@@ -7,13 +7,37 @@
     <Filter Include="Core">
       <UniqueIdentifier>{de7c39ca-66bd-4696-af76-1bcfd5c6a843}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\Math">
+      <UniqueIdentifier>{7b036a5b-b1b4-40c6-860f-19d6da73b723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Vector">
+      <UniqueIdentifier>{b8fa26b8-526f-4adf-a6e9-c14aa616ffa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Matrix">
+      <UniqueIdentifier>{9d732198-4554-41cc-8095-3f33d997fd2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Colour">
+      <UniqueIdentifier>{616a7d6d-59f7-4fc7-bd6e-723bde3276d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Ray">
+      <UniqueIdentifier>{ad81c0f8-54c4-49ae-9a6a-2b1848368029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Memory">
+      <UniqueIdentifier>{11f764c2-3c94-4ad4-af5d-6bfbeeda50c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Memory\Buffer">
+      <UniqueIdentifier>{c9c30b85-5a27-4980-8229-c0ed259e1f59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
+    <ClCompile Include="..\src\helpers\Math_Vector.cpp">
+      <Filter>Helpers\Math\Vector</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
-      <Filter>Core</Filter>
+      <Filter>Helpers\Math\Vector</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
