@@ -4,8 +4,16 @@
     <Filter Include="Helpers">
       <UniqueIdentifier>{ca14f9f3-55ee-4d95-bd81-872b0fa9c494}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{de7c39ca-66bd-4696-af76-1bcfd5c6a843}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\helpers\Math_Vector.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
