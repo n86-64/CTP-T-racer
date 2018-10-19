@@ -39,5 +39,8 @@
     <ClInclude Include="..\src\helpers\Math_Vector.h">
       <Filter>Helpers\Math\Vector</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Colour.h">
+      <Filter>Helpers\Math\Colour</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
