@@ -25,9 +25,6 @@
     <Filter Include="Helpers\Memory">
       <UniqueIdentifier>{11f764c2-3c94-4ad4-af5d-6bfbeeda50c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Helpers\Memory\Buffer">
-      <UniqueIdentifier>{c9c30b85-5a27-4980-8229-c0ed259e1f59}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Helpers\Memory\Image">
       <UniqueIdentifier>{4589c29a-cfe4-419d-80da-2000a62dcd7d}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,12 @@
     <ClCompile Include="..\src\core\main.cpp" />
     <ClCompile Include="..\src\helpers\Math_Vector.cpp">
       <Filter>Helpers\Math\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\Math_Ray.cpp">
+      <Filter>Helpers\Math\Ray</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\Math_Matrix.cpp">
+      <Filter>Helpers\Math\Matrix</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +50,12 @@
     </ClInclude>
     <ClInclude Include="..\src\helpers\Image.h">
       <Filter>Helpers\Memory\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Ray.h">
+      <Filter>Helpers\Math\Ray</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Matrix.h">
+      <Filter>Helpers\Math\Matrix</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

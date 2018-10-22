@@ -135,12 +135,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
+    <ClCompile Include="..\src\helpers\Math_Matrix.cpp" />
+    <ClCompile Include="..\src\helpers\Math_Ray.cpp" />
     <ClCompile Include="..\src\helpers\Math_Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Image.h" />
     <ClInclude Include="..\src\helpers\Math_Colour.h" />
     <ClInclude Include="..\src\helpers\Math_Vector.h" />
+    <ClInclude Include="..\src\helpers\Math_Ray.h" />
+    <ClInclude Include="..\src\helpers\Math_Matrix.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
