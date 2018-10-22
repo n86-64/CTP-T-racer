@@ -66,7 +66,10 @@ namespace T_racer_Math
 
 
 	private:
-		float values[3] = { 0.0f, 0.0f, 0.0f };
+		union 
+		{
+			float values[3] = { 0.0f, 0.0f, 0.0f };
+		};
 	};
 
 	
@@ -83,5 +86,4 @@ namespace T_racer_Math
 			(a.x() * b.y()) - (a.y() * b.x())
 		);
 	}
-
 }

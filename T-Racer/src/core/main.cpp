@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "helpers/Math_Vector.h"
+#include "helpers/Image.h"
 
 // The application entry point.
 int main(int argc, char* argv[]) 
@@ -25,6 +26,9 @@ int main(int argc, char* argv[])
 
 	auto test = vec4 / vec6;
 	vec4 /= vec6;
+
+	Image  testImage(100, 100);
+
 
 	getchar();
 

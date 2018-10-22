@@ -45,7 +45,7 @@
     <ClInclude Include="..\src\helpers\Math_Colour.h">
       <Filter>Helpers\Math\Colour</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\helpers\Images.h">
+    <ClInclude Include="..\src\helpers\Image.h">
       <Filter>Helpers\Memory\Image</Filter>
     </ClInclude>
   </ItemGroup>
