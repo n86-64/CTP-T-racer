@@ -11,7 +11,7 @@ namespace T_racer_Math
 		direction(dir)
 	{}
 
-	Vector3 T_racer_Math::Ray::getInverseDirection()
+	Vector3 Ray::getInverseDirection()
 	{
 		assert((direction.x() != 0.0f) && (direction.y() != 0.0f) && (direction.z() != 0.0f));
 		return Vector3(1.0f / direction.x(), 1.0f / direction.y(), 1.0f / direction.z());
