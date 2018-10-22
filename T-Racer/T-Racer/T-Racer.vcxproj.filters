@@ -4,8 +4,58 @@
     <Filter Include="Helpers">
       <UniqueIdentifier>{ca14f9f3-55ee-4d95-bd81-872b0fa9c494}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{de7c39ca-66bd-4696-af76-1bcfd5c6a843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math">
+      <UniqueIdentifier>{7b036a5b-b1b4-40c6-860f-19d6da73b723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Vector">
+      <UniqueIdentifier>{b8fa26b8-526f-4adf-a6e9-c14aa616ffa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Matrix">
+      <UniqueIdentifier>{9d732198-4554-41cc-8095-3f33d997fd2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Colour">
+      <UniqueIdentifier>{616a7d6d-59f7-4fc7-bd6e-723bde3276d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Ray">
+      <UniqueIdentifier>{ad81c0f8-54c4-49ae-9a6a-2b1848368029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Memory">
+      <UniqueIdentifier>{11f764c2-3c94-4ad4-af5d-6bfbeeda50c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Memory\Image">
+      <UniqueIdentifier>{4589c29a-cfe4-419d-80da-2000a62dcd7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
+    <ClCompile Include="..\src\helpers\Math_Vector.cpp">
+      <Filter>Helpers\Math\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\Math_Ray.cpp">
+      <Filter>Helpers\Math\Ray</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\Math_Matrix.cpp">
+      <Filter>Helpers\Math\Matrix</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\helpers\Math_Vector.h">
+      <Filter>Helpers\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Colour.h">
+      <Filter>Helpers\Math\Colour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Image.h">
+      <Filter>Helpers\Memory\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Ray.h">
+      <Filter>Helpers\Math\Ray</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Matrix.h">
+      <Filter>Helpers\Math\Matrix</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
