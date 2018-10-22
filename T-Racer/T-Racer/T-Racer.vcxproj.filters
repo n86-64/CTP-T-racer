@@ -28,6 +28,9 @@
     <Filter Include="Helpers\Memory\Buffer">
       <UniqueIdentifier>{c9c30b85-5a27-4980-8229-c0ed259e1f59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\Memory\Image">
+      <UniqueIdentifier>{4589c29a-cfe4-419d-80da-2000a62dcd7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -41,6 +44,9 @@
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Colour.h">
       <Filter>Helpers\Math\Colour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Images.h">
+      <Filter>Helpers\Memory\Image</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
