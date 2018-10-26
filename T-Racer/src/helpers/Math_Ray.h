@@ -27,6 +27,9 @@ namespace T_racer_Math
 		void	setPosition(Vector3 pos) { position = pos; }
 		void	setDirection(Vector3 dir) { direction = dir; }
 
+		float	getMagnitude() { return magnitude; }
+		void    setMagnitude(float newLength) { magnitude = newLength; }
+
 	private:
 		Vector3  position;
 		Vector3  direction;

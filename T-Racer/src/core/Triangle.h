@@ -13,6 +13,7 @@
 #include "core/Vertex.h"
 #include "core/Intersection.h"
 #include "helpers/Math_Ray.h"
+#include "helpers/Math_Colour.h"
 
 
 constexpr int VERTEX_COUNT = 3;
@@ -25,7 +26,7 @@ public:
 
 	T_racer_TriangleIntersection   isIntersecting(T_racer_Math::Ray  ray);
 
-
+	T_racer_Math::Vector3		   interpolatePoint(T_racer_TriangleIntersection iCoord);
 
 private:
 	T_racer_Vertex   verticies[VERTEX_COUNT] = { 0 };

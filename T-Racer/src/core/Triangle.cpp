@@ -39,8 +39,25 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 
 	if (intersect.intersection) 
 	{
+		float length;
 		intersect.t = T_racer_Math::dot(qVec, v2v0);
+		length = ray.getMagnitude();
+
+		if (length != FLT_MAX && length < intersect.t) 
+		{
+			intersect.intersection = false;
+		}
 	}
 
 	return intersect;
+}
+
+T_racer_Math::Vector3 Triangle::interpolatePoint(T_racer_TriangleIntersection iCoord)
+{
+	T_racer_Math::Vector3  returnCoord;
+
+	// TODO - Fetch colour from texture.
+	returnCoord = (verticies[0].texCoord * iCoord.u) + (verticies[1].texCoord * iCoord.v) + (verticies[2].texCoord * iCoord.w);
+
+	return returnCoord;
 }
