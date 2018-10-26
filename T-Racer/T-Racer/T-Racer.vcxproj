@@ -140,6 +140,9 @@
     <ClCompile Include="..\src\helpers\Math_Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\core\Intersection.h" />
+    <ClInclude Include="..\src\core\Triangle.h" />
+    <ClInclude Include="..\src\core\Vertex.h" />
     <ClInclude Include="..\src\helpers\Image.h" />
     <ClInclude Include="..\src\helpers\Math_Colour.h" />
     <ClInclude Include="..\src\helpers\Math_Vector.h" />

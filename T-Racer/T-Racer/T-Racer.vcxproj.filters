@@ -28,6 +28,15 @@
     <Filter Include="Helpers\Memory\Image">
       <UniqueIdentifier>{4589c29a-cfe4-419d-80da-2000a62dcd7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Structures">
+      <UniqueIdentifier>{705121cd-7d4b-4b2c-a17a-131473813528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Vertex">
+      <UniqueIdentifier>{4127f0cb-829a-44ab-abf1-89340f43eb43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Triangle">
+      <UniqueIdentifier>{52216c4c-3334-4940-a232-23eb2dc274f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -56,6 +65,15 @@
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Matrix.h">
       <Filter>Helpers\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Vertex.h">
+      <Filter>Core\Structures\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Triangle.h">
+      <Filter>Core\Structures\Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Intersection.h">
+      <Filter>Core\Structures\Triangle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
