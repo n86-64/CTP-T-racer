@@ -30,6 +30,6 @@ namespace T_racer_Math
 	private:
 		Vector3  position;
 		Vector3  direction;
-		float	 maxMagnitude = FLT_MAX; // Maybe need, not sure.
+		float	 magnitude = FLT_MAX; // Maybe need, not sure.
 	};
 }

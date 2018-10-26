@@ -11,15 +11,23 @@
 #pragma once
 
 #include "core/Vertex.h"
+#include "core/Intersection.h"
+#include "helpers/Math_Ray.h"
+
 
 constexpr int VERTEX_COUNT = 3;
 
 class Triangle 
 {
 public:
-	Triangle();
+	Triangle() = default;
+	Triangle(T_racer_Vertex v1, T_racer_Vertex v2, T_racer_Vertex v3);
+
+	T_racer_TriangleIntersection   isIntersecting(T_racer_Math::Ray  ray);
+
+
 
 private:
 	T_racer_Vertex   verticies[VERTEX_COUNT] = { 0 };
-	unsigned int materialID = 0;
+	unsigned int					  materialID = 0;
 };

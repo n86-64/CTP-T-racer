@@ -1,34 +1,30 @@
+#include <iostream>
 #include <stdio.h>
 
-#include "helpers/Math_Vector.h"
-#include "helpers/Image.h"
+#include "Triangle.h"
 
 // The application entry point.
 int main(int argc, char* argv[]) 
 {
-	printf("Hello world, Today Im going to calculate a vector.");
-	T_racer_Math::Vector3   vec1;
-	T_racer_Math::Vector3   vec2(1.0f);
-	T_racer_Math::Vector3   vec3(1.0f, 10.0f);
-	T_racer_Math::Vector3   vec4(100.0f, 100.0f, 100.0f);
-	T_racer_Math::Vector3   vec5;
-	vec5 += vec2;
-	vec3 = vec5 * 10.0f;
-	vec2 = vec3 * 2;
+	printf("Hello world, Today Im going to calculate a vector. \n");
+	
+	T_racer_Vertex v0, v1, v2;
+	v0.position = T_racer_Math::Vector3(0, 0, 0);
+	v1.position = T_racer_Math::Vector3(0, 0, 1);
+	v2.position = T_racer_Math::Vector3(1, 0, 0);
 
-	T_racer_Math::Vector3   vec6(2.0f, 2.0f, 2.0f);
+	Triangle test(v0, v1, v2);
+	T_racer_Math::Ray      testRay;
+	testRay.setPosition(T_racer_Math::Vector3(0, 1, 0));
+	testRay.setDirection(T_racer_Math::Vector3(0, -1, 0));
 
-	vec1 = vec4.normalise();
+	T_racer_TriangleIntersection isIntersecting = test.isIntersecting(testRay);
 
-	// float test = vec4.normaliseSelfWithMagnitude();
-
-	float dotval = dot(vec4, vec6);
-
-	auto test = vec4 / vec6;
-	vec4 /= vec6;
-
-	Image  testImage(100, 100);
-
+	if (isIntersecting.intersection) 
+	{
+		printf("An intersection has occured lol.");
+		
+	}
 
 	getchar();
 

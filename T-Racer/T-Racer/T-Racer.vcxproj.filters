@@ -49,6 +49,9 @@
     <ClCompile Include="..\src\helpers\Math_Matrix.cpp">
       <Filter>Helpers\Math\Matrix</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\Triangle.cpp">
+      <Filter>Core\Structures\Triangle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
@@ -73,7 +76,7 @@
       <Filter>Core\Structures\Triangle</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Intersection.h">
-      <Filter>Core\Structures\Triangle</Filter>
+      <Filter>Core\Structures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
