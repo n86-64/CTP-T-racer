@@ -54,6 +54,8 @@ namespace T_racer_Math
 		void			 operator*=(float scalier);
 		void			 operator*=(int scalier);
 
+		Vector3			 inverse(float scailer);
+
 		// Other Vector Operations
 		Vector3	normalise();
 		void normaliseSelf();

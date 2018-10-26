@@ -25,7 +25,7 @@ namespace T_racer_Math
 		Vector3 getInverseDirection();
 
 		void	setPosition(Vector3 pos) { position = pos; }
-		void	setDirection(Vector3 dir) { direction = dir; }
+		void	setDirection(Vector3 dir) { direction = dir; inverseDirection = direction.inverse(1); }
 
 		float	getMagnitude() { return magnitude; }
 		void    setMagnitude(float newLength) { magnitude = newLength; }
@@ -33,6 +33,7 @@ namespace T_racer_Math
 	private:
 		Vector3  position;
 		Vector3  direction;
+		Vector3  inverseDirection; // TODO - Apply inverse direction to the ray.
 		float	 magnitude = FLT_MAX; // Maybe need, not sure.
 	};
 }

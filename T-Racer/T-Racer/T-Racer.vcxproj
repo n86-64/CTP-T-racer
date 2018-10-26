@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\core\AABB.cpp" />
     <ClCompile Include="..\src\core\main.cpp" />
     <ClCompile Include="..\src\core\Triangle.cpp" />
     <ClCompile Include="..\src\helpers\Math_Matrix.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="..\src\helpers\Math_Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\core\AABB.h" />
     <ClInclude Include="..\src\core\Intersection.h" />
     <ClInclude Include="..\src\core\Triangle.h" />
     <ClInclude Include="..\src\core\Vertex.h" />

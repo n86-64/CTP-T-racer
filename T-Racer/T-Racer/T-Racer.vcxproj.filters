@@ -37,6 +37,9 @@
     <Filter Include="Core\Structures\Triangle">
       <UniqueIdentifier>{52216c4c-3334-4940-a232-23eb2dc274f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Structures\AABB">
+      <UniqueIdentifier>{f6e4ea21-654a-4f8c-b4e8-bc21c386188c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -51,6 +54,9 @@
     </ClCompile>
     <ClCompile Include="..\src\core\Triangle.cpp">
       <Filter>Core\Structures\Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\AABB.cpp">
+      <Filter>Core\Structures\AABB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="..\src\core\Intersection.h">
       <Filter>Core\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\AABB.h">
+      <Filter>Core\Structures\AABB</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

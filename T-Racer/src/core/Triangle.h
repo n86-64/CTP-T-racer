@@ -25,7 +25,6 @@ public:
 	Triangle(T_racer_Vertex v1, T_racer_Vertex v2, T_racer_Vertex v3);
 
 	T_racer_TriangleIntersection   isIntersecting(T_racer_Math::Ray  ray);
-
 	T_racer_Math::Vector3		   interpolatePoint(T_racer_TriangleIntersection iCoord);
 
 private:

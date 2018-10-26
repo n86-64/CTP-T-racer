@@ -73,7 +73,6 @@ namespace T_racer_Math
 		this->values[2] /= vec.values[2];
 	}
 
-
 	Vector3 Vector3::operator*(float scalier)
 	{
 		return Vector3(this->values[0] * scalier, this->values[1] * scalier, this->values[2] * scalier);
@@ -96,6 +95,11 @@ namespace T_racer_Math
 		this->values[0] *= scalier;
 		this->values[1] *= scalier;
 		this->values[2] *= scalier;
+	}
+
+	Vector3 Vector3::inverse(float scalier)
+	{
+		return Vector3(scalier / this->values[0], scalier / this->values[1], scalier / this->values[2]);
 	}
 
 	Vector3 Vector3::normalise()
