@@ -31,25 +31,80 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 	T_racer_Math::Vector3 tVec = ray.getPosition() - verticies[0].position;
 	T_racer_Math::Vector3 qVec = T_racer_Math::cross(tVec, v1v0);
 
-	intersect.u = T_racer_Math::dot(pVec, tVec) * determinant;
-	intersect.v = T_racer_Math::dot(qVec, ray.getDirection()) * determinant;
+	intersect.t = T_racer_Math::dot(qVec, v2v0);
 
-	intersect.intersection = (intersect.u > 0.0f || intersect.u < 1.0f) && (intersect.v > 0.0f || (intersect.v + intersect.u) < 1.0f);
-	intersect.setW();
-
-	if (intersect.intersection) 
+	if (intersect.t != FLT_MAX || intersect.t < 1e-4)
 	{
-		float length;
-		intersect.t = T_racer_Math::dot(qVec, v2v0);
-		length = ray.getMagnitude();
-
-		if (length != FLT_MAX && length < intersect.t) 
-		{
-			intersect.intersection = false;
-		}
+		intersect.intersection = false;
+		return intersect;
 	}
 
+	intersect.u = T_racer_Math::dot(pVec, tVec) * determinant;
+	if (intersect.u < 0.0f || intersect.u > 1.0f)
+	{
+		intersect.intersection = false;
+		return intersect;
+	}
+	intersect.v = T_racer_Math::dot(qVec, ray.getDirection()) * determinant;
+	if (intersect.v < 0.0f || intersect.v > 1.0f)
+	{
+		intersect.intersection = false;
+		return intersect;
+	}
+
+	intersect.intersection = (intersect.v + intersect.u) < 1.0f;
+	intersect.setW();
+
 	return intersect;
+}
+
+bool Triangle::isIntersectingShadow(T_racer_Math::Ray ray, const float maxt)
+{
+	T_racer_Math::Vector3  v1v0 = verticies[1].position - verticies[0].position;
+	T_racer_Math::Vector3  v2v0 = verticies[2].position - verticies[0].position;
+
+	// Calculate the determinant for the matrix
+	T_racer_Math::Vector3   pVec = T_racer_Math::cross(ray.getDirection(), v2v0);
+	float determinant = T_racer_Math::dot(pVec, v1v0);
+
+	// Check to see if we should continue.
+	// Here we can cull the triangle if nescessery. 
+	if (determinant <= 1e-8)
+	{
+		return false;
+	}
+
+	// Inverse the determinant for scaling. 
+	determinant = 1 / determinant;
+	T_racer_Math::Vector3 tVec = ray.getPosition() - verticies[0].position;
+	T_racer_Math::Vector3 qVec = T_racer_Math::cross(tVec, v1v0);
+
+	float t;
+
+	t = T_racer_Math::dot(qVec, v2v0);
+
+	if (t > maxt || t < 1e-4)
+	{
+		return false;
+	}
+
+	float u = T_racer_Math::dot(pVec, tVec) * determinant;
+	if (u < 0.0f || u > 1.0f)
+	{
+		return 0;
+	}
+	float v = T_racer_Math::dot(qVec, ray.getDirection()) * determinant;
+	if (v < 0.0f || v > 1.0f)
+	{
+		return 0;
+	}
+
+	if ((v + u) < 1.0f)
+	{
+		return 1.0f;
+	}
+
+	return 0;
 }
 
 T_racer_Math::Vector3 Triangle::interpolatePoint(T_racer_TriangleIntersection iCoord)

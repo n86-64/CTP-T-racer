@@ -30,11 +30,11 @@ bool AABB::isIntersected(T_racer_Math::Ray ray)
 
 bool AABB::isIntersected(AABB box)
 {
-	if (max.x > box.min.x && min.x < box.max.x) 
+	if (max.x() > box.min.x() && min.x() < box.max.x()) 
 	{
-		if (max.y > box.min.y && min.y < box.max.y)
+		if (max.y() > box.min.y() && min.y() < box.max.y())
 		{
-			if (max.z > box.min.z && min.z < box.max.z)
+			if (max.z() > box.min.z() && min.z() < box.max.z())
 			{
 				return true;
 			}
