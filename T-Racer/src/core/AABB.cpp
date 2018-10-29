@@ -10,10 +10,36 @@ bool AABB::isIntersected(T_racer_Math::Ray ray)
 	T_racer_Math::Vector3  tmax;
 	T_racer_Math::Vector3  tmin;
 
-	T_racer_Math::Vector3 rayDir = ray.getDirection();
+	T_racer_Math::Vector3 rayDir = ray.getInverseDirection();
+	T_racer_Math::Vector3 rayPos = ray.getPosition();
 	bool intersection = false;
 
-	
+	tmin = min;
+	tmax = max;
 
-	return intersection;
+	if (tmin.x() <= 0) { float temp = tmin.x(); tmin.x(tmax.x()); tmax.x(temp); }
+	if (tmin.y() <= 0) { float temp = tmin.y(); tmin.y(tmax.y()); tmax.y(temp); }
+	if (tmin.z() <= 0) { float temp = tmin.z(); tmin.z(tmax.z()); tmax.z(temp); }
+
+	tmin = (tmin - rayPos) * rayDir;
+	tmax = (tmax - rayPos) * rayDir;
+
+
+	return (tmin.x() < tmax.x()) && (tmin.y() < tmax.y()) && (tmin.z() < tmax.z());
+}
+
+bool AABB::isIntersected(AABB box)
+{
+	if (max.x > box.min.x && min.x < box.max.x) 
+	{
+		if (max.y > box.min.y && min.y < box.max.y)
+		{
+			if (max.z > box.min.z && min.z < box.max.z)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
 }

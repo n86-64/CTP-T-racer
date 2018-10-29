@@ -22,6 +22,7 @@ public:
 	AABB(T_racer_Math::Vector3  vMin, T_racer_Math::Vector3 vMax);
 
 	bool isIntersected(T_racer_Math::Ray  ray);
+	bool isIntersected(AABB box);
 
 private:
 	T_racer_Math::Vector3   min = T_racer_Math::Vector3(FLT_MAX, FLT_MAX, FLT_MAX);
