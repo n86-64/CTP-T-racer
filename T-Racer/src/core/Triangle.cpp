@@ -116,3 +116,8 @@ T_racer_Math::Vector3 Triangle::interpolatePoint(T_racer_TriangleIntersection iC
 
 	return returnCoord;
 }
+
+T_racer_Math::Vector3 Triangle::interpolateNormals(T_racer_TriangleIntersection iCoord)
+{
+	return T_racer_Math::Vector3((verticies[0].normal * iCoord.u) + (verticies[1].normal * iCoord.v) + (verticies[2].normal * iCoord.w));
+}
