@@ -45,28 +45,16 @@ bool AABB::isIntersected(AABB box)
 
 void AABB::enlargeBox(T_racer_Math::Vector3 point)
 {
-	if (point.X > max.X) 
+	if (point.X > max.X || point.Y > max.Y || point.Z > max.Z)
 	{
-		if (point.Y > max.Y)
-		{
-			if (point.Z > max.Z) 
-			{
-				// Change the box size.
-				max = point;
-			}
-		}
+		// Change the box size.
+		max = point;
 	}
 
-	if (point.X < min.X)
+	if (point.X < min.X || point.Y < min.Y || point.Z < min.Z)
 	{
-		if (point.Y < min.Y)
-		{
-			if (point.Z < min.Z)
-			{
-				// Change the box size.
-				min = point;
-			}
-		}
+		// Change the box size.
+		min = point;
 	}
 
 	return;

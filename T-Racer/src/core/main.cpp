@@ -21,6 +21,7 @@ int main(int argc, char* argv[])
 	testRay.setMagnitude(100.0f);
 
 	AABB  bb(T_racer_Math::Vector3(5.0f, 0.0f, 0.0f), T_racer_Math::Vector3(15.0f, 2.0f, 0.0f));
+	bb.enlargeBox(T_racer_Math::Vector3(1.0f, 1.0f, 1.0f));
 	//testRay.setMagnitude(10.0f);
 	
 	T_racer_TriangleIntersection isIntersecting = test.isIntersecting(testRay);
