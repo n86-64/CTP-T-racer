@@ -24,7 +24,6 @@ bool AABB::isIntersected(T_racer_Math::Ray ray)
 	tmin = (tmin - rayPos) * rayDir;
 	tmax = (tmax - rayPos) * rayDir;
 
-
 	return (tmin.x() < tmax.x()) && (tmin.y() < tmax.y()) && (tmin.z() < tmax.z());
 }
 
@@ -42,4 +41,33 @@ bool AABB::isIntersected(AABB box)
 	}
 
 	return false;
+}
+
+void AABB::enlargeBox(T_racer_Math::Vector3 point)
+{
+	if (point.X > max.X) 
+	{
+		if (point.Y > max.Y)
+		{
+			if (point.Z > max.Z) 
+			{
+				// Change the box size.
+				max = point;
+			}
+		}
+	}
+
+	if (point.X < min.X)
+	{
+		if (point.Y < min.Y)
+		{
+			if (point.Z < min.Z)
+			{
+				// Change the box size.
+				min = point;
+			}
+		}
+	}
+
+	return;
 }

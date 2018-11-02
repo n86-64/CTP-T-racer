@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "Triangle.h"
+#include "AABB.h"
 
 // The application entry point.
 int main(int argc, char* argv[]) 
@@ -17,9 +18,19 @@ int main(int argc, char* argv[])
 	T_racer_Math::Ray      testRay;
 	testRay.setPosition(T_racer_Math::Vector3(0.0f, 0.0f, -1.0f));
 	testRay.setDirection(T_racer_Math::Vector3(0, -1.0f, 0.0f));
+	testRay.setMagnitude(100.0f);
+
+	AABB  bb(T_racer_Math::Vector3(5.0f, 0.0f, 0.0f), T_racer_Math::Vector3(15.0f, 2.0f, 0.0f));
 	//testRay.setMagnitude(10.0f);
 	
 	T_racer_TriangleIntersection isIntersecting = test.isIntersecting(testRay);
+	
+	if (bb.isIntersected(testRay)) 
+	{
+		printf("An box intersection has occured lol.");
+	}
+
+	
 
 	if (isIntersecting.intersection) 
 	{

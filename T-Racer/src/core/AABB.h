@@ -24,7 +24,9 @@ public:
 	bool isIntersected(T_racer_Math::Ray  ray);
 	bool isIntersected(AABB box);
 
+	void enlargeBox(T_racer_Math::Vector3 point);
+
 private:
 	T_racer_Math::Vector3   min = T_racer_Math::Vector3(FLT_MAX, FLT_MAX, FLT_MAX);
-	T_racer_Math::Vector3	max = T_racer_Math::Vector3(FLT_MIN, FLT_MIN, FLT_MIN);
+	T_racer_Math::Vector3	max = T_racer_Math::Vector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 };

@@ -67,10 +67,16 @@ namespace T_racer_Math
 		float Magnitude();
 
 
-	private:
+	public:
 		union 
 		{
 			float values[3] = { 0.0f, 0.0f, 0.0f };
+			struct 
+			{
+				float X;
+				float Y;
+				float Z;
+			};
 		};
 	};
 

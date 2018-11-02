@@ -1,5 +1,7 @@
 #include "Triangle.h"
 
+#define ELIPSION 1e-4
+
 Triangle::Triangle(T_racer_Vertex v1, T_racer_Vertex v2, T_racer_Vertex v3)
 {
 	verticies[0] = v1;
@@ -33,7 +35,7 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 
 	intersect.t = T_racer_Math::dot(qVec, v2v0);
 
-	if (intersect.t != FLT_MAX || intersect.t < 1e-4)
+	if (intersect.t != FLT_MAX || intersect.t < ELIPSION)
 	{
 		intersect.intersection = false;
 		return intersect;
