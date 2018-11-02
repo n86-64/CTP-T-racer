@@ -40,6 +40,12 @@
     <Filter Include="Core\Structures\AABB">
       <UniqueIdentifier>{f6e4ea21-654a-4f8c-b4e8-bc21c386188c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Structures\Camera">
+      <UniqueIdentifier>{3f0a6433-dae5-4913-b278-f8746c59dfe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Transform">
+      <UniqueIdentifier>{f4d30049-540b-4a08-a44e-69f84584a7de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -86,6 +92,12 @@
     </ClInclude>
     <ClInclude Include="..\src\core\AABB.h">
       <Filter>Core\Structures\AABB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Camera.h">
+      <Filter>Core\Structures\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Transform.h">
+      <Filter>Helpers\Math\Transform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

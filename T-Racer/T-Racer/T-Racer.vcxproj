@@ -143,7 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\AABB.h" />
+    <ClInclude Include="..\src\core\Camera.h" />
     <ClInclude Include="..\src\core\Intersection.h" />
+    <ClInclude Include="..\src\core\Transform.h" />
     <ClInclude Include="..\src\core\Triangle.h" />
     <ClInclude Include="..\src\core\Vertex.h" />
     <ClInclude Include="..\src\helpers\Image.h" />

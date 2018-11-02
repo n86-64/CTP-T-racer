@@ -31,8 +31,6 @@ int main(int argc, char* argv[])
 		printf("An box intersection has occured lol.");
 	}
 
-	
-
 	if (isIntersecting.intersection) 
 	{
 		printf("An intersection has occured lol.");
