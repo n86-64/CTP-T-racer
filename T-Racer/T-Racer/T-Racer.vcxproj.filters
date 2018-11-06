@@ -64,6 +64,9 @@
     <ClCompile Include="..\src\core\AABB.cpp">
       <Filter>Core\Structures\AABB</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\Camera.cpp">
+      <Filter>Core\Structures\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
