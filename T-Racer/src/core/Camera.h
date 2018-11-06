@@ -18,14 +18,18 @@
 class Camera 
 {
 public:
-	Camera();
+	Camera() = default;
 
+
+	// Creates a view and perspective matrix for the corrisponding camera. 
 	T_racer_CameraTransform  getCameraTransform();
 	
 
 private:
-	float fovX, fovY;
+	float fov;
 	float resX, resY;
+	float near, far;
 
 	T_racer_Math::Vector3    position;
+	T_racer_Math::Vector3    target;
 };

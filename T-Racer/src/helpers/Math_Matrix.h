@@ -46,10 +46,10 @@ namespace T_racer_Math
 		// Return a value from the matrix.
 		float value(int row, int column) 
 		{
-			return matrix[(row * 3) + column]; 
+			return m[row][column]; 
 		}
 
-		// operations
+		// matrix operations
 		Matrix4X4  operator* (Matrix4X4  mat);
 
 	private:
@@ -64,9 +64,11 @@ namespace T_racer_Math
 				0.0f, 0.0f, 1.0f, 0.0f,
 				0.0f, 0.0f, 0.0f, 1.0f
 			};
+			float m[4][4]; 
 		};
 	};
 
+	// Generates a translation matrix. 
 	inline Matrix4X4  createTranslationMatrix(Vector3 translation) 
 	{
 		return Matrix4X4
@@ -96,15 +98,15 @@ namespace T_racer_Math
 
 	};
 
-	// generate a perspective matrix based on fov.
+	// generate a perspective matrix based on a provided FOV.
 	inline Matrix4X4 createPerspectiveMatrix(float fovY, float aspectRatio, float nearZ, float farZ) 
 	{
 		return Matrix4X4
 		(
-			,0.0f,,0.0f,
-			0.0f,,,0.0f,
-			0.0f ,0.0f, (farZ + nearZ) / (farZ - nearZ),-((2 * farZ * nearZ) / (farZ-nearZ)),
-			0.0f, 0.0f, 0.0f, 1.0f
+			1 / (aspectRatio * tan(fovY / 2)),0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1 / tan(fovY / 2), 0.0f,
+			0.0f ,0.0f, -((farZ + nearZ) / (farZ - nearZ)), -((2 * farZ * nearZ) / (farZ-nearZ)),
+			0.0f, 0.0f, -1.0f, 0.0f
 		);
 	}
 }

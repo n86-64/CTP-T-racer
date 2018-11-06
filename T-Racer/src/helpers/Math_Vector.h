@@ -94,4 +94,9 @@ namespace T_racer_Math
 			(a.x() * b.y()) - (a.y() * b.x())
 		);
 	}
+
+	// A series of vector constants.
+	const Vector3 up(0.0f, 1.0f, 0.0f);
+	const Vector3 right(1.0f, 0.0f, 0.0f);
+	const Vector3 forward(0.0f, 0.0f, 1.0f);
 }
