@@ -20,6 +20,7 @@ class Camera
 public:
 	Camera();
 
+	T_racer_CameraTransform  getCameraTransform();
 	
 
 private:
@@ -27,6 +28,4 @@ private:
 	float resX, resY;
 
 	T_racer_Math::Vector3    position;
-	T_racer_CameraTransform  camTransform;
-
 };

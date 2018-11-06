@@ -9,22 +9,102 @@
 
 #pragma once
 
+constexpr int MATRIX_ELEMENTS_COUNT_4X4 = 16;
+
+#include <math.h>
+#include "Math_Vector.h"
 
 namespace T_racer_Math 
 {
 	class Matrix4X4 
 	{
 	public:
-		Matrix4X4();
+		Matrix4X4() = default;
+		Matrix4X4(float m00, float m01, float m02, float m03,
+				  float m10, float m11, float m12,  float m13,
+				  float m20, float m21, float m22, float m23,
+				  float m30, float m31, float m32, float m33 )
+		{
+			matrix[0] = m00;
+			matrix[1] = m01;
+			matrix[2] = m02;
+			matrix[3] = m03;
+			matrix[4] = m10;
+			matrix[5] = m11;
+			matrix[6] = m12;
+			matrix[7] = m13;
+			matrix[8] = m20;
+			matrix[9] = m21;
+			matrix[10] = m22;
+			matrix[11] = m23;
+			matrix[12] = m30;
+			matrix[13] = m31;
+			matrix[14] = m32;
+			matrix[15] = m33;
+		};
+
+		// Return a value from the matrix.
+		float value(int row, int column) 
+		{
+			return matrix[(row * 3) + column]; 
+		}
+
+		// operations
+		Matrix4X4  operator* (Matrix4X4  mat);
 
 	private:
-		// Initialy set to be an identity matrix.
-		float matrix[16] = 
+
+		union 
 		{
-			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f
+			// Initialy set to be an identity matrix.
+			float matrix[MATRIX_ELEMENTS_COUNT_4X4] =
+			{
+				1.0f, 0.0f, 0.0f, 0.0f,
+				0.0f, 1.0f, 0.0f, 0.0f,
+				0.0f, 0.0f, 1.0f, 0.0f,
+				0.0f, 0.0f, 0.0f, 1.0f
+			};
 		};
 	};
+
+	inline Matrix4X4  createTranslationMatrix(Vector3 translation) 
+	{
+		return Matrix4X4
+		(
+			1.0f, 0.0f, 0.0f, translation.X,
+			0.0f, 1.0f, 0.0f, translation.Y,
+			0.0f, 0.0f, 1.0f, translation.Z,
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+	}
+
+
+	// Generate a view matrix for a camera based on the cameras position.
+	inline Matrix4X4  createViewMatrix(Vector3 eyePos, Vector3 targetPos, Vector3 up) 
+	{
+		// The forward and right matracies.
+		Vector3 forward = (targetPos - eyePos).normalise();
+		Vector3 right = cross(forward, up).normalise();
+
+		return Matrix4X4
+		(
+			right.X, right.Y, right.Z, -eyePos.X,
+			forward.X, forward.Y, forward.Z, -eyePos.X,
+			up.X, up.Y, up.Z, -eyePos.X,
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+
+	};
+
+	// generate a perspective matrix based on fov.
+	inline Matrix4X4 createPerspectiveMatrix(float fovY, float aspectRatio, float nearZ, float farZ) 
+	{
+		return Matrix4X4
+		(
+			,0.0f,,0.0f,
+			0.0f,,,0.0f,
+			0.0f ,0.0f, (farZ + nearZ) / (farZ - nearZ),-((2 * farZ * nearZ) / (farZ-nearZ)),
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+	}
 }
