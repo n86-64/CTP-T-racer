@@ -57,10 +57,9 @@ void T_racer_Buffer::extractData(std::string & charBuffer, size_t offset, size_t
 	charBuffer = std::string((char*)data + offset, extractionSize);
 }
 
-void T_racer_Buffer::extractData(std::string& charBuffer, size_t offset, size_t& size)
+void T_racer_Buffer::extractData(std::string& charBuffer, size_t offset)
 {
-	std::sscanf((char*)data + offset, "%c", charBuffer.data());
-	size = charBuffer.size();
+	charBuffer = std::string((char*)data + offset);
 }
 
 void T_racer_Buffer::assignBufferData(uint8_t* data, size_t size)
