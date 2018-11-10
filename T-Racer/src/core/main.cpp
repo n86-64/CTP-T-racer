@@ -3,6 +3,8 @@
 
 #include "Triangle.h"
 #include "AABB.h"
+#include "helpers/FileReader.h"
+
 
 // The application entry point.
 int main(int argc, char* argv[]) 
@@ -36,6 +38,16 @@ int main(int argc, char* argv[])
 		printf("An intersection has occured lol.");
 		
 	}
+
+	//T_racer_FileBuffer  buffer("test.txt");
+	//if (buffer.readFile()) 
+	//{
+	//	printf("The file was read."); 
+	//
+	//	std::string test;
+	//	buffer.extractData(test, 0, buffer.getBufferSize());
+	//}
+
 
 	getchar();
 

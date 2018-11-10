@@ -138,6 +138,7 @@
     <ClCompile Include="..\src\core\Camera.cpp" />
     <ClCompile Include="..\src\core\main.cpp" />
     <ClCompile Include="..\src\core\Triangle.cpp" />
+    <ClCompile Include="..\src\helpers\FileReader.cpp" />
     <ClCompile Include="..\src\helpers\Math_Matrix.cpp" />
     <ClCompile Include="..\src\helpers\Math_Ray.cpp" />
     <ClCompile Include="..\src\helpers\Math_Vector.cpp" />
@@ -149,11 +150,13 @@
     <ClInclude Include="..\src\core\Transform.h" />
     <ClInclude Include="..\src\core\Triangle.h" />
     <ClInclude Include="..\src\core\Vertex.h" />
+    <ClInclude Include="..\src\helpers\FileReader.h" />
     <ClInclude Include="..\src\helpers\Image.h" />
     <ClInclude Include="..\src\helpers\Math_Colour.h" />
     <ClInclude Include="..\src\helpers\Math_Vector.h" />
     <ClInclude Include="..\src\helpers\Math_Ray.h" />
     <ClInclude Include="..\src\helpers\Math_Matrix.h" />
+    <ClInclude Include="..\src\helpers\Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
