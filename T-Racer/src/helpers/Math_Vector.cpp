@@ -25,6 +25,27 @@ namespace T_racer_Math
 		this->values[2] = vector.values[2];
 	}
 
+	Vector3::Vector3(T_racer_Buffer buffer)
+	{
+		std::string dValue;
+		size_t offset = 0;
+
+		// Parse values out of the file stream.
+		buffer.extractData(dValue, offset, offset);
+		X = std::stof(dValue);
+		offset += dValue.size() + 1;
+		
+		dValue.clear();
+
+		buffer.extractData(dValue, offset);
+		Y = std::stof(dValue);
+		offset += dValue.size() + 1;
+
+		buffer.extractData(dValue, offset);
+		Z = std::stof(dValue);
+		//offset += dValue.size() ;
+	}
+
 	Vector3 Vector3::operator+(Vector3 vec)
 	{
 		return Vector3(this->values[0] + vec.values[0], this->values[1] + vec.values[1], this->values[2] + vec.values[2]);

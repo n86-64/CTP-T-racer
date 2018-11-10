@@ -3,17 +3,23 @@
 
 #include "FileReader.h"
 
-T_racer_FileBuffer::T_racer_FileBuffer(std::string file)
+T_racer_Buffer::T_racer_Buffer(std::string file)
 	:filename(file)
 {
 }
 
-void T_racer_FileBuffer::setFileName(std::string file)
+T_racer_Buffer::T_racer_Buffer(uint8_t* contents, size_t size)
+	:data(contents),
+	dataSize(size)
+{
+}
+
+void T_racer_Buffer::setFileName(std::string file)
 {
 	filename = file;
 }
 
-bool T_racer_FileBuffer::readFile()
+bool T_racer_Buffer::readFile()
 {
 	std::fstream  fileStream;
 	fileStream.open(filename.c_str(), std::ios::in | std::ios::binary);
@@ -36,23 +42,30 @@ bool T_racer_FileBuffer::readFile()
 	return true;
 }
 
-bool T_racer_FileBuffer::writeFile()
+bool T_racer_Buffer::writeFile()
 {
 	return false;
 }
 
-uint8_t T_racer_FileBuffer::operator[](int seekIndex)
+uint8_t T_racer_Buffer::operator[](int seekIndex)
 {
 	return data[seekIndex];
 }
 
-void T_racer_FileBuffer::extractData(std::string & charBuffer, size_t offset, size_t extractionSize)
+void T_racer_Buffer::extractData(std::string & charBuffer, size_t offset, size_t extractionSize)
 {
 	charBuffer = std::string((char*)data + offset, extractionSize);
 }
 
-void T_racer_FileBuffer::assignBufferData(uint8_t* data, size_t size)
+void T_racer_Buffer::extractData(std::string& charBuffer, size_t offset, size_t& size)
 {
+	std::sscanf((char*)data + offset, "%c", charBuffer.data());
+	size = charBuffer.size();
+}
+
+void T_racer_Buffer::assignBufferData(uint8_t* data, size_t size)
+{
+
 	return;
 }
 

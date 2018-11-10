@@ -30,6 +30,6 @@ public:
 	bool						   isIntersectingShadow(T_racer_Math::Ray ray, const float maxt);
 
 private:
-	T_racer_Vertex   verticies[VERTEX_COUNT] = { 0 };
+	T_racer_Vertex   verticies[VERTEX_COUNT] = {};
 	unsigned int					  materialID = 0;
 };

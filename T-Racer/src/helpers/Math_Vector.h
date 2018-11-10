@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "helpers/FileReader.h"
+
 // A set of vector operations that can be called at any time. 
 namespace T_racer_Math
 {
@@ -23,6 +25,7 @@ namespace T_racer_Math
 		Vector3(float x, float y);
 		Vector3(float x, float y, float z);
 		Vector3(const Vector3&  vector);
+		Vector3(T_racer_Buffer  buffer);
 
 		// get/set components.
 		float x() { return values[0]; };

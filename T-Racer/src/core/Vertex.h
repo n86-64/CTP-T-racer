@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "helpers/FileReader.h"
 #include "helpers/Math_Vector.h"
 
 struct T_racer_Vertex 
@@ -17,4 +18,14 @@ struct T_racer_Vertex
 	T_racer_Math::Vector3		position;
 	T_racer_Math::Vector3		normal;
 	T_racer_Math::Vector3		texCoord;
+
+	T_racer_Vertex() = default;
+	T_racer_Vertex(T_racer_Buffer buffer) 
+	{
+		std::string  data;
+		buffer.extractData(data, 0, buffer.getBufferSize());
+
+		// Parse data.
+		
+	}
 };

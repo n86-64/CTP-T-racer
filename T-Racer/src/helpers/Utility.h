@@ -10,7 +10,7 @@
 
 #pragma once
 
-inline void RELEASE_RESOURCE(void*& memory) 
+inline void T_RACER_RELEASE_RESOURCE(void*& memory) 
 {
 	if (memory) { delete memory; memory = nullptr; }
 }
