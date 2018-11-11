@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-T_racer_CameraTransform Camera::getCameraTransform()
+T_racer_CameraTransform T_racer_Camera::getCameraTransform()
 {
 	T_racer_CameraTransform  transform;
 	transform.view = T_racer_Math::createViewMatrix(position, target, T_racer_Math::up);

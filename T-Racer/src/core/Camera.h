@@ -15,10 +15,10 @@
 
 #include "Transform.h"
 
-class Camera 
+class T_racer_Camera 
 {
 public:
-	Camera() = default;
+	T_racer_Camera() = default;
 
 
 	// Creates a view and perspective matrix for the corrisponding camera. 
@@ -26,7 +26,7 @@ public:
 	
 
 private:
-	float fov;
+	float fov; // fov on the y-axis.
 	float resX, resY;
 	float near, far;
 
