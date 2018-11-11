@@ -76,7 +76,6 @@ void T_racer_Buffer::extractData(std::string & charBuffer, size_t offset, char d
 			break;
 		}
 	}
-
 }
 
 void T_racer_Buffer::assignBufferData(uint8_t* data, size_t size)
