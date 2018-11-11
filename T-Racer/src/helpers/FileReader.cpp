@@ -34,17 +34,30 @@ bool T_racer_Buffer::readFile()
 	dataSize = fileStream.tellg();
 	fileStream.seekg(0, fileStream.beg);
 
-	T_RACER_RELEASE_BUFFER((void*&)data);
+	T_RACER_RELEASE_RESOURCE((void*&)data);
 
 	data = new uint8_t[dataSize];
 	fileStream.read((char*)data, dataSize);
+
+	fileStream.close();
 
 	return true;
 }
 
 bool T_racer_Buffer::writeFile()
 {
-	return false;
+	std::fstream  fileStream;
+	fileStream.open(filename.c_str(), std::ios::out | std::ios::binary);
+
+	if (fileStream.fail() && !data)
+	{
+		return false;
+	}
+
+	fileStream.write((char*)data, dataSize);
+	fileStream.close();
+
+	return true;
 }
 
 uint8_t T_racer_Buffer::operator[](int seekIndex)
@@ -80,7 +93,8 @@ void T_racer_Buffer::extractData(std::string & charBuffer, size_t offset, char d
 
 void T_racer_Buffer::assignBufferData(uint8_t* data, size_t size)
 {
-	return;
+	this->data = data;
+	dataSize = size;
 }
 
 

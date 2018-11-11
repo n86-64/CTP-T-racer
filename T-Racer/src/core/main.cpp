@@ -39,9 +39,11 @@ int main(int argc, char* argv[])
 		
 	}
 
-	std::string data = "11\n22\n33";
+	std::string data = "11.5\n22\n33";
 	T_racer_Buffer  buffer((uint8_t*)data.data(), 9);
 	T_racer_Math::Vector3 testV(buffer);
+	buffer.setFileName("test2.txt");
+	buffer.writeFile();
 	//if (buffer.readFile()) 
 	//{
 	//	printf("The file was read."); 
@@ -49,8 +51,6 @@ int main(int argc, char* argv[])
 	//	std::string test;
 	//	buffer.extractData(test, 0, buffer.getBufferSize());
 	//}
-
-
 
 
 	getchar();

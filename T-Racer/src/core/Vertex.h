@@ -26,6 +26,6 @@ struct T_racer_Vertex
 		buffer.extractData(data, 0, buffer.getBufferSize());
 
 		// Parse data.
-		
+		buffer.extractData(data, 0, ' ');
 	}
 };
