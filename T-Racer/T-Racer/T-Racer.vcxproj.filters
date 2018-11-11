@@ -40,11 +40,23 @@
     <Filter Include="Core\Structures\AABB">
       <UniqueIdentifier>{f6e4ea21-654a-4f8c-b4e8-bc21c386188c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Structures\Camera">
-      <UniqueIdentifier>{3f0a6433-dae5-4913-b278-f8746c59dfe0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Helpers\Math\Transform">
       <UniqueIdentifier>{f4d30049-540b-4a08-a44e-69f84584a7de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Scene">
+      <UniqueIdentifier>{1eea016f-6f84-42cc-bd29-4861d61ca757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects">
+      <UniqueIdentifier>{ca9882eb-42c0-4713-9d46-5afaa44df246}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Camera">
+      <UniqueIdentifier>{3f0a6433-dae5-4913-b278-f8746c59dfe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource">
+      <UniqueIdentifier>{d8fe427b-3e89-4cf0-b555-0f65ee9a1e2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Main">
+      <UniqueIdentifier>{c23c1497-09ef-4bcc-aa36-5acfe0a91370}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,7 +77,10 @@
       <Filter>Core\Structures\AABB</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Camera.cpp">
-      <Filter>Core\Structures\Camera</Filter>
+      <Filter>Core\Objects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Scene.cpp">
+      <Filter>Core\Structures\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,10 +112,16 @@
       <Filter>Core\Structures\AABB</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Camera.h">
-      <Filter>Core\Structures\Camera</Filter>
+      <Filter>Core\Objects\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Transform.h">
       <Filter>Helpers\Math\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Scene.h">
+      <Filter>Core\Structures\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Resource.h">
+      <Filter>Core\Objects\Resource</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
