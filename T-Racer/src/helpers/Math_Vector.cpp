@@ -31,19 +31,7 @@ namespace T_racer_Math
 		size_t offset = 0;
 
 		// Parse values out of the file stream.
-		buffer.extractData(dValue, offset, offset);
-		X = std::stof(dValue);
-		offset += dValue.size() + 1;
 		
-		dValue.clear();
-
-		buffer.extractData(dValue, offset);
-		Y = std::stof(dValue);
-		offset += dValue.size() + 1;
-
-		buffer.extractData(dValue, offset);
-		Z = std::stof(dValue);
-		//offset += dValue.size() ;
 	}
 
 	Vector3 Vector3::operator+(Vector3 vec)

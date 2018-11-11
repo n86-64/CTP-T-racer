@@ -59,12 +59,28 @@ void T_racer_Buffer::extractData(std::string & charBuffer, size_t offset, size_t
 
 void T_racer_Buffer::extractData(std::string& charBuffer, size_t offset)
 {
-	charBuffer = std::string((char*)data + offset);
+	std::string sData = std::string((char*)data);
+	charBuffer = sData.substr(offset, dataSize - offset);
+}
+
+void T_racer_Buffer::extractData(std::string & charBuffer, size_t offset, char deliminator)
+{
+	for (int i = offset; i < dataSize; i++) 
+	{
+		if (data[i] != deliminator) 
+		{
+			charBuffer += data[i];
+		}
+		else 
+		{
+			break;
+		}
+	}
+
 }
 
 void T_racer_Buffer::assignBufferData(uint8_t* data, size_t size)
 {
-
 	return;
 }
 

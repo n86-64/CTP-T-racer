@@ -30,6 +30,8 @@ public:
 	// Read/Write to file buffer. 
 	void extractData(std::string& charBuffer, size_t offset, size_t extractionSize);
 	void extractData(std::string& charBuffer, size_t offset);
+	void extractData(std::string& charBuffer, size_t offset, char deliminator);
+
 	void assignBufferData(uint8_t* data, size_t size);
 
 	size_t getBufferSize() const { return dataSize; }
