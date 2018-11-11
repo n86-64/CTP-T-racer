@@ -58,6 +58,9 @@
     <Filter Include="Core\Main">
       <UniqueIdentifier>{c23c1497-09ef-4bcc-aa36-5acfe0a91370}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Display">
+      <UniqueIdentifier>{784b15cc-a342-48d3-8313-913c5a52a9dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
