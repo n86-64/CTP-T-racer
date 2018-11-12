@@ -61,6 +61,15 @@
     <Filter Include="Core\Display">
       <UniqueIdentifier>{784b15cc-a342-48d3-8313-913c5a52a9dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Display\PFM">
+      <UniqueIdentifier>{a5b222ce-6fd2-4d7a-92e2-5b73c8612b16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Display\Window/LDR">
+      <UniqueIdentifier>{41cef452-74b4-4c4f-a4da-8f57805e8802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Display\TGA">
+      <UniqueIdentifier>{0dd5cfbb-3cf6-4838-8273-2074faaa6ae2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -84,6 +93,12 @@
     </ClCompile>
     <ClCompile Include="..\src\core\Scene.cpp">
       <Filter>Core\Structures\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Display.cpp">
+      <Filter>Core\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Window.cpp">
+      <Filter>Core\Display\Window/LDR</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +140,12 @@
     </ClInclude>
     <ClInclude Include="..\src\core\Resource.h">
       <Filter>Core\Objects\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Display.h">
+      <Filter>Core\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Window.h">
+      <Filter>Core\Display\Window/LDR</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

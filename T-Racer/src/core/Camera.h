@@ -7,7 +7,6 @@
 *  @bug No known bugs.
 */
 
-
 #pragma once
 
 #include "helpers/Math_Matrix.h"

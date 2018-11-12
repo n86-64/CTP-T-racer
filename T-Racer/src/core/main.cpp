@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 
-#include <SFML/Graphics.hpp>
+#include "Window.h"
 
 #include "Triangle.h"
 #include "AABB.h"
@@ -46,25 +46,33 @@ int main(int argc, char* argv[])
 	// 1. Add parameterisation to the renderer so that parameters can be set for the renderer.
 	// 2. Add abstraction for objects such as the window for multiplatform movement.
 
-	bool quit = false;
-	sf::RenderWindow  window(sf::VideoMode(800,600),"T-racer");
-	sf::Event   winEvent;
+	//bool quit = false;
+	//sf::RenderWindow  window(sf::VideoMode(800,600),"T-racer");
+	//sf::Event   winEvent;
 
 
-	while (!quit) 
+	//while (!quit) 
+	//{
+	//	while (window.pollEvent(winEvent)) 
+	//	{
+	//		switch (winEvent.type) 
+	//		{
+	//		case sf::Event::Closed:
+	//			quit = true;
+	//			break;
+	//		}
+	//	}
+
+	//	window.clear(sf::Color(255,0,0)); // Clear the screen.
+	//	window.display();
+	//}
+
+	T_racer_Display_Window  window;
+	window.init(1920, 1080);
+	
+	while (!window.shouldQuit()) 
 	{
-		while (window.pollEvent(winEvent)) 
-		{
-			switch (winEvent.type) 
-			{
-			case sf::Event::Closed:
-				quit = true;
-				break;
-			}
-		}
-
-		window.clear(sf::Color(255,0,0)); // Clear the screen.
-		window.display();
+		window.update();
 	}
 
 	

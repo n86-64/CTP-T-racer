@@ -148,9 +148,11 @@
   <ItemGroup>
     <ClCompile Include="..\src\core\AABB.cpp" />
     <ClCompile Include="..\src\core\Camera.cpp" />
+    <ClCompile Include="..\src\core\Display.cpp" />
     <ClCompile Include="..\src\core\main.cpp" />
     <ClCompile Include="..\src\core\Scene.cpp" />
     <ClCompile Include="..\src\core\Triangle.cpp" />
+    <ClCompile Include="..\src\core\Window.cpp" />
     <ClCompile Include="..\src\helpers\Math_Matrix.cpp" />
     <ClCompile Include="..\src\helpers\Math_Ray.cpp" />
     <ClCompile Include="..\src\helpers\Math_Vector.cpp" />
@@ -158,12 +160,14 @@
   <ItemGroup>
     <ClInclude Include="..\src\core\AABB.h" />
     <ClInclude Include="..\src\core\Camera.h" />
+    <ClInclude Include="..\src\core\Display.h" />
     <ClInclude Include="..\src\core\Intersection.h" />
     <ClInclude Include="..\src\core\Resource.h" />
     <ClInclude Include="..\src\core\Scene.h" />
     <ClInclude Include="..\src\core\Transform.h" />
     <ClInclude Include="..\src\core\Triangle.h" />
     <ClInclude Include="..\src\core\Vertex.h" />
+    <ClInclude Include="..\src\core\Window.h" />
     <ClInclude Include="..\src\helpers\Image.h" />
     <ClInclude Include="..\src\helpers\Math_Colour.h" />
     <ClInclude Include="..\src\helpers\Math_Vector.h" />
