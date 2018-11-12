@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <math.h>
+
 #include "Math_Vector.h"
 
 namespace T_racer_Math 

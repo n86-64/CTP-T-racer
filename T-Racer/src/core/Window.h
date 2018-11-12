@@ -11,25 +11,23 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
 #include "Display.h"
 
-class T_racer_Display_Window : T_racer_Display 
+class T_racer_Display_Window : public T_racer_Display 
 {
 public:
-	T_racer_Display_Window() = default;
-	~T_racer_Display_Window() = default;
+	//T_racer_Display_Window() = default;
+	//~T_racer_Display_Window() = default;
 
 	// Inherited via T_racer_Display
-	void init(float resolutionX, float resolutionY);
-	void update();
-    void writeToDisplay(Image & imageBuffer);
+	void init(float resolutionX, float resolutionY) override;
+	void update() override;
+    void writeToDisplay(Image & imageBuffer) override;
 
 	bool shouldQuit() const { return quit; }
 
 private:
 	void copyImageToFramebuffer();
-
 	sf::Color  getColour(T_racer_Math::Colour& col);
 
 private:

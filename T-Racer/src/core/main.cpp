@@ -3,9 +3,6 @@
 
 #include "Window.h"
 
-#include "Triangle.h"
-#include "AABB.h"
-
 // The application entry point.
 int main(int argc, char* argv[]) 
 {
@@ -66,6 +63,7 @@ int main(int argc, char* argv[])
 	//	window.clear(sf::Color(255,0,0)); // Clear the screen.
 	//	window.display();
 	//}
+
 
 	T_racer_Display_Window  window;
 	window.init(1920, 1080);

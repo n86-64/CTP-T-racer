@@ -20,10 +20,8 @@ class T_racer_Camera
 public:
 	T_racer_Camera() = default;
 
-
 	// Creates a view and perspective matrix for the corrisponding camera. 
 	T_racer_CameraTransform  getCameraTransform();
-	
 
 private:
 	float fov; // fov on the y-axis.
