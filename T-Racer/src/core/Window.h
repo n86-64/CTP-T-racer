@@ -18,6 +18,7 @@ class T_racer_Display_Window : T_racer_Display
 {
 public:
 	T_racer_Display_Window() = default;
+	~T_racer_Display_Window() = default;
 
 	// Inherited via T_racer_Display
 	void init(float resolutionX, float resolutionY);
@@ -27,7 +28,12 @@ public:
 	bool shouldQuit() const { return quit; }
 
 private:
+	void copyImageToFramebuffer();
+
+	sf::Color  getColour(T_racer_Math::Colour& col);
+
+private:
 	sf::Event			  events;
 	sf::RenderWindow	  window;
-	sf::RenderTexture     frameTexture;
+	sf::RenderTexture&    frameTexture;
 };

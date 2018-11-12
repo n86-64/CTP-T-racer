@@ -26,6 +26,11 @@ struct Image
 		colour_values = new T_racer_Math::Colour[w * h];
 	};
 
+	T_racer_Math::Colour  operator()(int x, int y) 
+	{
+		return colour_values[(height * y) + x];
+	}
+
 	~Image() 
 	{
 		if (colour_values) 

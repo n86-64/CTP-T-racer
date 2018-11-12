@@ -19,5 +19,14 @@ namespace T_racer_Math
 		Vector3	 luminance = Vector3(1.0f, 1.0f, 1.0f);  // Weighting of colour values.
 
 		Vector3 getLuminanceColour() { return (colour * luminance); };
+		Vector3 getTonemappedColour(float gamma) 
+		{
+			return Vector3
+			(
+				fmin(1.0f, powf(colour.X, gamma)) * 255,
+				fmin(1.0f, powf(colour.Y, gamma)) * 255,
+				fmin(1.0f, powf(colour.Z, gamma)) * 255
+			);
+		}
 	};
 }

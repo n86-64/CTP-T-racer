@@ -16,6 +16,7 @@ class T_racer_Display
 {
 public:
 	T_racer_Display() = default;
+	virtual ~T_racer_Display() = default;
 
 	virtual void init(float resolutionX, float resolutionY) = 0; 
 	virtual void update() = 0;
