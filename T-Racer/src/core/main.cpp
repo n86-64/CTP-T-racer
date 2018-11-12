@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 	// 2. Add abstraction for objects such as the window for multiplatform movement.
 
 	bool quit = false;
-	sf::RenderWindow  window(sf::VideoMode(800,600),"T_racer");
+	sf::RenderWindow  window(sf::VideoMode(800,600),"T-racer");
 	sf::Event   winEvent;
 
 
@@ -63,7 +63,8 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		window.clear(); // Clear the screen.
+		window.clear(sf::Color(255,0,0)); // Clear the screen.
+		window.display();
 	}
 
 	
