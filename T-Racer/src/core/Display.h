@@ -9,6 +9,7 @@
 */
 
 #pragma once
+#include <string>
 #include "helpers/Image.h"
 
 class T_racer_Display 
@@ -20,8 +21,13 @@ public:
 	virtual void update() = 0;
 	virtual void writeToDisplay(Image& imageBuffer) = 0;
 
+	virtual void setDisplayName(std::string name) = 0;
+
 protected:
+	std::string displayName;
 	bool     quit = false;
 	Image    frameBuffer;
+
+	// DEPRECATED!!! - Information is provided by image. 
 	float    resX, resY;
 };

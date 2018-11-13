@@ -19,6 +19,8 @@ struct Image
 
 	Image() {}; // Constructs a blank image.
 
+	int getSize() { return width * height; }
+
 	Image(int w, int h) 
 	{
 		width = w;
@@ -39,5 +41,7 @@ struct Image
 			colour_values = nullptr;
 		}
 	}
+
+
 };
 

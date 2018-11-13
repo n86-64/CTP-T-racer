@@ -16,13 +16,16 @@
 class T_racer_Display_Window : public T_racer_Display 
 {
 public:
-	//T_racer_Display_Window() = default;
-	//~T_racer_Display_Window() = default;
+	T_racer_Display_Window() = default;
+	~T_racer_Display_Window() = default;
 
 	// Inherited via T_racer_Display
 	void init(float resolutionX, float resolutionY) override;
 	void update() override;
     void writeToDisplay(Image & imageBuffer) override;
+
+	void setDisplayName(std::string name) override { displayName = name; window.setTitle(name); } 
+
 
 	bool shouldQuit() const { return quit; }
 
@@ -33,5 +36,5 @@ private:
 private:
 	sf::Event			  events;
 	sf::RenderWindow	  window;
-	sf::RenderTexture&    frameTexture;
+	sf::RenderTexture     frameTexture;
 };
