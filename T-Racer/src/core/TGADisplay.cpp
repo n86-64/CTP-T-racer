@@ -5,11 +5,6 @@ void T_racer_Display_TGA::init(float resolutionX, float resolutionY)
 	return;
 }
 
-void T_racer_Display_TGA::update()
-{
-	return;
-}
-
 void T_racer_Display_TGA::writeToDisplay(Image& imageBuffer)
 {
 	FILE *pFile;               // The file pointer.

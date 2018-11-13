@@ -100,6 +100,12 @@
     <ClCompile Include="..\src\core\Window.cpp">
       <Filter>Core\Displays\Window/LDR</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\PFMDisplay.cpp">
+      <Filter>Core\Displays\PFM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\TGADisplay.cpp">
+      <Filter>Core\Displays\TGA</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
@@ -146,6 +152,12 @@
     </ClInclude>
     <ClInclude Include="..\src\core\Window.h">
       <Filter>Core\Displays\Window/LDR</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\TGADisplay.h">
+      <Filter>Core\Displays\TGA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PFMDisplay.h">
+      <Filter>Core\Displays\PFM</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
