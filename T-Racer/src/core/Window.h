@@ -35,5 +35,9 @@ private:
 private:
 	sf::Event			  events;
 	sf::RenderWindow	  window;
+
+	// Textures for rendering the frame.
 	sf::RenderTexture     frameTexture;
+	sf::Texture			  winTex;
+	sf::Sprite			  winSprite;
 };

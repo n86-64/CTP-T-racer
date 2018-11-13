@@ -42,6 +42,10 @@ void T_racer_Display_Window::copyImageToFramebuffer()
 			frameImage.setPixel(x, y, getColour(col));
 		}
 	}
+
+	winTex.loadFromImage(frameImage);
+	winSprite.setTexture(winTex);
+	window.draw(winSprite);
 }
 
 sf::Color T_racer_Display_Window::getColour(T_racer_Math::Colour& col)
