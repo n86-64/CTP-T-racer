@@ -43,6 +43,11 @@ struct Image
 		return colour_values[point];
 	}
 
+	Image operator=(const Image& image) 
+	{
+		return Image(image);
+	}
+
 	~Image() 
 	{
 		if (colour_values) 
@@ -51,7 +56,5 @@ struct Image
 			colour_values = nullptr;
 		}
 	}
-
-
 };
 

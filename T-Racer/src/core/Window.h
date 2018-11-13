@@ -22,10 +22,9 @@ public:
 	// Inherited via T_racer_Display
 	void init(float resolutionX, float resolutionY) override;
 	void update() override;
-    void writeToDisplay(Image & imageBuffer) override;
+    void writeToDisplay(Image* imageBuffer) override;
 
 	void setDisplayName(std::string name) override { displayName = name; window.setTitle(name); } 
-
 
 	bool shouldQuit() const { return quit; }
 

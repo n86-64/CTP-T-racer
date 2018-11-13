@@ -21,7 +21,7 @@ public:
 	void update() override {};
 
 	// Code for writing to a TGA file is provided by Tom-Bashord Rodgers.
-	void writeToDisplay(Image& imageBuffer) override;
+	void writeToDisplay(Image* imageBuffer) override;
 
 
 	void setDisplayName(std::string name) override;

@@ -23,14 +23,14 @@ public:
 
 	virtual void init(float resolutionX, float resolutionY) = 0; 
 	virtual void update() = 0;
-	virtual void writeToDisplay(Image& imageBuffer) = 0;
+	virtual void writeToDisplay(Image* imageBuffer) = 0;
 
 	virtual void setDisplayName(std::string name) = 0;
 
 protected:
 	std::string displayName;
 	bool     quit = false;
-	Image    frameBuffer;
+	Image*    frameBuffer;
 
 	// DEPRECATED!!! - Information is provided by image. 
 	float    resX, resY;

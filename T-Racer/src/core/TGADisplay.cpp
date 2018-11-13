@@ -5,7 +5,7 @@ void T_racer_Display_TGA::init(float resolutionX, float resolutionY)
 	return;
 }
 
-void T_racer_Display_TGA::writeToDisplay(Image& imageBuffer)
+void T_racer_Display_TGA::writeToDisplay(Image* imageBuffer)
 {
 	FILE *pFile;               // The file pointer.
 	unsigned char uselessChar; // used for useless char.
@@ -19,7 +19,7 @@ void T_racer_Display_TGA::writeToDisplay(Image& imageBuffer)
 	pFile = fopen(displayName.c_str(), "wb");
 
 	// Check if the file opened or not.
-	if (pFile == NULL && !imageBuffer.colour_values)
+	if (pFile == NULL && !imageBuffer->colour_values)
 	{
 		perror(displayName.c_str());
 		return;
@@ -46,32 +46,32 @@ void T_racer_Display_TGA::writeToDisplay(Image& imageBuffer)
 	fwrite(&uselessInt, sizeof(short int), 1, pFile);
 
 	// Write the size that you want.
-	fwrite(&imageBuffer.width, sizeof(short int), 1, pFile);
-	fwrite(&imageBuffer.height, sizeof(short int), 1, pFile);
+	fwrite(&(imageBuffer->width), sizeof(short int), 1, pFile);
+	fwrite(&(imageBuffer->height), sizeof(short int), 1, pFile);
 	fwrite(&bits, sizeof(unsigned char), 1, pFile);
 
 	// Write useless data.
 	fwrite(&uselessChar, sizeof(unsigned char), 1, pFile);
 
 	// Get image size.
-	Size = imageBuffer.getSize() * colorMode;
+	Size = imageBuffer->getSize() * colorMode;
 
-	for (int y = 0; y < imageBuffer.height; y++)
+	for (int y = 0; y < imageBuffer->height; y++)
 	{
-		for (int x = 0; x < imageBuffer.width; x++)
+		for (int x = 0; x < imageBuffer->width; x++)
 		{
-			int i = (x + imageBuffer.width * (imageBuffer.height - y - 1)) * 3;
+			int i = (x + imageBuffer->width * (imageBuffer->height - y - 1)) * 3;
 
 			uint8_t c[3];
-			c[2] = imageBuffer(x, y).getTonemappedColour(1.0f).Z;
-			c[1] = imageBuffer(x, y).getTonemappedColour(1.0f).Y;
-			c[0] = imageBuffer(x, y).getTonemappedColour(1.0f).X;
+			c[2] = (*imageBuffer)(x, y).getTonemappedColour(1.0f).X;
+			c[1] = (*imageBuffer)(x, y).getTonemappedColour(1.0f).Y;
+			c[0] = (*imageBuffer)(x, y).getTonemappedColour(1.0f).Z;
 
 			fwrite(&c[0], sizeof(uint8_t), 3, pFile);
 		}
 	}
 
-	fprintf(stderr, "Saved TGA: %dx%d\n", imageBuffer.width, imageBuffer.height);
+	fprintf(stderr, "Saved TGA: %dx%d\n", imageBuffer->width, imageBuffer->height);
 
 	// close the file.
 	fclose(pFile);

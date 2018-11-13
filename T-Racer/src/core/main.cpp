@@ -63,6 +63,7 @@ int main(int argc, char* argv[])
 	//	}
 
 	//	window.clear(sf::Color(255,0,0)); // Clear the screen.
+	//	window.clear(sf::Color(255,0,0)); // Clear the screen.
 	//	window.display();
 	//}
 
@@ -76,7 +77,7 @@ int main(int argc, char* argv[])
 	T_racer_Display_PFM  pfm;
 
 	window.init(800, 600);
-	window.writeToDisplay(test);
+	window.writeToDisplay(&test);
 
 	while (!window.shouldQuit()) 
 	{
@@ -85,11 +86,11 @@ int main(int argc, char* argv[])
 
 	tga.init(800, 600);
 	tga.setDisplayName("Test.tga");
-	tga.writeToDisplay(test);
+	tga.writeToDisplay(&test);
 
 	pfm.init(800, 600);
 	pfm.setDisplayName("Test.pfm");
-	pfm.writeToDisplay(test);
+	pfm.writeToDisplay(&test);
 
 	
 	return 0;

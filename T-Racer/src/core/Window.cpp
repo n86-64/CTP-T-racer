@@ -25,7 +25,7 @@ void T_racer_Display_Window::update()
 	window.display();
 }
 
-void T_racer_Display_Window::writeToDisplay(Image& imageBuffer)
+void T_racer_Display_Window::writeToDisplay(Image* imageBuffer)
 {
 	frameBuffer = imageBuffer;
 }
@@ -34,17 +34,17 @@ void T_racer_Display_Window::copyImageToFramebuffer()
 {
 	sf::Image frameImage = frameTexture.getTexture().copyToImage();
 	T_racer_Math::Colour col;
-	for (int y = 0; y < frameBuffer.height; y++) 
+	for (int y = 0; y < frameBuffer->height; y++) 
 	{
-		for (int x = 0; x < frameBuffer.width; x++)
+		for (int x = 0; x < frameBuffer->width; x++)
 		{
-			col = frameBuffer(x, y);
+			col = (*frameBuffer)(x, y);
 			frameImage.setPixel(x, y, getColour(col));
 		}
 	}
 }
 
-sf::Color T_racer_Display_Window::getColour(T_racer_Math::Colour & col)
+sf::Color T_racer_Display_Window::getColour(T_racer_Math::Colour& col)
 {
 	T_racer_Math::Vector3 mappedCol = col.getTonemappedColour(1.0f);
 	return sf::Color

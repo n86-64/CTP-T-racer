@@ -22,7 +22,7 @@ public:
 
 	// Code for parsong to a pfm file is provided by 
 	// Tom bashford rodgers. 
-	void writeToDisplay(Image & imageBuffer) override;
+	void writeToDisplay(Image* imageBuffer) override;
 
 
 	void setDisplayName(std::string name) override { displayName = name; }
