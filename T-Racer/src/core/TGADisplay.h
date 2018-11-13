@@ -19,7 +19,11 @@ public:
 	// Inherited via T_racer_Display
 	void init(float resolutionX, float resolutionY) override;
 	void update() override {};
+
+	// Code for writing to a TGA file is provided by Tom-Bashord Rodgers.
 	void writeToDisplay(Image& imageBuffer) override;
+
+
 	void setDisplayName(std::string name) override;
 
 private:

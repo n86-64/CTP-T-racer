@@ -20,7 +20,8 @@ public:
 	void init(float resolutionX, float resolutionY) override;
 	void update() override;
 
-	// Code for process provided by Tom-Bashford Rogers.
+	// Code for parsong to a pfm file is provided by 
+	// Tom bashford rodgers. 
 	void writeToDisplay(Image & imageBuffer) override;
 
 

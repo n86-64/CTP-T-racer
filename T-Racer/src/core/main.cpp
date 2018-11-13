@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 #include "Window.h"
+#include "PFMDisplay.h"
+#include "TGADisplay.h"
 
 // The application entry point.
 int main(int argc, char* argv[]) 
@@ -64,14 +66,30 @@ int main(int argc, char* argv[])
 	//	window.display();
 	//}
 
+	Image test(800, 600);
+	Image test2; 
+
+	test2 = test;
 
 	T_racer_Display_Window  window;
-	window.init(1920, 1080);
-	
+	T_racer_Display_TGA  tga;
+	T_racer_Display_PFM  pfm;
+
+	window.init(800, 600);
+	window.writeToDisplay(test);
+
 	while (!window.shouldQuit()) 
 	{
 		window.update();
 	}
+
+	tga.init(800, 600);
+	tga.setDisplayName("Test.tga");
+	tga.writeToDisplay(test);
+
+	pfm.init(800, 600);
+	pfm.setDisplayName("Test.pfm");
+	pfm.writeToDisplay(test);
 
 	
 	return 0;

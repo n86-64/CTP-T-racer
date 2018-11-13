@@ -21,6 +21,15 @@ struct Image
 
 	int getSize() { return width * height; }
 
+	// Copy Constructor for copying values across.
+	Image(const Image& image) 
+	{
+		this->colour_values = new T_racer_Math::Colour[image.width * image.height];
+		this->width = image.width;
+		this->height = image.height;
+		memcpy(&this->colour_values[0], image.colour_values, sizeof(T_racer_Math::Colour) * image.width * image.height);
+	}
+
 	Image(int w, int h) 
 	{
 		width = w;
@@ -30,7 +39,8 @@ struct Image
 
 	T_racer_Math::Colour  operator()(int x, int y) 
 	{
-		return colour_values[(height * y) + x];
+		int point = (y * width) + x;
+		return colour_values[point];
 	}
 
 	~Image() 

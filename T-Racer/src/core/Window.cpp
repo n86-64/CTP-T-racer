@@ -4,6 +4,7 @@
 void T_racer_Display_Window::init(float resolutionX, float resolutionY)
 {
 	window.create(sf::VideoMode(resolutionX, resolutionY),"T-Racer Result.");
+	frameTexture.create(resolutionX, resolutionY);
 	frameTexture.setView(window.getView());
 }
 
@@ -31,14 +32,14 @@ void T_racer_Display_Window::writeToDisplay(Image& imageBuffer)
 
 void T_racer_Display_Window::copyImageToFramebuffer()
 {
-	sf::Image frameImage;
+	sf::Image frameImage = frameTexture.getTexture().copyToImage();
 	T_racer_Math::Colour col;
-	for (int i = 0; i < frameBuffer.height; i++) 
+	for (int y = 0; y < frameBuffer.height; y++) 
 	{
-		for (int j = 0; j < frameBuffer.width; j++)
+		for (int x = 0; x < frameBuffer.width; x++)
 		{
-			col = frameBuffer(i, j);
-			frameImage.setPixel(i, j, getColour(col));
+			col = frameBuffer(x, y);
+			frameImage.setPixel(x, y, getColour(col));
 		}
 	}
 }
