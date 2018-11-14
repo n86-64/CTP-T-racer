@@ -17,13 +17,13 @@ namespace T_racer_Math
 {
 	struct Colour 
 	{
-		Vector3  colour	   = Vector3(1.0f, 1.0f, 0.0f);
-		Vector3	 luminance = Vector3(1.0f, 1.0f, 1.0f);  // Weighting of colour values.
+		Vector  colour	   = Vector(1.0f, 1.0f, 0.0f);
+		Vector	 luminance = Vector(1.0f, 1.0f, 1.0f);  // Weighting of colour values.
 
-		Vector3 getLuminanceColour() { return (colour * luminance); };
-		Vector3 getTonemappedColour(float gamma) 
+		Vector getLuminanceColour() { return (colour * luminance); };
+		Vector getTonemappedColour(float gamma) 
 		{
-			return Vector3
+			return Vector
 			(
 				fmin(1.0f, powf(colour.X, gamma)) * 255,
 				fmin(1.0f, powf(colour.Y, gamma)) * 255,

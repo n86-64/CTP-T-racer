@@ -1,17 +1,17 @@
 #include "AABB.h"
 
-AABB::AABB(T_racer_Math::Vector3 vMin, T_racer_Math::Vector3 vMax)
+AABB::AABB(T_racer_Math::Vector vMin, T_racer_Math::Vector vMax)
 	:min(vMin),
 	max(vMax)
 {}
 
 bool AABB::isIntersected(T_racer_Math::Ray ray)
 {
-	T_racer_Math::Vector3  tmax;
-	T_racer_Math::Vector3  tmin;
+	T_racer_Math::Vector  tmax;
+	T_racer_Math::Vector  tmin;
 
-	T_racer_Math::Vector3 rayDir = ray.getInverseDirection();
-	T_racer_Math::Vector3 rayPos = ray.getPosition();
+	T_racer_Math::Vector rayDir = ray.getInverseDirection();
+	T_racer_Math::Vector rayPos = ray.getPosition();
 	bool intersection = false;
 
 	tmin = min;
@@ -43,7 +43,7 @@ bool AABB::isIntersected(AABB box)
 	return false;
 }
 
-void AABB::enlargeBox(T_racer_Math::Vector3 point)
+void AABB::enlargeBox(T_racer_Math::Vector point)
 {
 	if (point.X > max.X || point.Y > max.Y || point.Z > max.Z)
 	{

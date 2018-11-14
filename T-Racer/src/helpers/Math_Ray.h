@@ -18,22 +18,22 @@ namespace T_racer_Math
 	{
 	public:
 		Ray();
-		Ray(Vector3 origin, Vector3 dir);
+		Ray(Vector origin, Vector dir);
 
-		Vector3 getPosition() const { return position; }
-		Vector3 getDirection() const { return direction; }
-		Vector3 getInverseDirection();
+		Vector getPosition() const { return position; }
+		Vector getDirection() const { return direction; }
+		Vector getInverseDirection();
 
-		void	setPosition(Vector3 pos) { position = pos; }
-		void	setDirection(Vector3 dir) { direction = dir; inverseDirection = direction.inverse(1); }
+		void	setPosition(Vector pos) { position = pos; }
+		void	setDirection(Vector dir) { direction = dir; inverseDirection = direction.inverse(1); }
 
 		float	getMagnitude() { return magnitude; }
 		void    setMagnitude(float newLength) { magnitude = newLength; }
 
 	private:
-		Vector3  position;
-		Vector3  direction;
-		Vector3  inverseDirection; // TODO - Apply inverse direction to the ray.
+		Vector  position;
+		Vector  direction;
+		Vector  inverseDirection; // TODO - Apply inverse direction to the ray.
 		float	 magnitude = FLT_MAX; // Maybe need, not sure.
 	};
 }

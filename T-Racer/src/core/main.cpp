@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 
+#include "helpers/Math_Matrix.h"
 #include "Window.h"
 #include "PFMDisplay.h"
 #include "TGADisplay.h"
@@ -66,6 +67,12 @@ int main(int argc, char* argv[])
 	//	window.clear(sf::Color(255,0,0)); // Clear the screen.
 	//	window.display();
 	//}
+
+	T_racer_Math::Vector testvec(1.0f, 1.0f, 1.0f, 1.0f);
+	T_racer_Math::Matrix4X4  matTest;
+	T_racer_Math::Matrix4X4  matTest2;
+
+	T_racer_Math::Matrix4X4 testmat3 = matTest2 * matTest;
 
 	Image test(800, 600);
 	Image test2; 

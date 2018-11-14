@@ -13,11 +13,11 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 {
 	T_racer_TriangleIntersection  intersect;
 
-	T_racer_Math::Vector3  v1v0 = verticies[1].position - verticies[0].position;
-	T_racer_Math::Vector3  v2v0 = verticies[2].position - verticies[0].position;
+	T_racer_Math::Vector  v1v0 = verticies[1].position - verticies[0].position;
+	T_racer_Math::Vector  v2v0 = verticies[2].position - verticies[0].position;
 
 	// Calculate the determinant for the matrix
-	T_racer_Math::Vector3   pVec = T_racer_Math::cross(ray.getDirection(), v2v0);
+	T_racer_Math::Vector   pVec = T_racer_Math::cross(ray.getDirection(), v2v0);
 	float determinant = T_racer_Math::dot(pVec, v1v0);
 
 	// Check to see if we should continue.
@@ -30,8 +30,8 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 
 	// Inverse the determinant for scaling. 
 	determinant = 1 / determinant;
-	T_racer_Math::Vector3 tVec = ray.getPosition() - verticies[0].position;
-	T_racer_Math::Vector3 qVec = T_racer_Math::cross(tVec, v1v0);
+	T_racer_Math::Vector tVec = ray.getPosition() - verticies[0].position;
+	T_racer_Math::Vector qVec = T_racer_Math::cross(tVec, v1v0);
 
 	intersect.t = T_racer_Math::dot(qVec, v2v0);
 
@@ -62,11 +62,11 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 
 bool Triangle::isIntersectingShadow(T_racer_Math::Ray ray, const float maxt)
 {
-	T_racer_Math::Vector3  v1v0 = verticies[1].position - verticies[0].position;
-	T_racer_Math::Vector3  v2v0 = verticies[2].position - verticies[0].position;
+	T_racer_Math::Vector  v1v0 = verticies[1].position - verticies[0].position;
+	T_racer_Math::Vector  v2v0 = verticies[2].position - verticies[0].position;
 
 	// Calculate the determinant for the matrix
-	T_racer_Math::Vector3   pVec = T_racer_Math::cross(ray.getDirection(), v2v0);
+	T_racer_Math::Vector   pVec = T_racer_Math::cross(ray.getDirection(), v2v0);
 	float determinant = T_racer_Math::dot(pVec, v1v0);
 
 	// Check to see if we should continue.
@@ -78,8 +78,8 @@ bool Triangle::isIntersectingShadow(T_racer_Math::Ray ray, const float maxt)
 
 	// Inverse the determinant for scaling. 
 	determinant = 1 / determinant;
-	T_racer_Math::Vector3 tVec = ray.getPosition() - verticies[0].position;
-	T_racer_Math::Vector3 qVec = T_racer_Math::cross(tVec, v1v0);
+	T_racer_Math::Vector tVec = ray.getPosition() - verticies[0].position;
+	T_racer_Math::Vector qVec = T_racer_Math::cross(tVec, v1v0);
 
 	float t;
 
@@ -109,9 +109,9 @@ bool Triangle::isIntersectingShadow(T_racer_Math::Ray ray, const float maxt)
 	return 0;
 }
 
-T_racer_Math::Vector3 Triangle::interpolatePoint(T_racer_TriangleIntersection iCoord)
+T_racer_Math::Vector Triangle::interpolatePoint(T_racer_TriangleIntersection iCoord)
 {
-	T_racer_Math::Vector3  returnCoord;
+	T_racer_Math::Vector  returnCoord;
 
 	// TODO - Fetch colour from texture.
 	returnCoord = (verticies[0].texCoord * iCoord.u) + (verticies[1].texCoord * iCoord.v) + (verticies[2].texCoord * iCoord.w);
@@ -119,7 +119,7 @@ T_racer_Math::Vector3 Triangle::interpolatePoint(T_racer_TriangleIntersection iC
 	return returnCoord;
 }
 
-T_racer_Math::Vector3 Triangle::interpolateNormals(T_racer_TriangleIntersection iCoord)
+T_racer_Math::Vector Triangle::interpolateNormals(T_racer_TriangleIntersection iCoord)
 {
-	return T_racer_Math::Vector3((verticies[0].normal * iCoord.u) + (verticies[1].normal * iCoord.v) + (verticies[2].normal * iCoord.w));
+	return T_racer_Math::Vector((verticies[0].normal * iCoord.u) + (verticies[1].normal * iCoord.v) + (verticies[2].normal * iCoord.w));
 }

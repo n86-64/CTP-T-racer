@@ -50,7 +50,7 @@ void T_racer_Display_Window::copyImageToFramebuffer()
 
 sf::Color T_racer_Display_Window::getColour(T_racer_Math::Colour& col)
 {
-	T_racer_Math::Vector3 mappedCol = col.getTonemappedColour(1.0f);
+	T_racer_Math::Vector mappedCol = col.getTonemappedColour(1.0f);
 	return sf::Color
 	(
 		mappedCol.X,

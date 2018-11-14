@@ -50,7 +50,9 @@ namespace T_racer_Math
 		}
 
 		// matrix operations
-		Matrix4X4  operator* (Matrix4X4  mat);
+		Vector    operator* (Vector mat);
+		Matrix4X4 operator*(Matrix4X4 matrix);
+
 
 	private:
 
@@ -69,7 +71,7 @@ namespace T_racer_Math
 	};
 
 	// Generates a translation matrix. 
-	inline Matrix4X4  createTranslationMatrix(Vector3 translation) 
+	inline Matrix4X4  createTranslationMatrix(Vector translation) 
 	{
 		return Matrix4X4
 		(
@@ -82,11 +84,11 @@ namespace T_racer_Math
 
 
 	// Generate a view matrix for a camera based on the cameras position.
-	inline Matrix4X4  createViewMatrix(Vector3 eyePos, Vector3 targetPos, Vector3 up) 
+	inline Matrix4X4  createViewMatrix(Vector eyePos, Vector targetPos, Vector up) 
 	{
 		// The forward and right matracies.
-		Vector3 forward = (targetPos - eyePos).normalise();
-		Vector3 right = cross(forward, up).normalise();
+		Vector forward = (targetPos - eyePos).normalise();
+		Vector right = cross(forward, up).normalise();
 
 		return Matrix4X4
 		(

@@ -13,8 +13,11 @@
 #include <vector>
 
 #include "Resource.h"
+
+#include "Triangle.h"
 #include "Camera.h"
 
+class T_racer_Display;
 
 class T_racer_Scene 
 {
@@ -27,12 +30,15 @@ public:
 
 	// Render a single frame and add to a display. 
 	void Render();
+	void setDisplay(T_racer_Display* newDisplay); 
 
 private:
 	std::vector<std::unique_ptr<T_racer_Resource>>  sceneResources;
-	T_racer_Camera* mainCamera = nullptr;
+	std::vector<Triangle>   sceneTriangles;
 
+	T_racer_Camera* mainCamera = nullptr;
+	T_racer_Display* display;
 
 private:
-	void traceRay();
+	T_racer_Math::Ray generateRay(float xPos, float yPos);
 };

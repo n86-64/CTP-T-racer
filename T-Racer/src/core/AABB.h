@@ -19,14 +19,14 @@ class AABB
 {
 public:
 	AABB() = default;
-	AABB(T_racer_Math::Vector3  vMin, T_racer_Math::Vector3 vMax);
+	AABB(T_racer_Math::Vector  vMin, T_racer_Math::Vector vMax);
 
 	bool isIntersected(T_racer_Math::Ray  ray);
 	bool isIntersected(AABB box);
 
-	void enlargeBox(T_racer_Math::Vector3 point);
+	void enlargeBox(T_racer_Math::Vector point);
 
 private:
-	T_racer_Math::Vector3   min = T_racer_Math::Vector3(FLT_MAX, FLT_MAX, FLT_MAX);
-	T_racer_Math::Vector3	max = T_racer_Math::Vector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+	T_racer_Math::Vector   min = T_racer_Math::Vector(FLT_MAX, FLT_MAX, FLT_MAX);
+	T_racer_Math::Vector	max = T_racer_Math::Vector(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 };

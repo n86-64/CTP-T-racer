@@ -28,6 +28,6 @@ private:
 	float resX, resY;
 	float near, far;
 
-	T_racer_Math::Vector3    position;
-	T_racer_Math::Vector3    target;
+	T_racer_Math::Vector    position;
+	T_racer_Math::Vector    target;
 };
