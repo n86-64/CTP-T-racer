@@ -21,9 +21,13 @@ void T_racer_Scene::setDisplay(T_racer_Display* newDisplay)
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 {
 	// Here lets generate a ray. 
-	T_racer_Math::Vector screenPos(xPos,yPos);
+	T_racer_Math::Ray     ray;
+	T_racer_CameraTransform  camTransform = mainCamera->getCameraTransform();
 
+	T_racer_Math::Vector screenPos(xPos,yPos);
 	T_racer_Math::Matrix4X4  world;
+	
+
 
 
 	return T_racer_Math::Ray();
