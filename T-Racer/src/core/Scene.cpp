@@ -16,6 +16,7 @@ void T_racer_Scene::Render()
 void T_racer_Scene::setDisplay(T_racer_Display* newDisplay)
 {
 	display = newDisplay;
+	generateRay(0.0f, 0.0f);
 }
 
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
@@ -25,10 +26,21 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 	T_racer_CameraTransform  camTransform = mainCamera->getCameraTransform();
 
 	T_racer_Math::Vector screenPos(xPos,yPos);
-	T_racer_Math::Matrix4X4  world;
+	T_racer_Math::Vector ndcPos;
+	T_racer_Math::Vector cameraSpace;
+	T_racer_Math::Matrix4X4  transform;
 	
+	transform = camTransform.projection * camTransform.view;
+	transform = T_racer_Math::getInverseMatrix(transform);
 
+	//ndcPos = T_racer_Math::Vector(screenPos.X + 0.5 / mainCamera->getWidth(), screenPos.Y + 0.5 / mainCamera->getHeight());
+	//ndcPos = T_racer_Math::Vector(ndcPos.X * 2 - 1, ndcPos.Y * 2 - 1);
 
+	//cameraSpace = T_racer_Math::Vector()
 
-	return T_racer_Math::Ray();
+	// Here we create the ray. 
+	ray.setPosition(transform * screenPos);
+	ray.setDirection(ray.getPosition().normalise());
+
+	return ray;
 }

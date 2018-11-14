@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "PFMDisplay.h"
 #include "TGADisplay.h"
+#include "Scene.h"
 
 // The application entry point.
 int main(int argc, char* argv[]) 
@@ -75,6 +76,7 @@ int main(int argc, char* argv[])
 	T_racer_Math::Matrix4X4 testmat3 = matTest2 * matTest;
 	T_racer_Math::getInverseMatrix(testmat3);
 
+
 	Image test(800, 600);
 	Image test2; 
 
@@ -84,6 +86,8 @@ int main(int argc, char* argv[])
 	T_racer_Display_TGA  tga;
 	T_racer_Display_PFM  pfm;
 
+	T_racer_Camera  testCam;
+
 	window.init(800, 600);
 	window.writeToDisplay(&test);
 
@@ -91,6 +95,10 @@ int main(int argc, char* argv[])
 	{
 		window.update();
 	}
+
+	T_racer_Scene testScene;
+	testScene.setMainCamera(&testCam);
+	testScene.setDisplay(&window);
 
 	tga.init(800, 600);
 	tga.setDisplayName("Test.tga");

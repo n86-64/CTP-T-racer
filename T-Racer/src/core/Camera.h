@@ -23,10 +23,14 @@ public:
 	// Creates a view and perspective matrix for the corrisponding camera. 
 	T_racer_CameraTransform  getCameraTransform();
 
+	float getFoV() const { return fov; }
+	float getWidth() const { float resX; }
+	float getHeight() const { float resY; }
+
 private:
-	float fov; // fov on the y-axis.
+	float fov = 90.0f; // fov on the y-axis.
 	float resX, resY;
-	float near, far;
+	float near = 0.1f, far = 100.0f;
 
 	T_racer_Math::Vector    position;
 	T_racer_Math::Vector    target;

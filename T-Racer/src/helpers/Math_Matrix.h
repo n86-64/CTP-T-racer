@@ -85,14 +85,14 @@ namespace T_racer_Math
 		float d = getMatrixDeterminant(mat);
 		if (d == 0) 
 		{
-			return Matrix4X4();
+			return mat;
 		}
 
 		return Matrix4X4
 		(
 			1 / mat.value(0, 0), mat.value(0, 1), mat.value(0, 2), mat.value(0, 3),
 			mat.value(1, 0), 1 / mat.value(1, 1), mat.value(1, 2), mat.value(1, 3),
-			mat.value(2, 0), mat.value(2, 1), mat.value(2, 2), mat.value(2, 3),
+			mat.value(2, 0), mat.value(2, 1), 1 / mat.value(2, 2), mat.value(2, 3),
 		     mat.value(3, 0), mat.value(3, 1), mat.value(3, 2), 1 / mat.value(3, 3)
 		);
 	}
