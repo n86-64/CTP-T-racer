@@ -70,6 +70,15 @@ namespace T_racer_Math
 		};
 	};
 
+	// Matrix constants
+	const Matrix4X4 ERROR_MATRIX
+	(
+		INFINITY, INFINITY, INFINITY, INFINITY,
+		INFINITY, INFINITY, INFINITY, INFINITY,
+		INFINITY, INFINITY, INFINITY, INFINITY,
+		INFINITY, INFINITY, INFINITY, INFINITY
+	);
+
 	inline float getMatrixDeterminant(Matrix4X4 mat) 
 	{
 		float d1 = mat.value(0, 0) + mat.value(1, 1) + mat.value(2, 2) + mat.value(3, 3);
@@ -78,14 +87,37 @@ namespace T_racer_Math
 		return ((d1 - d2));
 	}
 
+	inline void swapMatrixRows(int row, Matrix4X4& mat) 
+	{
+
+	}
 
 	// Returns the input matrix if the operation fails.
 	inline Matrix4X4 getInverseMatrix(Matrix4X4 mat) 
 	{
+		// perform gauss-jordan matrix inversion.
+		T_racer_Math::Matrix4X4   inverseMatrix;
+
 		float d = getMatrixDeterminant(mat);
-		if (d == 0) 
+		if (d == 0.0f) 
 		{
-			return mat;
+			// there is no determinant. Return error matrix.
+			return ERROR_MATRIX;
+		}
+
+		// setp 1 - for each pivot per column work out the multiplier and add it to our matrix and then
+		// inverse our incoming matrix.
+		for (int i = 0; i < 4; i++) 
+		{
+			if (mat.value(i, i) != 1.0f) 
+			{
+				swapMatrixRows(i, mat);
+				// check each of the other rows and either swap or devide matrix rows.
+			}
+			else 
+			{
+				// do the pivot test. 
+			}
 		}
 
 		return Matrix4X4

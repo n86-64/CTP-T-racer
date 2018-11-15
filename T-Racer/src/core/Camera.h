@@ -24,8 +24,11 @@ public:
 	T_racer_CameraTransform  getCameraTransform();
 
 	float getFoV() const { return fov; }
-	float getWidth() const { float resX; }
-	float getHeight() const { float resY; }
+	float getWidth() const { return resX; }
+	float getHeight() const { return resY; }
+
+	float getNearZ() const { return near; }
+	float getFarZ() const { return far; }
 
 private:
 	float fov = 90.0f; // fov on the y-axis.

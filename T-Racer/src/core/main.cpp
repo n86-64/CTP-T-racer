@@ -73,7 +73,14 @@ int main(int argc, char* argv[])
 	T_racer_Math::Matrix4X4  matTest;
 	T_racer_Math::Matrix4X4  matTest2;
 
-	T_racer_Math::Matrix4X4 testmat3 = matTest2 * matTest;
+	T_racer_Math::Matrix4X4 testmat3
+	(
+		2, 2, 2, 2,
+		2, 2, 2, 2,
+		2, 2, 2, 2,
+		0, 0, 0, 0
+	);
+
 	T_racer_Math::getInverseMatrix(testmat3);
 
 

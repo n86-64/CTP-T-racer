@@ -11,6 +11,8 @@ void T_racer_Scene::Render()
 {
 	// Here we trace the ray for the camera.
 	
+	// Generate a ray for each image in the framebuffer.
+	// If intersection with a triangle, colour the pixel else stop. 
 }
 
 void T_racer_Scene::setDisplay(T_racer_Display* newDisplay)
@@ -40,7 +42,8 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 
 	// Here we create the ray. 
 	ray.setPosition(transform * screenPos);
-	ray.setDirection(ray.getPosition().normalise());
+	ray.setDirection(T_racer_Math::forward);
+	ray.setMagnitude(mainCamera->getFarZ() - mainCamera->getNearZ());
 
 	return ray;
 }
