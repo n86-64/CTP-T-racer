@@ -83,8 +83,7 @@ int main(int argc, char* argv[])
 
 	T_racer_Math::getInverseMatrix(testmat3);
 
-
-	Image test(800, 600);
+	Image test(800, 600, T_racer_Math::Colour(0.0f,0.0f,0.0f));
 	Image test2; 
 
 	test2 = test;

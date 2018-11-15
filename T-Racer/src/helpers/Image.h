@@ -18,6 +18,13 @@ struct Image
 	T_racer_Math::Colour*			colour_values = nullptr;
 
 	Image() {}; // Constructs a blank image.
+	Image(int w, int h, T_racer_Math::Colour col) : Image(w, h)
+	{
+		for (int i = 0; i < getSize(); i++) 
+		{
+			colour_values[i] = col;
+		}
+	}
 
 	int getSize() { return width * height; }
 	void setSize(int nWidth, int nHeight) 

@@ -17,6 +17,12 @@ namespace T_racer_Math
 {
 	struct Colour 
 	{
+		Colour() = default;
+		Colour(float r, float g, float b) 
+		{
+			colour = Vector(r, g, b);
+		}
+
 		Vector  colour	   = Vector(1.0f, 1.0f, 1.0f);
 		Vector	 luminance = Vector(1.0f, 1.0f, 1.0f);  // Weighting of colour values.
 

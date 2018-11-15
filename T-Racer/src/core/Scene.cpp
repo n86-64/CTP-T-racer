@@ -25,7 +25,7 @@ void T_racer_Scene::Render()
 				if (triangle.isIntersecting(ray).intersection) 
 				{
 					// Colour the pixel white.
-					frameData(x, y, T_racer_Math::Colour());
+					frameData(x, y, T_racer_Math::Colour(1.0f, 1.0f, 1.0f));
 				}
 			}
 		}
@@ -62,7 +62,7 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 
 	// Here we create the ray. 
 	ray.setPosition(transform * screenPos);
-	ray.setDirection(T_racer_Math::forward);
+	ray.setDirection(transform * T_racer_Math::forward);
 	ray.setMagnitude(mainCamera->getFarZ() - mainCamera->getNearZ());
 
 	return ray;
