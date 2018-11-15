@@ -27,6 +27,9 @@ public:
 
 	virtual void setDisplayName(std::string name) = 0;
 
+	float getWidth() const { return resX; }
+	float getHeight() const { return resY; }
+
 protected:
 	std::string displayName;
 	bool     quit = false;

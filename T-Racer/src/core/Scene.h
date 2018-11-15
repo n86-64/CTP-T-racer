@@ -39,6 +39,8 @@ private:
 	T_racer_Camera* mainCamera = nullptr;
 	T_racer_Display* display;
 
+	Image          frameData;
+
 private:
 	T_racer_Math::Ray generateRay(float xPos, float yPos);
 };

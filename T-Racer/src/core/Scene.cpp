@@ -9,15 +9,35 @@ void T_racer_Scene::addResourceObject(T_racer_Resource* newRes)
 
 void T_racer_Scene::Render()
 {
+	T_racer_Math::Ray  ray;
 	// Here we trace the ray for the camera.
 	
 	// Generate a ray for each image in the framebuffer.
 	// If intersection with a triangle, colour the pixel else stop. 
+	for (int y = 0; y < frameData.height; y++) 
+	{
+		for (int x = 0; x < frameData.width; x++)
+		{
+			ray = generateRay(x, y);
+			// perform the intersection.
+			for (Triangle& triangle : sceneTriangles) 
+			{
+				if (triangle.isIntersecting(ray).intersection) 
+				{
+					// Colour the pixel white.
+					frameData(x, y, T_racer_Math::Colour());
+				}
+			}
+		}
+	}
+
+	display->writeToDisplay(&frameData);
 }
 
 void T_racer_Scene::setDisplay(T_racer_Display* newDisplay)
 {
 	display = newDisplay;
+	frameData.setSize(display->getWidth(), display->getHeight());
 	generateRay(0.0f, 0.0f);
 }
 
@@ -28,7 +48,7 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 	T_racer_CameraTransform  camTransform = mainCamera->getCameraTransform();
 
 	T_racer_Math::Vector screenPos(xPos,yPos);
-	T_racer_Math::Vector ndcPos;
+	T_racer_Math::Vector ndcPos; // possibly not needed.
 	T_racer_Math::Vector cameraSpace;
 	T_racer_Math::Matrix4X4  transform;
 	

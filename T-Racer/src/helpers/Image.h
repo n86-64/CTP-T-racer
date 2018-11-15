@@ -20,6 +20,12 @@ struct Image
 	Image() {}; // Constructs a blank image.
 
 	int getSize() { return width * height; }
+	void setSize(int nWidth, int nHeight) 
+	{
+		width = nWidth;
+		height = nHeight;
+		colour_values = new T_racer_Math::Colour[width * height];
+	}
 
 	// Copy Constructor for copying values across.
 	Image(const Image& image) 
@@ -41,6 +47,12 @@ struct Image
 	{
 		int point = (y * width) + x;
 		return colour_values[point];
+	}
+
+	void  operator()(int x, int y, T_racer_Math::Colour col)
+	{
+		int point = (y * width) + x;
+		colour_values[point] = col;
 	}
 
 	Image operator=(const Image& image) 

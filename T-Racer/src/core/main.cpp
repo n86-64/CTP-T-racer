@@ -75,10 +75,10 @@ int main(int argc, char* argv[])
 
 	T_racer_Math::Matrix4X4 testmat3
 	(
-		2, 2, 2, 2,
-		2, 2, 2, 2,
-		2, 2, 2, 2,
-		0, 0, 0, 0
+		2, 5, -8, 1,
+		1, 2, -3, 1,
+		-3, -5, 2, 1,
+		1, 1, 1, 1
 	);
 
 	T_racer_Math::getInverseMatrix(testmat3);
