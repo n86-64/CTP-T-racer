@@ -57,6 +57,7 @@ namespace T_racer_Math
 		// matrix operations
 		Vector    operator* (Vector mat);
 		Matrix4X4 operator*(Matrix4X4 matrix);
+		float&    operator[](int pos) { return matrix[pos]; }
 
 
 	private:
@@ -97,7 +98,7 @@ namespace T_racer_Math
 	{
 		// perform gauss-jordan matrix inversion.
 		T_racer_Math::Matrix4X4   inverseMatrix;
-		float value;
+		float inverseValue;
 
 		float d = getMatrixDeterminant(mat);
 		if (d == 0.0f) 
@@ -106,18 +107,167 @@ namespace T_racer_Math
 			return ERROR_MATRIX;
 		}
 
-		// setp 1 - for each pivot per column work out the multiplier and add it to our matrix and then
-		// inverse our incoming matrix.
+		// TODO - Finsih implementation of gauss-Jorden inversion.
+		//for (int r = 0; r < 4; r++) 
+		//{
+		//	if (mat.value(r, r) != 1.0f) 
+		//	{
+		//		for (int i = 0; i < 4; i++) 
+		//		{
+		//			mat.value(r, i, mat.value(r, i) / mat.value(r, 0));
+		//		}
 
+		//		for (int i = 0; i < 4; i++)
+		//		{
+		//			inverseMatrix.value(r, i, mat.value(r, i) / mat.value(r, 0));
+		//		}
+		//	}
 
+		//	inverseValue = -mat.value(r + 1, r);
 
-		return Matrix4X4
-		(
-			1 / mat.value(0, 0), mat.value(0, 1), mat.value(0, 2), mat.value(0, 3),
-			mat.value(1, 0), 1 / mat.value(1, 1), mat.value(1, 2), mat.value(1, 3),
-			mat.value(2, 0), mat.value(2, 1), 1 / mat.value(2, 2), mat.value(2, 3),
-		     mat.value(3, 0), mat.value(3, 1), mat.value(3, 2), 1 / mat.value(3, 3)
-		);
+		//	// Now we calculate the pivots.
+		//	for (int r2 = 0; r2 < 4; r2++) 
+		//	{
+		//		if (r2 != r) 
+		//		{
+		//			// perform the calculation.
+		//			for (int c2 = 0; c2 < 4; c2++) 
+		//			{
+		//				mat.value(r2, c2, (mat.value(r2, c2) - inverseValue) * mat.value(r2 - 1, c2));
+		//			}
+		//		}
+		//	}
+		//}
+		
+		// Source code retrieved from GLU project (OpenGL utility Library.) - https://github.com/jlyharia/Computer_GraphicsII/blob/master/gluInvertMatrix.h
+		inverseMatrix[0] = mat[5] * mat[10] * mat[15] -
+			mat[5] * mat[11] * mat[14] -
+			mat[9] * mat[6] * mat[15] +
+			mat[9] * mat[7] * mat[14] +
+			mat[13] * mat[6] * mat[11] -
+			mat[13] * mat[7] * mat[10];
+
+		inverseMatrix[4] = -mat[4] * mat[10] * mat[15] +
+			mat[4] * mat[11] * mat[14] +
+			mat[8] * mat[6] * mat[15] -
+			mat[8] * mat[7] * mat[14] -
+			mat[12] * mat[6] * mat[11] +
+			mat[12] * mat[7] * mat[10];
+
+		inverseMatrix[8] = mat[4] * mat[9] * mat[15] -
+			mat[4] * mat[11] * mat[13] -
+			mat[8] * mat[5] * mat[15] +
+			mat[8] * mat[7] * mat[13] +
+			mat[12] * mat[5] * mat[11] -
+			mat[12] * mat[7] * mat[9];
+
+		inverseMatrix[12] = -mat[4] * mat[9] * mat[14] +
+			mat[4] * mat[10] * mat[13] +
+			mat[8] * mat[5] * mat[14] -
+			mat[8] * mat[6] * mat[13] -
+			mat[12] * mat[5] * mat[10] +
+			mat[12] * mat[6] * mat[9];
+
+		inverseMatrix[1] = -mat[1] * mat[10] * mat[15] +
+			mat[1] * mat[11] * mat[14] +
+			mat[9] * mat[2] * mat[15] -
+			mat[9] * mat[3] * mat[14] -
+			mat[13] * mat[2] * mat[11] +
+			mat[13] * mat[3] * mat[10];
+
+		inverseMatrix[5] = mat[0] * mat[10] * mat[15] -
+			mat[0] * mat[11] * mat[14] -
+			mat[8] * mat[2] * mat[15] +
+			mat[8] * mat[3] * mat[14] +
+			mat[12] * mat[2] * mat[11] -
+			mat[12] * mat[3] * mat[10];
+
+		inverseMatrix[9] = -mat[0] * mat[9] * mat[15] +
+			mat[0] * mat[11] * mat[13] +
+			mat[8] * mat[1] * mat[15] -
+			mat[8] * mat[3] * mat[13] -
+			mat[12] * mat[1] * mat[11] +
+			mat[12] * mat[3] * mat[9];
+
+		inverseMatrix[13] = mat[0] * mat[9] * mat[14] -
+			mat[0] * mat[10] * mat[13] -
+			mat[8] * mat[1] * mat[14] +
+			mat[8] * mat[2] * mat[13] +
+			mat[12] * mat[1] * mat[10] -
+			mat[12] * mat[2] * mat[9];
+
+		inverseMatrix[2] = mat[1] * mat[6] * mat[15] -
+			mat[1] * mat[7] * mat[14] -
+			mat[5] * mat[2] * mat[15] +
+			mat[5] * mat[3] * mat[14] +
+			mat[13] * mat[2] * mat[7] -
+			mat[13] * mat[3] * mat[6];
+
+		inverseMatrix[6] = -mat[0] * mat[6] * mat[15] +
+			mat[0] * mat[7] * mat[14] +
+			mat[4] * mat[2] * mat[15] -
+			mat[4] * mat[3] * mat[14] -
+			mat[12] * mat[2] * mat[7] +
+			mat[12] * mat[3] * mat[6];
+
+		inverseMatrix[10] = mat[0] * mat[5] * mat[15] -
+			mat[0] * mat[7] * mat[13] -
+			mat[4] * mat[1] * mat[15] +
+			mat[4] * mat[3] * mat[13] +
+			mat[12] * mat[1] * mat[7] -
+			mat[12] * mat[3] * mat[5];
+
+		inverseMatrix[14] = -mat[0] * mat[5] * mat[14] +
+			mat[0] * mat[6] * mat[13] +
+			mat[4] * mat[1] * mat[14] -
+			mat[4] * mat[2] * mat[13] -
+			mat[12] * mat[1] * mat[6] +
+			mat[12] * mat[2] * mat[5];
+
+		inverseMatrix[3] = -mat[1] * mat[6] * mat[11] +
+			mat[1] * mat[7] * mat[10] +
+			mat[5] * mat[2] * mat[11] -
+			mat[5] * mat[3] * mat[10] -
+			mat[9] * mat[2] * mat[7] +
+			mat[9] * mat[3] * mat[6];
+
+		inverseMatrix[7] = mat[0] * mat[6] * mat[11] -
+			mat[0] * mat[7] * mat[10] -
+			mat[4] * mat[2] * mat[11] +
+			mat[4] * mat[3] * mat[10] +
+			mat[8] * mat[2] * mat[7] -
+			mat[8] * mat[3] * mat[6];
+
+		inverseMatrix[11] = -mat[0] * mat[5] * mat[11] +
+			mat[0] * mat[7] * mat[9] +
+			mat[4] * mat[1] * mat[11] -
+			mat[4] * mat[3] * mat[9] -
+			mat[8] * mat[1] * mat[7] +
+			mat[8] * mat[3] * mat[5];
+
+		inverseMatrix[15] = mat[0] * mat[5] * mat[10] -
+			mat[0] * mat[6] * mat[9] -
+			mat[4] * mat[1] * mat[10] +
+			mat[4] * mat[2] * mat[9] +
+			mat[8] * mat[1] * mat[6] -
+			mat[8] * mat[2] * mat[5];
+
+		d = (mat[0] * inverseMatrix[0]) + (mat[1] * inverseMatrix[4]) + (mat[2] * inverseMatrix[8]) + (mat[3] * inverseMatrix[12]);
+		d = 1 / d;
+		for (int i = 0; i < MATRIX_ELEMENTS_COUNT_4X4; i++) 
+		{
+			inverseMatrix[i] *= d;
+		}
+
+		return inverseMatrix;
+
+		//return Matrix4X4
+		//(
+		//	1 / mat.value(0, 0), mat.value(0, 1), mat.value(0, 2), mat.value(0, 3),
+		//	mat.value(1, 0), 1 / mat.value(1, 1), mat.value(1, 2), mat.value(1, 3),
+		//	mat.value(2, 0), mat.value(2, 1), 1 / mat.value(2, 2), mat.value(2, 3),
+		//     mat.value(3, 0), mat.value(3, 1), mat.value(3, 2), 1 / mat.value(3, 3)
+		//);
 	}
 
 

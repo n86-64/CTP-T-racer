@@ -94,6 +94,9 @@ int main(int argc, char* argv[])
 
 	T_racer_Camera  testCam;
 
+	T_racer_Scene   testScene; 
+
+
 	window.init(800, 600);
 	window.writeToDisplay(&test);
 
