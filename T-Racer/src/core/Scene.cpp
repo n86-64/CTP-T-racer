@@ -25,7 +25,11 @@ void T_racer_Scene::Render()
 				if (triangle.isIntersecting(ray).intersection) 
 				{
 					// Colour the pixel white.
-					frameData(x, y, T_racer_Math::Colour(1.0f, 1.0f, 1.0f));
+					frameData(x, y, T_racer_Math::Colour(0.0f, 1.0f, 0.0f));
+				}
+				else 
+				{
+					frameData(x, y, T_racer_Math::Colour(1.0f, 0.0f, 0.0f));
 				}
 			}
 		}
@@ -38,7 +42,7 @@ void T_racer_Scene::setDisplay(T_racer_Display* newDisplay)
 {
 	display = newDisplay;
 	frameData.setSize(display->getWidth(), display->getHeight());
-	generateRay(0.0f, 0.0f);
+	mainCamera->setResolution(display->getWidth(), display->getHeight());
 }
 
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)

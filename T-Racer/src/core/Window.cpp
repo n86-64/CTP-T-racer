@@ -6,6 +6,9 @@ void T_racer_Display_Window::init(float resolutionX, float resolutionY)
 	window.create(sf::VideoMode(resolutionX, resolutionY),"T-Racer Result.");
 	frameTexture.create(resolutionX, resolutionY);
 	frameTexture.setView(window.getView());
+
+	resX = resolutionX;
+	resY = resolutionY;
 }
 
 void T_racer_Display_Window::update()

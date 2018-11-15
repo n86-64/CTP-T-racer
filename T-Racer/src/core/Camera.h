@@ -30,11 +30,13 @@ public:
 	float getNearZ() const { return near; }
 	float getFarZ() const { return far; }
 
+	void setResolution(float x, float y) { resX = x; resY = y; }
+
 private:
 	float fov = 90.0f; // fov on the y-axis.
 	float resX, resY;
 	float near = 0.1f, far = 100.0f;
 
 	T_racer_Math::Vector    position;
-	T_racer_Math::Vector    target;
+	T_racer_Math::Vector    target = T_racer_Math::forward;
 };

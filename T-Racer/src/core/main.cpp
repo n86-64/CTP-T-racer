@@ -94,20 +94,18 @@ int main(int argc, char* argv[])
 
 	T_racer_Camera  testCam;
 
-	T_racer_Scene   testScene; 
-
-
 	window.init(800, 600);
 	window.writeToDisplay(&test);
-
-	while (!window.shouldQuit()) 
-	{
-		window.update();
-	}
 
 	T_racer_Scene testScene;
 	testScene.setMainCamera(&testCam);
 	testScene.setDisplay(&window);
+	testScene.Render();
+
+	while (!window.shouldQuit())
+	{
+		window.update();
+	}
 
 	tga.init(800, 600);
 	tga.setDisplayName("Test.tga");
