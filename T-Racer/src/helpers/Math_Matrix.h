@@ -99,13 +99,14 @@ namespace T_racer_Math
 		// perform gauss-jordan matrix inversion.
 		T_racer_Math::Matrix4X4   inverseMatrix;
 		float inverseValue;
+		float d = 0.0f; // = getMatrixDeterminant(mat);
 
-		float d = getMatrixDeterminant(mat);
-		if (d == 0.0f) 
-		{
-			// there is no determinant. Return error matrix.
-			return ERROR_MATRIX;
-		}
+
+		//if (d == 0.0f) 
+		//{
+		//	// there is no determinant. Return error matrix.
+		//	return ERROR_MATRIX;
+		//}
 
 		// TODO - Finsih implementation of gauss-Jorden inversion.
 		//for (int r = 0; r < 4; r++) 
@@ -253,6 +254,12 @@ namespace T_racer_Math
 			mat[8] * mat[2] * mat[5];
 
 		d = (mat[0] * inverseMatrix[0]) + (mat[1] * inverseMatrix[4]) + (mat[2] * inverseMatrix[8]) + (mat[3] * inverseMatrix[12]);
+
+		if (d == 0.0f) 
+		{
+			return ERROR_MATRIX;
+		}
+
 		d = 1 / d;
 		for (int i = 0; i < MATRIX_ELEMENTS_COUNT_4X4; i++) 
 		{
@@ -260,14 +267,6 @@ namespace T_racer_Math
 		}
 
 		return inverseMatrix;
-
-		//return Matrix4X4
-		//(
-		//	1 / mat.value(0, 0), mat.value(0, 1), mat.value(0, 2), mat.value(0, 3),
-		//	mat.value(1, 0), 1 / mat.value(1, 1), mat.value(1, 2), mat.value(1, 3),
-		//	mat.value(2, 0), mat.value(2, 1), 1 / mat.value(2, 2), mat.value(2, 3),
-		//     mat.value(3, 0), mat.value(3, 1), mat.value(3, 2), 1 / mat.value(3, 3)
-		//);
 	}
 
 
@@ -280,6 +279,18 @@ namespace T_racer_Math
 			0.0f, 1.0f, 0.0f, translation.Y,
 			0.0f, 0.0f, 1.0f, translation.Z,
 			0.0f, 0.0f, 0.0f, 1.0f
+		);
+	}
+
+	// Generates a scale matrix.
+	inline Matrix4X4 createScaleMatrix(Vector scale) 
+	{
+		return Matrix4X4
+		(
+			scale.X, 0.0f, 0.0f, 0.0f,
+			0.0f, scale.Y, 0.0f, 0.0f,
+			0.0f, 0.0f, scale.Z, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f
 		);
 	}
 

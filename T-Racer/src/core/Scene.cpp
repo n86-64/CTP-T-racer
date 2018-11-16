@@ -51,22 +51,21 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 	T_racer_Math::Ray     ray;
 	T_racer_CameraTransform  camTransform = mainCamera->getCameraTransform();
 
-	T_racer_Math::Vector screenPos(xPos,yPos);
-	T_racer_Math::Vector ndcPos; // possibly not needed.
-	T_racer_Math::Vector cameraSpace;
-	T_racer_Math::Matrix4X4  transform;
+	T_racer_Math::Vector rasterPos(xPos,yPos);
+	T_racer_Math::Matrix4X4 screenTransform; /*= T_racer_Math::createScaleMatrix() *
+		T_racer_Math::createScaleMatrix() * 
+		T_racer_Math::createTranslationMatrix();*/
+	T_racer_Math::Matrix4X4 transform;
+
+	T_racer_Math::Vector cameraPos;
 	
 	transform = camTransform.projection * camTransform.view;
 	transform = T_racer_Math::getInverseMatrix(transform);
 
-	//ndcPos = T_racer_Math::Vector(screenPos.X + 0.5 / mainCamera->getWidth(), screenPos.Y + 0.5 / mainCamera->getHeight());
-	//ndcPos = T_racer_Math::Vector(ndcPos.X * 2 - 1, ndcPos.Y * 2 - 1);
-
-	//cameraSpace = T_racer_Math::Vector()
 
 	// Here we create the ray. 
-	ray.setPosition(transform * screenPos);
-	ray.setDirection(transform * T_racer_Math::forward);
+	ray.setPosition(transform * screenTransform * cameraPos);
+	ray.setDirection(transform * screenTransform * T_racer_Math::forward);
 	ray.setMagnitude(mainCamera->getFarZ() - mainCamera->getNearZ());
 
 	return ray;
