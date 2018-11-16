@@ -26,6 +26,7 @@ void T_racer_Scene::Render()
 				{
 					// Colour the pixel white.
 					frameData(x, y, T_racer_Math::Colour(0.0f, 1.0f, 0.0f));
+					break;
 				}
 				else 
 				{
@@ -52,9 +53,9 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 	T_racer_CameraTransform  camTransform = mainCamera->getCameraTransform();
 
 	T_racer_Math::Vector rasterPos(xPos,yPos);
-	T_racer_Math::Matrix4X4 screenTransform; /*= T_racer_Math::createScaleMatrix() *
+	T_racer_Math::Matrix4X4 screenTransform; /* = T_racer_Math::createScaleMatrix() *
 		T_racer_Math::createScaleMatrix() * 
-		T_racer_Math::createTranslationMatrix();*/
+		T_racer_Math::createTranslationMatrix(); */ // TODO - Add this.
 	T_racer_Math::Matrix4X4 transform;
 
 	T_racer_Math::Vector cameraPos;

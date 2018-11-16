@@ -301,13 +301,15 @@ namespace T_racer_Math
 		// The forward and right matracies.
 		Vector forward = (targetPos - eyePos).normalise();
 		Vector right = cross(forward, up).normalise();
-
+		Vector lUp = cross(right, forward);
+		
+		
 		return Matrix4X4
 		(
-			right.X, right.Y, right.Z, -eyePos.X,
-			forward.X, forward.Y, forward.Z, -eyePos.X,
-			up.X, up.Y, up.Z, -eyePos.X,
-			0.0f, 0.0f, 0.0f, 1.0f
+			forward.X, lUp.X, right.X, 0.0f,
+			forward.Y, lUp.Y, right.Y, 0.0f,
+			forward.Z, lUp.Z, right.Z, 0.0f,
+			-dot(forward, eyePos), -dot(lUp, eyePos), -dot(right, eyePos), 1.0f
 		);
 
 	};
@@ -315,12 +317,25 @@ namespace T_racer_Math
 	// generate a perspective matrix based on a provided FOV.
 	inline Matrix4X4 createPerspectiveMatrix(float fovY, float aspectRatio, float nearZ, float farZ) 
 	{
+		// Based on DirectX Implementation.
+		float yScale = sin(fovY / 2) / cos(fovY / 2);
+		float xScale = yScale / aspectRatio;
+
 		return Matrix4X4
 		(
-			1 / (aspectRatio * tan(fovY / 2)),0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1 / tan(fovY / 2), 0.0f,
-			0.0f ,0.0f, -((farZ + nearZ) / (farZ - nearZ)), -((2 * farZ * nearZ) / (farZ-nearZ)),
-			0.0f, 0.0f, -1.0f, 0.0f
+			xScale, 0.0f, 0.0f, 0.0f,
+			0.0f, yScale, 0.0f, 0.0f,
+			0.0f, 0.0f, farZ/(farZ-nearZ), 1.0f,
+			0.0f, 0.0f, -(nearZ*farZ)/(farZ-nearZ), 0.0f
 		);
+
+
+		//return Matrix4X4
+		//(
+		//	1 / (aspectRatio * tan(fovY / 2)),0.0f, 0.0f, 0.0f,
+		//	0.0f, 0.0f, 1 / tan(fovY / 2), 0.0f,
+		//	0.0f ,0.0f, -((farZ + nearZ) / (farZ - nearZ)), -((2 * farZ * nearZ) / (farZ-nearZ)),
+		//	0.0f, 0.0f, -1.0f, 0.0f
+		//);
 	}
 }

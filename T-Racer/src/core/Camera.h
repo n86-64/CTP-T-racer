@@ -33,7 +33,7 @@ public:
 	void setResolution(float x, float y) { resX = x; resY = y; }
 
 private:
-	float fov = 90.0f; // fov on the y-axis.
+	float fov = 1.57079632679489661923; // fov on the y-axis.
 	float resX, resY;
 	float near = 0.1f, far = 100.0f;
 
