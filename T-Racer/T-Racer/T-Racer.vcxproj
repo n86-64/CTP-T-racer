@@ -152,6 +152,8 @@
     <ClCompile Include="..\src\core\main.cpp" />
     <ClCompile Include="..\src\core\PFMDisplay.cpp" />
     <ClCompile Include="..\src\core\Scene.cpp" />
+    <ClCompile Include="..\src\core\Texture.cpp" />
+    <ClCompile Include="..\src\core\TextureManager.cpp" />
     <ClCompile Include="..\src\core\TGADisplay.cpp" />
     <ClCompile Include="..\src\core\Triangle.cpp" />
     <ClCompile Include="..\src\core\Window.cpp" />
@@ -168,6 +170,7 @@
     <ClInclude Include="..\src\core\Resource.h" />
     <ClInclude Include="..\src\core\Scene.h" />
     <ClInclude Include="..\src\core\Texture.h" />
+    <ClInclude Include="..\src\core\TextureManager.h" />
     <ClInclude Include="..\src\core\Transform.h" />
     <ClInclude Include="..\src\core\Triangle.h" />
     <ClInclude Include="..\src\core\TGADisplay.h" />

@@ -73,6 +73,12 @@
     <Filter Include="Core\Structures\Textures">
       <UniqueIdentifier>{b8609122-c8cc-44dc-bde9-d18dea9065c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Modules">
+      <UniqueIdentifier>{71d97d95-a975-4f99-a980-603d677844e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Modules\TextureManager">
+      <UniqueIdentifier>{5213d3b7-817e-4e38-aea6-da34806e4283}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -108,6 +114,12 @@
     </ClCompile>
     <ClCompile Include="..\src\core\TGADisplay.cpp">
       <Filter>Core\Displays\TGA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Texture.cpp">
+      <Filter>Core\Structures\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\TextureManager.cpp">
+      <Filter>Core\Modules\TextureManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="..\src\core\Texture.h">
       <Filter>Core\Structures\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\TextureManager.h">
+      <Filter>Core\Modules\TextureManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
