@@ -6,6 +6,7 @@
 #include "PFMDisplay.h"
 #include "TGADisplay.h"
 #include "Scene.h"
+#include "Texture.h"
 
 // The application entry point.
 int main(int argc, char* argv[]) 
@@ -68,6 +69,10 @@ int main(int argc, char* argv[])
 	//	window.clear(sf::Color(255,0,0)); // Clear the screen.
 	//	window.display();
 	//}
+
+	
+	T_racer_Texture2D<float> testtex;
+	testtex.interpolatePointBilinear(0.5, 0.5);
 
 	T_racer_Math::Vector testvec(1.0f, 1.0f, 1.0f, 1.0f);
 	T_racer_Math::Matrix4X4  matTest;

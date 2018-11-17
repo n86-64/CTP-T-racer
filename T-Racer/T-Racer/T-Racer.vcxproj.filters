@@ -70,6 +70,9 @@
     <Filter Include="Core\Displays\TGA">
       <UniqueIdentifier>{0dd5cfbb-3cf6-4838-8273-2074faaa6ae2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Structures\Textures">
+      <UniqueIdentifier>{b8609122-c8cc-44dc-bde9-d18dea9065c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -158,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="..\src\core\PFMDisplay.h">
       <Filter>Core\Displays\PFM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Texture.h">
+      <Filter>Core\Structures\Textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
