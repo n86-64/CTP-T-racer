@@ -117,7 +117,8 @@ int main(int argc, char* argv[])
 
 	tga.init(800, 600);
 	tga.setDisplayName("Test.tga");
-	tga.writeToDisplay(&test);
+	testScene.setDisplay(&tga);
+	testScene.Render();
 
 	pfm.init(800, 600);
 	pfm.setDisplayName("Test.pfm");

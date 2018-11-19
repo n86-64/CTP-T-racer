@@ -2,6 +2,8 @@
 
 void T_racer_Display_TGA::init(float resolutionX, float resolutionY)
 {
+	resX = resolutionX;
+	resY = resolutionY;
 	return;
 }
 
@@ -63,9 +65,9 @@ void T_racer_Display_TGA::writeToDisplay(Image* imageBuffer)
 			int i = (x + imageBuffer->width * (imageBuffer->height - y - 1)) * 3;
 
 			uint8_t c[3];
-			c[2] = (*imageBuffer)(x, y).getTonemappedColour(1.0f).X;
+			c[2] = (*imageBuffer)(x, y).getTonemappedColour(1.0f).Z;
 			c[1] = (*imageBuffer)(x, y).getTonemappedColour(1.0f).Y;
-			c[0] = (*imageBuffer)(x, y).getTonemappedColour(1.0f).Z;
+			c[0] = (*imageBuffer)(x, y).getTonemappedColour(1.0f).X;
 
 			fwrite(&c[0], sizeof(uint8_t), 3, pFile);
 		}

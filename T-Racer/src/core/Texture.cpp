@@ -39,7 +39,7 @@ T_racer_Math::Colour T_racer_Texture2D::interpolatePointBilinear(float u, float 
 		+ ( c01.colour * (1 - wU) * wV) + (c11.colour * wU * wV);
 
 	T_racer_Math::Colour outCol;
-	outCol.colour = T_racer_Math::Vector(colourVec.X * 255.0f, colourVec.Y * 255.0f, colourVec.Z * 255.0f);
+	outCol.colour = T_racer_Math::Vector(colourVec.X, colourVec.Y, colourVec.Z);
 
 	// Return the colour in the corrisponding pixel.
 	return outCol;
