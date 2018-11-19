@@ -22,11 +22,11 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 
 	// Check to see if we should continue.
 	// Here we can cull the triangle if nescessery. 
-	if (determinant <= 1e-8) 
-	{
-		intersect.intersection = false;
-		return intersect;
-	}
+	//if (determinant <= 1e-8) 
+	//{
+	//	intersect.intersection = false;
+	//	return intersect;
+	//}
 
 	// Inverse the determinant for scaling. 
 	determinant = 1 / determinant;

@@ -24,7 +24,5 @@ public:
 	// Tom bashford rodgers. 
 	void writeToDisplay(Image* imageBuffer) override;
 
-
 	void setDisplayName(std::string name) override { displayName = name; }
-
 };
