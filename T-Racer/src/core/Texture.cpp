@@ -19,21 +19,38 @@ void T_racer_Texture2D::copyPixelValues(int x, int y, float r, float g, float b)
 
 T_racer_Math::Colour T_racer_Texture2D::interpolatePointBilinear(float u, float v)
 {
+	float Tu = (u * width);
+	float Tv = (v * height);
+
+	int Iu = ((int)floor(Tu)) % width;
+	int Iv = ((int)floor(Tv)) % height;
+
+	float wU = Tu - Iu;
+	float wV = Tv - Iv;
+
 	// Values for interpolation.
-	T_racer_Math::Vector  q0 = T_racer_Math::Vector(0, 0);
-	T_racer_Math::Vector  q1 = T_racer_Math::Vector(width, 0);
-	T_racer_Math::Vector  q2 = T_racer_Math::Vector(0, height);
-	T_racer_Math::Vector  q3 = T_racer_Math::Vector(width, height);
+    // Here we will put the nearest pixel values.
+	T_racer_Math::Colour   c00 = getPixelValue(Iu, Iv);
+	T_racer_Math::Colour   c01 = getPixelValue(Iu + 1, Iv);
+	T_racer_Math::Colour   c10 = getPixelValue(Iu, Iv + 1);
+	T_racer_Math::Colour   c11 = getPixelValue(Iu + 1, Iv + 1);
 
-	// Compute the positions in the x-axis.
-	T_racer_Math::Vector posXA = q0 * (1.0f - u) + q1 * u;
-	T_racer_Math::Vector posXB = q2 * (1.0f - u) + q3 * u;
-	T_racer_Math::Vector interpolatedPos = posXA * (1.0f - v) + posXB * v;
+	T_racer_Math::Vector colourVec = (c00.colour * (1 - wU) * (1 - wV)) + (c01.colour * wU * (1 - wV)) 
+		+ ( c01.colour * (1 - wU) * wV) + (c11.colour * wU * wV);
 
-	// Here we obtain the pixel values
-	interpolatedPos.X = ceil(interpolatedPos.X);
-	interpolatedPos.Y = ceil(interpolatedPos.Y);
+	T_racer_Math::Colour outCol;
+	outCol.colour = T_racer_Math::Vector(colourVec.X * 255.0f, colourVec.Y * 255.0f, colourVec.Z * 255.0f);
 
 	// Return the colour in the corrisponding pixel.
-	return T_racer_Math::Colour();
+	return outCol;
+}
+
+T_racer_Math::Colour T_racer_Texture2D::getPixelValue(int x, int y)
+{
+	return T_racer_Math::Colour
+	(
+		textureData[x + (width * y)], 
+		textureData[x + (width * y) + 1], 
+		textureData[x + (width * y) + 2]
+	);
 }
