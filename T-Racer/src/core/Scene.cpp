@@ -63,7 +63,7 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 	float Py = (1 - 2 * ((yPos + 0.5) / display->getHeight()) * tan(mainCamera->getFoV() / 2));
 
 	T_racer_Math::Vector rayOrigin = mainCamera->getPosition();
-	T_racer_Math::Vector  rayDirection = T_racer_Math::Vector(Px, Py, 1 /* mainCamera->getForward().Z */); // note that this just equal to Vec3f(Px, Py, -1); 
+	T_racer_Math::Vector  rayDirection = T_racer_Math::Vector(Px, Py,  mainCamera->getForward().Z); // note that this just equal to Vec3f(Px, Py, -1); 
 	
 	ray.setPosition(worldTransform * rayOrigin);
 	ray.setDirection(((worldTransform * rayDirection) - ray.getPosition()).normalise()); // it's a direction so don't forget to normalize 
