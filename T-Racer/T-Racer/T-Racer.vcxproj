@@ -150,6 +150,7 @@
     <ClCompile Include="..\src\core\Camera.cpp" />
     <ClCompile Include="..\src\core\Display.cpp" />
     <ClCompile Include="..\src\core\main.cpp" />
+    <ClCompile Include="..\src\core\ModelLoader.cpp" />
     <ClCompile Include="..\src\core\PFMDisplay.cpp" />
     <ClCompile Include="..\src\core\Scene.cpp" />
     <ClCompile Include="..\src\core\Texture.cpp" />

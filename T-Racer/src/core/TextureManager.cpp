@@ -34,7 +34,7 @@ T_racer_Texture2D* T_racer_TextureManager::loadTexture(std::string texName)
 			for (int x = 0; x < imageFile.getSize().x; x++)
 			{
 				col = imageFile.getPixel(x, y);
-				texture->copyPixelValues(x, y, col.r, col.g, col.b);
+				texture->copyPixelValues(x, y, col.r / 255.0f, col.g / 255.0f, col.b / 255.0f);
 			}
 		}
 

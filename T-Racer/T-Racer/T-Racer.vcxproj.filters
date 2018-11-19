@@ -127,6 +127,9 @@
     <ClCompile Include="..\src\core\TextureManager.cpp">
       <Filter>Core\Modules\TextureManager</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\ModelLoader.cpp">
+      <Filter>Core\Objects\Resource\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">

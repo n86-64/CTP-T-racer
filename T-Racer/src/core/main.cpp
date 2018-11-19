@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
 
 	
 	T_racer_TextureManager texManager;
-	T_racer_Texture2D*  texture = texManager.createTexture("Test.tga");
+	T_racer_Texture2D*  texture = texManager.createTexture("test.jpg");
 	T_racer_Texture2D*  texture2 = texManager.createTexture("Test.tga");
 
 	T_racer_Math::Vector testvec(1.0f, 1.0f, 1.0f, 1.0f);
