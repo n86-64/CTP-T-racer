@@ -31,6 +31,9 @@ public:
 	float getFarZ() const { return far; }
 
 	void setResolution(float x, float y) { resX = x; resY = y; }
+	float getAspectRatio() const { return resX / resY; }
+
+	T_racer_Math::Vector  getPosition() const { return position; }
 
 private:
 	float fov = 1.57079632679489661923; // fov on the y-axis.

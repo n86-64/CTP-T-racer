@@ -290,7 +290,7 @@ namespace T_racer_Math
 			scale.X, 0.0f, 0.0f, 0.0f,
 			0.0f, scale.Y, 0.0f, 0.0f,
 			0.0f, 0.0f, scale.Z, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f
+			0.0f, 0.0f, 0.0f, 1.0f
 		);
 	}
 
@@ -318,7 +318,7 @@ namespace T_racer_Math
 	inline Matrix4X4 createPerspectiveMatrix(float fovY, float aspectRatio, float nearZ, float farZ) 
 	{
 		// Based on DirectX Implementation.
-		float yScale = sin(fovY / 2) / cos(fovY / 2);
+		float yScale = 1 / tan(fovY / 2);
 		float xScale = yScale / aspectRatio;
 
 		return Matrix4X4

@@ -1,3 +1,6 @@
+#define _USE_MATH_DEFINES
+#include <cmath> 
+
 #include "Display.h"
 #include "Scene.h"
 
@@ -25,12 +28,12 @@ void T_racer_Scene::Render()
 				if (triangle.isIntersecting(ray).intersection) 
 				{
 					// Colour the pixel white.
-					frameData(x, y, T_racer_Math::Colour(0.0f, 1.0f, 0.0f));
+					frameData(x, y, T_racer_Math::Colour(1.0f, 1.0f, 1.0f));
 					break;
 				}
 				else 
 				{
-					frameData(x, y, T_racer_Math::Colour(1.0f, 0.0f, 0.0f));
+					frameData(x, y, T_racer_Math::Colour(0.0f, 0.0f, 0.0f));
 				}
 			}
 		}
@@ -48,26 +51,47 @@ void T_racer_Scene::setDisplay(T_racer_Display* newDisplay)
 
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 {
+	// TODO - When generating a ray in the world.
+
+	// All rays are fired from the cameras origin.
+	// All
+
 	// Here lets generate a ray. 
 	T_racer_Math::Ray     ray;
 	T_racer_CameraTransform  camTransform = mainCamera->getCameraTransform();
 
-	T_racer_Math::Vector rasterPos(xPos,yPos);
-	T_racer_Math::Matrix4X4 screenTransform; /* = T_racer_Math::createScaleMatrix() *
-		T_racer_Math::createScaleMatrix() * 
-		T_racer_Math::createTranslationMatrix(); */ // TODO - Add this.
-	T_racer_Math::Matrix4X4 transform;
+	//T_racer_Math::Vector rayDir;
 
-	T_racer_Math::Vector cameraPos;
-	
-	transform = camTransform.projection * camTransform.view;
-	transform = T_racer_Math::getInverseMatrix(transform);
+	//T_racer_Math::Vector rasterPos(xPos,yPos);
+	//T_racer_Math::Matrix4X4 screenTransform = T_racer_Math::createScaleMatrix(T_racer_Math::Vector(display->getWidth(), display->getHeight(), 1.0f)) *
+	//	T_racer_Math::createScaleMatrix(T_racer_Math::Vector(1.0f / display->getWidth(), 1.0f / display->getHeight(), 1.0f)) * 
+	//	T_racer_Math::createTranslationMatrix(T_racer_Math::Vector(-display->getWidth() / 2, -display->getHeight() / 2, 0.0f));  // TODO - Add this.
+	//
+	T_racer_Math::Matrix4X4 worldTransform;
+	worldTransform = camTransform.projection * camTransform.view;
 
+	worldTransform = T_racer_Math::getInverseMatrix(worldTransform);
+	//screenTransform = T_racer_Math::getInverseMatrix(screenTransform);
 
-	// Here we create the ray. 
-	ray.setPosition(transform * screenTransform * cameraPos);
-	ray.setDirection(transform * screenTransform * T_racer_Math::forward);
-	ray.setMagnitude(mainCamera->getFarZ() - mainCamera->getNearZ());
+	//// Here we create the ray. 
+	//ray.setPosition(worldTransform * screenTransform * rasterPos);
+	//ray.setDirection(ray.getPosition().normalise());
+	//rayDir = ray.getDirection();
+	//rayDir.Z = -rayDir.Z;
+	//ray.setDirection(rayDir);
+
+	//ray.setMagnitude((mainCamera->getFarZ() - mainCamera->getNearZ()) / ray.getDirection().Z);
+
+	T_racer_Math::Vector screenPos(
+		(2 * ((xPos + 0.5)/mainCamera->getWidth()) - 1) * tan(mainCamera->getFoV() / 2 * M_PI / 180) * mainCamera->getAspectRatio(),
+		(1 - 2 * (yPos/mainCamera->getHeight()) * tan(mainCamera->getFoV() / 2 * M_PI / 180)),
+		-1.0f
+	);
+
+	screenPos = worldTransform * screenPos;
+
+	ray.setPosition(mainCamera->getPosition());
+	ray.setDirection((screenPos - ray.getPosition()).normalise());
 
 	return ray;
 }
