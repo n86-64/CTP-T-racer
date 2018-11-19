@@ -82,6 +82,9 @@
     <Filter Include="Helpers\Math\Trig">
       <UniqueIdentifier>{977b9fbf-941a-475e-b175-ad87bc77f9cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Objects\Resource\Models">
+      <UniqueIdentifier>{f30b3bd7-71ae-4316-ac59-6395eee4b746}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -185,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Trig.h">
       <Filter>Helpers\Math\Trig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\ModelLoader.h">
+      <Filter>Core\Objects\Resource\Models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

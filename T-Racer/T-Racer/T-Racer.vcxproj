@@ -166,6 +166,7 @@
     <ClInclude Include="..\src\core\Camera.h" />
     <ClInclude Include="..\src\core\Display.h" />
     <ClInclude Include="..\src\core\Intersection.h" />
+    <ClInclude Include="..\src\core\ModelLoader.h" />
     <ClInclude Include="..\src\core\PFMDisplay.h" />
     <ClInclude Include="..\src\core\Resource.h" />
     <ClInclude Include="..\src\core\Scene.h" />

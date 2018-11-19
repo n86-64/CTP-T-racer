@@ -1,6 +1,6 @@
 #include "Triangle.h"
 
-#define ELIPSION 1e-4
+#define ELIPSION 1e-8
 
 Triangle::Triangle(T_racer_Vertex v1, T_racer_Vertex v2, T_racer_Vertex v3)
 {
@@ -35,7 +35,7 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 
 	intersect.t = T_racer_Math::dot(qVec, v2v0);
 
-	if (intersect.t != INFINITY || intersect.t < ELIPSION)
+	if (intersect.t != INFINITY && intersect.t < ELIPSION)
 	{
 		intersect.intersection = false;
 		return intersect;

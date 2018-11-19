@@ -34,6 +34,6 @@ namespace T_racer_Math
 		Vector  position;
 		Vector  direction;
 		Vector  inverseDirection; // TODO - Apply inverse direction to the ray.
-		float	 magnitude = FLT_MAX; // Maybe need, not sure.
+		float	 magnitude = INFINITY; // Maybe need, not sure.
 	};
 }

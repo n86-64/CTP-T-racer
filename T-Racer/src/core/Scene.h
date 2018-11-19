@@ -26,11 +26,11 @@ public:
 	{
 		// Test code only.
 		T_racer_Vertex  v1;
-		v1.position = T_racer_Math::Vector(0.0f, 5.0f, 10.0f);
+		v1.position = T_racer_Math::Vector(0.0f, 5.0f, -5.0f);
 		T_racer_Vertex  v2;
-		v2.position = T_racer_Math::Vector(-10.0f, 0.0f, 10.0f);
+		v2.position = T_racer_Math::Vector(-10.0f, 0.0f, -5.0f);
 		T_racer_Vertex  v3;
-		v3.position = T_racer_Math::Vector(10.0f, 0.0f, 10.0f);
+		v3.position = T_racer_Math::Vector(10.0f, 0.0f, -5.0f);
 
 		sceneTriangles.push_back(Triangle(v1, v2, v3));
 	};
