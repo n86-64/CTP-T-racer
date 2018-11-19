@@ -79,6 +79,9 @@
     <Filter Include="Core\Modules\TextureManager">
       <UniqueIdentifier>{5213d3b7-817e-4e38-aea6-da34806e4283}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\Math\Trig">
+      <UniqueIdentifier>{977b9fbf-941a-475e-b175-ad87bc77f9cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -179,6 +182,9 @@
     </ClInclude>
     <ClInclude Include="..\src\core\TextureManager.h">
       <Filter>Core\Modules\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Trig.h">
+      <Filter>Helpers\Math\Trig</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

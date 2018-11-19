@@ -68,7 +68,7 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 	//	T_racer_Math::createTranslationMatrix(T_racer_Math::Vector(-display->getWidth() / 2, -display->getHeight() / 2, 0.0f));  // TODO - Add this.
 	//
 	T_racer_Math::Matrix4X4 worldTransform;
-	worldTransform = camTransform.projection * camTransform.view;
+	//worldTransform = camTransform.projection * camTransform.view;
 
 	worldTransform = T_racer_Math::getInverseMatrix(worldTransform);
 	//screenTransform = T_racer_Math::getInverseMatrix(screenTransform);
@@ -77,10 +77,9 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 	//ray.setPosition(worldTransform * screenTransform * rasterPos);
 	//ray.setDirection(ray.getPosition().normalise());
 	//rayDir = ray.getDirection();
-	//rayDir.Z = -rayDir.Z;
 	//ray.setDirection(rayDir);
 
-	//ray.setMagnitude((mainCamera->getFarZ() - mainCamera->getNearZ()) / ray.getDirection().Z);
+	ray.setMagnitude((mainCamera->getFarZ() - mainCamera->getNearZ()) / ray.getDirection().Z);
 
 	T_racer_Math::Vector screenPos(
 		(2 * ((xPos + 0.5)/mainCamera->getWidth()) - 1) * tan(mainCamera->getFoV() / 2 * M_PI / 180) * mainCamera->getAspectRatio(),

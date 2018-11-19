@@ -321,13 +321,14 @@ namespace T_racer_Math
 		float yScale = 1 / tan(fovY / 2);
 		float xScale = yScale / aspectRatio;
 
-		return Matrix4X4
-		(
-			xScale, 0.0f, 0.0f, 0.0f,
-			0.0f, yScale, 0.0f, 0.0f,
-			0.0f, 0.0f, farZ/(farZ-nearZ), 1.0f,
-			0.0f, 0.0f, -(nearZ*farZ)/(farZ-nearZ), 0.0f
-		);
+		return createScaleMatrix(T_racer_Math::Vector(xScale, yScale, 1.0f)) *
+			Matrix4X4
+			(
+				1.0f, 0.0f, 0.0f, 0.0f,
+				0.0f, 1.0f, 0.0f, 0.0f,
+				0.0f, 0.0f, farZ / (farZ - nearZ), -(nearZ*farZ) / (farZ - nearZ),
+				0.0f, 0.0f, 1.0f, 0.0f
+			);
 
 
 		//return Matrix4X4

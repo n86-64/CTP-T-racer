@@ -11,6 +11,7 @@
 
 #include "helpers/Math_Matrix.h"
 #include "helpers/Math_Vector.h"
+#include "helpers/Math_Trig.h"
 
 
 #include "Transform.h"
@@ -36,7 +37,7 @@ public:
 	T_racer_Math::Vector  getPosition() const { return position; }
 
 private:
-	float fov = 1.57079632679489661923; // fov on the y-axis.
+	float fov = radians(90.0f); // fov on the y-axis.
 	float resX, resY;
 	float near = 0.1f, far = 100.0f;
 

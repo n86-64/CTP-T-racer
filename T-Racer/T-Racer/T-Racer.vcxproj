@@ -178,6 +178,7 @@
     <ClInclude Include="..\src\core\Window.h" />
     <ClInclude Include="..\src\helpers\Image.h" />
     <ClInclude Include="..\src\helpers\Math_Colour.h" />
+    <ClInclude Include="..\src\helpers\Math_Trig.h" />
     <ClInclude Include="..\src\helpers\Math_Vector.h" />
     <ClInclude Include="..\src\helpers\Math_Ray.h" />
     <ClInclude Include="..\src\helpers\Math_Matrix.h" />
