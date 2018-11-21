@@ -35,13 +35,13 @@ public:
 	float getAspectRatio() const { return resX / resY; }
 
 	T_racer_Math::Vector  getPosition() const { return position; }
-	T_racer_Math::Vector  getForward() const { return target; }
+	T_racer_Math::Vector  getForward() { return position + target; }
 
 private:
 	float fov = radians(90.0f); // fov on the y-axis.
 	float resX, resY;
 	float near = 0.1f, far = 100.0f;
 
-	T_racer_Math::Vector    position = T_racer_Math::Vector(2.0f, 0.0f, -1.0f);
+	T_racer_Math::Vector    position = T_racer_Math::Vector(0.0f, 0.0f, 3.0f);
 	T_racer_Math::Vector    target = T_racer_Math::forward;
 };

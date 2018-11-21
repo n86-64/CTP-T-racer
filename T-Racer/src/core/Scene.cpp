@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath> 
 
+#include "ModelLoader.h"
 #include "Display.h"
 #include "Scene.h"
 
@@ -8,6 +9,19 @@
 void T_racer_Scene::addResourceObject(T_racer_Resource* newRes)
 {
 	sceneResources.push_back(std::unique_ptr<T_racer_Resource>(newRes));
+}
+
+void T_racer_Scene::loadModel(std::string modelName)
+{
+	T_racer_ResourceModel  model;
+	model.loadModel(modelName);
+	std::vector<Triangle>* triangles = model.getModelTriangles();
+
+	for (Triangle& tri : *triangles) 
+	{
+		// Laod the triangles into the scene temporaraly.
+		sceneTriangles.emplace_back(tri);
+	}
 }
 
 void T_racer_Scene::Render()

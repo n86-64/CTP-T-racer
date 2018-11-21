@@ -10,7 +10,6 @@
 #pragma once
 
 #include <vector>
-#include <assimp/Importer.hpp>
 
 #include "Triangle.h"
 #include "core/Resource.h"
@@ -22,7 +21,9 @@ public:
 	T_racer_ResourceModel() = default;
 
 	void loadModel(std::string  pathNames);
-	std::vector<Triangle>  getModelTriangles();
+	std::vector<Triangle>*  getModelTriangles();
+
+
 
 private:
 	std::vector<Triangle>  modelTriangles;

@@ -71,9 +71,9 @@ int main(int argc, char* argv[])
 	//}
 
 	
-	T_racer_TextureManager texManager;
-	T_racer_Texture2D*  texture = texManager.createTexture("test.jpg");
-	texture->interpolatePointBilinear(1, 1);
+	//T_racer_TextureManager texManager;
+	//T_racer_Texture2D*  texture = texManager.createTexture("test.jpg");
+	//texture->interpolatePointBilinear(1, 1);
 
 	// T_racer_Texture2D*  texture2 = texManager.createTexture("Test.tga");
 
@@ -108,6 +108,7 @@ int main(int argc, char* argv[])
 	T_racer_Scene testScene;
 	testScene.setMainCamera(&testCam);
 	testScene.setDisplay(&window);
+	testScene.loadModel("resources/cube.obj");
 	testScene.Render();
 
 	while (!window.shouldQuit())

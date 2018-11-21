@@ -22,22 +22,13 @@ class T_racer_Display;
 class T_racer_Scene 
 {
 public:
-	T_racer_Scene() 
-	{
-		// Test code only.
-		T_racer_Vertex  v1;
-		v1.position = T_racer_Math::Vector(0.0f, 5.0f, 5.0f);
-		T_racer_Vertex  v2;
-		v2.position = T_racer_Math::Vector(-10.0f, 0.0f, 5.0f);
-		T_racer_Vertex  v3;
-		v3.position = T_racer_Math::Vector(10.0f, 0.0f, 5.0f);
-
-		sceneTriangles.push_back(Triangle(v1, v2, v3));
-	};
+	T_racer_Scene()
+	{};
 
 	void addResourceObject(T_racer_Resource* newRes);
 	void setMainCamera(T_racer_Camera* newCam) { mainCamera = newCam; };
 	
+	void loadModel(std::string modelName);
 
 	// Render a single frame and add to a display. 
 	void Render();

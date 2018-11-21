@@ -195,5 +195,8 @@
     <ClInclude Include="..\src\core\ModelLoader.h">
       <Filter>Core\Objects\Resource\Models</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\helpers\OBJ_Loader.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
