@@ -110,6 +110,13 @@
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)resources\*" "$(OutDir)resources\" /F /R /Y /I /S
+xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copys dependancies to the executable directory. Allows them to be run.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
