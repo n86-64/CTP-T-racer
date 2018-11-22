@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <cmath>
+
 // A set of vector operations that can be called at any time. 
 namespace T_racer_Math
 {
@@ -34,6 +36,9 @@ namespace T_racer_Math
 		void y(float value) { values[1] = value; };
 		void z(float value) { values[2] = value; };
 
+		float maxComp();
+		float minComp();
+
 		// May be needed.
 		float*	getVectorAsArray();
 
@@ -48,6 +53,7 @@ namespace T_racer_Math
 		void			 operator*=(Vector vec);
 		Vector			 operator/(Vector vec);
 		void			 operator/=(Vector vec);
+		Vector			 operator/(int scalier);
 
 		// Scalier Operations
 		Vector			 operator*(float scalier);
@@ -82,6 +88,15 @@ namespace T_racer_Math
 		};
 	};
 
+	inline Vector min(Vector& a, Vector& b) 
+	{
+		return Vector(fminf(a.X, b.X), fminf(a.Y, b.Y), fminf(a.Z, b.Z));
+	}
+
+	inline Vector max(Vector& a, Vector& b)
+	{
+		return Vector(fmaxf(a.X, b.X), fmaxf(a.Y, b.Y), fmaxf(a.Z, b.Z));
+	}
 	
 	inline float dot(Vector a, Vector b) 
 	{

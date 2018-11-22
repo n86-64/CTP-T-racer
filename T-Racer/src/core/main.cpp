@@ -7,6 +7,8 @@
 #include "TGADisplay.h"
 #include "Scene.h"
 #include "TextureManager.h"
+#include "AABB.h"
+
 
 // The application entry point.
 int main(int argc, char* argv[]) 
@@ -76,6 +78,18 @@ int main(int argc, char* argv[])
 	//texture->interpolatePointBilinear(1, 1);
 
 	// T_racer_Texture2D*  texture2 = texManager.createTexture("Test.tga");
+
+	// Ray-Box Intersection Tests
+	T_racer_Math::Ray testRay({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f });
+	T_racer_Collider_AABB testBox({ -1.0f, -1.0f, -1.0f }, { 1.0f, 1.0f, 1.0f });
+
+	if (testBox.isIntersected(testRay)) 
+	{
+		printf("lol what your only checking collisions with boxes.");
+	}
+	getchar();
+
+//	return 0;
 
 	T_racer_Math::Vector testvec(1.0f, 1.0f, 1.0f, 1.0f);
 	T_racer_Math::Matrix4X4  matTest;

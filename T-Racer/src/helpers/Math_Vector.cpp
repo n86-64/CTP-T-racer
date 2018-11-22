@@ -30,6 +30,32 @@ namespace T_racer_Math
 		this->values[2] = vector.values[2];
 	}
 
+	float Vector::maxComp()
+	{
+		float max = (-INFINITY);
+		for (int i = 0; i < 3; i++) 
+		{
+			if (values[i] > max) 
+			{
+				max = values[i];
+			}
+		}
+		return max;
+	}
+
+	float Vector::minComp()
+	{
+		float min = INFINITY;
+		for (int i = 0; i < 3; i++)
+		{
+			if (values[i] < min)
+			{
+				min = values[i];
+			}
+		}
+		return min;
+	}
+
 	Vector Vector::operator+(Vector vec)
 	{
 		return Vector(this->values[0] + vec.values[0], this->values[1] + vec.values[1], this->values[2] + vec.values[2]);
@@ -76,6 +102,11 @@ namespace T_racer_Math
 		this->values[0] /= vec.values[0];
 		this->values[1] /= vec.values[1];
 		this->values[2] /= vec.values[2];
+	}
+
+	Vector Vector::operator/(int scalier)
+	{
+		return Vector(this->values[0] / scalier, this->values[1] / scalier, this->values[2] / scalier);
 	}
 
 	Vector Vector::operator*(float scalier)

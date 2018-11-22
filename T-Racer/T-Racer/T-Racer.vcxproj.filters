@@ -97,6 +97,9 @@
     <Filter Include="Core\BVH\Data">
       <UniqueIdentifier>{9807e3c0-4928-4c89-9715-bd68f920d338}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\Math\Numeric">
+      <UniqueIdentifier>{05ae2bf4-37e1-49eb-9453-33172ee5d1f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -218,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="..\src\core\BVHTests.h">
       <Filter>Core\BVH\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_neumeric.h">
+      <Filter>Helpers\Math\Numeric</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include "helpers/Math_neumeric.h"
+
 #include "AABB.h"
 
 T_racer_Collider_AABB::T_racer_Collider_AABB(T_racer_Math::Vector vMin, T_racer_Math::Vector vMax)
@@ -6,25 +9,16 @@ T_racer_Collider_AABB::T_racer_Collider_AABB(T_racer_Math::Vector vMin, T_racer_
 {}
 
 bool T_racer_Collider_AABB::isIntersected(T_racer_Math::Ray ray)
-{
-	T_racer_Math::Vector  tmax;
-	T_racer_Math::Vector  tmin;
+{	
+	T_racer_Math::Vector inv = ray.getInverseDirection();
 
-	T_racer_Math::Vector rayDir = ray.getInverseDirection();
-	T_racer_Math::Vector rayPos = ray.getPosition();
-	bool intersection = false;
+	T_racer_Math::Vector point0 = (min - ray.getPosition()) * inv;
+	T_racer_Math::Vector point1 = (max - ray.getPosition()) * inv;
 
-	tmin = min;
-	tmax = max;
+	T_racer_Math::Vector tMin = T_racer_Math::min(point0, point1); 
+	T_racer_Math::Vector tMax = T_racer_Math::max(point0, point1);
 
-	if (tmin.x() <= 0) { float temp = tmin.x(); tmin.x(tmax.x()); tmax.x(temp); }
-	if (tmin.y() <= 0) { float temp = tmin.y(); tmin.y(tmax.y()); tmax.y(temp); }
-	if (tmin.z() <= 0) { float temp = tmin.z(); tmin.z(tmax.z()); tmax.z(temp); }
-
-	tmin = (tmin - rayPos) * rayDir;
-	tmax = (tmax - rayPos) * rayDir;
-
-	return (tmin.x() < tmax.x()) && (tmin.y() < tmax.y()) && (tmin.z() < tmax.z());
+	return (tMin.maxComp() <= tMax.minComp()); 
 }
 
 bool T_racer_Collider_AABB::isIntersected(T_racer_Collider_AABB box)
@@ -58,4 +52,14 @@ void T_racer_Collider_AABB::enlargeBox(T_racer_Math::Vector point)
 	}
 
 	return;
+}
+
+T_racer_Math::Vector T_racer_Collider_AABB::getBoxMidpoint()
+{
+	return min + getBoxHalfLength();
+}
+
+T_racer_Math::Vector T_racer_Collider_AABB::getBoxHalfLength()
+{
+	return ((max - min) / 2);
 }

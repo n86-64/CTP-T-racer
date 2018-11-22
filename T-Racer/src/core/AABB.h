@@ -26,7 +26,10 @@ public:
 
 	void enlargeBox(T_racer_Math::Vector point);
 
+	T_racer_Math::Vector getBoxMidpoint();
+	T_racer_Math::Vector getBoxHalfLength();
+
 private:
-	T_racer_Math::Vector   min = T_racer_Math::Vector(FLT_MAX, FLT_MAX, FLT_MAX);
-	T_racer_Math::Vector	max = T_racer_Math::Vector(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+	T_racer_Math::Vector   min = T_racer_Math::Vector(INFINITY, INFINITY, INFINITY);
+	T_racer_Math::Vector	max = T_racer_Math::Vector(-INFINITY, -INFINITY, -INFINITY);
 };
