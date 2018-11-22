@@ -116,14 +116,14 @@ int main(int argc, char* argv[])
 		window.update();
 	}
 
-	tga.init(800, 600);
-	tga.setDisplayName("Test.tga");
-	testScene.setDisplay(&tga);
-	testScene.Render();
+	//tga.init(1920, 1080);
+	//tga.setDisplayName("Test.tga");
+	//testScene.setDisplay(&tga);
+	//testScene.Render();
 
-	pfm.init(800, 600);
-	pfm.setDisplayName("Test.pfm");
-	pfm.writeToDisplay(&test);
+	//pfm.init(1920, 1080);
+	//pfm.setDisplayName("Test.pfm");
+	//pfm.writeToDisplay(&test);
 
 	
 	return 0;
