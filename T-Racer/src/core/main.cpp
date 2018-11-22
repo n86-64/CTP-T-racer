@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
 	T_racer_Camera  testCam;
 
 	window.init(800, 600);
-	window.writeToDisplay(&test);
+//	window.writeToDisplay(&test);
 
 	T_racer_Scene testScene;
 	testScene.setMainCamera(&testCam);

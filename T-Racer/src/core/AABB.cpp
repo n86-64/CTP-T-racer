@@ -1,11 +1,11 @@
 #include "AABB.h"
 
-AABB::AABB(T_racer_Math::Vector vMin, T_racer_Math::Vector vMax)
+T_racer_Collider_AABB::T_racer_Collider_AABB(T_racer_Math::Vector vMin, T_racer_Math::Vector vMax)
 	:min(vMin),
 	max(vMax)
 {}
 
-bool AABB::isIntersected(T_racer_Math::Ray ray)
+bool T_racer_Collider_AABB::isIntersected(T_racer_Math::Ray ray)
 {
 	T_racer_Math::Vector  tmax;
 	T_racer_Math::Vector  tmin;
@@ -27,7 +27,7 @@ bool AABB::isIntersected(T_racer_Math::Ray ray)
 	return (tmin.x() < tmax.x()) && (tmin.y() < tmax.y()) && (tmin.z() < tmax.z());
 }
 
-bool AABB::isIntersected(AABB box)
+bool T_racer_Collider_AABB::isIntersected(T_racer_Collider_AABB box)
 {
 	if (max.x() > box.min.x() && min.x() < box.max.x()) 
 	{
@@ -43,7 +43,7 @@ bool AABB::isIntersected(AABB box)
 	return false;
 }
 
-void AABB::enlargeBox(T_racer_Math::Vector point)
+void T_racer_Collider_AABB::enlargeBox(T_racer_Math::Vector point)
 {
 	if (point.X > max.X || point.Y > max.Y || point.Z > max.Z)
 	{

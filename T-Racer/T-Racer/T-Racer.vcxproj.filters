@@ -85,6 +85,18 @@
     <Filter Include="Core\Objects\Resource\Models">
       <UniqueIdentifier>{f30b3bd7-71ae-4316-ac59-6395eee4b746}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\BVH">
+      <UniqueIdentifier>{c56648c3-52c1-4f04-8cfc-893c38254ba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH\Tree">
+      <UniqueIdentifier>{a44ad1ce-cdbf-4664-bbec-e4da80648454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH\Node">
+      <UniqueIdentifier>{62d76758-e280-450c-847b-6405d1c332b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH\Data">
+      <UniqueIdentifier>{9807e3c0-4928-4c89-9715-bd68f920d338}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -129,6 +141,9 @@
     </ClCompile>
     <ClCompile Include="..\src\core\ModelLoader.cpp">
       <Filter>Core\Objects\Resource\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\BVHNode.cpp">
+      <Filter>Core\BVH\Node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +212,12 @@
     </ClInclude>
     <ClInclude Include="..\src\helpers\OBJ_Loader.h">
       <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BVHNode.h">
+      <Filter>Core\BVH\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BVHTests.h">
+      <Filter>Core\BVH\Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

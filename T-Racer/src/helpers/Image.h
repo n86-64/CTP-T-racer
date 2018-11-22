@@ -31,7 +31,8 @@ struct Image
 	{
 		width = nWidth;
 		height = nHeight;
-		colour_values = new T_racer_Math::Colour[width * height];
+		colour_values = new T_racer_Math::Colour[width * height] { T_racer_Math::Colour(0.0f, 0.0f, 0.0f) };
+
 	}
 
 	// Copy Constructor for copying values across.

@@ -154,6 +154,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\AABB.cpp" />
+    <ClCompile Include="..\src\core\BVHNode.cpp" />
     <ClCompile Include="..\src\core\Camera.cpp" />
     <ClCompile Include="..\src\core\Display.cpp" />
     <ClCompile Include="..\src\core\main.cpp" />
@@ -171,6 +172,8 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\AABB.h" />
+    <ClInclude Include="..\src\core\BVHNode.h" />
+    <ClInclude Include="..\src\core\BVHTests.h" />
     <ClInclude Include="..\src\core\Camera.h" />
     <ClInclude Include="..\src\core\Display.h" />
     <ClInclude Include="..\src\core\Intersection.h" />
