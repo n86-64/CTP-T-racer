@@ -69,7 +69,7 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 	T_racer_Math::Ray     ray;
 	T_racer_CameraTransform  camTransform = mainCamera->getCameraTransform();
 
-	T_racer_Math::Matrix4X4 worldTransform = camTransform.projection * camTransform.view;
+	T_racer_Math::Matrix4X4 worldTransform = /*camTransform.projection **/ camTransform.view;
 	worldTransform = T_racer_Math::getInverseMatrix(worldTransform);
 
 	float imageAspectRatio = mainCamera->getAspectRatio();
