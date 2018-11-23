@@ -1,8 +1,10 @@
 #include "BVHTests.h"
 #include "BVHNode.h"
 
-// cost constants.
-
+T_racer_BVH_Node::~T_racer_BVH_Node()
+{
+	clearChildNodes();
+}
 
 void T_racer_BVH_Node::createBox(T_racer_Math::Vector min, T_racer_Math::Vector max)
 {
@@ -37,6 +39,17 @@ void T_racer_BVH_Node::assignNodes(T_racer_BVH_Node* newLeft, T_racer_BVH_Node* 
 {
 	lNode = newLeft;
 	rNode = newRight;
+}
+
+void T_racer_BVH_Node::addPrimativeIndicies(int value)
+{
+	triIndex.emplace_back(value);
+}
+
+void T_racer_BVH_Node::clearChildNodes()
+{
+	if (lNode) { delete lNode; lNode = nullptr; }
+	if (rNode) { delete rNode; rNode = nullptr; }
 }
 
 void T_racer_BVH_Node::addTriangles(T_racer_BVH_CollisionQueue_t* queue)

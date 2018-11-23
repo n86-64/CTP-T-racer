@@ -19,6 +19,7 @@ class T_racer_BVH_Tree
 {
 public:
 	T_racer_BVH_Tree() = default;
+	~T_racer_BVH_Tree();
 
 	void generateSceneBVH(std::vector<Triangle>& scenePrimatives);
 	void checkForIntersections(T_racer_Math::Ray* ray); 
@@ -26,8 +27,13 @@ public:
 	T_racer_BVH_CollisionQueue_t getPossibleCollisions();
 
 private:
+	void createBVHNodes(std::vector<Triangle>& scenePrimatives);
+
+	// Splitting routienes.
+
+private:
 	// The root node of the tree.
-	T_racer_BVH_Node* root;
+	T_racer_BVH_Node* root = nullptr;
 
 	// The indicies of the triangles that we have to test.
 	T_racer_BVH_CollisionQueue_t  collisionQueue; 

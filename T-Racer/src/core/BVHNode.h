@@ -21,7 +21,7 @@ class T_racer_BVH_Node
 {
 public:
 	T_racer_BVH_Node() = default;
-	~T_racer_BVH_Node() {}; // TODO - Create code to delete child nodes.
+	~T_racer_BVH_Node();
 
 	// Defines the nodes AABB box.
 	void createBox(T_racer_Math::Vector min, T_racer_Math::Vector max);
@@ -34,12 +34,18 @@ public:
 	// Give this node some children. 
 	void assignNodes(T_racer_BVH_Node* newLeft, T_racer_BVH_Node* newRight);
 
+	void addPrimativeIndicies(int value);
+
+	void clearChildNodes();
+
 private:
 	void addTriangles(T_racer_BVH_CollisionQueue_t* queue);
 
 private:
 	// The box that represents the AABB.
 	T_racer_Collider_AABB  box;
+
+	T_racer_BVH_Node*      parent = nullptr;
 
 	// The child Nodes.
 	T_racer_BVH_Node*      lNode = nullptr;
