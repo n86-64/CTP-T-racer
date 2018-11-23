@@ -123,3 +123,12 @@ T_racer_Math::Vector Triangle::interpolateNormals(T_racer_TriangleIntersection i
 {
 	return T_racer_Math::Vector((verticies[0].normal * iCoord.u) + (verticies[1].normal * iCoord.v) + (verticies[2].normal * iCoord.w));
 }
+
+void Triangle::generateBoundingBox()
+{
+	collider = T_racer_Collider_AABB
+	(
+		T_racer_Math::Vector(),
+		T_racer_Math::Vector()
+	)
+}
