@@ -41,6 +41,12 @@ void T_racer_BVH_Node::assignNodes(T_racer_BVH_Node* newLeft, T_racer_BVH_Node* 
 	rNode = newRight;
 }
 
+void T_racer_BVH_Node::assignNodes(int newLNode, int newRNode)
+{
+	lNodeIndex = newLNode;
+	rNodeIndex = newRNode;
+}
+
 void T_racer_BVH_Node::addPrimativeIndicies(int value)
 {
 	triIndex.emplace_back(value);

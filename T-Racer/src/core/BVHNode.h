@@ -15,6 +15,8 @@
 
 #include "AABB.h"
 
+constexpr int T_RACER_NODE_NULL = -1;
+
 struct  T_racer_BVH_CollisionQueue_t;
 
 class T_racer_BVH_Node 
@@ -33,6 +35,7 @@ public:
 
 	// Give this node some children. 
 	void assignNodes(T_racer_BVH_Node* newLeft, T_racer_BVH_Node* newRight);
+	void assignNodes(int newLNode, int newRNode);
 
 	void addPrimativeIndicies(int value);
 
@@ -50,6 +53,10 @@ private:
 	// The child Nodes.
 	T_racer_BVH_Node*      lNode = nullptr;
 	T_racer_BVH_Node*      rNode = nullptr;
+
+	int					   parentIndex = -1;
+	int					   lNodeIndex = -1;
+	int					   rNodeIndex = -1;
 
 	std::vector<int>       triIndex;
 };
