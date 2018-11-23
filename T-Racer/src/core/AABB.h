@@ -29,6 +29,9 @@ public:
 	T_racer_Math::Vector getBoxMidpoint();
 	T_racer_Math::Vector getBoxHalfLength();
 
+	T_racer_Math::Vector getMin() const { return min; };
+	T_racer_Math::Vector getMax() const { return max; };
+
 private:
 	T_racer_Math::Vector   min = T_racer_Math::Vector(INFINITY, INFINITY, INFINITY);
 	T_racer_Math::Vector	max = T_racer_Math::Vector(-INFINITY, -INFINITY, -INFINITY);

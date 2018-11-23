@@ -26,6 +26,8 @@ void T_racer_Scene::loadModel(std::string modelName)
 
 void T_racer_Scene::Render()
 {
+	bvh.generateSceneBVH(sceneTriangles);
+
 	T_racer_Math::Ray  ray;
 	// Here we trace the ray for the camera.
 	
@@ -36,6 +38,8 @@ void T_racer_Scene::Render()
 		for (int x = 0; x < frameData.width; x++)
 		{
 			ray = generateRay(x, y);
+			bvh.checkForIntersections(&ray);
+
 			// perform the intersection.
 			for (Triangle& triangle : sceneTriangles) 
 			{

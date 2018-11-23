@@ -10,7 +10,7 @@ void T_racer_BVH_Node::createBox(T_racer_Math::Vector min, T_racer_Math::Vector 
 void T_racer_BVH_Node::intersection(T_racer_Math::Ray* ray, T_racer_BVH_CollisionQueue_t* queue)
 {
 	// TODO - Does this box intersect with a ray. If so we should look at checking our children.
-	// or if there are no children we return the index of the triangle.
+	// or if there are no children we return the index of the triangles here in the box.
 	if (box.isIntersected(*ray)) 
 	{
 		if (!lNode && !rNode) 

@@ -31,7 +31,11 @@ public:
 	void						   generateBoundingBox();
 	bool						   isIntersectingShadow(T_racer_Math::Ray ray, const float maxt);
 
+	T_racer_Collider_AABB* getCollider() { return &collider; };
 
+private:
+	T_racer_Math::Vector getMinVector();
+	T_racer_Math::Vector getMaxVector();
 
 private:
 	T_racer_Collider_AABB					collider;

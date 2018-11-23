@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "Triangle.h"
 
 #define ELIPSION 1e-8
@@ -109,6 +111,30 @@ bool Triangle::isIntersectingShadow(T_racer_Math::Ray ray, const float maxt)
 	return 0;
 }
 
+T_racer_Math::Vector Triangle::getMinVector()
+{
+	float axisValues[3];
+	for (int i = 0; i < 3; i++) 
+	{
+		axisValues[i] = fminf(verticies[0].position.values[i], verticies[1].position.values[i]);
+		axisValues[i] = fminf(axisValues[i], verticies[2].position.values[i]);
+	}
+
+	return T_racer_Math::Vector(axisValues[0], axisValues[1], axisValues[2]);
+}
+
+T_racer_Math::Vector Triangle::getMaxVector()
+{
+	float axisValues[3];
+	for (int i = 0; i < 3; i++)
+	{
+		axisValues[i] = fmaxf(verticies[0].position.values[i], verticies[1].position.values[i]);
+		axisValues[i] = fmaxf(axisValues[i], verticies[2].position.values[i]);
+	}
+
+	return T_racer_Math::Vector(axisValues[0], axisValues[1], axisValues[2]);
+}
+
 T_racer_Math::Vector Triangle::interpolatePoint(T_racer_TriangleIntersection iCoord)
 {
 	T_racer_Math::Vector  returnCoord;
@@ -128,7 +154,7 @@ void Triangle::generateBoundingBox()
 {
 	collider = T_racer_Collider_AABB
 	(
-		T_racer_Math::Vector(),
-		T_racer_Math::Vector()
-	)
+		getMinVector(),
+		getMaxVector()
+	);
 }

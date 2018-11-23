@@ -17,6 +17,8 @@
 #include "Triangle.h"
 #include "Camera.h"
 
+#include "BVHTree.h"
+
 class T_racer_Display;
 
 class T_racer_Scene 
@@ -42,6 +44,8 @@ private:
 	T_racer_Display* display;
 
 	Image          frameData;
+	
+	T_racer_BVH_Tree  bvh;
 
 private:
 	T_racer_Math::Ray generateRay(float xPos, float yPos);

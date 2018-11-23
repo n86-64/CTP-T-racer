@@ -148,6 +148,9 @@
     <ClCompile Include="..\src\core\BVHNode.cpp">
       <Filter>Core\BVH\Node</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\BVHTree.cpp">
+      <Filter>Core\BVH\Tree</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
@@ -224,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_neumeric.h">
       <Filter>Helpers\Math\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BVHTree.h">
+      <Filter>Core\BVH\Tree</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
