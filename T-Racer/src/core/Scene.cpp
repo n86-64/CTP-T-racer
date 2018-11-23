@@ -38,7 +38,7 @@ void T_racer_Scene::Render()
 		for (int x = 0; x < frameData.width; x++)
 		{
 			ray = generateRay(x, y);
-			bvh.checkForIntersections(&ray);
+			// bvh.checkForIntersections(&ray);
 
 			// perform the intersection.
 			for (Triangle& triangle : sceneTriangles) 

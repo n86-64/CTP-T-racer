@@ -54,6 +54,17 @@ void T_racer_Collider_AABB::enlargeBox(T_racer_Math::Vector point)
 	return;
 }
 
+void T_racer_Collider_AABB::enlargeBox(T_racer_Collider_AABB& collider)
+{
+	min.X = fminf(min.X, collider.getMin().X);
+	min.Y = fminf(min.Y, collider.getMin().Y);
+	min.Z = fminf(min.Z, collider.getMin().Z);
+	
+	max.X = fmaxf(max.X, collider.getMax().X);
+	max.Y = fmaxf(max.Y, collider.getMax().Y);
+	max.Z = fmaxf(max.Z, collider.getMax().Z);
+}
+
 T_racer_Math::Vector T_racer_Collider_AABB::getBoxMidpoint()
 {
 	return min + getBoxHalfLength();

@@ -26,6 +26,8 @@ public:
 	// Defines the nodes AABB box.
 	void createBox(T_racer_Math::Vector min, T_racer_Math::Vector max);
 
+	void assignBox(T_racer_Collider_AABB& nBox);
+
 	// Perform an Intersection Test with a ray.
 	void intersection(T_racer_Math::Ray* ray, T_racer_BVH_CollisionQueue_t* queue);
 

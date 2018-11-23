@@ -1,10 +1,18 @@
 #include "BVHTests.h"
 #include "BVHNode.h"
 
+// cost constants.
+
+
 void T_racer_BVH_Node::createBox(T_racer_Math::Vector min, T_racer_Math::Vector max)
 {
 	// Create a box in world space to these specified points. 
 	box = T_racer_Collider_AABB(min, max);
+}
+
+void T_racer_BVH_Node::assignBox(T_racer_Collider_AABB & nBox)
+{
+	box = nBox;
 }
 
 void T_racer_BVH_Node::intersection(T_racer_Math::Ray* ray, T_racer_BVH_CollisionQueue_t* queue)

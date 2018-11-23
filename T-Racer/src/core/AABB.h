@@ -25,6 +25,7 @@ public:
 	bool isIntersected(T_racer_Collider_AABB box);
 
 	void enlargeBox(T_racer_Math::Vector point);
+	void enlargeBox(T_racer_Collider_AABB& collider);
 
 	T_racer_Math::Vector getBoxMidpoint();
 	T_racer_Math::Vector getBoxHalfLength();
