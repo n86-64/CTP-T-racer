@@ -74,3 +74,12 @@ T_racer_Math::Vector T_racer_Collider_AABB::getBoxHalfLength()
 {
 	return ((max - min) / 2);
 }
+
+float T_racer_Collider_AABB::getSurfaceArea()
+{
+	float surfaceArea = 0.0f;
+	T_racer_Math::Vector boxDiameter = getBoxLength();
+	surfaceArea = 2.0f * ((boxDiameter.X * boxDiameter.Y) + (boxDiameter.Y * boxDiameter.Z) + (boxDiameter.X * boxDiameter.Z));
+
+	return surfaceArea;
+}

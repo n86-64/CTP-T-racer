@@ -42,6 +42,8 @@ public:
 
 	void clearChildNodes();
 
+	T_racer_Collider_AABB*  getBounds() { return &box; }
+
 private:
 	void addTriangles(T_racer_BVH_CollisionQueue_t* queue);
 

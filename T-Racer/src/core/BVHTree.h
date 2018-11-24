@@ -21,9 +21,15 @@ struct BVHSplitInfo
 	bool split = false;
 	T_racer_Collider_AABB  lChildBox;
 	T_racer_Collider_AABB  rChildBox;
-	float splitCost = INFINITY;
+	float splitCost = 0.0f;
+	int axis = -1;
 };
 
+struct BVHEdge 
+{
+	float t;
+	int primativeRef = 0;
+};
 
 class T_racer_BVH_Tree 
 {
@@ -40,7 +46,7 @@ private:
 	void createBVHNodes(std::vector<Triangle>& scenePrimatives);
 
 	// Splitting routienes.
-	float getSplitCost(); // Implements Surface area Heuristic.
+	void getSplitCost(BVHSplitInfo& splitInfo, std::vector<Triangle*>& nodePrimatives, std::vector<int>& primativeIDs, float totalSA); // Implements Surface area Heuristic.
 
 	BVHSplitInfo shouldPartition(int nodeIndex, std::vector<Triangle>& primatives);
 
@@ -55,4 +61,8 @@ private:
 
 	// The indicies of the triangles that we have to test.
 	T_racer_BVH_CollisionQueue_t  collisionQueue; 
+
+	float surfaceArea = 0.0f;
+
+	int maxDepth = 0; // Based on research in pbrt. (p.g 204 Real time rendering third edition.) 
 };

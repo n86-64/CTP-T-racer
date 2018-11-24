@@ -29,10 +29,12 @@ public:
 
 	T_racer_Math::Vector getBoxMidpoint();
 	T_racer_Math::Vector getBoxHalfLength();
-	T_racer_Math::Vector getBoxLength() { return getBoxHalfLength() * 2; }
+	T_racer_Math::Vector getBoxLength() { return getBoxHalfLength() * 2; } // TODO - flop so that max-min occurs in this function and aquiring half length only then divides the result by 2.
 
 	T_racer_Math::Vector getMin() const { return min; };
 	T_racer_Math::Vector getMax() const { return max; };
+
+	float				 getSurfaceArea();
 
 private:
 	T_racer_Math::Vector   min = T_racer_Math::Vector(INFINITY, INFINITY, INFINITY);
