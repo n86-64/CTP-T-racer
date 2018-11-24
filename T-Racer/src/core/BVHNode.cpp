@@ -52,6 +52,11 @@ void T_racer_BVH_Node::addPrimativeIndicies(int value)
 	triIndex.emplace_back(value);
 }
 
+std::vector<int>& T_racer_BVH_Node::getTriangleIndexList()
+{
+	return triIndex;
+}
+
 void T_racer_BVH_Node::clearChildNodes()
 {
 	if (lNode) { delete lNode; lNode = nullptr; }

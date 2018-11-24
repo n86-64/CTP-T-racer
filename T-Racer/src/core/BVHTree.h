@@ -16,6 +16,15 @@
 #include "core/Triangle.h"
 
 
+struct BVHSplitInfo 
+{
+	bool split = false;
+	T_racer_Collider_AABB  lChildBox;
+	T_racer_Collider_AABB  rChildBox;
+	float splitCost = INFINITY;
+};
+
+
 class T_racer_BVH_Tree 
 {
 public:
@@ -33,7 +42,7 @@ private:
 	// Splitting routienes.
 	float getSplitCost(); // Implements Surface area Heuristic.
 
-	bool shouldPartition();
+	BVHSplitInfo shouldPartition(int nodeIndex, std::vector<Triangle>& primatives);
 
 	// Returns a ratio at which to split the min and max.
 	float partitionNodeSpace(T_racer_BVH_Node* newNode);

@@ -8,6 +8,12 @@ constexpr int T_RACER_BVH_COST_INTERSECTION_TRIANGLE = 2;
 
 constexpr float T_RACER_BVH_PARTITION = -1.0f;
 
+//bool triangleSort(Triangle* aAxisVal, Triangle* bAxisVal) 
+//{
+//	return false;
+//}
+
+
 T_racer_BVH_Tree::~T_racer_BVH_Tree()
 {
 	if (root) 
@@ -57,17 +63,15 @@ void T_racer_BVH_Tree::createBVHNodes(std::vector<Triangle>& scenePrimatives)
 
 	nodesToResolve.emplace(0);
 	bool generate = false;
-	float partitionMultiplier = 0.0f;
-
+	BVHSplitInfo newSplit;
 
 	while (nodesToResolve.size() > 0) 
 	{
 		// Here we generate the child nodes and add them to the queue.
 		nodePtr = &nodes[nodesToResolve.front()];
+		newSplit = shouldPartition(nodesToResolve.front(), scenePrimatives);
 
-		partitionMultiplier = partitionNodeSpace(nodePtr);
-
-		if (partitionMultiplier) 
+		if (newSplit.split) 
 		{
 			// Generate the next child nodes.
 			nodes.emplace_back(T_racer_BVH_Node());
@@ -77,6 +81,14 @@ void T_racer_BVH_Tree::createBVHNodes(std::vector<Triangle>& scenePrimatives)
 			childR = &nodes[nodes.size() - 1];
 
 			// Set the boxes and primatives for each.
+			nodePtr->assignNodes(nodes.size() - 2, nodes.size() - 1);
+			
+			nodesToResolve.emplace(nodes.size() - 2);
+			nodesToResolve.emplace(nodes.size() - 1);
+
+			// Assign these 
+			childL->assignBox(newSplit.lChildBox);
+			childR->assignBox(newSplit.rChildBox);
 		}
 
 
@@ -89,6 +101,21 @@ float T_racer_BVH_Tree::getSplitCost()
 {
 	
 	return 0.0f;
+}
+
+BVHSplitInfo T_racer_BVH_Tree::shouldPartition(int nodeIndex, std::vector<Triangle>& primatives)
+{
+	BVHSplitInfo  bestCost;
+	std::vector<Triangle*>  trianglesToTest;
+	trianglesToTest.reserve(nodes[nodeIndex].getTriangleIndexList().size());
+
+	for (int& nodeToTest : nodes[nodeIndex].getTriangleIndexList()) 
+	{
+		trianglesToTest.emplace_back(&primatives[nodeToTest]);
+	}
+
+	
+	return bestCost;
 }
 
 float T_racer_BVH_Tree::partitionNodeSpace(T_racer_BVH_Node* newNode)

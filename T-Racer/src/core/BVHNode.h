@@ -38,6 +38,7 @@ public:
 	void assignNodes(int newLNode, int newRNode);
 
 	void addPrimativeIndicies(int value);
+	std::vector<int>& getTriangleIndexList();
 
 	void clearChildNodes();
 
