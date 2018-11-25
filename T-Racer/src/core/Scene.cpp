@@ -41,19 +41,25 @@ void T_racer_Scene::Render()
 			bvh.checkForIntersections(&ray);
 
 			// perform the intersection.
-			for (Triangle& triangle : sceneTriangles) 
+			// Based on results from the BVH.
+			//for (Triangle& triangle : sceneTriangles) 
+			//{
+
+			for (int pIndex : bvh.getPossibleCollisions().triangleIndexes) 
 			{
-				if (triangle.isIntersecting(ray).intersection) 
+				if (sceneTriangles[pIndex].isIntersecting(ray).intersection)
 				{
 					// Colour the pixel white.
 					frameData(x, y, T_racer_Math::Colour(1.0f, 1.0f, 1.0f));
 					break;
 				}
-				else 
+				else
 				{
 					frameData(x, y, T_racer_Math::Colour(0.0f, 0.0f, 0.0f));
 				}
 			}
+
+			//}
 		}
 	}
 

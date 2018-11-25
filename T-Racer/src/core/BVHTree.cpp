@@ -45,7 +45,7 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 {
 	// Perform the intersection test for the ray.
 	// root->intersection(ray, &collisionQueue);
-
+	collisionQueue.triangleIndexes.clear();
 	std::queue<int> nodesToCheck;
 	nodesToCheck.emplace(0);
 	T_racer_BVH_Node* currentNode = nullptr;
