@@ -29,6 +29,7 @@ struct BVHEdge
 {
 	float t;
 	int primativeRef = 0;
+	bool startNode = true;
 };
 
 class T_racer_BVH_Tree 
@@ -46,9 +47,14 @@ private:
 	void createBVHNodes(std::vector<Triangle>& scenePrimatives);
 
 	// Splitting routienes.
-	void getSplitCost(BVHSplitInfo& splitInfo, std::vector<Triangle*>& nodePrimatives, std::vector<int>& primativeIDs, float totalSA); // Implements Surface area Heuristic.
+	void getSplitCost(int nodeIndex, 
+		BVHSplitInfo& splitInfo,
+		std::vector<Triangle*>& nodePrimatives, 
+		std::vector<int>& primativeIDs, 
+		float totalSA); // Implements Surface area Heuristic.
 
 	BVHSplitInfo shouldPartition(int nodeIndex, std::vector<Triangle>& primatives);
+	float getGeometricProbibility(T_racer_Collider_AABB& col, float surfaceArea);
 
 	// Returns a ratio at which to split the min and max.
 	float partitionNodeSpace(T_racer_BVH_Node* newNode);

@@ -27,6 +27,8 @@ public:
 	void enlargeBox(T_racer_Math::Vector point);
 	void enlargeBox(T_racer_Collider_AABB& collider);
 
+	void resizeBox(T_racer_Math::Vector  vMin, T_racer_Math::Vector vMax);
+
 	T_racer_Math::Vector getBoxMidpoint();
 	T_racer_Math::Vector getBoxHalfLength();
 	T_racer_Math::Vector getBoxLength() { return getBoxHalfLength() * 2; } // TODO - flop so that max-min occurs in this function and aquiring half length only then divides the result by 2.

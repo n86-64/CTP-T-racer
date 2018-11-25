@@ -65,6 +65,12 @@ void T_racer_Collider_AABB::enlargeBox(T_racer_Collider_AABB& collider)
 	max.Z = fmaxf(max.Z, collider.getMax().Z);
 }
 
+void T_racer_Collider_AABB::resizeBox(T_racer_Math::Vector vMin, T_racer_Math::Vector vMax)
+{
+	min = vMin;
+	max = vMax;
+}
+
 T_racer_Math::Vector T_racer_Collider_AABB::getBoxMidpoint()
 {
 	return min + getBoxHalfLength();

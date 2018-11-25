@@ -44,7 +44,9 @@ public:
 
 	T_racer_Collider_AABB*  getBounds() { return &box; }
 
-private:
+	int getLeftNode() const { return lNodeIndex; }
+	int getRightNode() const { return rNodeIndex; }
+
 	void addTriangles(T_racer_BVH_CollisionQueue_t* queue);
 
 private:
@@ -57,9 +59,9 @@ private:
 	T_racer_BVH_Node*      lNode = nullptr;
 	T_racer_BVH_Node*      rNode = nullptr;
 
-	int					   parentIndex = -1;
-	int					   lNodeIndex = -1;
-	int					   rNodeIndex = -1;
+	int					   parentIndex = T_RACER_NODE_NULL;
+	int					   lNodeIndex = T_RACER_NODE_NULL;
+	int					   rNodeIndex = T_RACER_NODE_NULL;
 
 	std::vector<int>       triIndex;
 };
