@@ -108,7 +108,7 @@ void T_racer_BVH_Tree::createBVHNodes(std::vector<Triangle>& scenePrimatives)
 			childR = &nodes[nodes.size() - 1];
 
 			// Set the boxes and primatives for each.
-			nodePtr->assignNodes(nodes.size() - 2, nodes.size() - 1);
+			nodes[nodesToResolve.front()].assignNodes((int)nodes.size() - 2, (int)nodes.size() - 1);
 
 			// Assign these there chosen bounding boxes.
 			childL->assignBox(newSplit.lChildBox);
@@ -251,7 +251,7 @@ BVHSplitInfo T_racer_BVH_Tree::shouldPartition(int nodeIndex, std::vector<Triang
 	// Should we split.
 	// If so generate the boxes used from splitting.
 	// else just set to false.
-
+	bestCost.split = (bestCost.splitCost != INFINITY);
 
 	return bestCost;
 }
