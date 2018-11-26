@@ -49,6 +49,7 @@ void T_racer_BVH_Node::assignNodes(int newLNode, int newRNode)
 
 void T_racer_BVH_Node::addPrimativeIndicies(int value)
 {
+	// TODO - Add code to prevent the addition of duplicate triangle veritices.
 	triIndex.emplace_back(value);
 }
 

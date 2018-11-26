@@ -118,14 +118,14 @@ void T_racer_BVH_Tree::createBVHNodes(std::vector<Triangle>& scenePrimatives)
 			// Then we emplace nodes and calculate more splits.
 			for (int i = 0; i < newSplit.edges.size(); i++) 
 			{
-				if (childL->getBounds()->getMin().values[newSplit.axis] < newSplit.edges[i].t &&
-					childL->getBounds()->getMax().values[newSplit.axis] > newSplit.edges[i].t)
+				if (childL->getBounds()->getMin().values[newSplit.axis] <= newSplit.edges[i].t &&
+					childL->getBounds()->getMax().values[newSplit.axis] >= newSplit.edges[i].t)
 				{
 					childL->addPrimativeIndicies(newSplit.edges[i].primativeRef);
 				}
 
-				if(childR->getBounds()->getMin().values[newSplit.axis] < newSplit.edges[i].t &&
-					childR->getBounds()->getMax().values[newSplit.axis] > newSplit.edges[i].t)
+				if(childR->getBounds()->getMin().values[newSplit.axis] <= newSplit.edges[i].t &&
+					childR->getBounds()->getMax().values[newSplit.axis] >= newSplit.edges[i].t)
 				{
 					childR->addPrimativeIndicies(newSplit.edges[i].primativeRef);
 				}
