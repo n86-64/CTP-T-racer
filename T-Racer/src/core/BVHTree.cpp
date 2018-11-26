@@ -180,20 +180,23 @@ void T_racer_BVH_Tree::getSplitCost
 	T_racer_Collider_AABB  leftAABB;
 	T_racer_Collider_AABB  rightAABB;
 
-	T_racer_Math::Vector   leftMax;
-	T_racer_Math::Vector   rightMin;
-
 	// Calculate the cost of a split at this point.
 	for (int j = 0; j < edges.size(); j++) 
 	{
-		leftMax = nodes[nodeIndex].getBounds()->getMax();
-		leftMax.values[splitInfo.axis] = edges[j].t;
+		//leftMax = nodes[nodeIndex].getBounds()->getMax();
+		//leftMax.values[splitInfo.axis] = edges[j].t;
 
-		rightMin = nodes[nodeIndex].getBounds()->getMin();
-		rightMin.values[splitInfo.axis] = edges[j].t;
+		//rightMin = nodes[nodeIndex].getBounds()->getMin();
+		//rightMin.values[splitInfo.axis] = edges[j].t;
 
-		leftAABB.resizeBox(nodes[nodeIndex].getBounds()->getMin(), leftMax);
-		rightAABB.resizeBox(rightMin, nodes[nodeIndex].getBounds()->getMax());
+		//leftAABB.resizeBox(nodes[nodeIndex].getBounds()->getMin(), leftMax);
+		//rightAABB.resizeBox(rightMin, nodes[nodeIndex].getBounds()->getMax());
+
+		// New approach to setting box bounds.
+		leftAABB = *nodes[nodeIndex].getBounds();
+		rightAABB = *nodes[nodeIndex].getBounds();
+		leftAABB.setMaxComp(splitInfo.axis, edges[j].t);
+		rightAABB.setMinComp(splitInfo.axis, edges[j].t);
 
 		if (!edges[j].startNode)
 		{

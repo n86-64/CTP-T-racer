@@ -38,6 +38,9 @@ public:
 
 	float				 getSurfaceArea();
 
+	void				 setMinComp(int axis, float value) { min.values[axis] = value; }
+	void				 setMaxComp(int axis, float value) { max.values[axis] = value; }
+
 private:
 	T_racer_Math::Vector   min = T_racer_Math::Vector(INFINITY, INFINITY, INFINITY);
 	T_racer_Math::Vector	max = T_racer_Math::Vector(-INFINITY, -INFINITY, -INFINITY);
