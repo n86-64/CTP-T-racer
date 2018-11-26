@@ -53,9 +53,8 @@ private:
 	// The box that represents the AABB.
 	T_racer_Collider_AABB  box;
 
+	// DEPRECATED!!!
 	T_racer_BVH_Node*      parent = nullptr;
-
-	// The child Nodes.
 	T_racer_BVH_Node*      lNode = nullptr;
 	T_racer_BVH_Node*      rNode = nullptr;
 

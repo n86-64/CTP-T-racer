@@ -116,8 +116,17 @@ void T_racer_BVH_Tree::createBVHNodes(std::vector<Triangle>& scenePrimatives)
 
 			// Assign primative indexes to each of the children based on intersections.
 			// Then we emplace nodes and calculate more splits.
-
-
+			for (int i = 0; i < newSplit.edges.size(); i++) 
+			{
+				if (newSplit.edges[i].startNode) 
+				{
+					childL->addPrimativeIndicies(newSplit.edges[i].primativeRef);
+				}
+				else 
+				{
+					childR->addPrimativeIndicies(newSplit.edges[i].primativeRef);
+				}
+			}
 
 			nodesToResolve.emplace(nodes.size() - 2);
 			nodesToResolve.emplace(nodes.size() - 1);
@@ -167,6 +176,7 @@ void T_racer_BVH_Tree::getSplitCost
 	}
 	std::sort(edges.begin(), edges.end(), triangleSort);
 
+	// TODO - check this section, make sure this is working. 
 	T_racer_Collider_AABB  leftAABB;
 	T_racer_Collider_AABB  rightAABB;
 
@@ -215,6 +225,7 @@ void T_racer_BVH_Tree::getSplitCost
 	}
 
 	splitInfo.splitCost = bestCost;
+	splitInfo.edges = edges;
 }
 
 BVHSplitInfo T_racer_BVH_Tree::shouldPartition(int nodeIndex, std::vector<Triangle>& primatives)

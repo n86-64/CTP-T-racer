@@ -16,20 +16,21 @@
 #include "core/Triangle.h"
 
 
+struct BVHEdge
+{
+	float t;
+	int primativeRef = 0;
+	bool startNode = true;
+};
+
 struct BVHSplitInfo 
 {
 	bool split = false;
 	T_racer_Collider_AABB  lChildBox;
 	T_racer_Collider_AABB  rChildBox;
+	std::vector<BVHEdge>   edges;
 	float splitCost = 0.0f;
 	int axis = -1;
-};
-
-struct BVHEdge 
-{
-	float t;
-	int primativeRef = 0;
-	bool startNode = true;
 };
 
 class T_racer_BVH_Tree 
