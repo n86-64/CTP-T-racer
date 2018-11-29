@@ -20,6 +20,7 @@ struct BVHEdge
 {
 	float t;
 	int primativeRef = 0;
+	int axis;
 	bool startNode = true;
 };
 

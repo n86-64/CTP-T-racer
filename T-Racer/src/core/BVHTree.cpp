@@ -7,6 +7,8 @@
 constexpr int T_RACER_BVH_COST_TRAVERSAL_NODES = 1;
 constexpr int T_RACER_BVH_COST_INTERSECTION_TRIANGLE = 80;
 
+constexpr int T_RACER_BVH_TRIANGLE_MAX_QUOTA = 2;
+
 
 constexpr float T_RACER_BVH_PARTITION = -1.0f;
 
@@ -160,19 +162,20 @@ void T_racer_BVH_Tree::getSplitCost
 	float invSA = 1 / totalSA;
 
 	std::vector<BVHEdge>  edges;
-	edges.reserve(2 * primativeIDs.size());
+	edges.reserve(primativeIDs.size());
 	BVHEdge  newEdge;
 
 	// Create each of the edges based on the axis and the boxes.
 	// Project onto the axis we are checking and then sort in order.
 	for (int i = 0; i < primativeIDs.size(); i++) 
 	{
-		newEdge.primativeRef = primativeIDs[i];
-		newEdge.t = nodePrimatives[primativeIDs[i]]->getCollider()->getMin().values[splitInfo.axis];
-		newEdge.startNode = true;
-		edges.emplace_back(newEdge);
+		//newEdge.primativeRef = primativeIDs[i];
+		//newEdge.t = nodePrimatives[primativeIDs[i]]->getCollider()->getMin().values[splitInfo.axis];
+		//newEdge.startNode = true;
+		//edges.emplace_back(newEdge);
 
 		newEdge.primativeRef = primativeIDs[i];
+		newEdge.axis = splitInfo.axis;
 		newEdge.t = nodePrimatives[primativeIDs[i]]->getCollider()->getMax().values[splitInfo.axis];
 		newEdge.startNode = false;
 		edges.emplace_back(newEdge);
@@ -182,6 +185,8 @@ void T_racer_BVH_Tree::getSplitCost
 	// TODO - check this section, make sure this is working. 
 	T_racer_Collider_AABB  leftAABB;
 	T_racer_Collider_AABB  rightAABB;
+
+	// We need to sort the triangles in order of there axis.
 
 	// Calculate the cost of a split at this point.
 	for (int j = 0; j < edges.size(); j++) 
@@ -194,17 +199,13 @@ void T_racer_BVH_Tree::getSplitCost
 
 		//leftAABB.resizeBox(nodes[nodeIndex].getBounds()->getMin(), leftMax);
 		//rightAABB.resizeBox(rightMin, nodes[nodeIndex].getBounds()->getMax());
+		aPrimCount = j;
+		bPrimCount = primativeIDs.size() - j;
 
-		// New approach to setting box bounds.
 		leftAABB = *nodes[nodeIndex].getBounds();
 		rightAABB = *nodes[nodeIndex].getBounds();
 		leftAABB.setMaxComp(splitInfo.axis, edges[j].t);
 		rightAABB.setMinComp(splitInfo.axis, edges[j].t);
-
-		if (!edges[j].startNode)
-		{
-			bPrimCount--;
-		}
 
 		// Create bounding boxes getting there surface area.
 		if (edges[j].t > nodes[nodeIndex].getBounds()->getMin().values[splitInfo.axis] &&
@@ -223,11 +224,6 @@ void T_racer_BVH_Tree::getSplitCost
 				splitInfo.rChildBox = rightAABB;
 			}
 		}
-
-		if(edges[j].startNode)
-		{
-			aPrimCount++;
-		}
 	}
 
 	splitInfo.splitCost = bestCost;
@@ -245,14 +241,19 @@ BVHSplitInfo T_racer_BVH_Tree::shouldPartition(int nodeIndex, std::vector<Triang
 	std::vector<Triangle*>  trianglesToTest;
 	std::vector<BVHEdge>	edges;
 
-	trianglesToTest.reserve(nodes[nodeIndex].getTriangleIndexList().size());
-	edges.reserve(nodes[nodeIndex].getTriangleIndexList().size() * 2);
-
-	for (int& nodeToTest : nodes[nodeIndex].getTriangleIndexList()) 
+	if (nodes[nodeIndex].getTriangleIndexList().size() <= T_RACER_BVH_TRIANGLE_MAX_QUOTA) 
 	{
-		trianglesToTest.emplace_back(&primatives[nodeToTest]);
+		bestCost.split = false;
+		return bestCost;
 	}
 
+	trianglesToTest.reserve(nodes[nodeIndex].getTriangleIndexList().size());
+	edges.reserve(nodes[nodeIndex].getTriangleIndexList().size());
+
+	for (int i = 0; i < primatives.size(); i++) 
+	{
+		trianglesToTest.emplace_back(&primatives[i]);
+	}
 
 	// for each axis we perform the SAH test.
 	for (int i = 0; i < 3; i++) 

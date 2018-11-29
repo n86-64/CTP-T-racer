@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
 	T_racer_Scene testScene;
 	testScene.setMainCamera(&testCam);
 	testScene.setDisplay(&window);
-	testScene.loadModel("resources/cube.obj");
+	testScene.loadModel("resources/bunny.obj");
 	testScene.Render();
 
 	while (!window.shouldQuit())
