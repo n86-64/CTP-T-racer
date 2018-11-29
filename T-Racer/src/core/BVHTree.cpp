@@ -176,7 +176,7 @@ void T_racer_BVH_Tree::getSplitCost
 
 		newEdge.primativeRef = primativeIDs[i];
 		newEdge.axis = splitInfo.axis;
-		newEdge.t = nodePrimatives[primativeIDs[i]]->getCollider()->getMax().values[splitInfo.axis];
+		newEdge.t = nodePrimatives[primativeIDs[i]]->getCollider()->getBoxMidpoint().values[splitInfo.axis];
 		newEdge.startNode = false;
 		edges.emplace_back(newEdge);
 	}
@@ -191,14 +191,6 @@ void T_racer_BVH_Tree::getSplitCost
 	// Calculate the cost of a split at this point.
 	for (int j = 0; j < edges.size(); j++) 
 	{
-		//leftMax = nodes[nodeIndex].getBounds()->getMax();
-		//leftMax.values[splitInfo.axis] = edges[j].t;
-
-		//rightMin = nodes[nodeIndex].getBounds()->getMin();
-		//rightMin.values[splitInfo.axis] = edges[j].t;
-
-		//leftAABB.resizeBox(nodes[nodeIndex].getBounds()->getMin(), leftMax);
-		//rightAABB.resizeBox(rightMin, nodes[nodeIndex].getBounds()->getMax());
 		aPrimCount = j;
 		bPrimCount = primativeIDs.size() - j;
 
