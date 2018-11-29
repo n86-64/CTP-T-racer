@@ -91,8 +91,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\Assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -100,8 +104,19 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\Assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)resources\*" "$(OutDir)resources\" /F /R /Y /I /S
+xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copys dependancies to the executable directory. Allows them to be run.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -111,11 +126,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\Assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,34 +143,61 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\Assimp\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\AABB.cpp" />
+    <ClCompile Include="..\src\core\BVHNode.cpp" />
+    <ClCompile Include="..\src\core\BVHTree.cpp" />
     <ClCompile Include="..\src\core\Camera.cpp" />
+    <ClCompile Include="..\src\core\Display.cpp" />
     <ClCompile Include="..\src\core\main.cpp" />
+    <ClCompile Include="..\src\core\ModelLoader.cpp" />
+    <ClCompile Include="..\src\core\PFMDisplay.cpp" />
+    <ClCompile Include="..\src\core\Scene.cpp" />
+    <ClCompile Include="..\src\core\Texture.cpp" />
+    <ClCompile Include="..\src\core\TextureManager.cpp" />
+    <ClCompile Include="..\src\core\TGADisplay.cpp" />
     <ClCompile Include="..\src\core\Triangle.cpp" />
+    <ClCompile Include="..\src\core\Window.cpp" />
     <ClCompile Include="..\src\helpers\Math_Matrix.cpp" />
     <ClCompile Include="..\src\helpers\Math_Ray.cpp" />
     <ClCompile Include="..\src\helpers\Math_Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\AABB.h" />
+    <ClInclude Include="..\src\core\BVHNode.h" />
+    <ClInclude Include="..\src\core\BVHTests.h" />
+    <ClInclude Include="..\src\core\BVHTree.h" />
     <ClInclude Include="..\src\core\Camera.h" />
+    <ClInclude Include="..\src\core\Display.h" />
     <ClInclude Include="..\src\core\Intersection.h" />
+    <ClInclude Include="..\src\core\ModelLoader.h" />
+    <ClInclude Include="..\src\core\PFMDisplay.h" />
+    <ClInclude Include="..\src\core\Resource.h" />
+    <ClInclude Include="..\src\core\Scene.h" />
+    <ClInclude Include="..\src\core\Texture.h" />
+    <ClInclude Include="..\src\core\TextureManager.h" />
     <ClInclude Include="..\src\core\Transform.h" />
     <ClInclude Include="..\src\core\Triangle.h" />
+    <ClInclude Include="..\src\core\TGADisplay.h" />
     <ClInclude Include="..\src\core\Vertex.h" />
+    <ClInclude Include="..\src\core\Window.h" />
     <ClInclude Include="..\src\helpers\Image.h" />
     <ClInclude Include="..\src\helpers\Math_Colour.h" />
+    <ClInclude Include="..\src\helpers\Math_neumeric.h" />
+    <ClInclude Include="..\src\helpers\Math_Trig.h" />
     <ClInclude Include="..\src\helpers\Math_Vector.h" />
     <ClInclude Include="..\src\helpers\Math_Ray.h" />
     <ClInclude Include="..\src\helpers\Math_Matrix.h" />
+    <ClInclude Include="..\src\helpers\OBJ_Loader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

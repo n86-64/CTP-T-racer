@@ -10,19 +10,22 @@
 
 #pragma once
 
+#include <cmath>
+
 // A set of vector operations that can be called at any time. 
 namespace T_racer_Math
 {
 	// TODO - Add inter-vector operations here. 
 
-	class Vector3
+	class Vector
 	{
 	public:
-		Vector3() = default;
-		Vector3(float x);
-		Vector3(float x, float y);
-		Vector3(float x, float y, float z);
-		Vector3(const Vector3&  vector);
+		Vector() = default;
+		Vector(float x);
+		Vector(float x, float y);
+		Vector(float x, float y, float z);
+		Vector(float x, float y, float z, float w);
+		Vector(const Vector&  vector);
 
 		// get/set components.
 		float x() { return values[0]; };
@@ -33,31 +36,35 @@ namespace T_racer_Math
 		void y(float value) { values[1] = value; };
 		void z(float value) { values[2] = value; };
 
+		float maxComp();
+		float minComp();
+
 		// May be needed.
 		float*	getVectorAsArray();
 
 		// Linear operations
-		Vector3			 operator+(Vector3 vec);
-		void			 operator+=(Vector3 vec);
-		Vector3			 operator-(Vector3 vec);
-		void		     operator-=(Vector3 vec);
+		Vector			 operator+(Vector vec);
+		void			 operator+=(Vector vec);
+		Vector			 operator-(Vector vec);
+		void		     operator-=(Vector vec);
 
 		// element based multiplication/division.
-		Vector3			 operator*(Vector3 vec);
-		void			 operator*=(Vector3 vec);
-		Vector3			 operator/(Vector3 vec);
-		void			 operator/=(Vector3 vec);
+		Vector			 operator*(Vector vec);
+		void			 operator*=(Vector vec);
+		Vector			 operator/(Vector vec);
+		void			 operator/=(Vector vec);
+		Vector			 operator/(int scalier);
 
 		// Scalier Operations
-		Vector3			 operator*(float scalier);
-		Vector3			 operator*(int scalier);
+		Vector			 operator*(float scalier);
+		Vector			 operator*(int scalier);
 		void			 operator*=(float scalier);
 		void			 operator*=(int scalier);
 
-		Vector3			 inverse(float scailer);
+		Vector			 inverse(float scailer);
 
 		// Other Vector Operations
-		Vector3	normalise();
+		Vector	normalise();
 		void normaliseSelf();
 
 		// Returns the magnitude used to normalise this vector. 
@@ -70,25 +77,35 @@ namespace T_racer_Math
 	public:
 		union 
 		{
-			float values[3] = { 0.0f, 0.0f, 0.0f };
+			float values[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 			struct 
 			{
 				float X;
 				float Y;
 				float Z;
+				float W;
 			};
 		};
 	};
 
+	inline Vector min(Vector& a, Vector& b) 
+	{
+		return Vector(fminf(a.X, b.X), fminf(a.Y, b.Y), fminf(a.Z, b.Z));
+	}
+
+	inline Vector max(Vector& a, Vector& b)
+	{
+		return Vector(fmaxf(a.X, b.X), fmaxf(a.Y, b.Y), fmaxf(a.Z, b.Z));
+	}
 	
-	inline float dot(Vector3 a, Vector3 b) 
+	inline float dot(Vector a, Vector b) 
 	{
 		return (a.x() * b.x()) + (a.y() * b.y()) + (a.z() * b.z());
 	}
 
-	inline Vector3 cross(Vector3 a, Vector3 b) 
+	inline Vector cross(Vector a, Vector b) 
 	{
-		return Vector3(
+		return Vector(
 			(a.y() * b.z()) - (a.z() * b.y()),
 			(a.z() * b.x()) - (a.x() * b.z()),
 			(a.x() * b.y()) - (a.y() * b.x())
@@ -96,7 +113,7 @@ namespace T_racer_Math
 	}
 
 	// A series of vector constants.
-	const Vector3 up(0.0f, 1.0f, 0.0f);
-	const Vector3 right(1.0f, 0.0f, 0.0f);
-	const Vector3 forward(0.0f, 0.0f, 1.0f);
+	const Vector up(0.0f, 1.0f, 0.0f);
+	const Vector right(1.0f, 0.0f, 0.0f);
+	const Vector forward(0.0f, 0.0f, 1.0f);
 }

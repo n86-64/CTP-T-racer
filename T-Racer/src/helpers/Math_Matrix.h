@@ -49,8 +49,16 @@ namespace T_racer_Math
 			return m[row][column]; 
 		}
 
+		void value(int row, int column, float value) 
+		{
+			m[row][column] = value;
+		}
+
 		// matrix operations
-		Matrix4X4  operator* (Matrix4X4  mat);
+		Vector    operator* (Vector mat);
+		Matrix4X4 operator*(Matrix4X4 matrix);
+		float&    operator[](int pos) { return matrix[pos]; }
+
 
 	private:
 
@@ -68,8 +76,202 @@ namespace T_racer_Math
 		};
 	};
 
+	// Matrix constants
+	const Matrix4X4 ERROR_MATRIX
+	(
+		INFINITY, INFINITY, INFINITY, INFINITY,
+		INFINITY, INFINITY, INFINITY, INFINITY,
+		INFINITY, INFINITY, INFINITY, INFINITY,
+		INFINITY, INFINITY, INFINITY, INFINITY
+	);
+
+	inline float getMatrixDeterminant(Matrix4X4 mat) 
+	{
+		float d1 = mat.value(0, 0) + mat.value(1, 1) + mat.value(2, 2) + mat.value(3, 3);
+		float d2 = mat.value(3, 0) + mat.value(2, 1) + mat.value(1, 2) + mat.value(0, 3);
+
+		return ((d1 - d2));
+	}
+
+	// Returns the input matrix if the operation fails.
+	inline Matrix4X4 getInverseMatrix(Matrix4X4 mat) 
+	{
+		// perform gauss-jordan matrix inversion.
+		T_racer_Math::Matrix4X4   inverseMatrix;
+		float inverseValue;
+		float d = 0.0f; // = getMatrixDeterminant(mat);
+
+
+		//if (d == 0.0f) 
+		//{
+		//	// there is no determinant. Return error matrix.
+		//	return ERROR_MATRIX;
+		//}
+
+		// TODO - Finsih implementation of gauss-Jorden inversion.
+		//for (int r = 0; r < 4; r++) 
+		//{
+		//	if (mat.value(r, r) != 1.0f) 
+		//	{
+		//		for (int i = 0; i < 4; i++) 
+		//		{
+		//			mat.value(r, i, mat.value(r, i) / mat.value(r, 0));
+		//		}
+
+		//		for (int i = 0; i < 4; i++)
+		//		{
+		//			inverseMatrix.value(r, i, mat.value(r, i) / mat.value(r, 0));
+		//		}
+		//	}
+
+		//	inverseValue = -mat.value(r + 1, r);
+
+		//	// Now we calculate the pivots.
+		//	for (int r2 = 0; r2 < 4; r2++) 
+		//	{
+		//		if (r2 != r) 
+		//		{
+		//			// perform the calculation.
+		//			for (int c2 = 0; c2 < 4; c2++) 
+		//			{
+		//				mat.value(r2, c2, (mat.value(r2, c2) - inverseValue) * mat.value(r2 - 1, c2));
+		//			}
+		//		}
+		//	}
+		//}
+		
+		// Source code retrieved from GLU project (OpenGL utility Library.) - https://github.com/jlyharia/Computer_GraphicsII/blob/master/gluInvertMatrix.h
+		inverseMatrix[0] = mat[5] * mat[10] * mat[15] -
+			mat[5] * mat[11] * mat[14] -
+			mat[9] * mat[6] * mat[15] +
+			mat[9] * mat[7] * mat[14] +
+			mat[13] * mat[6] * mat[11] -
+			mat[13] * mat[7] * mat[10];
+
+		inverseMatrix[4] = -mat[4] * mat[10] * mat[15] +
+			mat[4] * mat[11] * mat[14] +
+			mat[8] * mat[6] * mat[15] -
+			mat[8] * mat[7] * mat[14] -
+			mat[12] * mat[6] * mat[11] +
+			mat[12] * mat[7] * mat[10];
+
+		inverseMatrix[8] = mat[4] * mat[9] * mat[15] -
+			mat[4] * mat[11] * mat[13] -
+			mat[8] * mat[5] * mat[15] +
+			mat[8] * mat[7] * mat[13] +
+			mat[12] * mat[5] * mat[11] -
+			mat[12] * mat[7] * mat[9];
+
+		inverseMatrix[12] = -mat[4] * mat[9] * mat[14] +
+			mat[4] * mat[10] * mat[13] +
+			mat[8] * mat[5] * mat[14] -
+			mat[8] * mat[6] * mat[13] -
+			mat[12] * mat[5] * mat[10] +
+			mat[12] * mat[6] * mat[9];
+
+		inverseMatrix[1] = -mat[1] * mat[10] * mat[15] +
+			mat[1] * mat[11] * mat[14] +
+			mat[9] * mat[2] * mat[15] -
+			mat[9] * mat[3] * mat[14] -
+			mat[13] * mat[2] * mat[11] +
+			mat[13] * mat[3] * mat[10];
+
+		inverseMatrix[5] = mat[0] * mat[10] * mat[15] -
+			mat[0] * mat[11] * mat[14] -
+			mat[8] * mat[2] * mat[15] +
+			mat[8] * mat[3] * mat[14] +
+			mat[12] * mat[2] * mat[11] -
+			mat[12] * mat[3] * mat[10];
+
+		inverseMatrix[9] = -mat[0] * mat[9] * mat[15] +
+			mat[0] * mat[11] * mat[13] +
+			mat[8] * mat[1] * mat[15] -
+			mat[8] * mat[3] * mat[13] -
+			mat[12] * mat[1] * mat[11] +
+			mat[12] * mat[3] * mat[9];
+
+		inverseMatrix[13] = mat[0] * mat[9] * mat[14] -
+			mat[0] * mat[10] * mat[13] -
+			mat[8] * mat[1] * mat[14] +
+			mat[8] * mat[2] * mat[13] +
+			mat[12] * mat[1] * mat[10] -
+			mat[12] * mat[2] * mat[9];
+
+		inverseMatrix[2] = mat[1] * mat[6] * mat[15] -
+			mat[1] * mat[7] * mat[14] -
+			mat[5] * mat[2] * mat[15] +
+			mat[5] * mat[3] * mat[14] +
+			mat[13] * mat[2] * mat[7] -
+			mat[13] * mat[3] * mat[6];
+
+		inverseMatrix[6] = -mat[0] * mat[6] * mat[15] +
+			mat[0] * mat[7] * mat[14] +
+			mat[4] * mat[2] * mat[15] -
+			mat[4] * mat[3] * mat[14] -
+			mat[12] * mat[2] * mat[7] +
+			mat[12] * mat[3] * mat[6];
+
+		inverseMatrix[10] = mat[0] * mat[5] * mat[15] -
+			mat[0] * mat[7] * mat[13] -
+			mat[4] * mat[1] * mat[15] +
+			mat[4] * mat[3] * mat[13] +
+			mat[12] * mat[1] * mat[7] -
+			mat[12] * mat[3] * mat[5];
+
+		inverseMatrix[14] = -mat[0] * mat[5] * mat[14] +
+			mat[0] * mat[6] * mat[13] +
+			mat[4] * mat[1] * mat[14] -
+			mat[4] * mat[2] * mat[13] -
+			mat[12] * mat[1] * mat[6] +
+			mat[12] * mat[2] * mat[5];
+
+		inverseMatrix[3] = -mat[1] * mat[6] * mat[11] +
+			mat[1] * mat[7] * mat[10] +
+			mat[5] * mat[2] * mat[11] -
+			mat[5] * mat[3] * mat[10] -
+			mat[9] * mat[2] * mat[7] +
+			mat[9] * mat[3] * mat[6];
+
+		inverseMatrix[7] = mat[0] * mat[6] * mat[11] -
+			mat[0] * mat[7] * mat[10] -
+			mat[4] * mat[2] * mat[11] +
+			mat[4] * mat[3] * mat[10] +
+			mat[8] * mat[2] * mat[7] -
+			mat[8] * mat[3] * mat[6];
+
+		inverseMatrix[11] = -mat[0] * mat[5] * mat[11] +
+			mat[0] * mat[7] * mat[9] +
+			mat[4] * mat[1] * mat[11] -
+			mat[4] * mat[3] * mat[9] -
+			mat[8] * mat[1] * mat[7] +
+			mat[8] * mat[3] * mat[5];
+
+		inverseMatrix[15] = mat[0] * mat[5] * mat[10] -
+			mat[0] * mat[6] * mat[9] -
+			mat[4] * mat[1] * mat[10] +
+			mat[4] * mat[2] * mat[9] +
+			mat[8] * mat[1] * mat[6] -
+			mat[8] * mat[2] * mat[5];
+
+		d = (mat[0] * inverseMatrix[0]) + (mat[1] * inverseMatrix[4]) + (mat[2] * inverseMatrix[8]) + (mat[3] * inverseMatrix[12]);
+
+		if (d == 0.0f) 
+		{
+			return ERROR_MATRIX;
+		}
+
+		d = 1 / d;
+		for (int i = 0; i < MATRIX_ELEMENTS_COUNT_4X4; i++) 
+		{
+			inverseMatrix[i] *= d;
+		}
+
+		return inverseMatrix;
+	}
+
+
 	// Generates a translation matrix. 
-	inline Matrix4X4  createTranslationMatrix(Vector3 translation) 
+	inline Matrix4X4  createTranslationMatrix(Vector translation) 
 	{
 		return Matrix4X4
 		(
@@ -80,20 +282,34 @@ namespace T_racer_Math
 		);
 	}
 
-
-	// Generate a view matrix for a camera based on the cameras position.
-	inline Matrix4X4  createViewMatrix(Vector3 eyePos, Vector3 targetPos, Vector3 up) 
+	// Generates a scale matrix.
+	inline Matrix4X4 createScaleMatrix(Vector scale) 
 	{
-		// The forward and right matracies.
-		Vector3 forward = (targetPos - eyePos).normalise();
-		Vector3 right = cross(forward, up).normalise();
-
 		return Matrix4X4
 		(
-			right.X, right.Y, right.Z, -eyePos.X,
-			forward.X, forward.Y, forward.Z, -eyePos.X,
-			up.X, up.Y, up.Z, -eyePos.X,
+			scale.X, 0.0f, 0.0f, 0.0f,
+			0.0f, scale.Y, 0.0f, 0.0f,
+			0.0f, 0.0f, scale.Z, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
+		);
+	}
+
+
+	// Generate a view matrix for a camera based on the cameras position.
+	inline Matrix4X4  createViewMatrix(Vector eyePos, Vector targetPos, Vector up) 
+	{
+		// The forward and right matracies.
+		Vector forward = (targetPos - eyePos).normalise();
+		Vector right = cross(forward, up).normalise();
+		Vector lUp = cross(right, forward);
+		
+		
+		return Matrix4X4
+		(
+			forward.X, lUp.X, right.X, 0.0f,
+			forward.Y, lUp.Y, right.Y, 0.0f,
+			forward.Z, lUp.Z, right.Z, 0.0f,
+			-dot(forward, eyePos), -dot(lUp, eyePos), -dot(right, eyePos), 1.0f
 		);
 
 	};
@@ -101,12 +317,26 @@ namespace T_racer_Math
 	// generate a perspective matrix based on a provided FOV.
 	inline Matrix4X4 createPerspectiveMatrix(float fovY, float aspectRatio, float nearZ, float farZ) 
 	{
-		return Matrix4X4
-		(
-			1 / (aspectRatio * tan(fovY / 2)),0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1 / tan(fovY / 2), 0.0f,
-			0.0f ,0.0f, -((farZ + nearZ) / (farZ - nearZ)), -((2 * farZ * nearZ) / (farZ-nearZ)),
-			0.0f, 0.0f, -1.0f, 0.0f
-		);
+		// Based on DirectX Implementation.
+		float yScale = 1 / tan(fovY / 2);
+		float xScale = yScale / aspectRatio;
+
+		return createScaleMatrix(T_racer_Math::Vector(xScale, yScale, 1.0f)) *
+			Matrix4X4
+			(
+				1.0f, 0.0f, 0.0f, 0.0f,
+				0.0f, 1.0f, 0.0f, 0.0f,
+				0.0f, 0.0f, farZ / (farZ - nearZ), -(nearZ*farZ) / (farZ - nearZ),
+				0.0f, 0.0f, 1.0f, 0.0f
+			);
+
+
+		//return Matrix4X4
+		//(
+		//	1 / (aspectRatio * tan(fovY / 2)),0.0f, 0.0f, 0.0f,
+		//	0.0f, 0.0f, 1 / tan(fovY / 2), 0.0f,
+		//	0.0f ,0.0f, -((farZ + nearZ) / (farZ - nearZ)), -((2 * farZ * nearZ) / (farZ-nearZ)),
+		//	0.0f, 0.0f, -1.0f, 0.0f
+		//);
 	}
 }

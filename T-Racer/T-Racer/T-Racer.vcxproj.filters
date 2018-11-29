@@ -40,11 +40,65 @@
     <Filter Include="Core\Structures\AABB">
       <UniqueIdentifier>{f6e4ea21-654a-4f8c-b4e8-bc21c386188c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Structures\Camera">
-      <UniqueIdentifier>{3f0a6433-dae5-4913-b278-f8746c59dfe0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Helpers\Math\Transform">
       <UniqueIdentifier>{f4d30049-540b-4a08-a44e-69f84584a7de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Scene">
+      <UniqueIdentifier>{1eea016f-6f84-42cc-bd29-4861d61ca757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects">
+      <UniqueIdentifier>{ca9882eb-42c0-4713-9d46-5afaa44df246}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Camera">
+      <UniqueIdentifier>{3f0a6433-dae5-4913-b278-f8746c59dfe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource">
+      <UniqueIdentifier>{d8fe427b-3e89-4cf0-b555-0f65ee9a1e2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Main">
+      <UniqueIdentifier>{c23c1497-09ef-4bcc-aa36-5acfe0a91370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Displays">
+      <UniqueIdentifier>{784b15cc-a342-48d3-8313-913c5a52a9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Displays\PFM">
+      <UniqueIdentifier>{a5b222ce-6fd2-4d7a-92e2-5b73c8612b16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Displays\Window/LDR">
+      <UniqueIdentifier>{41cef452-74b4-4c4f-a4da-8f57805e8802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Displays\TGA">
+      <UniqueIdentifier>{0dd5cfbb-3cf6-4838-8273-2074faaa6ae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Textures">
+      <UniqueIdentifier>{b8609122-c8cc-44dc-bde9-d18dea9065c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Modules">
+      <UniqueIdentifier>{71d97d95-a975-4f99-a980-603d677844e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Modules\TextureManager">
+      <UniqueIdentifier>{5213d3b7-817e-4e38-aea6-da34806e4283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Trig">
+      <UniqueIdentifier>{977b9fbf-941a-475e-b175-ad87bc77f9cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource\Models">
+      <UniqueIdentifier>{f30b3bd7-71ae-4316-ac59-6395eee4b746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH">
+      <UniqueIdentifier>{c56648c3-52c1-4f04-8cfc-893c38254ba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH\Tree">
+      <UniqueIdentifier>{a44ad1ce-cdbf-4664-bbec-e4da80648454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH\Node">
+      <UniqueIdentifier>{62d76758-e280-450c-847b-6405d1c332b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH\Data">
+      <UniqueIdentifier>{9807e3c0-4928-4c89-9715-bd68f920d338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Numeric">
+      <UniqueIdentifier>{05ae2bf4-37e1-49eb-9453-33172ee5d1f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,7 +119,37 @@
       <Filter>Core\Structures\AABB</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Camera.cpp">
-      <Filter>Core\Structures\Camera</Filter>
+      <Filter>Core\Objects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Scene.cpp">
+      <Filter>Core\Structures\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Display.cpp">
+      <Filter>Core\Displays</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Window.cpp">
+      <Filter>Core\Displays\Window/LDR</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\PFMDisplay.cpp">
+      <Filter>Core\Displays\PFM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\TGADisplay.cpp">
+      <Filter>Core\Displays\TGA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Texture.cpp">
+      <Filter>Core\Structures\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\TextureManager.cpp">
+      <Filter>Core\Modules\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\ModelLoader.cpp">
+      <Filter>Core\Objects\Resource\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\BVHNode.cpp">
+      <Filter>Core\BVH\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\BVHTree.cpp">
+      <Filter>Core\BVH\Tree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,10 +181,55 @@
       <Filter>Core\Structures\AABB</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Camera.h">
-      <Filter>Core\Structures\Camera</Filter>
+      <Filter>Core\Objects\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Transform.h">
       <Filter>Helpers\Math\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Scene.h">
+      <Filter>Core\Structures\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Resource.h">
+      <Filter>Core\Objects\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Display.h">
+      <Filter>Core\Displays</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Window.h">
+      <Filter>Core\Displays\Window/LDR</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\TGADisplay.h">
+      <Filter>Core\Displays\TGA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PFMDisplay.h">
+      <Filter>Core\Displays\PFM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Texture.h">
+      <Filter>Core\Structures\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\TextureManager.h">
+      <Filter>Core\Modules\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Trig.h">
+      <Filter>Helpers\Math\Trig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\ModelLoader.h">
+      <Filter>Core\Objects\Resource\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\OBJ_Loader.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BVHNode.h">
+      <Filter>Core\BVH\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BVHTests.h">
+      <Filter>Core\BVH\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_neumeric.h">
+      <Filter>Helpers\Math\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BVHTree.h">
+      <Filter>Core\BVH\Tree</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

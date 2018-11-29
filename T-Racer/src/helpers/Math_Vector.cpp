@@ -3,112 +3,148 @@
 
 namespace T_racer_Math 
 {
-	Vector3::Vector3(float x)
+	Vector::Vector(float x)
 	{
 		values[0] = x;
 	}
 
-	Vector3::Vector3(float x, float y) : Vector3::Vector3(x)
+	Vector::Vector(float x, float y) : Vector::Vector(x)
 	{
 		values[1] = y;
 	}
 
-	Vector3::Vector3(float x, float y, float z) : Vector3::Vector3(x, y)
+	Vector::Vector(float x, float y, float z) : Vector::Vector(x, y)
 	{
 		values[2] = z;
 	}
 
-	Vector3::Vector3(const Vector3& vector)
+	Vector::Vector(float x, float y, float z, float w) : Vector::Vector(x, y, z)
+	{
+		values[3] = w;
+	}
+
+	Vector::Vector(const Vector& vector)
 	{
 		this->values[0] = vector.values[0];
 		this->values[1] = vector.values[1];
 		this->values[2] = vector.values[2];
 	}
 
-	Vector3 Vector3::operator+(Vector3 vec)
+	float Vector::maxComp()
 	{
-		return Vector3(this->values[0] + vec.values[0], this->values[1] + vec.values[1], this->values[2] + vec.values[2]);
+		float max = (-INFINITY);
+		for (int i = 0; i < 3; i++) 
+		{
+			if (values[i] > max) 
+			{
+				max = values[i];
+			}
+		}
+		return max;
 	}
 
-	void Vector3::operator+=(Vector3 vec)
+	float Vector::minComp()
+	{
+		float min = INFINITY;
+		for (int i = 0; i < 3; i++)
+		{
+			if (values[i] < min)
+			{
+				min = values[i];
+			}
+		}
+		return min;
+	}
+
+	Vector Vector::operator+(Vector vec)
+	{
+		return Vector(this->values[0] + vec.values[0], this->values[1] + vec.values[1], this->values[2] + vec.values[2]);
+	}
+
+	void Vector::operator+=(Vector vec)
 	{
 		this->values[0] += vec.values[0];
 		this->values[1] += vec.values[1];
 		this->values[2] += vec.values[2];
 	}
 
-	Vector3 Vector3::operator-(Vector3 vec)
+	Vector Vector::operator-(Vector vec)
 	{
-		return Vector3(this->values[0] - vec.values[0], this->values[1] - vec.values[1], this->values[2] - vec.values[2]);
+		return Vector(this->values[0] - vec.values[0], this->values[1] - vec.values[1], this->values[2] - vec.values[2]);
 	}
 
-	void Vector3::operator-=(Vector3 vec)
+	void Vector::operator-=(Vector vec)
 	{
 		this->values[0] -= vec.values[0];
 		this->values[1] -= vec.values[1];
 		this->values[2] -= vec.values[2];
 	}
 
-	Vector3 Vector3::operator*(Vector3 vec)
+	Vector Vector::operator*(Vector vec)
 	{
-		return Vector3(this->values[0] * vec.values[0], this->values[1] * vec.values[1], this->values[2] * vec.values[2]);
+		return Vector(this->values[0] * vec.values[0], this->values[1] * vec.values[1], this->values[2] * vec.values[2]);
 	}
 
-	void Vector3::operator*=(Vector3 vec)
+	void Vector::operator*=(Vector vec)
 	{
 		this->values[0] *= vec.values[0];
 		this->values[1] *= vec.values[1];
 		this->values[2] *= vec.values[2];
 	}
 
-	Vector3 Vector3::operator/(Vector3 vec)
+	Vector Vector::operator/(Vector vec)
 	{
-		return Vector3(this->values[0] / vec.values[0], this->values[1] / vec.values[1], this->values[2] / vec.values[2]);
+		return Vector(this->values[0] / vec.values[0], this->values[1] / vec.values[1], this->values[2] / vec.values[2]);
 	}
 
-	void Vector3::operator/=(Vector3 vec)
+	void Vector::operator/=(Vector vec)
 	{
 		this->values[0] /= vec.values[0];
 		this->values[1] /= vec.values[1];
 		this->values[2] /= vec.values[2];
 	}
 
-	Vector3 Vector3::operator*(float scalier)
+	Vector Vector::operator/(int scalier)
 	{
-		return Vector3(this->values[0] * scalier, this->values[1] * scalier, this->values[2] * scalier);
+		return Vector(this->values[0] / scalier, this->values[1] / scalier, this->values[2] / scalier);
 	}
 
-	Vector3 Vector3::operator*(int scalier)
+	Vector Vector::operator*(float scalier)
 	{
-		return Vector3(this->values[0] * scalier, this->values[1] * scalier, this->values[2] * scalier);
+		return Vector(this->values[0] * scalier, this->values[1] * scalier, this->values[2] * scalier);
 	}
 
-	void Vector3::operator*=(float scalier)
+	Vector Vector::operator*(int scalier)
 	{
-		this->values[0] *= scalier;
-		this->values[1] *= scalier;
-		this->values[2] *= scalier;
+		return Vector(this->values[0] * scalier, this->values[1] * scalier, this->values[2] * scalier);
 	}
 
-	void Vector3::operator*=(int scalier)
+	void Vector::operator*=(float scalier)
 	{
 		this->values[0] *= scalier;
 		this->values[1] *= scalier;
 		this->values[2] *= scalier;
 	}
 
-	Vector3 Vector3::inverse(float scalier)
+	void Vector::operator*=(int scalier)
 	{
-		return Vector3(scalier / this->values[0], scalier / this->values[1], scalier / this->values[2]);
+		this->values[0] *= scalier;
+		this->values[1] *= scalier;
+		this->values[2] *= scalier;
 	}
 
-	Vector3 Vector3::normalise()
+	Vector Vector::inverse(float scalier)
+	{
+		return Vector(scalier / this->values[0], scalier / this->values[1], scalier / this->values[2]);
+	}
+
+	Vector Vector::normalise()
 	{
 		float magnitude = Magnitude();
-		return Vector3(this->values[0] / magnitude, this->values[1] / magnitude, this->values[2] / magnitude);
+		return Vector(this->values[0] / magnitude, this->values[1] / magnitude, this->values[2] / magnitude);
 	}
 
-	void Vector3::normaliseSelf()
+	void Vector::normaliseSelf()
 	{
 		float magnitude = Magnitude();
 		this->values[0] /= magnitude;
@@ -116,7 +152,7 @@ namespace T_racer_Math
 		this->values[2] /= magnitude;
 	}
 
-	float Vector3::normaliseSelfWithMagnitude()
+	float Vector::normaliseSelfWithMagnitude()
 	{
 		float magnitude = Magnitude();
 		this->values[0] /= magnitude;
@@ -126,7 +162,7 @@ namespace T_racer_Math
 		return magnitude;
 	}
 
-	float Vector3::Magnitude()
+	float Vector::Magnitude()
 	{
 		float value = pow(this->values[0], 2) + pow(this->values[1], 2) + pow(this->values[2], 2);
 		return sqrt(value);

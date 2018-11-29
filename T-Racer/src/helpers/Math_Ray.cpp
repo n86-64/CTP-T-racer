@@ -3,17 +3,17 @@
 
 namespace T_racer_Math 
 {
-	Ray::Ray() : Ray(Vector3(0,0,0), Vector3(1,1,1))
+	Ray::Ray() : Ray(Vector(0,0,0), Vector(1,1,1))
 	{}
 
-	Ray::Ray(Vector3 origin, Vector3 dir):
+	Ray::Ray(Vector origin, Vector dir):
 		position(origin),
 		direction(dir)
 	{
 		inverseDirection = direction.inverse(1);
 	}
 
-	Vector3 Ray::getInverseDirection()
+	Vector Ray::getInverseDirection()
 	{
 		return inverseDirection;
 	}

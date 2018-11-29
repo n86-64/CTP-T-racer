@@ -1,33 +1,27 @@
+#include <stdio.h>
+#include "helpers/Math_neumeric.h"
+
 #include "AABB.h"
 
-AABB::AABB(T_racer_Math::Vector3 vMin, T_racer_Math::Vector3 vMax)
+T_racer_Collider_AABB::T_racer_Collider_AABB(T_racer_Math::Vector vMin, T_racer_Math::Vector vMax)
 	:min(vMin),
 	max(vMax)
 {}
 
-bool AABB::isIntersected(T_racer_Math::Ray ray)
-{
-	T_racer_Math::Vector3  tmax;
-	T_racer_Math::Vector3  tmin;
+bool T_racer_Collider_AABB::isIntersected(T_racer_Math::Ray ray)
+{	
+	T_racer_Math::Vector inv = ray.getInverseDirection();
 
-	T_racer_Math::Vector3 rayDir = ray.getInverseDirection();
-	T_racer_Math::Vector3 rayPos = ray.getPosition();
-	bool intersection = false;
+	T_racer_Math::Vector point0 = (min - ray.getPosition()) * inv;
+	T_racer_Math::Vector point1 = (max - ray.getPosition()) * inv;
 
-	tmin = min;
-	tmax = max;
+	T_racer_Math::Vector tMin = T_racer_Math::min(point0, point1); 
+	T_racer_Math::Vector tMax = T_racer_Math::max(point0, point1);
 
-	if (tmin.x() <= 0) { float temp = tmin.x(); tmin.x(tmax.x()); tmax.x(temp); }
-	if (tmin.y() <= 0) { float temp = tmin.y(); tmin.y(tmax.y()); tmax.y(temp); }
-	if (tmin.z() <= 0) { float temp = tmin.z(); tmin.z(tmax.z()); tmax.z(temp); }
-
-	tmin = (tmin - rayPos) * rayDir;
-	tmax = (tmax - rayPos) * rayDir;
-
-	return (tmin.x() < tmax.x()) && (tmin.y() < tmax.y()) && (tmin.z() < tmax.z());
+	return (tMin.maxComp() <= tMax.minComp()); 
 }
 
-bool AABB::isIntersected(AABB box)
+bool T_racer_Collider_AABB::isIntersected(T_racer_Collider_AABB box)
 {
 	if (max.x() > box.min.x() && min.x() < box.max.x()) 
 	{
@@ -43,7 +37,7 @@ bool AABB::isIntersected(AABB box)
 	return false;
 }
 
-void AABB::enlargeBox(T_racer_Math::Vector3 point)
+void T_racer_Collider_AABB::enlargeBox(T_racer_Math::Vector point)
 {
 	if (point.X > max.X || point.Y > max.Y || point.Z > max.Z)
 	{
@@ -58,4 +52,40 @@ void AABB::enlargeBox(T_racer_Math::Vector3 point)
 	}
 
 	return;
+}
+
+void T_racer_Collider_AABB::enlargeBox(T_racer_Collider_AABB& collider)
+{
+	min.X = fminf(min.X, collider.getMin().X);
+	min.Y = fminf(min.Y, collider.getMin().Y);
+	min.Z = fminf(min.Z, collider.getMin().Z);
+	
+	max.X = fmaxf(max.X, collider.getMax().X);
+	max.Y = fmaxf(max.Y, collider.getMax().Y);
+	max.Z = fmaxf(max.Z, collider.getMax().Z);
+}
+
+void T_racer_Collider_AABB::resizeBox(T_racer_Math::Vector vMin, T_racer_Math::Vector vMax)
+{
+	min = vMin;
+	max = vMax;
+}
+
+T_racer_Math::Vector T_racer_Collider_AABB::getBoxMidpoint()
+{
+	return min + getBoxHalfLength();
+}
+
+T_racer_Math::Vector T_racer_Collider_AABB::getBoxHalfLength()
+{
+	return ((max - min) / 2);
+}
+
+float T_racer_Collider_AABB::getSurfaceArea()
+{
+	float surfaceArea = 0.0f;
+	T_racer_Math::Vector boxDiameter = getBoxLength();
+	surfaceArea = 2.0f * ((boxDiameter.X * boxDiameter.Y) + (boxDiameter.Y * boxDiameter.Z) + (boxDiameter.X * boxDiameter.Z));
+
+	return surfaceArea;
 }

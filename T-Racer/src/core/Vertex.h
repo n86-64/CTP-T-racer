@@ -14,7 +14,7 @@
 
 struct T_racer_Vertex 
 {
-	T_racer_Math::Vector3		position;
-	T_racer_Math::Vector3		normal;
-	T_racer_Math::Vector3		texCoord;
+	T_racer_Math::Vector		position;
+	T_racer_Math::Vector		normal;
+	T_racer_Math::Vector		texCoord;
 };
