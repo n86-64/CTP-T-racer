@@ -29,18 +29,10 @@ public:
 	void createBox(T_racer_Math::Vector min, T_racer_Math::Vector max);
 
 	void assignBox(T_racer_Collider_AABB& nBox);
-
-	// Perform an Intersection Test with a ray.
-	void intersection(T_racer_Math::Ray* ray, T_racer_BVH_CollisionQueue_t* queue);
-
-	// Give this node some children. 
-	void assignNodes(T_racer_BVH_Node* newLeft, T_racer_BVH_Node* newRight);
 	void assignNodes(int newLNode, int newRNode);
 
 	void addPrimativeIndicies(int value);
 	std::vector<int>& getTriangleIndexList();
-
-	void clearChildNodes();
 
 	T_racer_Collider_AABB*  getBounds() { return &box; }
 
@@ -52,11 +44,6 @@ public:
 private:
 	// The box that represents the AABB.
 	T_racer_Collider_AABB  box;
-
-	// DEPRECATED!!!
-	T_racer_BVH_Node*      parent = nullptr;
-	T_racer_BVH_Node*      lNode = nullptr;
-	T_racer_BVH_Node*      rNode = nullptr;
 
 	int					   parentIndex = T_RACER_NODE_NULL;
 	int					   lNodeIndex = T_RACER_NODE_NULL;

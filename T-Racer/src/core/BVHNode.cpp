@@ -3,7 +3,6 @@
 
 T_racer_BVH_Node::~T_racer_BVH_Node()
 {
-	clearChildNodes();
 }
 
 void T_racer_BVH_Node::createBox(T_racer_Math::Vector min, T_racer_Math::Vector max)
@@ -15,30 +14,6 @@ void T_racer_BVH_Node::createBox(T_racer_Math::Vector min, T_racer_Math::Vector 
 void T_racer_BVH_Node::assignBox(T_racer_Collider_AABB & nBox)
 {
 	box = nBox;
-}
-
-void T_racer_BVH_Node::intersection(T_racer_Math::Ray* ray, T_racer_BVH_CollisionQueue_t* queue)
-{
-	// TODO - Does this box intersect with a ray. If so we should look at checking our children.
-	// or if there are no children we return the index of the triangles here in the box.
-	if (box.isIntersected(*ray)) 
-	{
-		if (!lNode && !rNode) 
-		{
-			lNode->intersection(ray, queue);
-			rNode->intersection(ray, queue);
-		}
-		else 
-		{
-			addTriangles(queue);
-		}
-	}
-}
-
-void T_racer_BVH_Node::assignNodes(T_racer_BVH_Node* newLeft, T_racer_BVH_Node* newRight)
-{
-	lNode = newLeft;
-	rNode = newRight;
 }
 
 void T_racer_BVH_Node::assignNodes(int newLNode, int newRNode)
@@ -56,12 +31,6 @@ void T_racer_BVH_Node::addPrimativeIndicies(int value)
 std::vector<int>& T_racer_BVH_Node::getTriangleIndexList()
 {
 	return triIndex;
-}
-
-void T_racer_BVH_Node::clearChildNodes()
-{
-	if (lNode) { delete lNode; lNode = nullptr; }
-	if (rNode) { delete rNode; rNode = nullptr; }
 }
 
 void T_racer_BVH_Node::addTriangles(T_racer_BVH_CollisionQueue_t* queue)
