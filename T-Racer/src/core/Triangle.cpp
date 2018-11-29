@@ -111,6 +111,18 @@ bool Triangle::isIntersectingShadow(T_racer_Math::Ray ray, const float maxt)
 	return 0;
 }
 
+T_racer_Math::Vector Triangle::getOrthnormalBasis()
+{
+	T_racer_Math::Vector u = verticies[1].position - verticies[0].position;
+	T_racer_Math::Vector v = verticies[2].position - verticies[1].position;
+
+	// Orthonormal basis is normalised Orthogonal basis function.
+	T_racer_Math::Vector e1 = u.normalise();
+	T_racer_Math::Vector e2 = v - (e1 * dot(v, e1));
+
+	return e2;
+}
+
 T_racer_Math::Vector Triangle::getMinVector()
 {
 	float axisValues[3];
