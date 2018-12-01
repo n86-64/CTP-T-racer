@@ -1,3 +1,4 @@
+#include <stack>
 #include <queue>
 #include "BVHTree.h"
 
@@ -48,21 +49,22 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 	// Perform the intersection test for the ray.
 	// root->intersection(ray, &collisionQueue);
 	collisionQueue.triangleIndexes.clear();
-	std::queue<int> nodesToCheck;
+	std::stack<int> nodesToCheck;
 	nodesToCheck.emplace(0);
 	T_racer_BVH_Node* currentNode = nullptr;
 
 	while (nodesToCheck.size() > 0) 
 	{
-		currentNode = &nodes[nodesToCheck.front()];
+		currentNode = &nodes[nodesToCheck.top()];
+		nodesToCheck.pop();
 
 		if (currentNode->getBounds()->isIntersected(*ray)) 
 		{
 			if (currentNode->getLeftNode() != T_RACER_NODE_NULL &&
 				currentNode->getRightNode() != T_RACER_NODE_NULL)
 			{
-				nodesToCheck.emplace(currentNode->getLeftNode());
 				nodesToCheck.emplace(currentNode->getRightNode());
+				nodesToCheck.emplace(currentNode->getLeftNode());
 			}
 			else 
 			{
@@ -70,8 +72,6 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 				currentNode->addTriangles(&collisionQueue);
 			}
 		}
-
-		nodesToCheck.pop();
 	}
 }
 
