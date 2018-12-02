@@ -100,6 +100,12 @@
     <Filter Include="Helpers\Math\Numeric">
       <UniqueIdentifier>{05ae2bf4-37e1-49eb-9453-33172ee5d1f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Materials">
+      <UniqueIdentifier>{0067694e-5235-4d9e-b077-58e85403ee13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Sampling">
+      <UniqueIdentifier>{a112ea01-a174-40a5-983c-e3711837978f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -151,6 +157,7 @@
     <ClCompile Include="..\src\core\BVHTree.cpp">
       <Filter>Core\BVH\Tree</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\helpers\Math_Sampler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
@@ -230,6 +237,12 @@
     </ClInclude>
     <ClInclude Include="..\src\core\BVHTree.h">
       <Filter>Core\BVH\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Materials.h">
+      <Filter>Core\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Sampler.h">
+      <Filter>Helpers\Sampling</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

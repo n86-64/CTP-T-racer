@@ -191,8 +191,8 @@ void T_racer_BVH_Tree::getSplitCost
 	// Calculate the cost of a split at this point.
 	for (int j = 0; j < edges.size(); j++) 
 	{
-		aPrimCount = j;
-		bPrimCount = primativeIDs.size() - j;
+		aPrimCount = (j + 1);
+		bPrimCount = primativeIDs.size() - (j - 1);
 
 		leftAABB = *nodes[nodeIndex].getBounds();
 		rightAABB = *nodes[nodeIndex].getBounds();

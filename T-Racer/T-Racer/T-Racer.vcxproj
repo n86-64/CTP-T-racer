@@ -169,6 +169,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClCompile Include="..\src\core\Window.cpp" />
     <ClCompile Include="..\src\helpers\Math_Matrix.cpp" />
     <ClCompile Include="..\src\helpers\Math_Ray.cpp" />
+    <ClCompile Include="..\src\helpers\Math_Sampler.cpp" />
     <ClCompile Include="..\src\helpers\Math_Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +180,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\core\Camera.h" />
     <ClInclude Include="..\src\core\Display.h" />
     <ClInclude Include="..\src\core\Intersection.h" />
+    <ClInclude Include="..\src\core\Materials.h" />
     <ClInclude Include="..\src\core\ModelLoader.h" />
     <ClInclude Include="..\src\core\PFMDisplay.h" />
     <ClInclude Include="..\src\core\Resource.h" />
@@ -198,6 +200,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\helpers\Math_Ray.h" />
     <ClInclude Include="..\src\helpers\Math_Matrix.h" />
     <ClInclude Include="..\src\helpers\OBJ_Loader.h" />
+    <ClInclude Include="..\src\helpers\Math_Sampler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

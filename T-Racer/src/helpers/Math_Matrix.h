@@ -298,6 +298,7 @@ namespace T_racer_Math
 	// Generate a view matrix for a camera based on the cameras position.
 	inline Matrix4X4  createViewMatrix(Vector eyePos, Vector targetPos, Vector up) 
 	{
+		// TODO - Review this matrix in order to solve issues with camera and possibly BVH.
 		// The forward and right matracies.
 		Vector forward = (targetPos - eyePos).normalise();
 		Vector right = cross(forward, up).normalise();
