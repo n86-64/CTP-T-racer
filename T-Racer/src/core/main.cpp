@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "TextureManager.h"
 #include "AABB.h"
+#include "helpers/Math_Sampler.h"
 
 
 // The application entry point.
@@ -87,6 +88,8 @@ int main(int argc, char* argv[])
 	{
 		printf("lol what your only checking collisions with boxes.");
 	}
+
+
 	getchar();
 
 //	return 0;

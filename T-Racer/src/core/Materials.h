@@ -12,6 +12,7 @@
 #pragma once
 
 #include "helpers/Math_Sampler.h"
+#include "Texture.h"
 
 namespace T_racer_Math 
 {
@@ -31,7 +32,10 @@ class T_racer_Material
 public:
 	T_racer_Material() = default;
 
-	virtual void					 Evaluate(T_racer_Math::Ray* ray) = 0;
+	virtual T_racer_Texture2D		 Evaluate(T_racer_Math::Ray* ray) = 0;
 	virtual T_racer_SampledDirection Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler matSampler) = 0;
 	virtual float					 ProbabilityDensity(T_racer_Math::Ray* ray) = 0;
+
+protected:
+	T_racer_Texture2D*				 materialTexture = nullptr;
 };

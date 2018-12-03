@@ -1,5 +1,9 @@
 #include "Math_Sampler.h"
 
+T_racer_Math::Sampler::Sampler()
+{
+}
+
 float T_racer_Math::Sampler::Random()
 {
 	return data(mersenneTwist);

@@ -18,6 +18,8 @@ namespace T_racer_Math
 	class Sampler 
 	{
 	public:
+		Sampler();
+
 		// Genrates a random number
 		float Random();
 
@@ -30,7 +32,7 @@ namespace T_racer_Math
 	private:
 		// The RNG devices.
 		std::random_device  rngEngine;
-		std::mt19937    mersenneTwist = std::mt19937(rngEngine);
-		std::uniform_real_distribution<float>   data = std::uniform_real_distribution<float>(0.0f, FLT_MAX);
+		std::mt19937    mersenneTwist = std::mt19937(rngEngine());
+		std::uniform_real_distribution<float>   data = std::uniform_real_distribution<float>(0.0f, 1.0f);
 	};
 };

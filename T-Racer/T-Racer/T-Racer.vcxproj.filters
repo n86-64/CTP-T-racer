@@ -157,7 +157,9 @@
     <ClCompile Include="..\src\core\BVHTree.cpp">
       <Filter>Core\BVH\Tree</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\helpers\Math_Sampler.cpp" />
+    <ClCompile Include="..\src\helpers\Math_Sampler.cpp">
+      <Filter>Helpers\Sampling</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
