@@ -24,12 +24,20 @@ struct BVHEdge
 	bool startNode = true;
 };
 
+struct BVHPrimative 
+{
+	std::vector<Triangle>*  triangles;
+	int primativeID = -1;
+	int axis = -1;
+};
+
 struct BVHSplitInfo 
 {
 	bool split = false;
 	T_racer_Collider_AABB  lChildBox;
 	T_racer_Collider_AABB  rChildBox;
-	std::vector<BVHEdge>   edges;
+	std::vector<int> lPrims;
+	std::vector<int> rPrims;
 	float splitCost = 0.0f;
 	int axis = -1;
 };
@@ -40,28 +48,25 @@ public:
 	T_racer_BVH_Tree() = default;
 	~T_racer_BVH_Tree();
 
-	void generateSceneBVH(std::vector<Triangle>& scenePrimatives);
+	void generateSceneBVH(std::vector<Triangle>* scenePrimatives);
 	void checkForIntersections(T_racer_Math::Ray* ray); 
 
 	T_racer_BVH_CollisionQueue_t getPossibleCollisions();
 
 private:
-	void createBVHNodes(std::vector<Triangle>& scenePrimatives);
+	void createBVHNodes();
 
 	// Splitting routienes.
 	void getSplitCost(int nodeIndex, 
-		BVHSplitInfo& splitInfo,
-		std::vector<Triangle*>& nodePrimatives, 
-		std::vector<int>& primativeIDs, 
-		float totalSA); // Implements Surface area Heuristic.
+		BVHSplitInfo& splitInfo); // Implements Surface area Heuristic.
 
-	BVHSplitInfo shouldPartition(int nodeIndex, std::vector<Triangle>& primatives);
+	BVHSplitInfo shouldPartition(int nodeIndex);
+
 	float getGeometricProbibility(T_racer_Collider_AABB& col, float surfaceArea);
-
-	// Returns a ratio at which to split the min and max.
-	float partitionNodeSpace(T_racer_BVH_Node* newNode);
 	
 private:
+	std::vector<Triangle>*    sceneObjects;  // All objects in a scene.
+
 	std::vector<T_racer_BVH_Node>   nodes = std::vector<T_racer_BVH_Node>(1);
 	
 	// The root node of the tree.

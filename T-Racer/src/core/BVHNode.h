@@ -32,6 +32,7 @@ public:
 	void assignNodes(int newLNode, int newRNode);
 
 	void addPrimativeIndicies(int value);
+	void setPrimativeIndicies(std::vector<int>& indicies);
 	std::vector<int>& getTriangleIndexList();
 
 	T_racer_Collider_AABB*  getBounds() { return &box; }
@@ -40,6 +41,11 @@ public:
 	int getRightNode() const { return rNodeIndex; }
 
 	void addTriangles(T_racer_BVH_CollisionQueue_t* queue);
+
+	// Additional heuristic.
+	int getNodeCost() const { return nodeCost; }
+	void setNodeCost(float newCost) { nodeCost = newCost; }
+
 
 private:
 	// The box that represents the AABB.
@@ -50,4 +56,6 @@ private:
 	int					   rNodeIndex = T_RACER_NODE_NULL;
 
 	std::vector<int>       triIndex;
+
+	float				   nodeCost = INFINITY;
 };
