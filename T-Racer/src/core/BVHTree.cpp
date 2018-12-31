@@ -112,44 +112,8 @@ void T_racer_BVH_Tree::createBVHNodes()
 			childL->assignBox(newSplit.lChildBox);
 			childR->assignBox(newSplit.rChildBox);
 
-			//std::vector<int> primatives = nodes[nodesToResolve.front()].getTriangleIndexList();
-			//for (int i = 0; i < primatives.size(); i++) 
-			//{
-			//	if (childL->getBounds()->getMin().values[newSplit.axis] < (*sceneObjects)[primatives[i]].getCollider().getMax().values[newSplit.axis] &&
-			//		childL->getBounds()->getMax().values[newSplit.axis] > (*sceneObjects)[primatives[i]].getCollider().getMin().values[newSplit.axis])
-			//	{
-			//		childL->addPrimativeIndicies(primatives[i]);
-			//	}
-			//	
-			//	if (childR->getBounds()->getMin().values[newSplit.axis] < (*sceneObjects)[primatives[i]].getCollider().getMax().values[newSplit.axis] &&
-			//		childR->getBounds()->getMax().values[newSplit.axis] > (*sceneObjects)[primatives[i]].getCollider().getMin().values[newSplit.axis])
-			//	{
-			//		childR->addPrimativeIndicies(primatives[i]);
-			//	}
-			//}
-
-
 			childL->setPrimativeIndicies(newSplit.lPrims);
 			childR->setPrimativeIndicies(newSplit.rPrims);
-
-
-
-			// Assign primative indexes to each of the children based on intersections.
-			// Then we emplace nodes and calculate more splits.
-			//for (int i = 0; i < nodes[nodesToResolve.front()].getTriangleIndexList(); i++) 
-			//{
-			//	if (childL->getBounds()->getMin().values[newSplit.axis] < newSplit.edges[i].t &&
-			//		childL->getBounds()->getMax().values[newSplit.axis] > newSplit.edges[i].t)
-			//	{
-			//		childL->addPrimativeIndicies(newSplit.edges[i].primativeRef);
-			//	}
-
-			//	if(childR->getBounds()->getMin().values[newSplit.axis] < newSplit.edges[i].t &&
-			//		childR->getBounds()->getMax().values[newSplit.axis] > newSplit.edges[i].t)
-			//	{
-			//		childR->addPrimativeIndicies(newSplit.edges[i].primativeRef);
-			//	}
-			//}
 
 			nodesToResolve.emplace(nodes.size() - 2);
 			nodesToResolve.emplace(nodes.size() - 1);
@@ -165,7 +129,6 @@ void T_racer_BVH_Tree::getSplitCost(int nodeIndex, BVHSplitInfo& splitInfo)
 {
 	float parentSA = nodes[nodeIndex].getBounds()->getSurfaceArea();
 	float invSA = 1 / parentSA;
-	float bestCost = INFINITY;
 	float currentCost = INFINITY;
 
 	std::vector<BVHPrimative>  primatives;
@@ -189,31 +152,27 @@ void T_racer_BVH_Tree::getSplitCost(int nodeIndex, BVHSplitInfo& splitInfo)
 	int leftCount = 0;
 	int rightCount = 0;
 
+	splitInfo.lPrims.clear();
+	splitInfo.rPrims.clear();
+
 	splitInfo.lPrims.reserve(primatives.size());
 	splitInfo.rPrims.reserve(primatives.size());
+
+	float bestCost = primatives.size() * T_RACER_BVH_COST_INTERSECTION_TRIANGLE;
 
 	// Perform the testing.
 	for (int j = 0; j < primatives.size(); j++) 
 	{
-		splitInfo.lPrims.clear();
-		splitInfo.rPrims.clear();
-
 		leftBox = T_racer_Collider_AABB();
 		rightBox = T_racer_Collider_AABB();
 
 		leftCount = (j);
 		rightCount = primatives.size() - (j);
 
-		for (int l = 0; l < j; l++) 
-		{
-			leftBox.enlargeBox((*sceneObjects)[primatives[l].primativeID].getCollider());
-			splitInfo.lPrims.emplace_back(primatives[l].primativeID);
-		}
-		for (int r = j; r < primatives.size(); r++) 
-		{
-			rightBox.enlargeBox((*sceneObjects)[primatives[r].primativeID].getCollider());
-			splitInfo.rPrims.emplace_back(primatives[r].primativeID);
-		}
+		leftBox.enlargeBox((*sceneObjects)[primatives[0].primativeID].getCollider());
+		leftBox.enlargeBox((*sceneObjects)[primatives[leftCount].primativeID].getCollider());
+		rightBox.enlargeBox((*sceneObjects)[primatives[leftCount].primativeID].getCollider());
+		rightBox.enlargeBox((*sceneObjects)[primatives[primatives.size() - 1].primativeID].getCollider());
 
 		currentCost = T_RACER_BVH_COST_TRAVERSAL_NODES
 			+ (getGeometricProbibility(leftBox, invSA) * (T_RACER_BVH_COST_INTERSECTION_TRIANGLE * leftCount))
@@ -224,8 +183,26 @@ void T_racer_BVH_Tree::getSplitCost(int nodeIndex, BVHSplitInfo& splitInfo)
 			splitInfo.splitCost = currentCost;
 			splitInfo.lChildBox = leftBox;
 			splitInfo.rChildBox = rightBox;
+
+			// TODO - Compress to one variable.
+			splitInfo.leftCount = leftCount;
+			splitInfo.rightCount = rightCount;
+			
 			bestCost = currentCost;
 		}
+	}
+
+	if (splitInfo.leftCount != -1 && splitInfo.rightCount != -1) 
+	{
+		for (int l = 0; l < splitInfo.leftCount; l++)
+		{
+			splitInfo.lPrims.emplace_back(primatives[l].primativeID);
+		}
+		for (int r = splitInfo.leftCount; r < primatives.size(); r++)
+		{
+			splitInfo.rPrims.emplace_back(primatives[r].primativeID);
+		}
+		splitInfo.split = true;
 	}
 }
 
@@ -258,7 +235,7 @@ BVHSplitInfo T_racer_BVH_Tree::shouldPartition(int nodeIndex)
 	// Should we split.
 	// If so generate the boxes used from splitting.
 	// else just set to false.
-	bestCost.split = (bestCost.splitCost != INFINITY);
+//	bestCost.split = (bestCost.splitCost != INFINITY);
 
 	return bestCost;
 }

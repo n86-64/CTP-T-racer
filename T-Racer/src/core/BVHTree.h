@@ -36,10 +36,16 @@ struct BVHSplitInfo
 	bool split = false;
 	T_racer_Collider_AABB  lChildBox;
 	T_racer_Collider_AABB  rChildBox;
+	std::vector<BVHPrimative>  prim;
+	int						   splitPoint;
 	std::vector<int> lPrims;
 	std::vector<int> rPrims;
 	float splitCost = 0.0f;
 	int axis = -1;
+
+	// NULL values.
+	int leftCount = -1;
+	int rightCount = -1;
 };
 
 class T_racer_BVH_Tree 
@@ -68,9 +74,6 @@ private:
 	std::vector<Triangle>*    sceneObjects;  // All objects in a scene.
 
 	std::vector<T_racer_BVH_Node>   nodes = std::vector<T_racer_BVH_Node>(1);
-	
-	// The root node of the tree.
-	T_racer_BVH_Node* root = &nodes[0];
 
 	// The indicies of the triangles that we have to test.
 	T_racer_BVH_CollisionQueue_t  collisionQueue; 
