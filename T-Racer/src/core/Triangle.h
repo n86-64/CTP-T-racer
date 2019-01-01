@@ -15,6 +15,7 @@
 #include "core/Intersection.h"
 #include "helpers/Math_Ray.h"
 #include "helpers/Math_Colour.h"
+#include "helpers/Math_Matrix.h"
 #include "AABB.h"
 
 constexpr int VERTEX_COUNT = 3;
@@ -31,8 +32,10 @@ public:
 	void						   generateBoundingBox();
 	bool						   isIntersectingShadow(T_racer_Math::Ray ray, const float maxt);
 	T_racer_Math::Vector		   getOrthnormalBasis();
+	T_racer_Math::Matrix3X3		   createShadingFrame();
+	T_racer_Math::Vector		   getNormal();
 
-	T_racer_Collider_AABB& getCollider() { return collider; };
+	T_racer_Collider_AABB&		   getCollider() { return collider; };
 
 private:
 	T_racer_Math::Vector getMinVector();

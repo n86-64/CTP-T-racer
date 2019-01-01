@@ -123,6 +123,22 @@ T_racer_Math::Vector Triangle::getOrthnormalBasis()
 	return e2;
 }
 
+T_racer_Math::Matrix3X3 Triangle::createShadingFrame()
+{
+
+
+
+	return T_racer_Math::Matrix3X3();
+}
+
+T_racer_Math::Vector Triangle::getNormal()
+{
+	T_racer_Math::Vector  v1v0 = verticies[1].position - verticies[0].position;
+	T_racer_Math::Vector  v2v0 = verticies[2].position - verticies[0].position;
+
+	return T_racer_Math::cross(v1v0, v2v0);
+}
+
 T_racer_Math::Vector Triangle::getMinVector()
 {
 	float axisValues[3];

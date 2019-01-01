@@ -10,6 +10,7 @@
 #pragma once
 
 constexpr int MATRIX_ELEMENTS_COUNT_4X4 = 16;
+constexpr int MATRIX_ELEMENTS_COUNT_3X3 = 9;
 
 #include <math.h>
 #include "Math_Vector.h"
@@ -76,6 +77,51 @@ namespace T_racer_Math
 		};
 	};
 
+	class Matrix3X3 
+	{
+	public:
+		Matrix3X3() = default;
+		Matrix3X3(
+			float m00, float m01, float m02,
+			float m10, float m11, float m12,
+			float m20, float m21, float m22)
+		{
+			m[0][0] = m00;
+			m[0][1] = m10;
+			m[0][2] = m20;
+			m[1][0] = m00;
+			m[1][1] = m00;
+			m[1][2] = m00;
+			m[2][0] = m00;
+			m[2][1] = m00;
+			m[2][2] = m00;
+		};
+
+		// Return a value from the matrix.
+		float value(int row, int column)
+		{
+			return m[row][column];
+		}
+
+		void value(int row, int column, float value)
+		{
+			m[row][column] = value;
+		}
+
+	private:
+		union
+		{
+			// Initialy set to be an identity matrix.
+			float matrix[MATRIX_ELEMENTS_COUNT_3X3] =
+			{
+				1.0f, 0.0f, 0.0f,
+				0.0f, 1.0f, 0.0f,
+				0.0f, 0.0f, 1.0f
+			};
+			float m[3][3];
+		};
+	};
+
 	// Matrix constants
 	const Matrix4X4 ERROR_MATRIX
 	(
@@ -83,6 +129,13 @@ namespace T_racer_Math
 		INFINITY, INFINITY, INFINITY, INFINITY,
 		INFINITY, INFINITY, INFINITY, INFINITY,
 		INFINITY, INFINITY, INFINITY, INFINITY
+	);
+
+	const Matrix3X3 ERROR_MATRIX
+	(
+		INFINITY, INFINITY, INFINITY,
+		INFINITY, INFINITY, INFINITY,
+		INFINITY, INFINITY, INFINITY
 	);
 
 	inline float getMatrixDeterminant(Matrix4X4 mat) 
@@ -303,7 +356,6 @@ namespace T_racer_Math
 		Vector forward = (targetPos - eyePos).normalise();
 		Vector right = cross(forward, up).normalise();
 		Vector lUp = cross(right, forward);
-		
 		
 		return Matrix4X4
 		(

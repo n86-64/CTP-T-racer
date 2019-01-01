@@ -16,9 +16,9 @@
 struct T_racer_Path_Vertex
 {
 	// Additional ray properties
-	T_racer_Math::Vector uv;
-	T_racer_Math::Vector normal;
-	T_racer_Math::Vector orthnormalBasis; // TODO - Create 3x3 matrix to allow rotations to be calculated.
-	T_racer_Math::Vector hitPoint;
-	unsigned int	   BRDFMaterialID = 0;
+	T_racer_Math::Vector	uv;
+	T_racer_Math::Vector	normal;
+	T_racer_Math::Matrix3X3 orthnormalBasis;
+	T_racer_Math::Vector	hitPoint;
+	unsigned int			BRDFMaterialID = 0;
 };
