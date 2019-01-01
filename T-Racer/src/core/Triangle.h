@@ -30,8 +30,9 @@ public:
 	T_racer_Math::Vector           interpolateNormals(T_racer_TriangleIntersection iCoord);
 	void						   generateBoundingBox();
 	bool						   isIntersectingShadow(T_racer_Math::Ray ray, const float maxt);
+	T_racer_Math::Vector		   getOrthnormalBasis();
 
-	T_racer_Collider_AABB* getCollider() { return &collider; };
+	T_racer_Collider_AABB& getCollider() { return collider; };
 
 private:
 	T_racer_Math::Vector getMinVector();

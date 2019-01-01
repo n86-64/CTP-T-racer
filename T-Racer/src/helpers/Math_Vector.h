@@ -46,6 +46,7 @@ namespace T_racer_Math
 		Vector			 operator+(Vector vec);
 		void			 operator+=(Vector vec);
 		Vector			 operator-(Vector vec);
+		Vector			 operator-();
 		void		     operator-=(Vector vec);
 
 		// element based multiplication/division.

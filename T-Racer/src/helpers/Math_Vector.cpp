@@ -73,6 +73,11 @@ namespace T_racer_Math
 		return Vector(this->values[0] - vec.values[0], this->values[1] - vec.values[1], this->values[2] - vec.values[2]);
 	}
 
+	Vector Vector::operator-()
+	{
+		return Vector(-this->values[0], -this->values[1], -this->values[2]);
+	}
+
 	void Vector::operator-=(Vector vec)
 	{
 		this->values[0] -= vec.values[0];

@@ -17,4 +17,12 @@ namespace T_racer_Math
 	{
 		return inverseDirection;
 	}
+
+	void Ray::setDirection(Vector dir)
+	{
+		direction = dir; 
+		inverseDirection = direction.inverse(1); 
+		incomingRayDirection = -direction;
+		normal = incomingRayDirection.normalise();
+	}
 }
