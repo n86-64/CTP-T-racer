@@ -39,17 +39,13 @@ bool T_racer_Collider_AABB::isIntersected(T_racer_Collider_AABB box)
 
 void T_racer_Collider_AABB::enlargeBox(T_racer_Math::Vector point)
 {
-	if (point.X > max.X || point.Y > max.Y || point.Z > max.Z)
-	{
-		// Change the box size.
-		max = point;
-	}
+	min.X = fminf(min.X, point.X);
+	min.Y = fminf(min.Y, point.Y);
+	min.Z = fminf(min.Z, point.Z);
 
-	if (point.X < min.X || point.Y < min.Y || point.Z < min.Z)
-	{
-		// Change the box size.
-		min = point;
-	}
+	max.X = fmaxf(max.X, point.X);
+	max.Y = fmaxf(max.Y, point.Y);
+	max.Z = fmaxf(max.Z, point.Z);
 
 	return;
 }
@@ -73,7 +69,7 @@ void T_racer_Collider_AABB::resizeBox(T_racer_Math::Vector vMin, T_racer_Math::V
 
 T_racer_Math::Vector T_racer_Collider_AABB::getBoxMidpoint()
 {
-	return min + getBoxHalfLength();
+	return (min + max) * 0.5f;
 }
 
 T_racer_Math::Vector T_racer_Collider_AABB::getBoxHalfLength()
@@ -88,4 +84,17 @@ float T_racer_Collider_AABB::getSurfaceArea()
 	surfaceArea = 2.0f * ((boxDiameter.X * boxDiameter.Y) + (boxDiameter.Y * boxDiameter.Z) + (boxDiameter.X * boxDiameter.Z));
 
 	return surfaceArea;
+}
+
+bool T_racer_Collider_AABB::isValid()
+{
+	for (int i = 0; i < 3; i++) 
+	{
+		if (min.values[i] > max.values[i]) 
+		{
+			return false;
+		}
+	}
+
+	return true;
 }

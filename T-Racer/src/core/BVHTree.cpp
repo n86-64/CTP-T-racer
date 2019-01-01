@@ -112,6 +112,9 @@ void T_racer_BVH_Tree::createBVHNodes()
 			childL->assignBox(newSplit.lChildBox);
 			childR->assignBox(newSplit.rChildBox);
 
+			assert(newSplit.lChildBox.isValid());
+			assert(newSplit.rChildBox.isValid());
+
 			childL->setPrimativeIndicies(newSplit.lPrims);
 			childR->setPrimativeIndicies(newSplit.rPrims);
 
@@ -158,7 +161,10 @@ void T_racer_BVH_Tree::getSplitCost(int nodeIndex, BVHSplitInfo& splitInfo)
 	splitInfo.lPrims.reserve(primatives.size());
 	splitInfo.rPrims.reserve(primatives.size());
 
-	float bestCost = primatives.size() * T_RACER_BVH_COST_INTERSECTION_TRIANGLE;
+	float bestCost = splitInfo.splitCost;
+
+	float leftCost = 0.0f;
+	float rightCost = 0.0f;
 
 	// Perform the testing.
 	for (int j = 0; j < primatives.size(); j++) 
@@ -169,14 +175,24 @@ void T_racer_BVH_Tree::getSplitCost(int nodeIndex, BVHSplitInfo& splitInfo)
 		leftCount = (j);
 		rightCount = primatives.size() - (j);
 
-		leftBox.enlargeBox((*sceneObjects)[primatives[0].primativeID].getCollider());
-		leftBox.enlargeBox((*sceneObjects)[primatives[leftCount].primativeID].getCollider());
-		rightBox.enlargeBox((*sceneObjects)[primatives[leftCount].primativeID].getCollider());
-		rightBox.enlargeBox((*sceneObjects)[primatives[primatives.size() - 1].primativeID].getCollider());
+		for (int left = 0; left < leftCount; left++) 
+		{
+			leftBox.enlargeBox((*sceneObjects)[primatives[left].primativeID].getCollider());
+		}
+		for (int right = leftCount; right < primatives.size(); right++) 
+		{
+			rightBox.enlargeBox((*sceneObjects)[primatives[right].primativeID].getCollider());
+		}
 
-		currentCost = T_RACER_BVH_COST_TRAVERSAL_NODES
-			+ (getGeometricProbibility(leftBox, invSA) * (T_RACER_BVH_COST_INTERSECTION_TRIANGLE * leftCount))
-		    + (getGeometricProbibility(rightBox, invSA) * (T_RACER_BVH_COST_INTERSECTION_TRIANGLE * rightCount));
+		//leftBox.enlargeBox((*sceneObjects)[primatives[0].primativeID].getCollider());
+		//leftBox.enlargeBox((*sceneObjects)[primatives[leftCount].primativeID].getCollider());
+		//rightBox.enlargeBox((*sceneObjects)[primatives[leftCount].primativeID].getCollider());
+		//rightBox.enlargeBox((*sceneObjects)[primatives[primatives.size() - 1].primativeID].getCollider());
+
+		leftCost = (getGeometricProbibility(leftBox, parentSA) * (T_RACER_BVH_COST_INTERSECTION_TRIANGLE * leftCount));
+		rightCost = getGeometricProbibility(rightBox, parentSA) * T_RACER_BVH_COST_INTERSECTION_TRIANGLE * rightCount;
+
+		currentCost = T_RACER_BVH_COST_TRAVERSAL_NODES + leftCost + rightCost;
 
 		if (currentCost < bestCost) 
 		{
@@ -223,6 +239,7 @@ BVHSplitInfo T_racer_BVH_Tree::shouldPartition(int nodeIndex)
 	// for each axis we perform the SAH test.
 	for (int i = 0; i < 3; i++) 
 	{
+		currentCost.splitCost = nodes[nodeIndex].getTriangleIndexList().size() * T_RACER_BVH_COST_INTERSECTION_TRIANGLE;
 		currentCost.axis = i;
 		getSplitCost(nodeIndex, currentCost);
 
@@ -242,5 +259,6 @@ BVHSplitInfo T_racer_BVH_Tree::shouldPartition(int nodeIndex)
 
 float T_racer_BVH_Tree::getGeometricProbibility(T_racer_Collider_AABB& col, float invSurfaceArea)
 {
-	return col.getSurfaceArea() * invSurfaceArea;
+	//return col.getSurfaceArea() * invSurfaceArea;
+	return col.getSurfaceArea() / invSurfaceArea;
 }

@@ -50,8 +50,6 @@ void T_racer_Scene::Render()
 				if (sceneTriangles[pIndex].isIntersecting(ray).intersection)
 				{
 					// Add the data to the ray here.
-					
-
 
 					// Colour the pixel white.
 					frameData(x, y, T_racer_Math::Colour(1.0f, 1.0f, 1.0f));
