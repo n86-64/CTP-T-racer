@@ -23,6 +23,6 @@ namespace T_racer_Math
 		direction = dir; 
 		inverseDirection = direction.inverse(1); 
 		incomingRayDirection = -direction;
-		normal = incomingRayDirection.normalise();
+	//	normal = incomingRayDirection.normalise();
 	}
 }

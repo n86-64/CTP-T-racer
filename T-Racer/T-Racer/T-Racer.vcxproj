@@ -268,6 +268,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\helpers\Math_Matrix.h" />
     <ClInclude Include="..\src\helpers\OBJ_Loader.h" />
     <ClInclude Include="..\src\helpers\Math_Sampler.h" />
+    <ClInclude Include="PathVertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

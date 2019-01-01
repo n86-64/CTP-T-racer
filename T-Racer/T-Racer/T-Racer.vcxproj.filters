@@ -55,9 +55,6 @@
     <Filter Include="Core\Objects\Resource">
       <UniqueIdentifier>{d8fe427b-3e89-4cf0-b555-0f65ee9a1e2b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Main">
-      <UniqueIdentifier>{c23c1497-09ef-4bcc-aa36-5acfe0a91370}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Displays">
       <UniqueIdentifier>{784b15cc-a342-48d3-8313-913c5a52a9dd}</UniqueIdentifier>
     </Filter>
@@ -103,8 +100,14 @@
     <Filter Include="Core\Materials">
       <UniqueIdentifier>{0067694e-5235-4d9e-b077-58e85403ee13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Helpers\Sampling">
+    <Filter Include="Helpers\Math\Sampling">
       <UniqueIdentifier>{a112ea01-a174-40a5-983c-e3711837978f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Dependancies">
+      <UniqueIdentifier>{d7da4135-9744-4125-99ed-375a880cb391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Paths">
+      <UniqueIdentifier>{6165ba71-b52e-4a40-9cff-5bea92db49af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -158,7 +161,7 @@
       <Filter>Core\BVH\Tree</Filter>
     </ClCompile>
     <ClCompile Include="..\src\helpers\Math_Sampler.cpp">
-      <Filter>Helpers\Sampling</Filter>
+      <Filter>Helpers\Math\Sampling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -225,9 +228,6 @@
     <ClInclude Include="..\src\core\ModelLoader.h">
       <Filter>Core\Objects\Resource\Models</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\helpers\OBJ_Loader.h">
-      <Filter>Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\BVHNode.h">
       <Filter>Core\BVH\Node</Filter>
     </ClInclude>
@@ -244,7 +244,13 @@
       <Filter>Core\Materials</Filter>
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Sampler.h">
-      <Filter>Helpers\Sampling</Filter>
+      <Filter>Helpers\Math\Sampling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\OBJ_Loader.h">
+      <Filter>Helpers\Dependancies</Filter>
+    </ClInclude>
+    <ClInclude Include="PathVertex.h">
+      <Filter>Core\Paths</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
