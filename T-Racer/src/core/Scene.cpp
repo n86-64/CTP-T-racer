@@ -26,7 +26,7 @@ void T_racer_Scene::loadModel(std::string modelName)
 
 void T_racer_Scene::Render()
 {
-	bvh.generateSceneBVH(sceneTriangles);
+	bvh.generateSceneBVH(&sceneTriangles);
 
 	T_racer_Math::Ray  ray;
 	// Here we trace the ray for the camera.

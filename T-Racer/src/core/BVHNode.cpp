@@ -28,6 +28,11 @@ void T_racer_BVH_Node::addPrimativeIndicies(int value)
 	triIndex.emplace_back(value);
 }
 
+void T_racer_BVH_Node::setPrimativeIndicies(std::vector<int>& indicies)
+{
+	triIndex = indicies;
+}
+
 std::vector<int>& T_racer_BVH_Node::getTriangleIndexList()
 {
 	return triIndex;

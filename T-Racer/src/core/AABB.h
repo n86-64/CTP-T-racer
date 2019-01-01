@@ -31,7 +31,7 @@ public:
 
 	T_racer_Math::Vector getBoxMidpoint();
 	T_racer_Math::Vector getBoxHalfLength();
-	T_racer_Math::Vector getBoxLength() { return getBoxHalfLength() * 2; } // TODO - flop so that max-min occurs in this function and aquiring half length only then divides the result by 2.
+	T_racer_Math::Vector getBoxLength() { return  max - min; } // TODO - flop so that max-min occurs in this function and aquiring half length only then divides the result by 2.
 
 	T_racer_Math::Vector getMin() const { return min; };
 	T_racer_Math::Vector getMax() const { return max; };
@@ -40,6 +40,8 @@ public:
 
 	void				 setMinComp(int axis, float value) { min.values[axis] = value; }
 	void				 setMaxComp(int axis, float value) { max.values[axis] = value; }
+
+	bool isValid();
 
 private:
 	T_racer_Math::Vector   min = T_racer_Math::Vector(INFINITY, INFINITY, INFINITY);
