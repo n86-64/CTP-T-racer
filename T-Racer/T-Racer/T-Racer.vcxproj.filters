@@ -34,9 +34,6 @@
     <Filter Include="Core\Structures\Vertex">
       <UniqueIdentifier>{4127f0cb-829a-44ab-abf1-89340f43eb43}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Structures\Triangle">
-      <UniqueIdentifier>{52216c4c-3334-4940-a232-23eb2dc274f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Structures\AABB">
       <UniqueIdentifier>{f6e4ea21-654a-4f8c-b4e8-bc21c386188c}</UniqueIdentifier>
     </Filter>
@@ -54,9 +51,6 @@
     </Filter>
     <Filter Include="Core\Objects\Resource">
       <UniqueIdentifier>{d8fe427b-3e89-4cf0-b555-0f65ee9a1e2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Main">
-      <UniqueIdentifier>{c23c1497-09ef-4bcc-aa36-5acfe0a91370}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Displays">
       <UniqueIdentifier>{784b15cc-a342-48d3-8313-913c5a52a9dd}</UniqueIdentifier>
@@ -100,6 +94,33 @@
     <Filter Include="Helpers\Math\Numeric">
       <UniqueIdentifier>{05ae2bf4-37e1-49eb-9453-33172ee5d1f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Materials">
+      <UniqueIdentifier>{0067694e-5235-4d9e-b077-58e85403ee13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Sampling">
+      <UniqueIdentifier>{a112ea01-a174-40a5-983c-e3711837978f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Dependancies">
+      <UniqueIdentifier>{d7da4135-9744-4125-99ed-375a880cb391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Paths">
+      <UniqueIdentifier>{6165ba71-b52e-4a40-9cff-5bea92db49af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Primatives">
+      <UniqueIdentifier>{85fd7598-b8db-4b93-9fda-98d8ae2740f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Primatives\Triangle">
+      <UniqueIdentifier>{52216c4c-3334-4940-a232-23eb2dc274f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Materials\MaterialManager">
+      <UniqueIdentifier>{7baa985f-11ce-4916-9394-40b14847452e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Materials\Material Types">
+      <UniqueIdentifier>{9c2fc4d2-6127-4349-974b-280f61f70e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Projections">
+      <UniqueIdentifier>{6a655777-e147-4792-9410-ae5af9622df0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -113,7 +134,7 @@
       <Filter>Helpers\Math\Matrix</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Triangle.cpp">
-      <Filter>Core\Structures\Triangle</Filter>
+      <Filter>Core\Structures\Primatives\Triangle</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\AABB.cpp">
       <Filter>Core\Structures\AABB</Filter>
@@ -151,6 +172,15 @@
     <ClCompile Include="..\src\core\BVHTree.cpp">
       <Filter>Core\BVH\Tree</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\helpers\Math_Sampler.cpp">
+      <Filter>Helpers\Math\Sampling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MaterialManager.cpp">
+      <Filter>Core\Materials\MaterialManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MatDiffuse.cpp">
+      <Filter>Core\Materials\Material Types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
@@ -172,7 +202,7 @@
       <Filter>Core\Structures\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Triangle.h">
-      <Filter>Core\Structures\Triangle</Filter>
+      <Filter>Core\Structures\Primatives\Triangle</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Intersection.h">
       <Filter>Core\Structures</Filter>
@@ -216,9 +246,6 @@
     <ClInclude Include="..\src\core\ModelLoader.h">
       <Filter>Core\Objects\Resource\Models</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\helpers\OBJ_Loader.h">
-      <Filter>Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\BVHNode.h">
       <Filter>Core\BVH\Node</Filter>
     </ClInclude>
@@ -230,6 +257,27 @@
     </ClInclude>
     <ClInclude Include="..\src\core\BVHTree.h">
       <Filter>Core\BVH\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Materials.h">
+      <Filter>Core\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Sampler.h">
+      <Filter>Helpers\Math\Sampling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\OBJ_Loader.h">
+      <Filter>Helpers\Dependancies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MaterialManager.h">
+      <Filter>Core\Materials\MaterialManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PathVertex.h">
+      <Filter>Core\Paths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MatDiffuse.h">
+      <Filter>Core\Materials\Material Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Projections.h">
+      <Filter>Helpers\Math\Projections</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

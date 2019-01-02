@@ -123,6 +123,40 @@ T_racer_Math::Vector Triangle::getOrthnormalBasis()
 	return e2;
 }
 
+// One implementation of the gram-schmidt method. Will need some verification from tom.
+T_racer_Math::Matrix3X3 Triangle::createShadingFrame()
+{
+	// The components of the triangle
+	T_racer_Math::Vector v1v0 = verticies[1].position - verticies[0].position;
+	T_racer_Math::Vector v2v0 = verticies[2].position - verticies[0].position;
+//	T_racer_Math::Vector v2v1 = verticies[2].position - verticies[1].position;
+	T_racer_Math::Vector w = getNormal();
+
+	// find the vector furthest from the normal.
+	T_racer_Math::Vector u1 = v1v0;
+	T_racer_Math::Vector u2 = v2v0 - (u1 * (dot(v2v0, u1) / dot(u1,u1)));
+	T_racer_Math::Vector u3 = w - (u1 * (dot(w, u2) / dot(u2, u2)));
+
+	u1.normaliseSelf();
+	u2.normaliseSelf();
+	u3.normaliseSelf();
+
+	return T_racer_Math::Matrix3X3
+	(
+		u1.X, u1.Y, u1.Z,
+		u2.X, u2.Y, u2.Z,
+		u3.X, u3.Y, u3.Z
+	);
+}
+
+T_racer_Math::Vector Triangle::getNormal()
+{
+	T_racer_Math::Vector  v1v0 = verticies[1].position - verticies[0].position;
+	T_racer_Math::Vector  v2v0 = verticies[2].position - verticies[0].position;
+
+	return T_racer_Math::cross(v1v0, v2v0);
+}
+
 T_racer_Math::Vector Triangle::getMinVector()
 {
 	float axisValues[3];
