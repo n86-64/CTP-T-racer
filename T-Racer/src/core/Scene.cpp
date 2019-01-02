@@ -75,6 +75,22 @@ void T_racer_Scene::setDisplay(T_racer_Display* newDisplay)
 	mainCamera->setResolution(display->getWidth(), display->getHeight());
 }
 
+void T_racer_Scene::setupScene()
+{
+	// Setup the scene for rendering.
+	bvh.generateSceneBVH(&sceneTriangles);
+}
+
+T_racer_BVH_CollisionQueue_t T_racer_Scene::traceRay(int x, int y)
+{
+	T_racer_BVH_CollisionQueue_t collisions;
+	collisions.ray = generateRay(x, y);
+	bvh.checkForIntersections(&collisions.ray);
+	collisions.triangleIndexes = bvh.getPossibleCollisions().triangleIndexes;
+
+	return collisions;
+}
+
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 {
 	// Here lets generate a ray. 

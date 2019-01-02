@@ -38,6 +38,8 @@ public:
 
 	T_racer_Collider_AABB&		   getCollider() { return collider; };
 
+	int							   getMaterialIndex() const { return materialID; }
+
 private:
 	T_racer_Math::Vector getMinVector();
 	T_racer_Math::Vector getMaxVector();

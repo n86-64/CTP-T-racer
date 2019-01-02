@@ -32,6 +32,8 @@ namespace T_racer_Math
 		float	getMagnitude() { return magnitude; }
 		void    setMagnitude(float newLength) { magnitude = newLength; }
 
+		Vector  getHitPoint(float t) { return position + (direction * t); }
+
 	private:
 		Vector  position;
 		Vector  direction;

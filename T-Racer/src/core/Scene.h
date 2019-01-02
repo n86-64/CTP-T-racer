@@ -13,11 +13,11 @@
 #include <vector>
 
 #include "Resource.h"
-
 #include "Triangle.h"
 #include "Camera.h"
-
 #include "BVHTree.h"
+
+#include "helpers/Image.h"
 
 class T_racer_Display;
 
@@ -35,6 +35,12 @@ public:
 	// Render a single frame and add to a display. 
 	void Render();
 	void setDisplay(T_racer_Display* newDisplay); 
+
+	// Renderer Routienes
+	void setupScene();
+	T_racer_BVH_CollisionQueue_t  traceRay(int x, int y); // Returns a list of triangles we have collided with.
+
+	Triangle*   getTriangleByIndex(int index) { return &sceneTriangles[index]; }
 
 private:
 	std::vector<std::unique_ptr<T_racer_Resource>>  sceneResources;

@@ -10,9 +10,11 @@
 #pragma once
 
 #include <vector>
+#include "helpers/Math_Ray.h"
 
 struct T_racer_BVH_CollisionQueue_t
 {
 	// The triangles we need to test from the scene.
 	std::vector<int>  triangleIndexes;
+	T_racer_Math::Ray ray;
 };

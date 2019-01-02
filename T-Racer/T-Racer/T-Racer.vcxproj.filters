@@ -121,6 +121,12 @@
     <Filter Include="Helpers\Math\Projections">
       <UniqueIdentifier>{6a655777-e147-4792-9410-ae5af9622df0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Renderers">
+      <UniqueIdentifier>{71633785-2be9-482d-9d63-c6487bce6b7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Renderers\Path-Tracer">
+      <UniqueIdentifier>{595f7e72-5fb5-4c0f-9c7f-03d88b0637be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -144,9 +150,6 @@
     </ClCompile>
     <ClCompile Include="..\src\core\Scene.cpp">
       <Filter>Core\Structures\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\Display.cpp">
-      <Filter>Core\Displays</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Window.cpp">
       <Filter>Core\Displays\Window/LDR</Filter>
@@ -180,6 +183,12 @@
     </ClCompile>
     <ClCompile Include="..\src\core\MatDiffuse.cpp">
       <Filter>Core\Materials\Material Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\PathTracer.cpp">
+      <Filter>Core\Renderers\Path-Tracer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Display.cpp">
+      <Filter>Core\Displays</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +287,12 @@
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Projections.h">
       <Filter>Helpers\Math\Projections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Renderers.h">
+      <Filter>Core\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PathTracer.h">
+      <Filter>Core\Renderers\Path-Tracer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

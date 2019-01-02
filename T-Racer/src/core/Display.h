@@ -30,6 +30,8 @@ public:
 	float getWidth() const { return resX; }
 	float getHeight() const { return resY; }
 
+	void setColourValue(int x, int y, T_racer_Math::Colour newCol);
+
 protected:
 	std::string displayName;
 	bool     quit = false;
