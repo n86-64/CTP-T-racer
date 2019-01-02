@@ -267,6 +267,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\helpers\Image.h" />
     <ClInclude Include="..\src\helpers\Math_Colour.h" />
     <ClInclude Include="..\src\helpers\Math_neumeric.h" />
+    <ClInclude Include="..\src\helpers\Math_Projections.h" />
     <ClInclude Include="..\src\helpers\Math_Trig.h" />
     <ClInclude Include="..\src\helpers\Math_Vector.h" />
     <ClInclude Include="..\src\helpers\Math_Ray.h" />

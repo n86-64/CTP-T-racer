@@ -118,6 +118,9 @@
     <Filter Include="Core\Materials\Material Types">
       <UniqueIdentifier>{9c2fc4d2-6127-4349-974b-280f61f70e44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\Math\Projections">
+      <UniqueIdentifier>{6a655777-e147-4792-9410-ae5af9622df0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -272,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="..\src\core\MatDiffuse.h">
       <Filter>Core\Materials\Material Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Projections.h">
+      <Filter>Helpers\Math\Projections</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
