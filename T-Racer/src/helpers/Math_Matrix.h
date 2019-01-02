@@ -123,7 +123,7 @@ namespace T_racer_Math
 	};
 
 	// Matrix constants
-	const Matrix4X4 ERROR_MATRIX
+	const Matrix4X4 ERROR_MATRIX_4X4
 	(
 		INFINITY, INFINITY, INFINITY, INFINITY,
 		INFINITY, INFINITY, INFINITY, INFINITY,
@@ -131,7 +131,7 @@ namespace T_racer_Math
 		INFINITY, INFINITY, INFINITY, INFINITY
 	);
 
-	const Matrix3X3 ERROR_MATRIX
+	const Matrix3X3 ERROR_MATRIX_3X3
 	(
 		INFINITY, INFINITY, INFINITY,
 		INFINITY, INFINITY, INFINITY,
@@ -310,7 +310,7 @@ namespace T_racer_Math
 
 		if (d == 0.0f) 
 		{
-			return ERROR_MATRIX;
+			return ERROR_MATRIX_4X4;
 		}
 
 		d = 1 / d;

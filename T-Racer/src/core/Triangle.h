@@ -32,6 +32,7 @@ public:
 	void						   generateBoundingBox();
 	bool						   isIntersectingShadow(T_racer_Math::Ray ray, const float maxt);
 	T_racer_Math::Vector		   getOrthnormalBasis();
+	
 	T_racer_Math::Matrix3X3		   createShadingFrame(); // Returns an orthonormal 3X3 projection matrix.
 	T_racer_Math::Vector		   getNormal();
 
