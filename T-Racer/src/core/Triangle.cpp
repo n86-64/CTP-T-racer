@@ -125,7 +125,10 @@ T_racer_Math::Vector Triangle::getOrthnormalBasis()
 
 T_racer_Math::Matrix3X3 Triangle::createShadingFrame()
 {
-
+	// The components of the triangle
+	T_racer_Math::Vector u = verticies[1].position - verticies[0].position;
+	T_racer_Math::Vector v = verticies[2].position - verticies[0].position;
+	T_racer_Math::Vector w = verticies[2].position - verticies[1].position;
 
 
 	return T_racer_Math::Matrix3X3();

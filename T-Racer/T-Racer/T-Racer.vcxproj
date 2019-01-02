@@ -226,6 +226,8 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClCompile Include="..\src\core\Camera.cpp" />
     <ClCompile Include="..\src\core\Display.cpp" />
     <ClCompile Include="..\src\core\main.cpp" />
+    <ClCompile Include="..\src\core\MatDiffuse.cpp" />
+    <ClCompile Include="..\src\core\MaterialManager.cpp" />
     <ClCompile Include="..\src\core\ModelLoader.cpp" />
     <ClCompile Include="..\src\core\PFMDisplay.cpp" />
     <ClCompile Include="..\src\core\Scene.cpp" />
@@ -247,8 +249,11 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\core\Camera.h" />
     <ClInclude Include="..\src\core\Display.h" />
     <ClInclude Include="..\src\core\Intersection.h" />
+    <ClInclude Include="..\src\core\MatDiffuse.h" />
+    <ClInclude Include="..\src\core\MaterialManager.h" />
     <ClInclude Include="..\src\core\Materials.h" />
     <ClInclude Include="..\src\core\ModelLoader.h" />
+    <ClInclude Include="..\src\core\PathVertex.h" />
     <ClInclude Include="..\src\core\PFMDisplay.h" />
     <ClInclude Include="..\src\core\Resource.h" />
     <ClInclude Include="..\src\core\Scene.h" />
@@ -268,7 +273,6 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\helpers\Math_Matrix.h" />
     <ClInclude Include="..\src\helpers\OBJ_Loader.h" />
     <ClInclude Include="..\src\helpers\Math_Sampler.h" />
-    <ClInclude Include="PathVertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

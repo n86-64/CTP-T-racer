@@ -34,9 +34,6 @@
     <Filter Include="Core\Structures\Vertex">
       <UniqueIdentifier>{4127f0cb-829a-44ab-abf1-89340f43eb43}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Structures\Triangle">
-      <UniqueIdentifier>{52216c4c-3334-4940-a232-23eb2dc274f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Structures\AABB">
       <UniqueIdentifier>{f6e4ea21-654a-4f8c-b4e8-bc21c386188c}</UniqueIdentifier>
     </Filter>
@@ -109,6 +106,18 @@
     <Filter Include="Core\Paths">
       <UniqueIdentifier>{6165ba71-b52e-4a40-9cff-5bea92db49af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Structures\Primatives">
+      <UniqueIdentifier>{85fd7598-b8db-4b93-9fda-98d8ae2740f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Primatives\Triangle">
+      <UniqueIdentifier>{52216c4c-3334-4940-a232-23eb2dc274f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Materials\MaterialManager">
+      <UniqueIdentifier>{7baa985f-11ce-4916-9394-40b14847452e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Materials\Material Types">
+      <UniqueIdentifier>{9c2fc4d2-6127-4349-974b-280f61f70e44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -122,7 +131,7 @@
       <Filter>Helpers\Math\Matrix</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Triangle.cpp">
-      <Filter>Core\Structures\Triangle</Filter>
+      <Filter>Core\Structures\Primatives\Triangle</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\AABB.cpp">
       <Filter>Core\Structures\AABB</Filter>
@@ -163,6 +172,12 @@
     <ClCompile Include="..\src\helpers\Math_Sampler.cpp">
       <Filter>Helpers\Math\Sampling</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\MaterialManager.cpp">
+      <Filter>Core\Materials\MaterialManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MatDiffuse.cpp">
+      <Filter>Core\Materials\Material Types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
@@ -184,7 +199,7 @@
       <Filter>Core\Structures\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Triangle.h">
-      <Filter>Core\Structures\Triangle</Filter>
+      <Filter>Core\Structures\Primatives\Triangle</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Intersection.h">
       <Filter>Core\Structures</Filter>
@@ -249,8 +264,14 @@
     <ClInclude Include="..\src\helpers\OBJ_Loader.h">
       <Filter>Helpers\Dependancies</Filter>
     </ClInclude>
-    <ClInclude Include="PathVertex.h">
+    <ClInclude Include="..\src\core\MaterialManager.h">
+      <Filter>Core\Materials\MaterialManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PathVertex.h">
       <Filter>Core\Paths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MatDiffuse.h">
+      <Filter>Core\Materials\Material Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
