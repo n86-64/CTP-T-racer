@@ -11,6 +11,7 @@
 
 #include <random>
 #include <time.h>
+
 #include "Math_Vector.h"
 
 namespace T_racer_Math 
@@ -32,7 +33,7 @@ namespace T_racer_Math
 	private:
 		// The RNG devices.
 		std::random_device  rngEngine;
-		std::mt19937    mersenneTwist = std::mt19937(rngEngine());
-		std::uniform_real_distribution<float>   data = std::uniform_real_distribution<float>(0.0f, 1.0f);
+		std::mt19937    mersenneTwist;
+		std::uniform_real_distribution<float>   data;
 	};
 };

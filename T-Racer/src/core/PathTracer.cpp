@@ -31,17 +31,41 @@ void T_racer_Renderer_PathTracer::Render()
 				lightPath[0].orthnormalBasis = primative->createShadingFrame();
 
 				// Calculate the light paths.
-				tracePath();
-
+				tracePath(collisions.ray);
 
 			}
 		}
 	}
 }
 
-void T_racer_Renderer_PathTracer::tracePath()
+void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay)
 {
-	
+	T_racer_Material*  surfaceMaterial = nullptr;
+	bool terminatePath = false;
+
+	T_racer_Math::Ray   ray = initialRay;
+	T_racer_Math::Sampler  sampler;
+
+	T_racer_Math::Colour  pathTroughput;
+	pathTroughput.colour = T_racer_Math::Vector(1.0f, 1.0f, 1.0f);
+	T_racer_SampledDirection  wi;
+
+	T_racer_Math::Colour  brdfValue;
+
+	int pathIndex = 0;
+	while (!terminatePath) 
+	{
+		surfaceMaterial = materials.retrieveMaterial(pathIndex);
+		wi = surfaceMaterial->Sample(&ray, sampler);
+
+		pathTroughput = pathTroughput * brdfValue * dot(wi.direction, lightPath[pathIndex].normal) / wi.probabilityDensity;
+		terminatePath = RussianRoulette(pathTroughput, pathIndex);
+
+		// else trace the scene again.
+		// If we hit a light source also terminate the path.
+		// then loop.
+	}
+
 }
 
 int T_racer_Renderer_PathTracer::sortTriangles(T_racer_BVH_CollisionQueue_t& collisions, T_racer_TriangleIntersection& intersection)
@@ -64,4 +88,12 @@ int T_racer_Renderer_PathTracer::sortTriangles(T_racer_BVH_CollisionQueue_t& col
 	}
 
 	return primaryTriangle;
+}
+
+bool T_racer_Renderer_PathTracer::RussianRoulette(T_racer_Math::Colour& colour, int pathIndex)
+{
+	bool stop = false;
+
+
+	return stop;
 }

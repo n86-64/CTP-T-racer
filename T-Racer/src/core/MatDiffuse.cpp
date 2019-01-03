@@ -19,7 +19,7 @@ T_racer_Texture2D T_racer_Materials_BasicDiffuse::Evaluate(T_racer_Math::Ray * r
 	return outputTex;
 }
 
-T_racer_SampledDirection T_racer_Materials_BasicDiffuse::Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler matSampler)
+T_racer_SampledDirection T_racer_Materials_BasicDiffuse::Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler& matSampler)
 {
 	T_racer_SampledDirection dir;
 
@@ -36,6 +36,8 @@ T_racer_SampledDirection T_racer_Materials_BasicDiffuse::Sample(T_racer_Math::Ra
 
 float T_racer_Materials_BasicDiffuse::ProbabilityDensity(T_racer_Math::Ray * ray)
 {
+	// TODO - Add code to retrieve surface normal.
+
 	T_racer_SampledDirection sampledDirection;
 
 	return 0.0f;

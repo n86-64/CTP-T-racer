@@ -36,5 +36,23 @@ namespace T_racer_Math
 				fmin(1.0f, powf(colour.Z, gamma)) * 255
 			);
 		}
+
+		Colour operator*(Colour& col) 
+		{
+			Vector val = this->colour * col.colour;
+			return Colour(val.X, val.Y, val.Z);
+		}
+
+		Colour operator*(float scalier)
+		{
+			Vector val = this->colour * scalier;
+			return Colour(val.X, val.Y, val.Z);
+		}
+
+		Colour operator/(float scalier) 
+		{
+			Vector val = this->colour / scalier;
+			return Colour(val.X, val.Y, val.Z);
+		}
 	};
 }

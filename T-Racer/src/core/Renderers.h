@@ -10,6 +10,8 @@
 #pragma once
 
 #include "Scene.h"
+#include "MaterialManager.h"
+#include "TextureManager.h"
 
 class T_racer_Renderer_Base 
 {
@@ -20,9 +22,12 @@ public:
 	void setDisplay(T_racer_Display* newDisplay) { display = newDisplay; }
 
 protected:
-	virtual void tracePath() = 0;
+	virtual void tracePath(T_racer_Math::Ray initialRay) = 0;
 
 protected:
 	std::unique_ptr<T_racer_Scene>  sceneObject;
-	T_racer_Display*   display = nullptr;
+	T_racer_MaterialManager         materials;
+	T_racer_TextureManager			textures;
+
+	T_racer_Display*				display = nullptr;
 };

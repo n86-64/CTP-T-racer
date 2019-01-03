@@ -20,8 +20,9 @@ public:
 	// Inherited via T_racer_Material
 	virtual T_racer_Texture2D Evaluate(T_racer_Math::Ray * ray) override;
 
-	virtual T_racer_SampledDirection Sample(T_racer_Math::Ray * ray, T_racer_Math::Sampler matSampler) override;
+	virtual T_racer_SampledDirection Sample(T_racer_Math::Ray * ray, T_racer_Math::Sampler& matSampler) override;
 
 	virtual float ProbabilityDensity(T_racer_Math::Ray * ray) override;
 
 };
+

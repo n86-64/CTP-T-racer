@@ -33,7 +33,7 @@ public:
 	T_racer_Material() = default;
 
 	virtual T_racer_Texture2D		 Evaluate(T_racer_Math::Ray* ray) = 0;
-	virtual T_racer_SampledDirection Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler matSampler) = 0;
+	virtual T_racer_SampledDirection Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler& matSampler) = 0;
 	virtual float					 ProbabilityDensity(T_racer_Math::Ray* ray) = 0;
 
 protected:
