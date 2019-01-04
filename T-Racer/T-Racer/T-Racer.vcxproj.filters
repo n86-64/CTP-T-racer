@@ -64,9 +64,6 @@
     <Filter Include="Core\Displays\TGA">
       <UniqueIdentifier>{0dd5cfbb-3cf6-4838-8273-2074faaa6ae2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Structures\Textures">
-      <UniqueIdentifier>{b8609122-c8cc-44dc-bde9-d18dea9065c5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Modules">
       <UniqueIdentifier>{71d97d95-a975-4f99-a980-603d677844e7}</UniqueIdentifier>
     </Filter>
@@ -94,9 +91,6 @@
     <Filter Include="Helpers\Math\Numeric">
       <UniqueIdentifier>{05ae2bf4-37e1-49eb-9453-33172ee5d1f5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Materials">
-      <UniqueIdentifier>{0067694e-5235-4d9e-b077-58e85403ee13}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Helpers\Math\Sampling">
       <UniqueIdentifier>{a112ea01-a174-40a5-983c-e3711837978f}</UniqueIdentifier>
     </Filter>
@@ -112,12 +106,6 @@
     <Filter Include="Core\Structures\Primatives\Triangle">
       <UniqueIdentifier>{52216c4c-3334-4940-a232-23eb2dc274f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Materials\MaterialManager">
-      <UniqueIdentifier>{7baa985f-11ce-4916-9394-40b14847452e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Materials\Material Types">
-      <UniqueIdentifier>{9c2fc4d2-6127-4349-974b-280f61f70e44}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Helpers\Math\Projections">
       <UniqueIdentifier>{6a655777-e147-4792-9410-ae5af9622df0}</UniqueIdentifier>
     </Filter>
@@ -126,6 +114,18 @@
     </Filter>
     <Filter Include="Core\Renderers\Path-Tracer">
       <UniqueIdentifier>{595f7e72-5fb5-4c0f-9c7f-03d88b0637be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource\Textures">
+      <UniqueIdentifier>{b8609122-c8cc-44dc-bde9-d18dea9065c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource\Materials">
+      <UniqueIdentifier>{0067694e-5235-4d9e-b077-58e85403ee13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource\Materials\MaterialManager">
+      <UniqueIdentifier>{7baa985f-11ce-4916-9394-40b14847452e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource\Materials\Material Types">
+      <UniqueIdentifier>{9c2fc4d2-6127-4349-974b-280f61f70e44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -161,7 +161,7 @@
       <Filter>Core\Displays\TGA</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Texture.cpp">
-      <Filter>Core\Structures\Textures</Filter>
+      <Filter>Core\Objects\Resource\Textures</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\TextureManager.cpp">
       <Filter>Core\Modules\TextureManager</Filter>
@@ -179,10 +179,10 @@
       <Filter>Helpers\Math\Sampling</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\MaterialManager.cpp">
-      <Filter>Core\Materials\MaterialManager</Filter>
+      <Filter>Core\Objects\Resource\Materials\MaterialManager</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\MatDiffuse.cpp">
-      <Filter>Core\Materials\Material Types</Filter>
+      <Filter>Core\Objects\Resource\Materials\Material Types</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\PathTracer.cpp">
       <Filter>Core\Renderers\Path-Tracer</Filter>
@@ -244,7 +244,7 @@
       <Filter>Core\Displays\PFM</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Texture.h">
-      <Filter>Core\Structures\Textures</Filter>
+      <Filter>Core\Objects\Resource\Textures</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\TextureManager.h">
       <Filter>Core\Modules\TextureManager</Filter>
@@ -268,7 +268,7 @@
       <Filter>Core\BVH\Tree</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Materials.h">
-      <Filter>Core\Materials</Filter>
+      <Filter>Core\Objects\Resource\Materials</Filter>
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Sampler.h">
       <Filter>Helpers\Math\Sampling</Filter>
@@ -277,13 +277,13 @@
       <Filter>Helpers\Dependancies</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\MaterialManager.h">
-      <Filter>Core\Materials\MaterialManager</Filter>
+      <Filter>Core\Objects\Resource\Materials\MaterialManager</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\PathVertex.h">
       <Filter>Core\Paths</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\MatDiffuse.h">
-      <Filter>Core\Materials\Material Types</Filter>
+      <Filter>Core\Objects\Resource\Materials\Material Types</Filter>
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Projections.h">
       <Filter>Helpers\Math\Projections</Filter>
