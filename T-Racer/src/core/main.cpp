@@ -9,6 +9,7 @@
 #include "TextureManager.h"
 #include "AABB.h"
 #include "helpers/Math_Sampler.h"
+#include "PathTracer.h"
 
 
 // The application entry point.
@@ -122,11 +123,18 @@ int main(int argc, char* argv[])
 	window.init(800, 600);
 //	window.writeToDisplay(&test);
 
+	T_racer_Renderer_PathTracer  trpt;
+
 	T_racer_Scene testScene;
 	testScene.setMainCamera(&testCam);
-	testScene.setDisplay(&window);
-	testScene.loadModel("resources/bunny.obj");
-	testScene.Render();
+	testScene.loadModel("resources/cube.obj");
+
+	trpt.setDisplay(&window);
+	trpt.setScene(&testScene);
+	trpt.Render();
+
+	//testScene.setDisplay(&window);
+	//testScene.Render();
 
 	while (!window.shouldQuit())
 	{

@@ -9,6 +9,8 @@ void T_racer_Display_Window::init(float resolutionX, float resolutionY)
 
 	resX = resolutionX;
 	resY = resolutionY;
+
+	frameBuffer = new Image(resX, resY);
 }
 
 void T_racer_Display_Window::update()

@@ -20,6 +20,16 @@ void T_racer_Renderer_PathTracer::Render()
 			collisions = sceneObject->traceRay(x, y);
 			triangleIndex = sortTriangles(collisions, intersectionDisc);
 
+			if (triangleIndex >= 0) 
+			{
+				display->setColourValue(x, y, T_racer_Math::Colour(1.0f,1.0f,1.0f));
+			}
+			else 
+			{
+				display->setColourValue(x, y, T_racer_Math::Colour(0.0f, 0.0f, 0.0f));
+			}
+
+#ifdef FALSE
 			if (triangleIndex) 
 			{
 				Triangle* primative = sceneObject->getTriangleByIndex(triangleIndex);
@@ -34,25 +44,33 @@ void T_racer_Renderer_PathTracer::Render()
 				tracePath(collisions.ray);
 
 			}
+#endif
 		}
 	}
+	display->update();
 }
 
 void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay)
 {
+	T_racer_TriangleIntersection  intersectDisc;
 	T_racer_Material*  surfaceMaterial = nullptr;
 	bool terminatePath = false;
+
+	T_racer_BVH_CollisionQueue_t  collisions;
 
 	T_racer_Math::Ray   ray = initialRay;
 	T_racer_Math::Sampler  sampler;
 
 	T_racer_Math::Colour  pathTroughput;
+	T_racer_Math::Colour  lightValue;
+
 	pathTroughput.colour = T_racer_Math::Vector(1.0f, 1.0f, 1.0f);
 	T_racer_SampledDirection  wi;
 
 	T_racer_Math::Colour  brdfValue;
 
 	int pathIndex = 0;
+	int triangleIndex = -1;
 	while (!terminatePath) 
 	{
 		surfaceMaterial = materials.retrieveMaterial(pathIndex);
@@ -64,6 +82,23 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay)
 		// else trace the scene again.
 		// If we hit a light source also terminate the path.
 		// then loop.
+		if (!terminatePath) 
+		{
+			collisions = sceneObject->traceRay(lightPath[pathIndex].hitPoint, wi.direction);
+			triangleIndex = sortTriangles(collisions, intersectDisc);
+
+			// TODO - Add routiene to check if this is a light source.
+			// If so terminate else we will evaluate the next light path.
+			if (triangleIndex) 
+			{
+				// Create a new light path.
+				pathIndex++;
+			}
+			else 
+			{
+				terminatePath = true;
+			}
+		}
 	}
 
 }
@@ -92,8 +127,13 @@ int T_racer_Renderer_PathTracer::sortTriangles(T_racer_BVH_CollisionQueue_t& col
 
 bool T_racer_Renderer_PathTracer::RussianRoulette(T_racer_Math::Colour& colour, int pathIndex)
 {
-	bool stop = false;
+	T_racer_Math::Sampler   sampler;
+	bool rr = (sampler.Random() < (colour.colour.Magnitude())); // TODO - Add code to perform russian roullete.
 
+	if (rr) 
+	{
+		colour.colour = colour.colour / colour.colour;
+	}
 
-	return stop;
+	return rr;
 }

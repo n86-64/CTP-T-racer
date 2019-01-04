@@ -21,6 +21,10 @@ public:
 	virtual void Render() = 0;
 	void setDisplay(T_racer_Display* newDisplay) { display = newDisplay; }
 
+	void setScene(T_racer_Scene* newScene) { sceneObject = std::unique_ptr<T_racer_Scene>(newScene); 
+	sceneObject->setDisplay(display);
+	}
+
 protected:
 	virtual void tracePath(T_racer_Math::Ray initialRay) = 0;
 

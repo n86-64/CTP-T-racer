@@ -121,11 +121,17 @@
     <Filter Include="Core\Objects\Resource\Materials">
       <UniqueIdentifier>{0067694e-5235-4d9e-b077-58e85403ee13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource\Materials\MaterialManager">
-      <UniqueIdentifier>{7baa985f-11ce-4916-9394-40b14847452e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Objects\Resource\Materials\Material Types">
       <UniqueIdentifier>{9c2fc4d2-6127-4349-974b-280f61f70e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Modules\MaterialManager">
+      <UniqueIdentifier>{7baa985f-11ce-4916-9394-40b14847452e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource\Lighting">
+      <UniqueIdentifier>{a2018fcc-8e8d-456a-ba2d-5d7033cd624d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource\Lighting\Lights">
+      <UniqueIdentifier>{131fee7a-e7c4-4b2c-ae64-8ede047906f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +185,7 @@
       <Filter>Helpers\Math\Sampling</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\MaterialManager.cpp">
-      <Filter>Core\Objects\Resource\Materials\MaterialManager</Filter>
+      <Filter>Core\Modules\MaterialManager</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\MatDiffuse.cpp">
       <Filter>Core\Objects\Resource\Materials\Material Types</Filter>
@@ -189,6 +195,12 @@
     </ClCompile>
     <ClCompile Include="..\src\core\Display.cpp">
       <Filter>Core\Displays</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\PointLight.cpp">
+      <Filter>Core\Objects\Resource\Lighting\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\BaseLight.cpp">
+      <Filter>Core\Objects\Resource\Lighting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -277,7 +289,7 @@
       <Filter>Helpers\Dependancies</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\MaterialManager.h">
-      <Filter>Core\Objects\Resource\Materials\MaterialManager</Filter>
+      <Filter>Core\Modules\MaterialManager</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\PathVertex.h">
       <Filter>Core\Paths</Filter>
@@ -293,6 +305,15 @@
     </ClInclude>
     <ClInclude Include="..\src\core\PathTracer.h">
       <Filter>Core\Renderers\Path-Tracer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BaseLight.h">
+      <Filter>Core\Objects\Resource\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PointLight.h">
+      <Filter>Core\Objects\Resource\Lighting\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\SampledObjects.h">
+      <Filter>Core\Paths</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
