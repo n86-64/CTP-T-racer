@@ -13,19 +13,12 @@
 
 #include "helpers/Math_Sampler.h"
 #include "Texture.h"
+#include "SampledObjects.h"
 
 namespace T_racer_Math 
 {
 	class Ray;
 }
-
-// The direction the ray should travel along with the probibility density.
-struct T_racer_SampledDirection
-{
-	T_racer_Math::Vector direction;
-	float				 probabilityDensity;
-};
-
 
 class T_racer_Material 
 {
