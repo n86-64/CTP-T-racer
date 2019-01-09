@@ -20,6 +20,7 @@
 #include "helpers/Image.h"
 
 class T_racer_Display;
+class T_racer_Light_Base;
 
 class T_racer_Scene 
 {
@@ -44,9 +45,12 @@ public:
 
 	Triangle*   getTriangleByIndex(int index) { return &sceneTriangles[index]; }
 
+	T_racer_Light_Base* sampleOneLightSource();
+
 private:
 	std::vector<std::unique_ptr<T_racer_Resource>>  sceneResources;
 	std::vector<Triangle>   sceneTriangles;
+	std::vector<T_racer_Light_Base*>  sceneLights;
 
 	T_racer_Camera* mainCamera = nullptr;
 	T_racer_Display* display;

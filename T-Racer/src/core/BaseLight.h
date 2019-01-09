@@ -25,6 +25,10 @@ public:
 	virtual T_racer_Math::Colour Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
 	virtual float probabilityDensity(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
 
+	T_racer_Math::Vector getPosition() const { return position; }
+
+	T_racer_Math::Vector getRotation() const { return rotation; }
+
 protected:
 	// TODO - Add any additional required variables here. 
 	T_racer_Math::Vector    position;

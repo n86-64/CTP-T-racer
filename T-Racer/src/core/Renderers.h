@@ -12,6 +12,7 @@
 #include "Scene.h"
 #include "MaterialManager.h"
 #include "TextureManager.h"
+#include "BaseLight.h"
 
 class T_racer_Renderer_Base 
 {
@@ -26,12 +27,12 @@ public:
 	}
 
 protected:
-	virtual void tracePath(T_racer_Math::Ray initialRay) = 0;
+	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance) = 0;
 
 protected:
-	std::unique_ptr<T_racer_Scene>  sceneObject;
-	T_racer_MaterialManager         materials;
-	T_racer_TextureManager			textures;
+	std::unique_ptr<T_racer_Scene>		sceneObject;
+	T_racer_MaterialManager				materials;
+	T_racer_TextureManager				textures;
 
 	T_racer_Display*				display = nullptr;
 };

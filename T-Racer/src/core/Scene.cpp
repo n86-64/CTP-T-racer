@@ -5,6 +5,8 @@
 #include "Display.h"
 #include "Scene.h"
 
+#include "BaseLight.h"
+
 
 void T_racer_Scene::addResourceObject(T_racer_Resource* newRes)
 {
@@ -101,6 +103,13 @@ T_racer_BVH_CollisionQueue_t T_racer_Scene::traceRay(T_racer_Math::Vector origin
 	collisions.triangleIndexes = bvh.getPossibleCollisions().triangleIndexes;
 
 	return collisions;
+}
+
+T_racer_Light_Base* T_racer_Scene::sampleOneLightSource()
+{
+	// Not adiquite but it will ensure a good light source is selected.
+	srand(NULL);
+	return sceneLights[rand() % sceneLights.size()];
 }
 
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)

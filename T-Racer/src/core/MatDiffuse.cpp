@@ -4,14 +4,14 @@
 
 #include "MatDiffuse.h"
 
-T_racer_Texture2D T_racer_Materials_BasicDiffuse::Evaluate(T_racer_Math::Ray * ray)
+T_racer_Texture2D T_racer_Materials_BasicDiffuse::Evaluate(T_racer_Math::Ray* ray, T_racer_Path_Vertex& pathVertex)
 {
 	T_racer_Math::Colour  lookupColour;
 	T_racer_Texture2D  outputTex(1, 1); 
 
 	if (materialTexture) 
 	{
-		lookupColour = materialTexture->interpolatePointBilinear(0.0f, 1.0f);
+		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
 		lookupColour.colour = lookupColour.colour / M_PI;
 		outputTex.copyPixelValues(0, 0, lookupColour.colour.X, lookupColour.colour.Y, lookupColour.colour.Z);
 	}
@@ -19,7 +19,7 @@ T_racer_Texture2D T_racer_Materials_BasicDiffuse::Evaluate(T_racer_Math::Ray * r
 	return outputTex;
 }
 
-T_racer_SampledDirection T_racer_Materials_BasicDiffuse::Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler& matSampler)
+T_racer_SampledDirection T_racer_Materials_BasicDiffuse::Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler& matSampler, T_racer_Path_Vertex& pathVertex)
 {
 	T_racer_SampledDirection dir;
 
@@ -29,16 +29,12 @@ T_racer_SampledDirection T_racer_Materials_BasicDiffuse::Sample(T_racer_Math::Ra
 	// TODO - Convert to world space using orthonormal basis matrix.
 
 	dir.direction = samplePos;
-	dir.probabilityDensity = ProbabilityDensity(ray);
+	dir.probabilityDensity = ProbabilityDensity(ray, dir, pathVertex);
 
 	return dir;
 }
 
-float T_racer_Materials_BasicDiffuse::ProbabilityDensity(T_racer_Math::Ray * ray)
+float T_racer_Materials_BasicDiffuse::ProbabilityDensity(T_racer_Math::Ray * ray, T_racer_SampledDirection& sampledDir, T_racer_Path_Vertex& pathVertex)
 {
-	// TODO - Add code to retrieve surface normal.
-
-	T_racer_SampledDirection sampledDirection;
-
-	return 0.0f;
+	return T_racer_Math::dot(sampledDir.direction, pathVertex.normal);
 }

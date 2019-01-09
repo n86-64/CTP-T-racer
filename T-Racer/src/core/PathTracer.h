@@ -24,7 +24,7 @@ public:
 	virtual void Render() override;
 
 protected:
-	virtual void tracePath(T_racer_Math::Ray initialRay) override;
+	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance) override;
 
 
 private:
@@ -36,5 +36,7 @@ private:
 	// Performs RussianRoulette on the path and then returns the 
 	bool RussianRoulette(T_racer_Math::Colour& colour, int pathIndex);
 
+	T_racer_Math::Colour calculateDirectLighting(int pathVertex, T_racer_Math::Colour& col);
 
+	bool isLightVisible();
 };
