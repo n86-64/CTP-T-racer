@@ -12,9 +12,12 @@
 #include <vector>
 #include "helpers/Math_Ray.h"
 
+class T_racer_Light_Base;
+
 struct T_racer_BVH_CollisionQueue_t
 {
 	// The triangles we need to test from the scene.
-	std::vector<int>  triangleIndexes;
+	std::vector<int>				 triangleIndexes;
+	std::vector<T_racer_Light_Base*> lights;
 	T_racer_Math::Ray ray;
 };

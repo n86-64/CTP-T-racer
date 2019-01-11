@@ -45,7 +45,7 @@ public:
 
 	Triangle*   getTriangleByIndex(int index) { return &sceneTriangles[index]; }
 
-	T_racer_Light_Base* sampleOneLightSource();
+	T_racer_Light_Base* retrieveOneLightSource();
 
 private:
 	std::vector<std::unique_ptr<T_racer_Resource>>  sceneResources;

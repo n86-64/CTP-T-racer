@@ -18,6 +18,7 @@ class T_racer_Renderer_Base
 {
 public:
 	T_racer_Renderer_Base() = default;
+	virtual ~T_racer_Renderer_Base() = default;
 
 	virtual void Render() = 0;
 	void setDisplay(T_racer_Display* newDisplay) { display = newDisplay; }

@@ -22,11 +22,11 @@ public:
 	T_racer_Light_Base() = default;
 
 	virtual T_racer_Math::Colour Sample(T_racer_SampledDirection sampledDirection) = 0;
-	virtual T_racer_Math::Colour Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
+	virtual T_racer_SampledDirection Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
+
 	virtual float probabilityDensity(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
 
 	T_racer_Math::Vector getPosition() const { return position; }
-
 	T_racer_Math::Vector getRotation() const { return rotation; }
 
 protected:

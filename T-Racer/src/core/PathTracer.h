@@ -21,6 +21,7 @@ class T_racer_Renderer_PathTracer : public T_racer_Renderer_Base
 public:
 	T_racer_Renderer_PathTracer() = default;
 
+
 	virtual void Render() override;
 
 protected:
@@ -38,5 +39,5 @@ private:
 
 	T_racer_Math::Colour calculateDirectLighting(int pathVertex, T_racer_Math::Colour& col);
 
-	bool isLightVisible();
+	bool isLightVisible(T_racer_Light_Base* lightSource, int pathVertex);
 };

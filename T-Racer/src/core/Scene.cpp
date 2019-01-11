@@ -99,13 +99,13 @@ T_racer_BVH_CollisionQueue_t T_racer_Scene::traceRay(T_racer_Math::Vector origin
 	collisions.ray.setPosition(origin);
 	collisions.ray.setDirection(direction);
 	bvh.checkForIntersections(&collisions.ray);
-
 	collisions.triangleIndexes = bvh.getPossibleCollisions().triangleIndexes;
+
 
 	return collisions;
 }
 
-T_racer_Light_Base* T_racer_Scene::sampleOneLightSource()
+T_racer_Light_Base* T_racer_Scene::retrieveOneLightSource()
 {
 	// Not adiquite but it will ensure a good light source is selected.
 	srand(NULL);
