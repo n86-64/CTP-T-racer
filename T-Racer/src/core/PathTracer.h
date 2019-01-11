@@ -40,4 +40,6 @@ private:
 	T_racer_Math::Colour calculateDirectLighting(int pathVertex, T_racer_Math::Colour& col);
 
 	bool isLightVisible(T_racer_Light_Base* lightSource, int pathVertex);
+
+	float geometryTerm(T_racer_SampledDirection& wi, int pathVertex, T_racer_Light_Base* lightSource);
 };

@@ -31,6 +31,7 @@ namespace T_racer_Math
 			}
 			else
 			{ /* region 2, also |b| > |a| */
+				r = b;
 				phi = (M_PI / 4) * (2 - (a / b));
 			}
 		}

@@ -127,7 +127,7 @@ int main(int argc, char* argv[])
 
 	T_racer_Scene testScene;
 	testScene.setMainCamera(&testCam);
-	testScene.loadModel("resources/bunny.obj");
+	testScene.loadModel("resources/cube.obj");
 
 	trpt.setDisplay(&window);
 	trpt.setScene(&testScene);
