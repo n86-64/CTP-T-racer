@@ -315,5 +315,8 @@
     <ClInclude Include="..\src\core\SampledObjects.h">
       <Filter>Core\Paths</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\core\MaterialConstants.h">
+      <Filter>Core\Objects\Resource\Materials</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

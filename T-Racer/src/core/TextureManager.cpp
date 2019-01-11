@@ -3,6 +3,13 @@
 #include "TextureManager.h"
 
 
+T_racer_TextureManager::T_racer_TextureManager()
+{
+	// Create a default texture availible for use in the renderer. (Simply a 256x256 white colour background.)
+	T_racer_Texture2D* defaultTex = new T_racer_Texture2D(256, 256);
+	textures.emplace(std::pair<std::string, std::unique_ptr<T_racer_Texture2D>>("default", defaultTex));
+}
+
 T_racer_Texture2D* T_racer_TextureManager::createTexture(std::string textureName)
 {
 	T_racer_Texture2D*  tex = nullptr;

@@ -30,6 +30,10 @@ public:
 	virtual T_racer_SampledDirection Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler& matSampler, T_racer_Path_Vertex& pathVertex) = 0;
 	virtual float					 ProbabilityDensity(T_racer_Math::Ray* ray, T_racer_SampledDirection& sampledDir, T_racer_Path_Vertex& pathVertex) = 0;
 
+	std::string getName() const { return name; }
+	void		setName(std::string value) { name = value; }
+
 protected:
+	std::string						 name = "default";
 	T_racer_Texture2D*				 materialTexture = nullptr;
 };

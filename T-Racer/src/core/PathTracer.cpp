@@ -39,8 +39,8 @@ void T_racer_Renderer_PathTracer::Render()
 				display->setColourValue(x, y, T_racer_Math::Colour(0.0f, 0.0f, 0.0f));
 			}
 
-//#ifdef TRUE
-			if (triangleIndex) 
+#ifdef TRUE
+			if (triangleIndex != T_RACER_TRIANGLE_NULL) 
 			{
 				Triangle* primative = sceneObject->getTriangleByIndex(triangleIndex);
 				lightPath.emplace_back(T_racer_Path_Vertex());
@@ -57,7 +57,7 @@ void T_racer_Renderer_PathTracer::Render()
 			}
 
 			lightPath.clear();
-//#endif	
+#endif	
 		}
 
 	}
@@ -117,7 +117,6 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				lightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
 				lightPath[pathIndex].orthnormalBasis = primative->createShadingFrame();
 
-
 			}
 			else 
 			{
@@ -138,7 +137,7 @@ int T_racer_Renderer_PathTracer::sortTriangles(T_racer_BVH_CollisionQueue_t& col
 	for (int pIndex : collisions.triangleIndexes)
 	{
 		intersect = sceneObject->getTriangleByIndex(pIndex)->isIntersecting(collisions.ray);
-		if (intersect.t < tVal)
+		if (intersect.t < tVal && intersect.intersection)
 		{
 			primaryTriangle = pIndex;
 			tVal = intersect.t;

@@ -16,7 +16,7 @@
 class T_racer_MaterialManager
 {
 public:
-	T_racer_MaterialManager() = default;
+	T_racer_MaterialManager();
 
 	T_racer_Material*   retrieveMaterial(int matID);
 

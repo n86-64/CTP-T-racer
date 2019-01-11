@@ -254,6 +254,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\core\Display.h" />
     <ClInclude Include="..\src\core\Intersection.h" />
     <ClInclude Include="..\src\core\MatDiffuse.h" />
+    <ClInclude Include="..\src\core\MaterialConstants.h" />
     <ClInclude Include="..\src\core\MaterialManager.h" />
     <ClInclude Include="..\src\core\Materials.h" />
     <ClInclude Include="..\src\core\ModelLoader.h" />

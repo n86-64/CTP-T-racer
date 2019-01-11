@@ -20,7 +20,7 @@
 class T_racer_TextureManager 
 {
 public:
-	T_racer_TextureManager() = default;
+	T_racer_TextureManager();
 
 	T_racer_Texture2D*   createTexture(std::string textureName);
 

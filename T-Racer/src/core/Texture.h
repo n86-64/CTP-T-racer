@@ -34,8 +34,9 @@ public:
 
 	// perform bi-linear interpolation on the point using a UV poijnt (normalised between 0 and 1)
 	T_racer_Math::Colour  interpolatePointBilinear(float u, float v);
-
 	T_racer_Math::Colour  getPixelValue(int x, int y);
+
+
 
 private:
 	int width = 0;

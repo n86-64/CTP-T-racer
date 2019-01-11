@@ -20,5 +20,6 @@ struct T_racer_Path_Vertex
 	T_racer_Math::Vector	normal;
 	T_racer_Math::Matrix3X3 orthnormalBasis;
 	T_racer_Math::Vector	hitPoint;
+	T_racer_Math::Vector    incomingRayDirection;
 	unsigned int			BRDFMaterialID = 0;
 };

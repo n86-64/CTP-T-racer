@@ -6,6 +6,14 @@ T_racer_Texture2D::T_racer_Texture2D(int texWidth, int texHeight)
 	height(texHeight)
 {
 	textureData = new float[width * height * 3];
+
+	for (int y = 0; y < texHeight; y++) 
+	{
+		for (int x = 0; x < texWidth; x++)
+		{
+			copyPixelValues(x, y, 1.0f, 1.0f, 1.0f);
+		}
+	}
 }
 
 T_racer_Texture2D::T_racer_Texture2D(const T_racer_Texture2D & obj)
