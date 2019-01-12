@@ -127,6 +127,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				lightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
 				lightPath[pathIndex].orthnormalBasis = primative->createShadingFrame();
 
+				ray = collisions.ray;
 			}
 			else 
 			{
@@ -134,6 +135,8 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 			}
 		}
 	}
+
+
 
 }
 
@@ -197,11 +200,13 @@ bool T_racer_Renderer_PathTracer::isLightVisible(T_racer_Light_Base* lightSource
 	return (intersectionIndex != T_RACER_TRIANGLE_NULL);
 }
 
-float T_racer_Renderer_PathTracer::geometryTerm(T_racer_SampledDirection & wi, int pathVertex, T_racer_Light_Base* lightSource)
+float T_racer_Renderer_PathTracer::geometryTerm(T_racer_SampledDirection& Light_wi, int pathVertex, T_racer_Light_Base* lightSource)
 {
-	T_racer_Math::Vector brdfTheta = lightPath[pathVertex].incomingRayDirection;
+	float brdfTheta = T_racer_Math::dot(Light_wi.direction, lightPath[pathVertex].normal);
+	float lightTheta = 0;// Determined by light direction.
 	T_racer_Math::Vector xN = lightPath[pathVertex].hitPoint;
-	T_racer_Math::Vector xL = wi.direction;
+	T_racer_Math::Vector xL = lightSource->getPosition();
 
-	return 0.0f;
+
+	return (brdfTheta * lightTheta) / pow((xN-xL).Magnitude(), 2);
 }
