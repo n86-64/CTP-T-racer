@@ -202,7 +202,9 @@
     <ClCompile Include="..\src\core\BaseLight.cpp">
       <Filter>Core\Objects\Resource\Lighting</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\core\Materials.cpp" />
+    <ClCompile Include="..\src\core\Materials.cpp">
+      <Filter>Core\Objects\Resource\Materials</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
