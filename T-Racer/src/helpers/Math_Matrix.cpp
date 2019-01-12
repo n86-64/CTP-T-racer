@@ -38,4 +38,12 @@ T_racer_Math::Matrix4X4 T_racer_Math::Matrix4X4::operator*(Matrix4X4 matrix)
 	return Rmatrix;
 }
 
-
+T_racer_Math::Vector T_racer_Math::Matrix3X3::operator*(T_racer_Math::Vector v)
+{
+	return Vector
+	(
+		m[0][0] * v.X + m[0][1] * v.Y + m[0][2] * v.Z,
+		m[1][0] * v.X + m[1][1] * v.Y + m[1][2] * v.Z,
+		m[2][0] * v.X + m[2][1] * v.Y + m[2][2] * v.Z
+	);
+}

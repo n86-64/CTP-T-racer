@@ -141,11 +141,41 @@ T_racer_Math::Matrix3X3 Triangle::createShadingFrame()
 	u2.normaliseSelf();
 	u3.normaliseSelf();
 
+
 	return T_racer_Math::Matrix3X3
 	(
 		u1.X, u1.Y, u1.Z,
 		u2.X, u2.Y, u2.Z,
 		u3.X, u3.Y, u3.Z
+	);
+}
+
+T_racer_Math::Matrix3X3 Triangle::createShadingFrame(T_racer_Math::Vector v)
+{
+	float invLen = 0.0f;
+	T_racer_Math::Vector v2;
+	T_racer_Math::Vector v3;
+
+	if (fabsf(v.X) > fabsf(v.Y)) 
+	{
+		invLen = 1.0f / sqrtf(pow(v.X, 2) + pow(v.Z, 2));
+		v2 = T_racer_Math::Vector(-v.Z * invLen, 0.0f, v.X * invLen);
+	}
+	else 
+	{
+		invLen = 1.0f / sqrtf(pow(v.Y, 2) + pow(v.Z, 2));
+		v2 = T_racer_Math::Vector(0.0f, v.Z * invLen, -v.Y * invLen);
+	}
+
+	assert(T_racer_Math::dot(v, v2) == 0.0f);
+
+	v3 = T_racer_Math::cross(v, v2);
+
+	return T_racer_Math::Matrix3X3 // Returns an outhogonal matrix.
+	(
+		v2.X, v2.Y, v2.Z,
+		v3.X, v3.Y, v3.Z,
+		v.X, v.Y, v.Z
 	);
 }
 

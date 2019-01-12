@@ -34,6 +34,8 @@ public:
 	T_racer_Math::Vector		   getOrthnormalBasis();
 	
 	T_racer_Math::Matrix3X3		   createShadingFrame(); // Returns an orthonormal 3X3 projection matrix.
+	T_racer_Math::Matrix3X3		   createShadingFrame(T_racer_Math::Vector v);
+
 	T_racer_Math::Vector		   getNormal();
 
 	T_racer_Collider_AABB&		   getCollider() { return collider; };

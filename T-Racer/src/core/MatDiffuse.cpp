@@ -28,7 +28,7 @@ T_racer_SampledDirection T_racer_Materials_BasicDiffuse::Sample(T_racer_Math::Ra
 
 	// TODO - Convert to world space using orthonormal basis matrix.
 
-	dir.direction = samplePos;
+	dir.direction = pathVertex.orthnormalBasis * samplePos;
 	dir.probabilityDensity = ProbabilityDensity(ray, dir, pathVertex);
 
 	return dir;

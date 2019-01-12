@@ -46,9 +46,9 @@ void T_racer_Renderer_PathTracer::Render()
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
 				lightPath[0].hitPoint = collisions.ray.getHitPoint(intersectionDisc.t);
-				lightPath[0].normal = primative->getNormal();
+				lightPath[0].normal = primative->getNormal().normalise();
 				lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
-				lightPath[0].orthnormalBasis = primative->createShadingFrame();
+				lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
 
 				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
 				tracePath(collisions.ray, irradiance);
@@ -79,7 +79,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	T_racer_Math::Colour  pathTroughput;
 	pathTroughput.colour = T_racer_Math::Vector(1.0f, 1.0f, 1.0f);
 
-	T_racer_SampledDirection  wo;
+	T_racer_SampledDirection  wi;
 
 	T_racer_Math::Colour  brdfValue;
 
@@ -88,9 +88,10 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	while (!terminatePath) 
 	{
 		surfaceMaterial = materials.retrieveMaterial(lightPath[pathIndex].BRDFMaterialID);
-		wo = surfaceMaterial->Sample(&ray, sampler, lightPath[pathIndex]);
+		wi = surfaceMaterial->Sample(&ray, sampler, lightPath[pathIndex]);
+		brdfValue = surfaceMaterial->Evaluate(&ray, lightPath[pathIndex]).getPixelValue(0,0);
 
-		pathTroughput = pathTroughput * brdfValue * dot(lightPath[pathIndex].incomingRayDirection, lightPath[pathIndex].normal) / wo.probabilityDensity;
+		pathTroughput = pathTroughput * brdfValue * dot(wi.direction, lightPath[pathIndex].normal) / wi.probabilityDensity;
 		terminatePath = !RussianRoulette(pathTroughput, pathIndex);
 
 		// else trace the scene again.
@@ -98,7 +99,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		// then loop.
 		if (!terminatePath) 
 		{
-			collisions = sceneObject->traceRay(lightPath[pathIndex].hitPoint, wo.direction);
+			collisions = sceneObject->traceRay(lightPath[pathIndex].hitPoint, wi.direction);
 			triangleIndex = sortTriangles(collisions, intersectDisc);
 
 			// TODO - Add routiene to check if this is a light source.
