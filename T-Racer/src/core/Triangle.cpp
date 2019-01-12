@@ -167,7 +167,7 @@ T_racer_Math::Matrix3X3 Triangle::createShadingFrame(T_racer_Math::Vector v)
 		v2 = T_racer_Math::Vector(0.0f, v.Z * invLen, -v.Y * invLen);
 	}
 
-	assert(T_racer_Math::dot(v, v2) == 0.0f);
+	//assert(T_racer_Math::dot(v, v2) == 0.0f);
 
 	v3 = T_racer_Math::cross(v, v2);
 

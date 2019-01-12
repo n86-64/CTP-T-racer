@@ -2,7 +2,7 @@
 #include "PathTracer.h"
 
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
-constexpr float T_RACER_LUMINANCE_VALUE = 0.5f;
+constexpr float T_RACER_LUMINANCE_VALUE = 0.3f;
 
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
@@ -166,11 +166,12 @@ int T_racer_Renderer_PathTracer::sortTriangles(T_racer_BVH_CollisionQueue_t& col
 bool T_racer_Renderer_PathTracer::RussianRoulette(T_racer_Math::Colour& colour, int pathIndex)
 {
 	T_racer_Math::Sampler   sampler;
-	bool rr = (sampler.Random() < T_RACER_LUMINANCE_VALUE); // TODO - Add code to perform russian roullete.
+	float stopProbability = sampler.Random();
+	bool rr = (stopProbability >= T_RACER_LUMINANCE_VALUE); // TODO - Add code to perform russian roullete.
 
 	if (rr) 
 	{
-		colour.colour = colour.colour / (colour.colour * T_RACER_LUMINANCE_VALUE);
+		colour.colour = colour.colour * (1.0f / 1.0f - stopProbability);
 	}
 
 	return rr;
@@ -206,7 +207,7 @@ float T_racer_Renderer_PathTracer::geometryTerm(T_racer_SampledDirection& Light_
 	float brdfTheta = T_racer_Math::dot(Light_wi.direction, lightPath[pathVertex].normal);
 	float lightTheta = 0;// Determined by light direction.
 	T_racer_Math::Vector xN = lightPath[pathVertex].hitPoint;
-	T_racer_Math::Vector xL = lightSource->getPosition(); // TODO - Need to work out how to get a point on the light source.
+	T_racer_Math::Vector xL = lightSource->getPosition(); // TODO - Need to work out how to work out position of a point light on the light source.
 
 	return (brdfTheta * lightTheta) / pow((xN-xL).Magnitude(), 2);
 }
