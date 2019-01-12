@@ -12,7 +12,7 @@ T_racer_Texture2D T_racer_Materials_BasicDiffuse::Evaluate(T_racer_Math::Ray* ra
 	if (materialTexture) 
 	{
 		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
-		lookupColour.colour = lookupColour.colour / M_PI;
+		lookupColour.colour = lookupColour.colour / (float)M_PI;
 		outputTex.copyPixelValues(0, 0, lookupColour.colour.X, lookupColour.colour.Y, lookupColour.colour.Z);
 	}
 

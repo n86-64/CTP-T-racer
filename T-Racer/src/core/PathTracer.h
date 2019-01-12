@@ -19,7 +19,7 @@ constexpr int T_RACER_SAMPLER_RR_CONSTANT = 0.1f;
 class T_racer_Renderer_PathTracer : public T_racer_Renderer_Base  
 {
 public:
-	T_racer_Renderer_PathTracer() = default;
+	T_racer_Renderer_PathTracer();
 
 
 	virtual void Render() override;
@@ -40,6 +40,5 @@ private:
 	T_racer_Math::Colour calculateDirectLighting(int pathVertex, T_racer_Math::Colour& col);
 
 	bool isLightVisible(T_racer_Light_Base* lightSource, int pathVertex);
-
 	float geometryTerm(T_racer_SampledDirection& wi, int pathVertex, T_racer_Light_Base* lightSource);
 };

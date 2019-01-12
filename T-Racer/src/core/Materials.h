@@ -33,6 +33,8 @@ public:
 	std::string getName() const { return name; }
 	void		setName(std::string value) { name = value; }
 
+	void	    setTexture(T_racer_Texture2D* newTexture);
+
 protected:
 	std::string						 name = "default";
 	T_racer_Texture2D*				 materialTexture = nullptr;

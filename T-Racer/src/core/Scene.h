@@ -25,13 +25,14 @@ class T_racer_Light_Base;
 class T_racer_Scene 
 {
 public:
-	T_racer_Scene()
-	{};
+	T_racer_Scene();
 
 	void addResourceObject(T_racer_Resource* newRes);
 	void setMainCamera(T_racer_Camera* newCam) { mainCamera = newCam; };
 	
 	void loadModel(std::string modelName);
+
+	void addLight(T_racer_Light_Base*  newLight) { sceneLights.emplace_back(newLight); }; // Adds a new light to the scene.
 
 	// Render a single frame and add to a display. 
 	void Render();
@@ -50,7 +51,7 @@ public:
 private:
 	std::vector<std::unique_ptr<T_racer_Resource>>  sceneResources;
 	std::vector<Triangle>   sceneTriangles;
-	std::vector<T_racer_Light_Base*>  sceneLights;
+	std::vector<std::unique_ptr<T_racer_Light_Base>>  sceneLights;
 
 	T_racer_Camera* mainCamera = nullptr;
 	T_racer_Display* display;

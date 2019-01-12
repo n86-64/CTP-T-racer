@@ -229,6 +229,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClCompile Include="..\src\core\main.cpp" />
     <ClCompile Include="..\src\core\MatDiffuse.cpp" />
     <ClCompile Include="..\src\core\MaterialManager.cpp" />
+    <ClCompile Include="..\src\core\Materials.cpp" />
     <ClCompile Include="..\src\core\ModelLoader.cpp" />
     <ClCompile Include="..\src\core\PathTracer.cpp" />
     <ClCompile Include="..\src\core\PFMDisplay.cpp" />

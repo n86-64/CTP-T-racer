@@ -20,6 +20,7 @@ T_racer_Texture2D::T_racer_Texture2D(const T_racer_Texture2D & obj)
 {
 	this->width = obj.width;
 	this->height = obj.height;
+	this->textureData = new float[width * height * 3];
 	memcpy(&this->textureData[0], obj.textureData, sizeof(float) * width * height * 3); // Copy the contents over to a new
 }
 

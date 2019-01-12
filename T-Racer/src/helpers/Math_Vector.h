@@ -55,6 +55,7 @@ namespace T_racer_Math
 		Vector			 operator/(Vector vec);
 		void			 operator/=(Vector vec);
 		Vector			 operator/(int scalier);
+		Vector			 operator/(float scalier);
 
 		// Scalier Operations
 		Vector			 operator*(float scalier);

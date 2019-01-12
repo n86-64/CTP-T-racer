@@ -1,11 +1,15 @@
 #include "Display.h"
-
 #include "PathTracer.h"
 
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
-
 constexpr float T_RACER_LUMINANCE_VALUE = 0.5f;
 
+
+T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
+{
+	// Here we set up the deafault materials.
+	materials.retrieveMaterial(0)->setTexture(textures.createTexture("default"));
+}
 
 void T_racer_Renderer_PathTracer::Render()
 {
@@ -57,7 +61,7 @@ void T_racer_Renderer_PathTracer::Render()
 			}
 
 			lightPath.clear();
-//#endif	
+// #endif	
 		}
 
 	}
@@ -80,7 +84,6 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	pathTroughput.colour = T_racer_Math::Vector(1.0f, 1.0f, 1.0f);
 
 	T_racer_SampledDirection  wi;
-
 	T_racer_Math::Colour  brdfValue;
 
 	int pathIndex = 0;
@@ -90,6 +93,11 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		surfaceMaterial = materials.retrieveMaterial(lightPath[pathIndex].BRDFMaterialID);
 		wi = surfaceMaterial->Sample(&ray, sampler, lightPath[pathIndex]);
 		brdfValue = surfaceMaterial->Evaluate(&ray, lightPath[pathIndex]).getPixelValue(0,0);
+
+		//pathTroughput = pathTroughput * brdfValue;
+		//pathTroughput = pathTroughput * dot(wi.direction, lightPath[pathIndex].normal);
+		//pathTroughput = pathTroughput / wi.probabilityDensity;
+
 
 		pathTroughput = pathTroughput * brdfValue * dot(wi.direction, lightPath[pathIndex].normal) / wi.probabilityDensity;
 		terminatePath = !RussianRoulette(pathTroughput, pathIndex);

@@ -114,6 +114,11 @@ namespace T_racer_Math
 		return Vector(this->values[0] / scalier, this->values[1] / scalier, this->values[2] / scalier);
 	}
 
+	Vector Vector::operator/(float scalier)
+	{
+		return Vector(this->values[0] / scalier, this->values[1] / scalier, this->values[2] / scalier);
+	}
+
 	Vector Vector::operator*(float scalier)
 	{
 		return Vector(this->values[0] * scalier, this->values[1] * scalier, this->values[2] * scalier);

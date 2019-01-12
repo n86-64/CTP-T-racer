@@ -19,7 +19,7 @@ public:
 	// Inherited via T_racer_Light_Base
 	virtual T_racer_Math::Colour Sample(T_racer_SampledDirection sampledDirection) override;
 	virtual T_racer_SampledDirection  Sample(T_racer_Path_Vertex & pathVertex, T_racer_Math::Ray & inputRay) override;
-	virtual float probabilityDensity(T_racer_Path_Vertex & pathVertex, T_racer_Math::Ray & inputRay) override;
+	virtual float probabilityDensity(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray & inputRay) override;
 
 private:
 	T_racer_Math::Colour intensity;

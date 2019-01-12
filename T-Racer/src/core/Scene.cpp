@@ -8,6 +8,9 @@
 #include "BaseLight.h"
 
 
+T_racer_Scene::T_racer_Scene()
+{}
+
 void T_racer_Scene::addResourceObject(T_racer_Resource* newRes)
 {
 	sceneResources.push_back(std::unique_ptr<T_racer_Resource>(newRes));
@@ -109,7 +112,7 @@ T_racer_Light_Base* T_racer_Scene::retrieveOneLightSource()
 {
 	// Not adiquite but it will ensure a good light source is selected.
 	srand(NULL);
-	return sceneLights[rand() % sceneLights.size()];
+	return sceneLights[rand() % sceneLights.size()].get();
 }
 
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)

@@ -10,6 +10,7 @@
 #include "AABB.h"
 #include "helpers/Math_Sampler.h"
 #include "PathTracer.h"
+#include "PointLight.h"
 
 
 // The application entry point.
@@ -119,6 +120,9 @@ int main(int argc, char* argv[])
 	T_racer_Display_PFM  pfm;
 
 	T_racer_Camera  testCam;
+	T_racer_Light_Point* light1 = new T_racer_Light_Point();
+	light1->setPosition(T_racer_Math::Vector(0.0f, 3.0f, 0.0f));
+
 
 	window.init(800, 600);
 //	window.writeToDisplay(&test);
@@ -127,6 +131,8 @@ int main(int argc, char* argv[])
 
 	T_racer_Scene testScene;
 	testScene.setMainCamera(&testCam);
+
+	testScene.addLight(light1);
 	testScene.loadModel("resources/cube.obj");
 
 	trpt.setDisplay(&window);
