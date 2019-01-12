@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "helpers/Math_Colour.h"
 #include "helpers/Math_Vector.h"
 #include "helpers/Math_Matrix.h"
 
@@ -21,5 +22,6 @@ struct T_racer_Path_Vertex
 	T_racer_Math::Matrix3X3 orthnormalBasis;
 	T_racer_Math::Vector	hitPoint;
 	T_racer_Math::Vector    incomingRayDirection;
+	T_racer_Math::Colour    pathColour;
 	unsigned int			BRDFMaterialID = 0;
 };
