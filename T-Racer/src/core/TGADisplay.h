@@ -18,7 +18,7 @@ public:
 
 	// Inherited via T_racer_Display
 	void init(float resolutionX, float resolutionY) override;
-	void update() override {};
+	void update() override { writeToDisplay(this->frameBuffer); };
 
 	// Code for writing to a TGA file is provided by Tom-Bashord Rodgers.
 	void writeToDisplay(Image* imageBuffer) override;

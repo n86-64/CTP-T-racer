@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
 
 	T_racer_Camera  testCam;
 	T_racer_Light_Point* light1 = new T_racer_Light_Point();
-	light1->setPosition(T_racer_Math::Vector(0.0f, 0.0f, -2.0f));
+	light1->setPosition(T_racer_Math::Vector(0.0f, 2.0f, 0.0f));
 
 
 	window.init(800, 600);

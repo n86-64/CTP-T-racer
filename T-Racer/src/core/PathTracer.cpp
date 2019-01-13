@@ -65,9 +65,9 @@ void T_racer_Renderer_PathTracer::Render()
 				}
 
 			}
+			lightPath.clear();
 
 			display->setColourValue(x, y, lightValue);
-			lightPath.clear();
 // #endif	
 		}
 
@@ -181,14 +181,17 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(int pa
 {
 	T_racer_Math::Ray  lightRay;
 	T_racer_Math::Colour Ld;
-	T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(); // Picks out a random light source to sample.
-	T_racer_SampledDirection light_wi = lightSource->Sample(lightPath[pathVertex], lightRay);
+	T_racer_Math::Sampler sampler;
 
 	T_racer_Material* material = materials.retrieveMaterial(lightPath[pathVertex].BRDFMaterialID);
+	T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(); // Picks out a random light source to sample.
+
+	T_racer_SampledDirection light_wi = lightSource->Sample(lightPath[pathVertex], lightRay);
+	T_racer_SampledDirection brdf_wi = material->Sample(nullptr, sampler, lightPath[pathVertex]);
 
 	// TODO - Implement BRDF for pathIndex surfaces.
 	T_racer_Math::Colour brdfValue = material->Evaluate(nullptr, lightPath[pathVertex]).getPixelValue(0,0);
-	Ld.colour = col.colour * brdfValue.colour * (float)isLightVisible(lightSource, pathVertex) * geometryTerm(light_wi, pathVertex, lightSource) / light_wi.probabilityDensity;
+	Ld.colour = col.colour * brdfValue.colour * (float)isLightVisible(lightSource, pathVertex) * geometryTerm(light_wi, brdf_wi, pathVertex, lightSource) / light_wi.probabilityDensity;
 
 	return Ld;
 }
@@ -202,10 +205,10 @@ bool T_racer_Renderer_PathTracer::isLightVisible(T_racer_Light_Base* lightSource
 	return (intersectionIndex == T_RACER_TRIANGLE_NULL);
 }
 
-float T_racer_Renderer_PathTracer::geometryTerm(T_racer_SampledDirection& Light_wi, int pathVertex, T_racer_Light_Base* lightSource)
+float T_racer_Renderer_PathTracer::geometryTerm(T_racer_SampledDirection& Light_wi, T_racer_SampledDirection& brdf_wi, int pathVertex, T_racer_Light_Base* lightSource)
 {
-	float brdfTheta = T_racer_Math::dot(Light_wi.direction, lightPath[pathVertex].normal);
-	float lightTheta = 0.5;// Determined by light direction.
+	float brdfTheta = T_racer_Math::dot(brdf_wi.direction, lightPath[pathVertex].normal);
+	float lightTheta = T_racer_Math::dot(brdf_wi.direction, Light_wi.direction);// Determined by light direction.
 	T_racer_Math::Vector xN = lightPath[pathVertex].hitPoint;
 	T_racer_Math::Vector xL = lightSource->getPosition(); // TODO - Need to work out how to work out position of a point light on the light source.
 

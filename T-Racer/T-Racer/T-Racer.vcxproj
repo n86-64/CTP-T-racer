@@ -218,6 +218,9 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)resources\*" "$(OutDir)resources\" /F /R /Y /I /S</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\AABB.cpp" />
