@@ -58,6 +58,7 @@ void T_racer_Renderer_PathTracer::Render()
 
 				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
 				tracePath(collisions.ray, irradiance);
+				lightValue.colour = irradiance.colour;
 
 				for (int i = 0; i < lightPath.size(); i++) 
 				{
@@ -139,6 +140,8 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 			}
 		}
 	}
+
+	irradiance = pathTroughput;
 }
 
 int T_racer_Renderer_PathTracer::sortTriangles(T_racer_BVH_CollisionQueue_t& collisions, T_racer_TriangleIntersection& intersection)
@@ -186,8 +189,10 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(int pa
 	T_racer_Material* material = materials.retrieveMaterial(lightPath[pathVertex].BRDFMaterialID);
 	T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(); // Picks out a random light source to sample.
 
-	T_racer_SampledDirection light_wi = lightSource->Sample(lightPath[pathVertex], lightRay);
+
 	T_racer_SampledDirection brdf_wi = material->Sample(nullptr, sampler, lightPath[pathVertex]);
+	lightRay = T_racer_Math::Ray(lightPath[pathVertex].hitPoint, brdf_wi.direction);
+	T_racer_SampledDirection light_wi = lightSource->Sample(lightPath[pathVertex], lightRay);
 
 	// TODO - Implement BRDF for pathIndex surfaces.
 	T_racer_Math::Colour brdfValue = material->Evaluate(nullptr, lightPath[pathVertex]).getPixelValue(0,0);
