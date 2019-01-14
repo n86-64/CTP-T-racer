@@ -1,4 +1,10 @@
+#include "helpers/Math_Trig.h"
 #include "PointLight.h"
+
+T_racer_Math::Colour T_racer_Light_Point::Evaluate(T_racer_Path_Vertex & pathVertex)
+{	
+	return intensity / pow((position - pathVertex.hitPoint).Magnitude(), 2);
+}
 
 T_racer_SampledDirection T_racer_Light_Point::Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay)
 {
@@ -14,9 +20,4 @@ float T_racer_Light_Point::probabilityDensity(T_racer_Path_Vertex& pathVertex, T
 {
 	// PDF derived from PBRT (p.g. 697)
 	return 1.0f;
-}
-
-T_racer_Math::Colour T_racer_Light_Point::Sample(T_racer_SampledDirection sampledDirection)
-{
-	return T_racer_Math::Colour();
 }

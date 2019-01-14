@@ -29,6 +29,8 @@ protected:
 
 
 private:
+	int directLightHits = 0;
+
 	std::vector<T_racer_Path_Vertex>   lightPath;
 
 	// returns the index of a triangle that was hit by the path-tracer.

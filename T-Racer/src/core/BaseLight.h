@@ -21,7 +21,8 @@ class T_racer_Light_Base
 public:
 	T_racer_Light_Base() = default;
 
-	virtual T_racer_Math::Colour Sample(T_racer_SampledDirection sampledDirection) = 0;
+
+	virtual T_racer_Math::Colour Evaluate(T_racer_Path_Vertex& pathVertex) = 0;
 	virtual T_racer_SampledDirection Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
 	virtual float probabilityDensity(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
 
@@ -31,6 +32,8 @@ public:
 	void				 setPosition(T_racer_Math::Vector newPos) { position = newPos; }
 
 protected:
+	T_racer_Math::Vector	intensity = T_racer_Math::Vector(1.0f, 1.0f, 1.0f);
+
 	// TODO - Add any additional required variables here. 
 	T_racer_Math::Vector    position;
 	T_racer_Math::Vector	rotation;

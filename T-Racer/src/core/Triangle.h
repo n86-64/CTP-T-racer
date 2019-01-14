@@ -42,6 +42,11 @@ public:
 
 	int							   getMaterialIndex() const { return materialID; }
 
+	T_racer_Math::Vector		   getHitPoint(T_racer_TriangleIntersection& it) {
+		return (verticies[0].position * it.u) + (verticies[1].position * it.v)
+			+ (verticies[2].position * it.w);
+	}
+
 private:
 	T_racer_Math::Vector getMinVector();
 	T_racer_Math::Vector getMaxVector();
