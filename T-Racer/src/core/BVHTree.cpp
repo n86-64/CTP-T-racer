@@ -107,10 +107,6 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 		{
 			nodeToCheckIndex--;
 		}
-
-		
-			// nodeToCheckIndex++;
-		//}
 	}
 }
 

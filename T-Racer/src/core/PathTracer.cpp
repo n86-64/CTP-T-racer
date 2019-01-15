@@ -229,7 +229,7 @@ bool T_racer_Renderer_PathTracer::isLightVisible(T_racer_Light_Base* lightSource
 float T_racer_Renderer_PathTracer::geometryTerm(T_racer_SampledDirection& Light_wi, T_racer_SampledDirection& brdf_wi, int pathVertex, T_racer_Light_Base* lightSource)
 {
 	float brdfTheta = T_racer_Math::dot(brdf_wi.direction, lightPath[pathVertex].normal);
-	float lightTheta = T_racer_Math::dot(Light_wi.direction,- brdf_wi.direction);// Determined by light direction.
+	float lightTheta = T_racer_Math::dot(Light_wi.direction, -brdf_wi.direction);// Determined by light direction.
 	T_racer_Math::Vector xN = lightPath[pathVertex].hitPoint;
 	T_racer_Math::Vector xL = lightSource->getPosition(); // TODO - Need to work out how to work out position of a point light on the light source.
 
