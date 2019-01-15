@@ -57,18 +57,18 @@ void T_racer_Renderer_PathTracer::Render()
 				Triangle* primative = sceneObject->getTriangleByIndex(triangleIndex);
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
-				lightPath[0].hitPoint = collisions.ray.getHitPoint(intersectionDisc.t);
+				lightPath[0].hitPoint = collisions.ray.getHitPoint(intersectionDisc.t);  //primative->getHitPoint(intersectionDisc);
 				lightPath[0].normal = primative->getNormal().normalise();
 				lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
 				lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
 
 				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
 				tracePath(collisions.ray, irradiance);
-				lightValue.colour = irradiance.colour;
+				//lightValue.colour = irradiance.colour;
 
 				for (int i = 0; i < lightPath.size(); i++) 
 				{
-					lightValue.colour = lightValue.colour + calculateDirectLighting(i, lightPath[i].pathColour).colour;
+					lightValue.colour = lightValue.colour + calculateDirectLighting(i, irradiance).colour;
 				}
 
 			}
@@ -126,7 +126,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 			//collisions = sceneObject->traceRay(lightPath[pathIndex].hitPoint, wi.direction);
 			//triangleIndex = sortTriangles(collisions, intersectDisc);
 
-			triangleIndex = sceneObject->traceRay2(lightPath[pathIndex].hitPoint, wi.direction, intersectDisc);
+			triangleIndex = sceneObject->traceRay2(lightPath[pathIndex].hitPoint, wi.direction, INFINITY, intersectDisc);
 
 			// TODO - Add routiene to check if this is a light source.
 			// If so terminate else we will evaluate the next light path.
@@ -139,9 +139,9 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				Triangle* primative = sceneObject->getTriangleByIndex(triangleIndex);
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				lightPath[pathIndex].BRDFMaterialID = primative->getMaterialIndex();
-				lightPath[pathIndex].hitPoint =  collisions.ray.getHitPoint(intersectDisc.t);
+				lightPath[pathIndex].hitPoint =  collisions.ray.getHitPoint(intersectDisc.t); // primative->getHitPoint(intersectDisc);
 				lightPath[pathIndex].wo = collisions.ray.getincomingRayDirection();
-				lightPath[pathIndex].normal = primative->getNormal();
+				lightPath[pathIndex].normal = primative->getNormal().normalise();
 				lightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
 				lightPath[pathIndex].orthnormalBasis = primative->createShadingFrame(lightPath[pathIndex].normal);
 
@@ -210,10 +210,12 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(int pa
 	float visible = (float)isLightVisible(lightSource, pathVertex);
 	float gTerm = geometryTerm(light_wi, brdf_wi, pathVertex, lightSource, lightPath[pathVertex]);
 
+	// assert(visible != 0.0f);
+
 	T_racer_Math::Colour brdfLightValue = lightSource->Evaluate(lightPath[pathVertex]);  
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, lightPath[pathVertex]).getPixelValue(0, 0);
 
-	Ld.colour = col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour * (visible * gTerm) / light_wi.probabilityDensity;
+	Ld.colour = /*lightPath[pathVertex].pathColour.colour **/ col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour * (visible * gTerm) / light_wi.probabilityDensity;
 
 	return Ld;
 }
@@ -222,7 +224,8 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(int pa
 bool T_racer_Renderer_PathTracer::isLightVisible(T_racer_Light_Base* lightSource, int pathVertex)
 {
 	T_racer_TriangleIntersection intersect;
-	int intersectionIndex = sceneObject->traceRay2(lightPath[pathVertex].hitPoint, (lightSource->getPosition() - lightPath[pathVertex].hitPoint).normalise(), intersect);
+	T_racer_Math::Vector dir = (lightSource->getPosition() - lightPath[pathVertex].hitPoint);
+	int intersectionIndex = sceneObject->traceRay2(lightPath[pathVertex].hitPoint, dir.normalise(), dir.Magnitude(), intersect);
 	return (intersectionIndex == T_RACER_TRIANGLE_NULL);
 }
 

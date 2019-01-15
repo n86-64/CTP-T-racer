@@ -108,11 +108,12 @@ T_racer_BVH_CollisionQueue_t T_racer_Scene::traceRay(T_racer_Math::Vector origin
 }
 
 
-int T_racer_Scene::traceRay2(T_racer_Math::Vector origin, T_racer_Math::Vector direction, T_racer_TriangleIntersection& intersectDesc)
+int T_racer_Scene::traceRay2(T_racer_Math::Vector origin, T_racer_Math::Vector direction, float t, T_racer_TriangleIntersection& intersectDesc)
 {
 	T_racer_BVH_CollisionQueue_t collisions;
 	collisions.ray.setPosition(origin);
 	collisions.ray.setDirection(direction);
+	collisions.ray.setMagnitude(t);
 	bvh.checkForIntersections(&collisions.ray);
 	intersectDesc = bvh.getIntersectedTriangleData();
 

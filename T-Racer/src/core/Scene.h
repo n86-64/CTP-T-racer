@@ -44,16 +44,16 @@ public:
 	T_racer_BVH_CollisionQueue_t traceRay(T_racer_Math::Vector origin, T_racer_Math::Vector direction); // Returns a proposed intersection with objects in the scene
 
 	int  traceRay2(int x, int y, T_racer_TriangleIntersection& intersectDesc);
-	int  traceRay2(T_racer_Math::Vector origin, T_racer_Math::Vector direction, T_racer_TriangleIntersection& intersectDesc);
+	int  traceRay2(T_racer_Math::Vector origin, T_racer_Math::Vector direction, float t, T_racer_TriangleIntersection& intersectDesc);
 
 	Triangle*   getTriangleByIndex(int index) { return &sceneTriangles[index]; }
 
 	T_racer_Light_Base* retrieveOneLightSource();
 
 private:
-	std::vector<std::unique_ptr<T_racer_Resource>>  sceneResources;
-	std::vector<Triangle>   sceneTriangles;
-	std::vector<std::unique_ptr<T_racer_Light_Base>>  sceneLights;
+	std::vector<std::unique_ptr<T_racer_Resource>>		sceneResources;
+	std::vector<Triangle>								sceneTriangles;
+	std::vector<std::unique_ptr<T_racer_Light_Base>>	sceneLights;
 
 	T_racer_Camera* mainCamera = nullptr;
 	T_racer_Display* display;

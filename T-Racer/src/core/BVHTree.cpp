@@ -57,7 +57,7 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 	T_racer_BVH_Node* currentNode = nullptr;
 
 	T_racer_TriangleIntersection  triIntersection;
-	intersectDesc.t = INFINITY;
+	intersectDesc.t = ray->getMagnitude();
 	closestTriangle = -1;
 
 	while (nodeToCheckIndex != -1)
