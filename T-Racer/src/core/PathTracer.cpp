@@ -38,7 +38,7 @@ void T_racer_Renderer_PathTracer::Render()
 			//collisions = sceneObject->traceRay(x, y);
 			//triangleIndex = sortTriangles(collisions, intersectionDisc);
 
-			triangleIndex = sceneObject->traceRay2(x, y);
+			triangleIndex = sceneObject->traceRay2(x, y, intersectionDisc);
 
 		//	assert(triangleIndex == triIndex2);
 
@@ -123,8 +123,10 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		// then loop.
 		if (!terminatePath) 
 		{
-			collisions = sceneObject->traceRay(lightPath[pathIndex].hitPoint, wi.direction);
-			triangleIndex = sortTriangles(collisions, intersectDisc);
+			//collisions = sceneObject->traceRay(lightPath[pathIndex].hitPoint, wi.direction);
+			//triangleIndex = sortTriangles(collisions, intersectDisc);
+
+			triangleIndex = sceneObject->traceRay2(lightPath[pathIndex].hitPoint, wi.direction, intersectDisc);
 
 			// TODO - Add routiene to check if this is a light source.
 			// If so terminate else we will evaluate the next light path.
@@ -220,8 +222,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(int pa
 bool T_racer_Renderer_PathTracer::isLightVisible(T_racer_Light_Base* lightSource, int pathVertex)
 {
 	T_racer_TriangleIntersection intersect;
-	T_racer_BVH_CollisionQueue_t collisions = sceneObject->traceRay(lightPath[pathVertex].hitPoint, (lightSource->getPosition() - lightPath[pathVertex].hitPoint).normalise());
-	int intersectionIndex = sortTriangles(collisions, intersect);
+	int intersectionIndex = sceneObject->traceRay2(lightPath[pathVertex].hitPoint, (lightSource->getPosition() - lightPath[pathVertex].hitPoint).normalise(), intersect);
 	return (intersectionIndex == T_RACER_TRIANGLE_NULL);
 }
 

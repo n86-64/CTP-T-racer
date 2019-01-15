@@ -1,4 +1,5 @@
 #include <queue>
+#include <deque>
 #include "BVHTree.h"
 
 // Intersection cost constants.
@@ -11,6 +12,8 @@ constexpr int T_RACER_BVH_TRIANGLE_MAX_QUOTA = 2;
 
 
 constexpr float T_RACER_BVH_PARTITION = -1.0f;
+
+constexpr int T_RACER_BVH_QUEUE_MAX_DEPTH = 50;
 
 // Predicate for sorting triangles along an axis.
 bool triangleSort(BVHEdge a, BVHEdge b) 
@@ -49,45 +52,55 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 	// Perform the intersection test for the ray.
 	// root->intersection(ray, &collisionQueue);
 	collisionQueue.triangleIndexes.clear();
-	std::queue<int> nodesToCheck;
-	nodesToCheck.emplace(0);
+
+	int nodesToCheck[T_RACER_BVH_QUEUE_MAX_DEPTH];
+	std::fill_n(nodesToCheck, T_RACER_BVH_QUEUE_MAX_DEPTH, -1);
+	int nodeToCheckIndex = 0;
+	nodesToCheck[nodeToCheckIndex] = 0;
+
 	T_racer_BVH_Node* currentNode = nullptr;
 
 	T_racer_TriangleIntersection  triIntersection;
 	intersectDesc.t = INFINITY;
 	closestTriangle = -1;
 
-	while (nodesToCheck.size() > 0) 
+	while (nodesToCheck[nodeToCheckIndex] != -1 )
 	{
-		currentNode = &nodes[nodesToCheck.front()];
+		//if (nodesToCheck[nodeToCheckIndex] != -1) 
+		//{
+			currentNode = &nodes[nodesToCheck[nodeToCheckIndex]];
 
-		if (currentNode->getBounds()->isIntersected(*ray)) 
-		{
-			if (currentNode->getLeftNode() != T_RACER_NODE_NULL &&
-				currentNode->getRightNode() != T_RACER_NODE_NULL)
+			if (currentNode->getBounds()->isIntersected(*ray))
 			{
-				nodesToCheck.emplace(currentNode->getLeftNode());
-				nodesToCheck.emplace(currentNode->getRightNode());
-			}
-			else 
-			{
-				// its a leaf we dont need to check this anymore.
-				currentNode->addTriangles(&collisionQueue);
-
-				for (int i = 0; i < collisionQueue.triangleIndexes.size(); i++) 
+				if (currentNode->getLeftNode() != T_RACER_NODE_NULL &&
+					currentNode->getRightNode() != T_RACER_NODE_NULL)
 				{
-					triIntersection = (*sceneObjects)[collisionQueue.triangleIndexes[i]].isIntersecting(*ray);
-					if (triIntersection.intersection && triIntersection.t < intersectDesc.t) 
+					nodesToCheck[nodeToCheckIndex + 1] = currentNode->getLeftNode();
+					nodesToCheck[nodeToCheckIndex + 2] = currentNode->getRightNode();
+					//checkNodes.push_back(currentNode->getLeftNode());
+					//checkNodes.push_back(currentNode->getRightNode());
+
+				}
+				else
+				{
+					// its a leaf we dont need to check this anymore.
+					currentNode->addTriangles(&collisionQueue);
+
+					for (int i = 0; i < collisionQueue.triangleIndexes.size(); i++)
 					{
-						closestTriangle = collisionQueue.triangleIndexes[i];
-						intersectDesc = triIntersection;
+						triIntersection = (*sceneObjects)[collisionQueue.triangleIndexes[i]].isIntersecting(*ray);
+						if (triIntersection.intersection && triIntersection.t < intersectDesc.t)
+						{
+							closestTriangle = collisionQueue.triangleIndexes[i];
+							intersectDesc = triIntersection;
+						}
 					}
 				}
-
 			}
-		}
 
-		nodesToCheck.pop();
+			nodesToCheck[nodeToCheckIndex] = -1;
+			nodeToCheckIndex++;
+		//}
 	}
 }
 
@@ -103,14 +116,20 @@ void T_racer_BVH_Tree::createBVHNodes()
 	T_racer_BVH_Node* childR = nullptr;
 
 	// int currentNode = T_RACER_NODE_NULL;
-	std::queue<int> nodesToResolve; // The indicies of the nodes we need to resolve.
-	nodesToResolve.emplace(0);
+
+	int nodesToResolve[T_RACER_BVH_QUEUE_MAX_DEPTH];
+	std::fill_n(nodesToResolve, T_RACER_BVH_QUEUE_MAX_DEPTH, -1);
+	int nodeToCheckIndex = 0;
+	nodesToResolve[nodeToCheckIndex] = 0;
+
+	//std::queue<int> nodesToResolve; // The indicies of the nodes we need to resolve.
+	//nodesToResolve.emplace(0);
 	BVHSplitInfo newSplit;
 
-	while (nodesToResolve.size() > 0) 
+	while (nodesToResolve[nodeToCheckIndex] != -1) 
 	{
 		// Here we generate the child nodes and add them to the queue.
-		newSplit = shouldPartition(nodesToResolve.front());
+		newSplit = shouldPartition(nodesToResolve[nodeToCheckIndex]);
 
 		if (newSplit.split) 
 		{
@@ -122,7 +141,7 @@ void T_racer_BVH_Tree::createBVHNodes()
 			childR = &nodes[nodes.size() - 1];
 
 			// Set the boxes and primatives for each.
-			nodes[nodesToResolve.front()].assignNodes((int)nodes.size() - 2, (int)nodes.size() - 1);
+			nodes[nodesToResolve[nodeToCheckIndex]].assignNodes((int)nodes.size() - 2, (int)nodes.size() - 1);
 
 			// Assign these there chosen bounding boxes.
 			childL->assignBox(newSplit.lChildBox);
@@ -134,12 +153,12 @@ void T_racer_BVH_Tree::createBVHNodes()
 			childL->setPrimativeIndicies(newSplit.lPrims);
 			childR->setPrimativeIndicies(newSplit.rPrims);
 
-			nodesToResolve.emplace(nodes.size() - 2);
-			nodesToResolve.emplace(nodes.size() - 1);
+			nodesToResolve[nodeToCheckIndex + 1] = nodes.size() - 2;
+			nodesToResolve[nodeToCheckIndex + 2] = nodes.size() - 1;
 		}
 
 		// Pop the top value of the queue.
-		nodesToResolve.pop();
+		nodeToCheckIndex++;
 	}
 }
 
