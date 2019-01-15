@@ -7,12 +7,8 @@
 // Constants derived from PBRT 3rd edition (p.g. 207)
 constexpr int T_RACER_BVH_COST_TRAVERSAL_NODES = 1;
 constexpr int T_RACER_BVH_COST_INTERSECTION_TRIANGLE = 80;
-
 constexpr int T_RACER_BVH_TRIANGLE_MAX_QUOTA = 2;
-
-
 constexpr float T_RACER_BVH_PARTITION = -1.0f;
-
 constexpr int T_RACER_BVH_QUEUE_MAX_DEPTH = 50;
 
 // Predicate for sorting triangles along an axis.
@@ -64,10 +60,10 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 	intersectDesc.t = INFINITY;
 	closestTriangle = -1;
 
-	while (nodesToCheck[nodeToCheckIndex] != -1 )
+	while (nodeToCheckIndex != -1)
 	{
-		//if (nodesToCheck[nodeToCheckIndex] != -1) 
-		//{
+		if (nodesToCheck[nodeToCheckIndex] != -1) 
+		{
 			currentNode = &nodes[nodesToCheck[nodeToCheckIndex]];
 
 			if (currentNode->getBounds()->isIntersected(*ray))
@@ -80,7 +76,10 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 					//checkNodes.push_back(currentNode->getLeftNode());
 					//checkNodes.push_back(currentNode->getRightNode());
 
+					nodesToCheck[nodeToCheckIndex] = -1;
+					nodeToCheckIndex = nodeToCheckIndex + 2;
 				}
+
 				else
 				{
 					// its a leaf we dont need to check this anymore.
@@ -95,11 +94,22 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 							intersectDesc = triIntersection;
 						}
 					}
+					nodesToCheck[nodeToCheckIndex] = -1;
+					nodeToCheckIndex--;
 				}
 			}
+			else
+			{
+				nodeToCheckIndex--;
+			}
+		}
+		else 
+		{
+			nodeToCheckIndex--;
+		}
 
-			nodesToCheck[nodeToCheckIndex] = -1;
-			nodeToCheckIndex++;
+		
+			// nodeToCheckIndex++;
 		//}
 	}
 }
