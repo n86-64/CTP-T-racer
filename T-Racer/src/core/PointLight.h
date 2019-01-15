@@ -21,6 +21,7 @@ public:
 	virtual T_racer_SampledDirection  Sample(T_racer_Path_Vertex & pathVertex, T_racer_Math::Ray & inputRay) override;
 	virtual float probabilityDensity(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray & inputRay) override;
 
+	virtual float surfaceCosine(T_racer_Path_Vertex& vertex) override;
 private:
 	T_racer_Math::Colour intensity;
 

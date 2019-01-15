@@ -26,6 +26,9 @@ public:
 	virtual T_racer_SampledDirection Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
 	virtual float probabilityDensity(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
 
+	// Determines the cosine value for the light source.
+	virtual float surfaceCosine(T_racer_Path_Vertex& vertex) = 0;
+
 	T_racer_Math::Vector getPosition() const { return position; }
 	T_racer_Math::Vector getRotation() const { return rotation; }
 

@@ -106,7 +106,8 @@ T_racer_BVH_CollisionQueue_t T_racer_Scene::traceRay(T_racer_Math::Vector origin
 
 	return collisions;
 }
-
+
+
 int T_racer_Scene::traceRay2(T_racer_Math::Vector origin, T_racer_Math::Vector direction, T_racer_TriangleIntersection& intersectDesc)
 {
 	T_racer_BVH_CollisionQueue_t collisions;
