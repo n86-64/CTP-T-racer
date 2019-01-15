@@ -104,8 +104,16 @@ T_racer_BVH_CollisionQueue_t T_racer_Scene::traceRay(T_racer_Math::Vector origin
 	bvh.checkForIntersections(&collisions.ray);
 	collisions.triangleIndexes = bvh.getPossibleCollisions().triangleIndexes;
 
-
 	return collisions;
+}
+
+int T_racer_Scene::traceRay2(int x, int y)
+{
+	T_racer_BVH_CollisionQueue_t collisions;
+	collisions.ray = generateRay(x, y);
+	bvh.checkForIntersections(&collisions.ray);
+
+	return bvh.getIntersectedTriangle();
 }
 
 T_racer_Light_Base* T_racer_Scene::retrieveOneLightSource()

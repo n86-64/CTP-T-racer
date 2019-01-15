@@ -2,7 +2,9 @@
 #include "PathTracer.h"
 
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
-constexpr float T_RACER_LUMINANCE_VALUE = 0.3f;
+constexpr float T_RACER_LUMINANCE_VALUE = 0.5f;
+
+constexpr int T_RACER_SAMPLE_COUNT = 1;
 
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
@@ -33,8 +35,12 @@ void T_racer_Renderer_PathTracer::Render()
 			irradiance = T_racer_Math::Colour(1.0f, 1.0f, 1.0f);
 			lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
 
-			collisions = sceneObject->traceRay(x, y);
-			triangleIndex = sortTriangles(collisions, intersectionDisc);
+			//collisions = sceneObject->traceRay(x, y);
+			//triangleIndex = sortTriangles(collisions, intersectionDisc);
+
+			triangleIndex = sceneObject->traceRay2(x, y);
+
+		//	assert(triangleIndex == triIndex2);
 
 			//if (triangleIndex >= 0) 
 			//{
@@ -67,6 +73,8 @@ void T_racer_Renderer_PathTracer::Render()
 
 			}
 			lightPath.clear();
+
+
 			display->setColourValue(x, y, lightValue);
 // #endif	
 		}

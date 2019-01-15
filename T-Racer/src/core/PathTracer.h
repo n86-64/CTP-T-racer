@@ -29,6 +29,9 @@ protected:
 
 
 private:
+	int triIndex2 = -1;
+
+
 	int directLightHits = 0;
 
 	std::vector<T_racer_Path_Vertex>   lightPath;

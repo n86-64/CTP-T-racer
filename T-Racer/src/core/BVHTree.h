@@ -59,6 +59,9 @@ public:
 
 	T_racer_BVH_CollisionQueue_t getPossibleCollisions();
 
+	int	  getIntersectedTriangle() const { return closestTriangle; }
+	T_racer_TriangleIntersection	  getIntersectedTriangleData() const { return intersectDesc; }
+
 private:
 	void createBVHNodes();
 
@@ -69,8 +72,13 @@ private:
 	BVHSplitInfo shouldPartition(int nodeIndex);
 
 	float getGeometricProbibility(T_racer_Collider_AABB& col, float surfaceArea);
-	
+
 private:
+	int						  closestTriangle = -1;
+	float					  closeT = INFINITY;
+
+	T_racer_TriangleIntersection   intersectDesc;
+
 	std::vector<Triangle>*    sceneObjects;  // All objects in a scene.
 
 	std::vector<T_racer_BVH_Node>   nodes = std::vector<T_racer_BVH_Node>(1);

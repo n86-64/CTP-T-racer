@@ -53,6 +53,10 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 	nodesToCheck.emplace(0);
 	T_racer_BVH_Node* currentNode = nullptr;
 
+	T_racer_TriangleIntersection  triIntersection;
+	intersectDesc.t = INFINITY;
+	closestTriangle = -1;
+
 	while (nodesToCheck.size() > 0) 
 	{
 		currentNode = &nodes[nodesToCheck.front()];
@@ -69,8 +73,20 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 			{
 				// its a leaf we dont need to check this anymore.
 				currentNode->addTriangles(&collisionQueue);
+
+				for (int i = 0; i < collisionQueue.triangleIndexes.size(); i++) 
+				{
+					triIntersection = (*sceneObjects)[collisionQueue.triangleIndexes[i]].isIntersecting(*ray);
+					if (triIntersection.intersection && triIntersection.t < intersectDesc.t) 
+					{
+						closestTriangle = collisionQueue.triangleIndexes[i];
+						intersectDesc = triIntersection;
+					}
+				}
+
 			}
 		}
+
 		nodesToCheck.pop();
 	}
 }

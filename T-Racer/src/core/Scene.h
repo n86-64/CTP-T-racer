@@ -43,6 +43,7 @@ public:
 	T_racer_BVH_CollisionQueue_t  traceRay(int x, int y); // Returns a list of triangles we have collided with.
 	T_racer_BVH_CollisionQueue_t traceRay(T_racer_Math::Vector origin, T_racer_Math::Vector direction); // Returns a proposed intersection with objects in the scene
 
+	int  traceRay2(int x, int y);
 
 	Triangle*   getTriangleByIndex(int index) { return &sceneTriangles[index]; }
 
