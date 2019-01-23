@@ -22,7 +22,7 @@ namespace T_racer_Math
 		double a = 2 * seed.X - 1; /* (a,b) is now on [-1,1]^2 */
 		double b = 2 * seed.Y - 1;
 
-		if (a > -b) 
+		if (a >= -b) 
 		{ /* region 1 or 2 */
 			if (a > b) 
 			{ /* region 1, also |a| > |b| */

@@ -6,8 +6,11 @@ T_racer_Math::Colour T_racer_Light_Point::Evaluate(T_racer_Path_Vertex & pathVer
 	return intensity;
 }
 
-T_racer_SampledDirection T_racer_Light_Point::Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay)
+T_racer_SampledDirection T_racer_Light_Point::Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay, T_racer_Path_Vertex& lightSourcePath)
 {
+	lightSourcePath.hitPoint = position;
+	lightSourcePath.normal = T_racer_Math::Vector(1.0f, 1.0f, 1.0f);
+
 	T_racer_SampledDirection dir;
 	dir.direction = (position - inputRay.getPosition()).normalise();
 	dir.probabilityDensity = probabilityDensity(pathVertex, inputRay);
