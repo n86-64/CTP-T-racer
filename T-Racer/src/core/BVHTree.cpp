@@ -22,6 +22,11 @@ bool primativeSort(BVHPrimative& a, BVHPrimative& b)
 	return (*a.triangles)[a.primativeID].getCollider().getBoxMidpoint().values[a.axis] < (*b.triangles)[b.primativeID].getCollider().getBoxMidpoint().values[b.axis];
 }
 
+T_racer_BVH_Tree::T_racer_BVH_Tree()
+{
+	nodes.reserve(T_RACER_BVH_NODE_PREALLOC);
+}
+
 T_racer_BVH_Tree::~T_racer_BVH_Tree()
 {
 
@@ -73,8 +78,6 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 				{
 					nodesToCheck[nodeToCheckIndex + 1] = currentNode->getLeftNode();
 					nodesToCheck[nodeToCheckIndex + 2] = currentNode->getRightNode();
-					//checkNodes.push_back(currentNode->getLeftNode());
-					//checkNodes.push_back(currentNode->getRightNode());
 
 					nodesToCheck[nodeToCheckIndex] = -1;
 					nodeToCheckIndex = nodeToCheckIndex + 2;

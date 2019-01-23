@@ -16,6 +16,9 @@
 #include "core/Triangle.h"
 
 
+constexpr int T_RACER_BVH_NODE_PREALLOC = 100;
+
+
 struct BVHEdge
 {
 	float t;
@@ -51,7 +54,7 @@ struct BVHSplitInfo
 class T_racer_BVH_Tree 
 {
 public:
-	T_racer_BVH_Tree() = default;
+	T_racer_BVH_Tree();
 	~T_racer_BVH_Tree();
 
 	void generateSceneBVH(std::vector<Triangle>* scenePrimatives);

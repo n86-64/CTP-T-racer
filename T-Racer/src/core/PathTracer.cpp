@@ -144,6 +144,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				lightPath[pathIndex].normal = primative->getNormal().normalise();
 				lightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
 				lightPath[pathIndex].orthnormalBasis = primative->createShadingFrame(lightPath[pathIndex].normal);
+				lightPath[pathIndex].pathColour = pathTroughput;
 
 				ray = collisions.ray;
 			}
@@ -215,7 +216,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(int pa
 	T_racer_Math::Colour brdfLightValue = lightSource->Evaluate(lightPath[pathVertex]);  
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, lightPath[pathVertex]).getPixelValue(0, 0);
 
-	Ld.colour = /*lightPath[pathVertex].pathColour.colour **/ col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour * (visible * gTerm) / light_wi.probabilityDensity;
+	Ld.colour = lightPath[pathVertex].pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour /* (visible*/ /*gTerm) */ / light_wi.probabilityDensity;
 
 	return Ld;
 }
