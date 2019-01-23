@@ -22,7 +22,7 @@ namespace T_racer_Math
 		double a = 2 * seed.X - 1; /* (a,b) is now on [-1,1]^2 */
 		double b = 2 * seed.Y - 1;
 
-		if (a >= -b) 
+		if (a > -b) 
 		{ /* region 1 or 2 */
 			if (a > b) 
 			{ /* region 1, also |a| > |b| */
@@ -35,7 +35,8 @@ namespace T_racer_Math
 				phi = (M_PI / 4) * (2 - (a / b));
 			}
 		}
-		else { /* region 3 or 4 */
+		else 
+		{ /* region 3 or 4 */
 			if (a < b) {
 				/* region 3, also |a| >= |b|, a != 0 */
 				r = -a;
