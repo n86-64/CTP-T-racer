@@ -30,6 +30,9 @@ public:
 	void addResourceObject(T_racer_Resource* newRes);
 	void setMainCamera(T_racer_Camera* newCam) { mainCamera = newCam; };
 	
+	std::string getName() { return name; }
+	void setName(std::string sceneName) { name = sceneName; }
+
 	void loadModel(std::string modelName);
 
 	void addLight(T_racer_Light_Base*  newLight) { sceneLights.emplace_back(newLight); }; // Adds a new light to the scene.
@@ -51,6 +54,7 @@ public:
 	T_racer_Light_Base* retrieveOneLightSource();
 
 private:
+	std::string											name = "NULLScene"; 
 	std::vector<std::unique_ptr<T_racer_Resource>>		sceneResources;
 	std::vector<Triangle>								sceneTriangles;
 	std::vector<std::unique_ptr<T_racer_Light_Base>>	sceneLights;

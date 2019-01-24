@@ -46,6 +46,10 @@ public:
 	int getNodeCost() const { return nodeCost; }
 	void setNodeCost(float newCost) { nodeCost = newCost; }
 
+	int getNumberOfTriangles() { return triIndex.size(); }
+	int getTriangle(int index) { return triIndex[index]; }
+
+
 
 private:
 	// The box that represents the AABB.

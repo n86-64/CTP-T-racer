@@ -1,5 +1,8 @@
 #include <queue>
 #include <deque>
+
+#include "helpers/FileReader.h"
+
 #include "BVHTree.h"
 
 // Intersection cost constants.
@@ -32,20 +35,25 @@ T_racer_BVH_Tree::~T_racer_BVH_Tree()
 
 }
 
-void T_racer_BVH_Tree::generateSceneBVH(std::vector<Triangle>* scenePrimatives)
+void T_racer_BVH_Tree::generateSceneBVH(std::string name, std::vector<Triangle>* scenePrimatives)
 {
 	sceneObjects = scenePrimatives;
-	T_racer_Collider_AABB  aabbBox;
-	for (int i = 0; i < scenePrimatives->size(); i++) 
-	{
-		(*sceneObjects)[i].generateBoundingBox();
-		nodes[0].addPrimativeIndicies(i);
-		aabbBox.enlargeBox((*sceneObjects)[i].getCollider());
-	}
 
-	// Set the root nodes AABB.
-	nodes[0].assignBox(aabbBox);
-	createBVHNodes();
+	if (!loadBVHFromFile(name)) 
+	{
+		T_racer_Collider_AABB  aabbBox;
+		for (int i = 0; i < scenePrimatives->size(); i++)
+		{
+			(*sceneObjects)[i].generateBoundingBox();
+			nodes[0].addPrimativeIndicies(i);
+			aabbBox.enlargeBox((*sceneObjects)[i].getCollider());
+		}
+
+		// Set the root nodes AABB.
+		nodes[0].assignBox(aabbBox);
+		createBVHNodes();
+		saveBVHToFile(name);
+	}
 }
 
 void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
@@ -116,6 +124,126 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 T_racer_BVH_CollisionQueue_t T_racer_BVH_Tree::getPossibleCollisions()
 {
 	return collisionQueue;
+}
+
+bool T_racer_BVH_Tree::loadBVHFromFile(std::string& name)
+{
+	std::string  value;
+	std::string path = "resources/BVH/" + name + ".trbh";
+	T_racer_Buffer  buffer(path);
+
+	if (!buffer.readFile()) 
+	{
+		return false;
+	}
+
+	// Here we load the BVH.
+	T_racer_Math::Vector  minVec;
+	T_racer_Math::Vector  maxVec;
+
+	size_t currentSize = sizeof(int);
+
+	int nodeCount;
+	int leftNode;
+	int rightNode;
+	int childCount;
+	int primitiveCount;
+	int child;
+
+	// Retrieve the nodecount.
+
+	buffer.extractData(&nodeCount, 0, currentSize);
+	nodes.resize(nodeCount); // preallocate the tree.
+
+	for (int i = 0; i < nodeCount; i++) 
+	{
+		buffer.extractData(&minVec.X, currentSize, sizeof(float));
+		currentSize += sizeof(float);
+		buffer.extractData(&minVec.Y, currentSize, sizeof(float));
+		currentSize += sizeof(float);
+		buffer.extractData(&minVec.Z, currentSize, sizeof(float));
+		currentSize += sizeof(float);
+
+		buffer.extractData(&maxVec.X, currentSize, sizeof(float));
+		currentSize += sizeof(float);
+		buffer.extractData(&maxVec.Y, currentSize, sizeof(float));
+		currentSize += sizeof(float);
+		buffer.extractData(&maxVec.Z, currentSize, sizeof(float));
+		currentSize += sizeof(float);
+		nodes[i].createBox(minVec, maxVec);
+
+		buffer.extractData(&leftNode, currentSize, sizeof(int));
+		currentSize += sizeof(int);
+		buffer.extractData(&rightNode, currentSize, sizeof(int));
+		currentSize += sizeof(int);
+		nodes[i].assignNodes(leftNode, rightNode);
+
+		// Get children.
+		buffer.extractData(&childCount, currentSize, sizeof(int));
+		currentSize += sizeof(int);
+
+		for (int j = 0; j < childCount; j++) 
+		{
+			buffer.extractData(&child, currentSize, sizeof(int));
+			currentSize += sizeof(int);
+			nodes[i].addPrimativeIndicies(child);
+		}
+	}
+
+	loadedBVH = true;
+	return true;
+}
+
+void T_racer_BVH_Tree::saveBVHToFile(std::string& name)
+{
+	std::string bufferStr;
+	std::string path = name + ".trbh";
+	T_racer_Buffer  buffer(path);
+
+	T_racer_Math::Vector  minVec;
+	T_racer_Math::Vector  maxVec;
+
+	// The number of nodes in the array.
+	int nodeCount = nodes.size();
+	int leftNode;
+	int rightNode;
+	int childCount;
+	int child;
+	bufferStr.append((const char*)&nodeCount, sizeof(int));
+
+	for (int i = 0; i < nodeCount; i++) 
+	{
+		// Write the contents of each node.
+		minVec = nodes[i].getBounds()->getMin();
+		maxVec = nodes[i].getBounds()->getMax();
+
+		bufferStr.append((const char*)&minVec.X, sizeof(float));
+		bufferStr.append((const char*)&minVec.Y, sizeof(float));
+		bufferStr.append((const char*)&minVec.Z, sizeof(float));
+		bufferStr.append((const char*)&maxVec.X, sizeof(float));
+		bufferStr.append((const char*)&maxVec.Y, sizeof(float));
+		bufferStr.append((const char*)&maxVec.Z, sizeof(float));
+
+		// Write the children to the file.
+		leftNode = nodes[i].getLeftNode();
+		rightNode = nodes[i].getRightNode();
+
+		bufferStr.append((const char*)&leftNode, sizeof(int));
+		bufferStr.append((const char*)&rightNode, sizeof(int));
+
+		// if children append these onto the list.
+		childCount = nodes[i].getNumberOfTriangles();
+		bufferStr.append((const char*)&childCount, sizeof(int));
+
+		for (int j = 0; j < childCount; j++) 
+		{
+			child = nodes[i].getTriangle(j);
+			bufferStr.append((const char*)&child, sizeof(int));
+		}
+	}
+
+	buffer.assignBufferData((uint8_t*)bufferStr.data(), bufferStr.size());
+	buffer.writeFile();
 }
 
 void T_racer_BVH_Tree::createBVHNodes()

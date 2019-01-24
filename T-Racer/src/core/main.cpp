@@ -54,6 +54,7 @@ int main(int argc, char* argv[])
 	T_racer_Renderer_PathTracer  trpt;
 
 	T_racer_Scene testScene;
+	testScene.setName("Cubey");
 	testScene.setMainCamera(&testCam);
 
 	testScene.addLight(light1);

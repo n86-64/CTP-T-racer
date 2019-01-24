@@ -57,7 +57,7 @@ public:
 	T_racer_BVH_Tree();
 	~T_racer_BVH_Tree();
 
-	void generateSceneBVH(std::vector<Triangle>* scenePrimatives);
+	void generateSceneBVH(std::string name, std::vector<Triangle>* scenePrimatives);
 	void checkForIntersections(T_racer_Math::Ray* ray); 
 
 	T_racer_BVH_CollisionQueue_t getPossibleCollisions();
@@ -66,6 +66,9 @@ public:
 	T_racer_TriangleIntersection	  getIntersectedTriangleData() const { return intersectDesc; }
 
 private:
+	bool loadBVHFromFile(std::string& name);
+	void saveBVHToFile(std::string& name); 
+
 	void createBVHNodes();
 
 	// Splitting routienes.
@@ -77,6 +80,7 @@ private:
 	float getGeometricProbibility(T_racer_Collider_AABB& col, float surfaceArea);
 
 private:
+	bool					  loadedBVH = false;
 	int						  closestTriangle = -1;
 	float					  closeT = INFINITY;
 

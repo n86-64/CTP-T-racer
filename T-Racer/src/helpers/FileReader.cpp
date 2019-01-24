@@ -91,6 +91,11 @@ void T_racer_Buffer::extractData(std::string & charBuffer, size_t offset, char d
 	}
 }
 
+void T_racer_Buffer::extractData(void* outputBuffer, size_t offset, size_t extractionSize)
+{
+	memcpy(outputBuffer, data + offset, extractionSize);
+}
+
 void T_racer_Buffer::assignBufferData(uint8_t* data, size_t size)
 {
 	this->data = data;
