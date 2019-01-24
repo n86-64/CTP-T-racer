@@ -133,6 +133,9 @@
     <Filter Include="Core\Objects\Resource\Lighting\Lights">
       <UniqueIdentifier>{131fee7a-e7c4-4b2c-ae64-8ede047906f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\FileIO">
+      <UniqueIdentifier>{e03657ef-b619-458d-a638-13a0be6d2e70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\main.cpp" />
@@ -204,6 +207,9 @@
     </ClCompile>
     <ClCompile Include="..\src\core\Materials.cpp">
       <Filter>Core\Objects\Resource\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\FileReader.cpp">
+      <Filter>Helpers\FileIO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -320,6 +326,12 @@
     </ClInclude>
     <ClInclude Include="..\src\core\MaterialConstants.h">
       <Filter>Core\Objects\Resource\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\FileReader.h">
+      <Filter>Helpers\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Utility.h">
+      <Filter>Helpers\Memory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

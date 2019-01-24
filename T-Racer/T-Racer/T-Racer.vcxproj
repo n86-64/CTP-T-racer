@@ -242,6 +242,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClCompile Include="..\src\core\TextureManager.cpp" />
     <ClCompile Include="..\src\core\TGADisplay.cpp" />
     <ClCompile Include="..\src\core\Triangle.cpp" />
+    <ClCompile Include="..\src\helpers\FileReader.cpp" />
     <ClCompile Include="..\src\core\Window.cpp" />
     <ClCompile Include="..\src\helpers\Math_Matrix.cpp" />
     <ClCompile Include="..\src\helpers\Math_Ray.cpp" />
@@ -276,6 +277,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\core\Triangle.h" />
     <ClInclude Include="..\src\core\TGADisplay.h" />
     <ClInclude Include="..\src\core\Vertex.h" />
+    <ClInclude Include="..\src\helpers\FileReader.h" />
     <ClInclude Include="..\src\core\Window.h" />
     <ClInclude Include="..\src\helpers\Image.h" />
     <ClInclude Include="..\src\helpers\Math_Colour.h" />
@@ -285,6 +287,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\helpers\Math_Vector.h" />
     <ClInclude Include="..\src\helpers\Math_Ray.h" />
     <ClInclude Include="..\src\helpers\Math_Matrix.h" />
+    <ClInclude Include="..\src\helpers\Utility.h" />
     <ClInclude Include="..\src\helpers\OBJ_Loader.h" />
     <ClInclude Include="..\src\helpers\Math_Sampler.h" />
   </ItemGroup>
