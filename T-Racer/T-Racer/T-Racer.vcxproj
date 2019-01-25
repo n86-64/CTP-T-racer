@@ -237,6 +237,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClCompile Include="..\src\core\PathTracer.cpp" />
     <ClCompile Include="..\src\core\PFMDisplay.cpp" />
     <ClCompile Include="..\src\core\PointLight.cpp" />
+    <ClCompile Include="..\src\core\Renderers.cpp" />
     <ClCompile Include="..\src\core\Scene.cpp" />
     <ClCompile Include="..\src\core\Texture.cpp" />
     <ClCompile Include="..\src\core\TextureManager.cpp" />

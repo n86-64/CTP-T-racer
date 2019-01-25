@@ -211,6 +211,9 @@
       <Filter>Helpers\FileIO</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\main.cpp" />
+    <ClCompile Include="..\src\core\Renderers.cpp">
+      <Filter>Core\Renderers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">

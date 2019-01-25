@@ -22,11 +22,11 @@ public:
 	T_racer_Renderer_PathTracer();
 
 
+	virtual void renderThreaded() override;
 	virtual void Render() override;
 
 protected:
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance) override;
-
 
 private:
 	int triIndex2 = -1;

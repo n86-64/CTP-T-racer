@@ -9,10 +9,14 @@
 
 #pragma once
 
+#include <thread>
+#include <atomic>
+
 #include "Scene.h"
 #include "MaterialManager.h"
 #include "TextureManager.h"
 #include "BaseLight.h"
+#include "Display.h"
 
 class T_racer_Renderer_Base 
 {
@@ -21,13 +25,15 @@ public:
 	virtual ~T_racer_Renderer_Base() = default;
 
 	virtual void Render() = 0;
-	void setDisplay(T_racer_Display* newDisplay) { display = newDisplay; }
+	void setDisplay(T_racer_Display* newDisplay);/* { display = newDisplay; }*/
 
 	void setScene(T_racer_Scene* newScene) { sceneObject = std::unique_ptr<T_racer_Scene>(newScene); 
 	sceneObject->setDisplay(display);
 	}
 
 protected:
+	virtual void renderThreaded() = 0; // Threaded path.
+
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance) = 0;
 
 protected:
@@ -35,5 +41,12 @@ protected:
 	T_racer_MaterialManager				materials;
 	T_racer_TextureManager				textures;
 
-	T_racer_Display*				display = nullptr;
+	T_racer_Display*					display = nullptr;
+
+	// Used for tile rendering.
+	std::atomic<int>					currentTile = 0;
+	int									tileCount = 0;
+	int									threadCount = 0;
+	T_racer_Math::Vector				tileSize = T_racer_Math::Vector(INFINITY, INFINITY);
+	std::vector<std::thread>			tileThreads; 
 };

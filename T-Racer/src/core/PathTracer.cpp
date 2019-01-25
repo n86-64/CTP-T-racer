@@ -15,6 +15,30 @@ T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
 
 void T_racer_Renderer_PathTracer::Render()
 {
+	sceneObject->setupScene();
+
+	if (threadCount > 0) 
+	{
+		for (int i = 0; i < threadCount; i++) 
+		{
+			tileThreads[i] = std::thread(&T_racer_Renderer_Base::renderThreaded, this);
+		}
+
+		while (true) 
+		{
+			// Here we check all of the threads and render until all of the threads have finsihed.
+			for (int i = 0; i < threadCount; i++)
+			{
+				if (tileThreads[i].joinable()) 
+				{
+					tileThreads[i].detach();
+				}
+			}
+		}
+
+		return;
+	}
+
 	int triangleIndex = -1;
 	T_racer_BVH_CollisionQueue_t collisions;
 	T_racer_TriangleIntersection intersectionDisc;
@@ -22,7 +46,7 @@ void T_racer_Renderer_PathTracer::Render()
 	T_racer_Math::Colour irradiance;
 	T_racer_Math::Colour lightValue;
 
-	sceneObject->setupScene();
+
 
 	// Here we trace the ray for the camera.
 	// Generate a ray for each image in the framebuffer.
@@ -156,6 +180,11 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	}
 
 	irradiance = pathTroughput;
+}
+
+void T_racer_Renderer_PathTracer::renderThreaded()
+{
+
 }
 
 int T_racer_Renderer_PathTracer::sortTriangles(T_racer_BVH_CollisionQueue_t& collisions, T_racer_TriangleIntersection& intersection)
