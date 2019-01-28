@@ -21,7 +21,6 @@ class T_racer_Renderer_PathTracer : public T_racer_Renderer_Base
 public:
 	T_racer_Renderer_PathTracer();
 
-
 	virtual void renderThreaded() override;
 	virtual void Render() override;
 
@@ -30,6 +29,7 @@ protected:
 
 private:
 	int triIndex2 = -1;
+	std::mutex   mtx;
 
 
 	int directLightHits = 0;

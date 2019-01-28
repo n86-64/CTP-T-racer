@@ -9,6 +9,7 @@ void T_racer_Renderer_Base::setDisplay(T_racer_Display * newDisplay)
 	{
 		tileThreads.resize(threadCount);
 		tileSize = T_racer_Math::Vector(20, 20);
-		tileCount = floor((display->getWidth() * display->getHeight()) / tileSize.X * tileSize.Y);
+		float tileArea = tileSize.X * tileSize.Y;
+		tileCount = floor((display->getWidth() * display->getHeight()) / tileArea);
 	}
 }

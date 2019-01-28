@@ -10,6 +10,7 @@
 #pragma once
 
 #include <thread>
+#include <mutex>
 #include <atomic>
 
 #include "Scene.h"
@@ -31,8 +32,9 @@ public:
 	sceneObject->setDisplay(display);
 	}
 
-protected:
 	virtual void renderThreaded() = 0; // Threaded path.
+
+protected:
 
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance) = 0;
 
