@@ -26,6 +26,7 @@ public:
 
 protected:
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance) override;
+	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath) override;
 
 private:
 	int triIndex2 = -1;
