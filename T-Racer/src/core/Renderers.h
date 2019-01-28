@@ -49,6 +49,7 @@ protected:
 	// Used for tile rendering.
 	std::atomic<int>					currentTile = 0;
 	std::atomic<int>					compleatedTiles = 0;
+
 	int									tileCount = 0;
 	int									threadCount = 0;
 	T_racer_Math::Vector				tileSize = T_racer_Math::Vector(INFINITY, INFINITY);
