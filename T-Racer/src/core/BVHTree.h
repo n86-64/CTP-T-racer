@@ -58,12 +58,10 @@ public:
 	~T_racer_BVH_Tree();
 
 	void generateSceneBVH(std::string name, std::vector<Triangle>* scenePrimatives);
-	void checkForIntersections(T_racer_Math::Ray* ray); 
-
-	T_racer_BVH_CollisionQueue_t getPossibleCollisions();
+	T_racer_TriangleIntersection checkForIntersections(T_racer_Math::Ray* ray);
+	bool visible(T_racer_Math::Ray* ray, const float t);
 
 	int	  getIntersectedTriangle() const { return closestTriangle; }
-	T_racer_TriangleIntersection	  getIntersectedTriangleData() const { return intersectDesc; }
 
 private:
 	bool loadBVHFromFile(std::string& name);
@@ -84,14 +82,9 @@ private:
 	int						  closestTriangle = -1;
 	float					  closeT = INFINITY;
 
-	T_racer_TriangleIntersection   intersectDesc;
-
 	std::vector<Triangle>*    sceneObjects;  // All objects in a scene.
 
 	std::vector<T_racer_BVH_Node>   nodes = std::vector<T_racer_BVH_Node>(1);
-
-	// The indicies of the triangles that we have to test.
-	T_racer_BVH_CollisionQueue_t  collisionQueue; 
 
 	float surfaceArea = 0.0f;
 

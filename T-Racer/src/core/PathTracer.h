@@ -29,18 +29,9 @@ protected:
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath) override;
 
 private:
-	int triIndex2 = -1;
-	std::mutex   mtx;
-
-	int directLightHits = 0;
-
-	//std::vector<T_racer_Path_Vertex>   lightPath;
-
 	// Performs RussianRoulette on the path and then returns the 
 	bool RussianRoulette(T_racer_Math::Colour& colour, T_racer_Path_Vertex* pathIndex);
-
 	T_racer_Math::Colour calculateDirectLighting(T_racer_Path_Vertex* pathIndex, T_racer_Math::Colour& col);
-
 	bool isLightVisible(T_racer_Light_Base* lightSource, T_racer_Path_Vertex* pathVertex);
 	float geometryTerm(T_racer_SampledDirection& light_wi, T_racer_SampledDirection& brdf_wi, T_racer_Path_Vertex* pathIndex, T_racer_Light_Base* lightSource, T_racer_Path_Vertex& lightVertex);
 };

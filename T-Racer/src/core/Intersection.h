@@ -22,4 +22,11 @@ struct T_racer_TriangleIntersection
 	float w = 0.0f;
 
 	void setW() { w = 1 - u - v; }
+
+	int triangleID = -1;
+
+	T_racer_TriangleIntersection()
+	{
+		t = FLT_MAX;
+	}
 };

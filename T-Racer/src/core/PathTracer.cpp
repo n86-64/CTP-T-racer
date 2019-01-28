@@ -168,8 +168,6 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	T_racer_Material*  surfaceMaterial = nullptr;
 	bool terminatePath = false;
 
-	T_racer_BVH_CollisionQueue_t  collisions;
-
 	T_racer_Math::Ray   ray = initialRay;
 	T_racer_Math::Sampler  sampler;
 
@@ -204,7 +202,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 			//collisions = sceneObject->traceRay(lightPath[pathIndex].hitPoint, wi.direction);
 			//triangleIndex = sortTriangles(collisions, intersectDisc);
 
-			triangleIndex = sceneObject->traceRay2(lightPath[pathIndex].hitPoint, wi.direction, INFINITY, intersectDisc);
+			intersectDisc = sceneObject->trace(lightPath[pathIndex].hitPoint, wi.direction);
 
 			// TODO - Add routiene to check if this is a light source.
 			// If so terminate else we will evaluate the next light path.
@@ -217,14 +215,14 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				Triangle* primative = sceneObject->getTriangleByIndex(triangleIndex);
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				lightPath[pathIndex].BRDFMaterialID = primative->getMaterialIndex();
-				lightPath[pathIndex].hitPoint = collisions.ray.getHitPoint(intersectDisc.t); // primative->getHitPoint(intersectDisc);
-				lightPath[pathIndex].wo = collisions.ray.getincomingRayDirection();
+				lightPath[pathIndex].hitPoint = lightPath[pathIndex].hitPoint + (wi.direction * intersectDisc.t);//collisions.ray.getHitPoint(intersectDisc.t); // primative->getHitPoint(intersectDisc);
+				lightPath[pathIndex].wo = -wi.direction;//collisions.ray.getincomingRayDirection();
 				lightPath[pathIndex].normal = primative->getNormal().normalise();
 				lightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
 				lightPath[pathIndex].orthnormalBasis = primative->createShadingFrame(lightPath[pathIndex].normal);
 				lightPath[pathIndex].pathColour = pathTroughput;
 
-				ray = collisions.ray;
+				//ray = collisions.ray;
 			}
 			else
 			{
@@ -247,17 +245,11 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 	std::vector<T_racer_Path_Vertex>  lightPath;
 	lightPath.reserve(T_RACER_PATH_INITIAL_COUNT);
-
-	int triangleIndex = -1;
 	int tWidth;
 	int tHeight;
 
-	{
-		std::lock_guard<std::mutex>  lock_guard(mtx);
-		// Defines the presence of the tiles.
-		tWidth = display->getWidth();
-		tHeight = display->getHeight();
-	}
+	tWidth = display->getWidth();
+	tHeight = display->getHeight();
 
 	while (currentTile < tHeight) 
 	{
@@ -271,21 +263,21 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
 
 			// Here we render the object.
-			mtx.lock();
-			triangleIndex = sceneObject->traceRay2(tX, tY, intersectionDisc);
+			T_racer_Math::Ray ray = sceneObject->generateRay(tX, tY);
+			intersectionDisc = sceneObject->trace(tX, tY);
 
-			if (triangleIndex != T_RACER_TRIANGLE_NULL)
+			if (intersectionDisc.triangleID != T_RACER_TRIANGLE_NULL)
 			{
-				Triangle* primative = sceneObject->getTriangleByIndex(triangleIndex);
+				Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
-				lightPath[0].hitPoint = collisions.ray.getHitPoint(intersectionDisc.t);
+				lightPath[0].hitPoint = //collisions.ray.getHitPoint(intersectionDisc.t);
 				lightPath[0].normal = primative->getNormal().normalise();
 				lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
 				lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
 
 				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
-				tracePath(collisions.ray, irradiance);
+				tracePath(collisions.ray, irradiance, lightPath);
 
 				for (int i = 0; i < lightPath.size(); i++)
 				{
@@ -296,8 +288,6 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			lightPath.clear();
 
 			display->setColourValue(tX, tY, lightValue);
-			mtx.unlock();
-
 		}
 
 		compleatedTiles++;
@@ -352,10 +342,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 // Performs a shadow ray check on the object.
 bool T_racer_Renderer_PathTracer::isLightVisible(T_racer_Light_Base* lightSource, T_racer_Path_Vertex* pathVertex)
 {
-	T_racer_TriangleIntersection intersect;
-	T_racer_Math::Vector dir = (lightSource->getPosition() - pathVertex->hitPoint);
-	int intersectionIndex = sceneObject->traceRay2(pathVertex->hitPoint, dir.normalise(), dir.Magnitude(), intersect);
-	return (intersectionIndex == T_RACER_TRIANGLE_NULL);
+	return sceneObject->visible(lightSource->getPosition(), pathVertex->hitPoint);
 }
 
 // Geometry term depends on the light source in question.

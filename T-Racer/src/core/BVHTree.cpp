@@ -56,11 +56,9 @@ void T_racer_BVH_Tree::generateSceneBVH(std::string name, std::vector<Triangle>*
 	}
 }
 
-void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
+T_racer_TriangleIntersection T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 {
 	// Perform the intersection test for the ray.
-	// root->intersection(ray, &collisionQueue);
-	collisionQueue.triangleIndexes.clear();
 
 	int nodesToCheck[T_RACER_BVH_QUEUE_MAX_DEPTH];
 	std::fill_n(nodesToCheck, T_RACER_BVH_QUEUE_MAX_DEPTH, -1);
@@ -70,8 +68,6 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 	T_racer_BVH_Node* currentNode = nullptr;
 
 	T_racer_TriangleIntersection  triIntersection;
-	intersectDesc.t = ray->getMagnitude();
-	closestTriangle = -1;
 
 	while (nodeToCheckIndex != -1)
 	{
@@ -84,25 +80,24 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 				if (currentNode->getLeftNode() != T_RACER_NODE_NULL &&
 					currentNode->getRightNode() != T_RACER_NODE_NULL)
 				{
-					nodesToCheck[nodeToCheckIndex + 1] = currentNode->getLeftNode();
-					nodesToCheck[nodeToCheckIndex + 2] = currentNode->getRightNode();
+					nodesToCheck[nodeToCheckIndex] = currentNode->getLeftNode();
+					nodesToCheck[nodeToCheckIndex + 1] = currentNode->getRightNode();
 
-					nodesToCheck[nodeToCheckIndex] = -1;
-					nodeToCheckIndex = nodeToCheckIndex + 2;
+					nodeToCheckIndex = nodeToCheckIndex + 1;
 				}
 
 				else
 				{
 					// its a leaf we dont need to check this anymore.
-					currentNode->addTriangles(&collisionQueue);
 
-					for (int i = 0; i < collisionQueue.triangleIndexes.size(); i++)
+					for (int i = 0; i < currentNode->getTriangleIndexList().size(); i++)
 					{
-						triIntersection = (*sceneObjects)[collisionQueue.triangleIndexes[i]].isIntersecting(*ray);
-						if (triIntersection.intersection && triIntersection.t < intersectDesc.t)
+						T_racer_TriangleIntersection  triIntersectiont;
+						triIntersectiont = (*sceneObjects)[currentNode->getTriangleIndexList()[i]].isIntersecting(*ray);
+						if (triIntersectiont.intersection && triIntersectiont.t < triIntersection.t)
 						{
-							closestTriangle = collisionQueue.triangleIndexes[i];
-							intersectDesc = triIntersection;
+							triIntersection = triIntersectiont;
+							triIntersection.triangleID = currentNode->getTriangleIndexList()[i];
 						}
 					}
 					nodesToCheck[nodeToCheckIndex] = -1;
@@ -119,11 +114,64 @@ void T_racer_BVH_Tree::checkForIntersections(T_racer_Math::Ray* ray)
 			nodeToCheckIndex--;
 		}
 	}
+	return triIntersection;
 }
 
-T_racer_BVH_CollisionQueue_t T_racer_BVH_Tree::getPossibleCollisions()
+bool T_racer_BVH_Tree::visible(T_racer_Math::Ray* ray, const float t)
 {
-	return collisionQueue;
+
+	int nodesToCheck[T_RACER_BVH_QUEUE_MAX_DEPTH];
+	std::fill_n(nodesToCheck, T_RACER_BVH_QUEUE_MAX_DEPTH, -1);
+	int nodeToCheckIndex = 0;
+	nodesToCheck[nodeToCheckIndex] = 0;
+
+	T_racer_BVH_Node* currentNode = nullptr;
+
+	while (nodeToCheckIndex != -1)
+	{
+		if (nodesToCheck[nodeToCheckIndex] != -1)
+		{
+			currentNode = &nodes[nodesToCheck[nodeToCheckIndex]];
+
+			if (currentNode->getBounds()->isIntersected(*ray))
+			{
+				if (currentNode->getLeftNode() != T_RACER_NODE_NULL &&
+					currentNode->getRightNode() != T_RACER_NODE_NULL)
+				{
+					nodesToCheck[nodeToCheckIndex] = currentNode->getLeftNode();
+					nodesToCheck[nodeToCheckIndex + 1] = currentNode->getRightNode();
+
+					nodeToCheckIndex = nodeToCheckIndex + 1;
+				}
+
+				else
+				{
+					// its a leaf we dont need to check this anymore.
+
+					for (int i = 0; i < currentNode->getTriangleIndexList().size(); i++)
+					{
+						T_racer_TriangleIntersection  triIntersectiont;
+						triIntersectiont = (*sceneObjects)[currentNode->getTriangleIndexList()[i]].isIntersecting(*ray);
+						if (triIntersectiont.intersection && triIntersectiont.t < t)
+						{
+							return false;
+						}
+					}
+					nodesToCheck[nodeToCheckIndex] = -1;
+					nodeToCheckIndex--;
+				}
+			}
+			else
+			{
+				nodeToCheckIndex--;
+			}
+		}
+		else
+		{
+			nodeToCheckIndex--;
+		}
+	}
+	return true;
 }
 
 bool T_racer_BVH_Tree::loadBVHFromFile(std::string& name)

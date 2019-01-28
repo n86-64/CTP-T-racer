@@ -4,6 +4,7 @@
 #include "ModelLoader.h"
 #include "Display.h"
 #include "Scene.h"
+#include "helpers/Math_Sampler.h"
 
 #include "BaseLight.h"
 
@@ -31,7 +32,7 @@ void T_racer_Scene::loadModel(std::string modelName)
 
 void T_racer_Scene::Render()
 {
-	bvh.generateSceneBVH(name, &sceneTriangles);
+	/*bvh.generateSceneBVH(name, &sceneTriangles);
 
 	T_racer_Math::Ray  ray;
 	// Here we trace the ray for the camera.
@@ -70,7 +71,7 @@ void T_racer_Scene::Render()
 		}
 	}
 
-	display->writeToDisplay(&frameData);
+	display->writeToDisplay(&frameData);*/
 }
 
 void T_racer_Scene::setDisplay(T_racer_Display* newDisplay)
@@ -91,7 +92,7 @@ T_racer_BVH_CollisionQueue_t T_racer_Scene::traceRay(int x, int y)
 	T_racer_BVH_CollisionQueue_t collisions;
 	collisions.ray = generateRay(x, y);
 	bvh.checkForIntersections(&collisions.ray);
-	collisions.triangleIndexes = bvh.getPossibleCollisions().triangleIndexes;
+	//collisions.triangleIndexes = bvh.getPossibleCollisions().triangleIndexes;
 
 	return collisions;
 }
@@ -102,32 +103,36 @@ T_racer_BVH_CollisionQueue_t T_racer_Scene::traceRay(T_racer_Math::Vector origin
 	collisions.ray.setPosition(origin);
 	collisions.ray.setDirection(direction);
 	bvh.checkForIntersections(&collisions.ray);
-	collisions.triangleIndexes = bvh.getPossibleCollisions().triangleIndexes;
+	//collisions.triangleIndexes = bvh.getPossibleCollisions().triangleIndexes;
 
 	return collisions;
 }
 
 
-int T_racer_Scene::traceRay2(T_racer_Math::Vector origin, T_racer_Math::Vector direction, float t, T_racer_TriangleIntersection& intersectDesc)
+T_racer_TriangleIntersection T_racer_Scene::trace(T_racer_Math::Vector origin, T_racer_Math::Vector direction)
 {
-	T_racer_BVH_CollisionQueue_t collisions;
-	collisions.ray.setPosition(origin);
-	collisions.ray.setDirection(direction);
-	collisions.ray.setMagnitude(t);
-	bvh.checkForIntersections(&collisions.ray);
-	intersectDesc = bvh.getIntersectedTriangleData();
-
-	return bvh.getIntersectedTriangle();
+	T_racer_Math::Ray ray(origin, direction);
+	return bvh.checkForIntersections(&ray);
 }
 
-int T_racer_Scene::traceRay2(int x, int y, T_racer_TriangleIntersection& intersectDesc)
+T_racer_TriangleIntersection T_racer_Scene::trace(int x, int y)
 {
-	T_racer_BVH_CollisionQueue_t collisions;
-	collisions.ray = generateRay(x, y);
-	bvh.checkForIntersections(&collisions.ray);
-	intersectDesc = bvh.getIntersectedTriangleData();
+	T_racer_Math::Ray ray = generateRay(x,  y);
+	return bvh.checkForIntersections(&ray);
+}
 
-	return bvh.getIntersectedTriangle();
+bool T_racer_Scene::visible(T_racer_Math::Vector origin, T_racer_Math::Vector destination)
+{
+	T_racer_Math::Vector direction = destination - origin;
+	float t = direction.normaliseSelfWithMagnitude();
+	T_racer_Math::Ray ray(origin, direction);
+	return bvh.visible(&ray, t - 0.0001f);
+}
+
+bool T_racer_Scene::visibleDir(T_racer_Math::Vector origin, T_racer_Math::Vector direction)
+{
+	T_racer_Math::Ray ray(origin, direction);
+	return bvh.visible(&ray, FLT_MAX);
 }
 
 T_racer_Light_Base* T_racer_Scene::retrieveOneLightSource()

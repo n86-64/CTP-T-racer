@@ -35,7 +35,7 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 	T_racer_Math::Vector tVec = ray.getPosition() - verticies[0].position;
 	T_racer_Math::Vector qVec = T_racer_Math::cross(tVec, v1v0);
 
-	intersect.t = T_racer_Math::dot(qVec, v2v0);
+	intersect.t = T_racer_Math::dot(qVec, v2v0) * determinant;
 
 	if (intersect.t == INFINITY && intersect.t < ELIPSION)
 	{

@@ -46,12 +46,16 @@ public:
 	T_racer_BVH_CollisionQueue_t  traceRay(int x, int y); // Returns a list of triangles we have collided with.
 	T_racer_BVH_CollisionQueue_t traceRay(T_racer_Math::Vector origin, T_racer_Math::Vector direction); // Returns a proposed intersection with objects in the scene
 
-	int  traceRay2(int x, int y, T_racer_TriangleIntersection& intersectDesc);
-	int  traceRay2(T_racer_Math::Vector origin, T_racer_Math::Vector direction, float t, T_racer_TriangleIntersection& intersectDesc);
+	T_racer_TriangleIntersection trace(int x, int y);
+	T_racer_TriangleIntersection trace(T_racer_Math::Vector origin, T_racer_Math::Vector direction);
+	bool visible(T_racer_Math::Vector origin, T_racer_Math::Vector destination);
+	bool visibleDir(T_racer_Math::Vector origin, T_racer_Math::Vector direction);
 
 	Triangle*   getTriangleByIndex(int index) { return &sceneTriangles[index]; }
 
 	T_racer_Light_Base* retrieveOneLightSource();
+
+	T_racer_Math::Ray generateRay(float xPos, float yPos);
 
 private:
 	std::string											name = "NULLScene"; 
@@ -65,7 +69,4 @@ private:
 	Image          frameData;
 	
 	T_racer_BVH_Tree  bvh;
-
-private:
-	T_racer_Math::Ray generateRay(float xPos, float yPos);
 };
