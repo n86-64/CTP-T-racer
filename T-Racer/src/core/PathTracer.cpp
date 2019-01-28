@@ -23,7 +23,7 @@ void T_racer_Renderer_PathTracer::Render()
 	if (threadCount > 0) 
 	{
 		std::thread thread;
-		for (int i = 0; i < 4; i++) 
+		for (int i = 0; i < threadCount; i++) 
 		{
 			thread = std::thread(&T_racer_Renderer_Base::renderThreaded, this);
 			thread.detach();
@@ -32,6 +32,8 @@ void T_racer_Renderer_PathTracer::Render()
 		// Quick and dirty way of waiting for threads to execute.
 		while (compleatedTiles != tileCount) 
 		{}
+
+		display->update();
 
 		return;
 	}
@@ -179,8 +181,17 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 
 void T_racer_Renderer_PathTracer::renderThreaded()
 {
+	// Data types for rendering threaded.
+	T_racer_TriangleIntersection intersectionDisc;
+	T_racer_BVH_CollisionQueue_t collisions;
+
+	T_racer_Math::Colour irradiance;
+	T_racer_Math::Colour lightValue;
+
 	std::vector<T_racer_Path_Vertex>  lightPath;
 	lightPath.reserve(T_RACER_PATH_INITIAL_COUNT);
+
+	int triangleIndex;
 
 	mtx.lock();
 	// Defines the presence of the tiles.
@@ -190,17 +201,48 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 	while (currentTile < tHeight) 
 	{
-
 		int tX = 0;
 		int tY = currentTile;
 		currentTile++;
+
+		irradiance = T_racer_Math::Colour(1.0f, 1.0f, 1.0f);
+		lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
 
 		for (tX; tX < tWidth; tX++)
 		{
 			// Here we render the object.
 			mtx.lock();
-			printf("Hello there height is %i x is = %i \n", tY, tX);
+			triangleIndex = sceneObject->traceRay2(tX, tY, intersectionDisc);
 			mtx.unlock();
+
+			if (triangleIndex != T_RACER_TRIANGLE_NULL)
+			{
+				mtx.lock();
+				Triangle* primative = sceneObject->getTriangleByIndex(triangleIndex);
+				lightPath.emplace_back(T_racer_Path_Vertex());
+				lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
+				lightPath[0].hitPoint = collisions.ray.getHitPoint(intersectionDisc.t);  //primative->getHitPoint(intersectionDisc);
+				lightPath[0].normal = primative->getNormal().normalise();
+				lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
+				lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
+
+				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
+				tracePath(collisions.ray, irradiance);
+				mtx.unlock();
+
+				for (int i = 0; i < lightPath.size(); i++)
+				{
+					lightValue.colour = lightValue.colour + calculateDirectLighting(i, irradiance).colour;
+				}
+
+			}
+
+			lightPath.clear();
+
+			mtx.lock();
+			display->setColourValue(tX, tY, lightValue);
+			mtx.unlock();
+
 		}
 
 		compleatedTiles++;
