@@ -23,7 +23,7 @@ void T_racer_Renderer_PathTracer::Render()
 	if (threadCount > 0) 
 	{
 		std::thread thread;
-		for (int i = 0; i < threadCount; i++) 
+		for (int i = 0; i < 4; i++) 
 		{
 			thread = std::thread(&T_racer_Renderer_Base::renderThreaded, this);
 			thread.detach();
@@ -199,7 +199,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 		{
 			// Here we render the object.
 			mtx.lock();
-			printf("Hello there height is %i \n", tY);
+			printf("Hello there height is %i x is = %i \n", tY, tX);
 			mtx.unlock();
 		}
 
