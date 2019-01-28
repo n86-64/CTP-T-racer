@@ -31,13 +31,9 @@ private:
 	int triIndex2 = -1;
 	std::mutex   mtx;
 
-
 	int directLightHits = 0;
 
 	std::vector<T_racer_Path_Vertex>   lightPath;
-
-	// returns the index of a triangle that was hit by the path-tracer.
-	int sortTriangles(T_racer_BVH_CollisionQueue_t& collisions, T_racer_TriangleIntersection& intersection);
 
 	// Performs RussianRoulette on the path and then returns the 
 	bool RussianRoulette(T_racer_Math::Colour& colour, int pathIndex);

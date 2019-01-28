@@ -6,6 +6,8 @@ constexpr float T_RACER_LUMINANCE_VALUE = 0.5f;
 
 constexpr int T_RACER_SAMPLE_COUNT = 1;
 
+constexpr int T_RACER_PATH_INITIAL_COUNT = 20;
+
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
 {
@@ -17,29 +19,19 @@ void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
 
+
 	if (threadCount > 0) 
 	{
+		std::thread thread;
 		for (int i = 0; i < threadCount; i++) 
 		{
-			tileThreads[i] = std::thread(&T_racer_Renderer_Base::renderThreaded, this);
+			thread = std::thread(&T_racer_Renderer_Base::renderThreaded, this);
+			thread.detach();
 		}
 
-		while (currentTile < tileCount) 
-		{
-			// Here we check all of the threads and render until all of the threads have finsihed.
-			for (int i = 0; i < threadCount; i++)
-			{
-				if (tileThreads[i].joinable()) 
-				{
-					tileThreads[i].detach();
-				}
-				else 
-				{
-					tileThreads[i] = std::thread(&T_racer_Renderer_Base::renderThreaded, this);
-					tileThreads[i].detach();
-				}
-			}
-		}
+		// Quick and dirty way of waiting for threads to execute.
+		while (compleatedTiles != tileCount) 
+		{}
 
 		return;
 	}
@@ -187,40 +179,34 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 
 void T_racer_Renderer_PathTracer::renderThreaded()
 {
-	// Defines the presence of the tiles.
-	int tX, tY;
-
-	tX = 1;
-	tY = 1;
-
-	currentTile++;
+	std::vector<T_racer_Path_Vertex>  lightPath;
+	lightPath.reserve(T_RACER_PATH_INITIAL_COUNT);
 
 	mtx.lock();
-	printf("Hello there from the thread \n");
+	// Defines the presence of the tiles.
+	int tWidth = display->getWidth();
+	int tHeight = display->getHeight();
 	mtx.unlock();
 
-	return;
-}
-
-int T_racer_Renderer_PathTracer::sortTriangles(T_racer_BVH_CollisionQueue_t& collisions, T_racer_TriangleIntersection& intersection)
-{
-	T_racer_TriangleIntersection intersect;
-
-	int        primaryTriangle = -1;
-	float	   tVal = INFINITY;
-
-	for (int pIndex : collisions.triangleIndexes)
+	while (currentTile < tHeight) 
 	{
-		intersect = sceneObject->getTriangleByIndex(pIndex)->isIntersecting(collisions.ray);
-		if (intersect.t < tVal && intersect.intersection)
+
+		int tX = 0;
+		int tY = currentTile;
+		currentTile++;
+
+		for (tX; tX < tWidth; tX++)
 		{
-			primaryTriangle = pIndex;
-			tVal = intersect.t;
-			intersection = intersect;
+			// Here we render the object.
+			mtx.lock();
+			printf("Hello there height is %i \n", tY);
+			mtx.unlock();
 		}
+
+		compleatedTiles++;
 	}
 
-	return primaryTriangle;
+	return;
 }
 
 // Weight the value according to the luminance if the luminance is less than a random value.
