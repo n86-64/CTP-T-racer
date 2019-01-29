@@ -271,7 +271,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
-				lightPath[0].hitPoint = //collisions.ray.getHitPoint(intersectionDisc.t);
+				lightPath[0].hitPoint = ray.getPosition() + (ray.getDirection() * intersectionDisc.t);//collisions.ray.getHitPoint(intersectionDisc.t);
 				lightPath[0].normal = primative->getNormal().normalise();
 				lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
 				lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
@@ -334,7 +334,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	T_racer_Math::Colour brdfLightValue = lightSource->Evaluate(*pathVertex);
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex).getPixelValue(0, 0);
 
-	Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour * (visible * gTerm)  / light_wi.probabilityDensity;
+	Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour * (/*visible* */ gTerm)  / light_wi.probabilityDensity;
 
 	return Ld;
 }
