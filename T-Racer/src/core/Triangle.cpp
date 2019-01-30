@@ -37,7 +37,7 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 
 	intersect.t = T_racer_Math::dot(qVec, v2v0) * determinant;
 
-	if (intersect.t == INFINITY && intersect.t < ELIPSION)
+	if (intersect.t == INFINITY || intersect.t < ELIPSION)
 	{
 		intersect.intersection = false;
 		return intersect;
@@ -56,7 +56,7 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray ray)
 		return intersect;
 	}
 
-	intersect.intersection = (intersect.v + intersect.u) < 1.0f;
+	intersect.intersection = (intersect.v + intersect.u) <= 1.0f;
 	intersect.setW();
 
 	return intersect;

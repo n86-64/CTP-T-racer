@@ -71,46 +71,40 @@ T_racer_TriangleIntersection T_racer_BVH_Tree::checkForIntersections(T_racer_Mat
 
 	while (nodeToCheckIndex != -1)
 	{
-		if (nodesToCheck[nodeToCheckIndex] != -1) 
+		currentNode = &nodes[nodesToCheck[nodeToCheckIndex]];
+
+		if (currentNode->getBounds()->isIntersected(*ray))
 		{
-			currentNode = &nodes[nodesToCheck[nodeToCheckIndex]];
-
-			if (currentNode->getBounds()->isIntersected(*ray))
+			if (currentNode->getLeftNode() != T_RACER_NODE_NULL &&
+				currentNode->getRightNode() != T_RACER_NODE_NULL)
 			{
-				if (currentNode->getLeftNode() != T_RACER_NODE_NULL &&
-					currentNode->getRightNode() != T_RACER_NODE_NULL)
-				{
-					nodesToCheck[nodeToCheckIndex] = currentNode->getLeftNode();
-					nodesToCheck[nodeToCheckIndex + 1] = currentNode->getRightNode();
+				nodesToCheck[nodeToCheckIndex] = currentNode->getLeftNode();
+				nodesToCheck[nodeToCheckIndex + 1] = currentNode->getRightNode();
 
-					nodeToCheckIndex = nodeToCheckIndex + 1;
-				}
-
-				else
-				{
-					// its a leaf we dont need to check this anymore.
-
-					for (int i = 0; i < currentNode->getTriangleIndexList().size(); i++)
-					{
-						T_racer_TriangleIntersection  triIntersectiont;
-						triIntersectiont = (*sceneObjects)[currentNode->getTriangleIndexList()[i]].isIntersecting(*ray);
-						if (triIntersectiont.intersection && triIntersectiont.t < triIntersection.t)
-						{
-							triIntersection = triIntersectiont;
-							triIntersection.triangleID = currentNode->getTriangleIndexList()[i];
-						}
-					}
-					nodesToCheck[nodeToCheckIndex] = -1;
-					nodeToCheckIndex--;
-				}
+				nodeToCheckIndex = nodeToCheckIndex + 1;
 			}
+
 			else
 			{
+				// its a leaf we dont need to check this anymore.
+
+				for (int i = 0; i < currentNode->getTriangleIndexList().size(); i++)
+				{
+					T_racer_TriangleIntersection  triIntersectiont;
+					triIntersectiont = (*sceneObjects)[currentNode->getTriangleIndexList()[i]].isIntersecting(*ray);
+					if (triIntersectiont.intersection && triIntersectiont.t < triIntersection.t)
+					{
+						triIntersection = triIntersectiont;
+						triIntersection.triangleID = currentNode->getTriangleIndexList()[i];
+					}
+				}
+				nodesToCheck[nodeToCheckIndex] = -1;
 				nodeToCheckIndex--;
 			}
 		}
-		else 
+		else
 		{
+			nodesToCheck[nodeToCheckIndex] = -1;
 			nodeToCheckIndex--;
 		}
 	}
@@ -152,7 +146,7 @@ bool T_racer_BVH_Tree::visible(T_racer_Math::Ray* ray, const float t)
 					{
 						T_racer_TriangleIntersection  triIntersectiont;
 						triIntersectiont = (*sceneObjects)[currentNode->getTriangleIndexList()[i]].isIntersecting(*ray);
-						if (triIntersectiont.intersection && triIntersectiont.t < t)
+						if (triIntersectiont.intersection && triIntersectiont.t < t && triIntersectiont.t > 0)
 						{
 							return false;
 						}
