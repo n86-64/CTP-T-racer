@@ -115,6 +115,12 @@ T_racer_TriangleIntersection T_racer_Scene::trace(T_racer_Math::Vector origin, T
 	return bvh.checkForIntersections(&ray);
 }
 
+T_racer_TriangleIntersection T_racer_Scene::trace(T_racer_Math::Ray ray)
+{
+	//T_racer_Math::Ray iRay = ray;
+	return bvh.checkForIntersections(&ray);
+}
+
 T_racer_TriangleIntersection T_racer_Scene::trace(int x, int y)
 {
 	T_racer_Math::Ray ray = generateRay(x,  y);
