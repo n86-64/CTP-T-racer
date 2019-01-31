@@ -2,7 +2,7 @@
 #include "PathTracer.h"
 
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
-constexpr float T_RACER_LUMINANCE_VALUE = 0.5f;
+constexpr float T_RACER_LUMINANCE_VALUE = 0.0f;
 
 constexpr int T_RACER_SAMPLE_COUNT = 1;
 
@@ -199,9 +199,6 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		// then loop.
 		if (!terminatePath)
 		{
-			//collisions = sceneObject->traceRay(lightPath[pathIndex].hitPoint, wi.direction);
-			//triangleIndex = sortTriangles(collisions, intersectDisc);
-
 			T_racer_Math::Ray ray(lightPath[pathIndex].hitPoint, wi.direction);
 			intersectDisc = sceneObject->trace(ray);
 
@@ -223,7 +220,6 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				lightPath[pathIndex].orthnormalBasis = primative->createShadingFrame(lightPath[pathIndex].normal);
 				lightPath[pathIndex].pathColour = pathTroughput;
 
-				//ray = collisions.ray;
 			}
 			else
 			{
@@ -279,7 +275,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
 
 				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
-				//tracePath(collisions.ray, irradiance, lightPath);
+				tracePath(collisions.ray, irradiance, lightPath);
 
 				for (int i = 0; i < lightPath.size(); i++)
 				{
@@ -303,7 +299,7 @@ bool T_racer_Renderer_PathTracer::RussianRoulette(T_racer_Math::Colour& colour, 
 {
 	T_racer_Math::Sampler   sampler;
 	float stopProbability = sampler.Random();
-	bool rr = (stopProbability >= T_RACER_LUMINANCE_VALUE); // TODO - Add code to perform russian roullete.
+	bool rr = (stopProbability <= T_RACER_LUMINANCE_VALUE); // TODO - Add code to perform russian roullete.
 
 	if (rr) 
 	{
@@ -329,15 +325,16 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	{
 		 return T_racer_Math::Colour(0, 0, 0);
 	}
+
 	T_racer_Path_Vertex lightVertex;
 	lightVertex.isLightSource = true;
 	lightVertex.hitPoint = lightSource->getPosition();
-	float gTerm = geometryTerm(pathVertex, &lightVertex);
 
+	float gTerm = geometryTerm(pathVertex, &lightVertex);
 	T_racer_Math::Colour brdfLightValue = lightSource->Evaluate(*pathVertex);
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex).getPixelValue(0, 0);
 
-	Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour * (/*visible* */ gTerm);// / light_wi.probabilityDensity;
+	Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour *  gTerm;// / light_wi.probabilityDensity;
 
 	return Ld;
 }
@@ -351,12 +348,15 @@ bool T_racer_Renderer_PathTracer::isLightVisible(T_racer_Light_Base* lightSource
 // Geometry term depends on the light source in question.
 float T_racer_Renderer_PathTracer::geometryTerm(T_racer_Path_Vertex* pathVertex, T_racer_Path_Vertex *lightVertex)
 {
+	// TODO - Work out a better approch for working out the hitpoint for geometry term.
+	// Consider using flags or related tools for differentiating light sources.
+	// Consider better functions for determining probability density if needed. 
 	T_racer_Math::Vector wi;
 	wi = lightVertex->hitPoint - pathVertex->hitPoint;
 	float l;
 	l = wi.normaliseSelfWithMagnitude();
 	float brdfTheta = T_racer_Math::dot(wi, pathVertex->normal);
-	float lightTheta = 1.0f;//
+	float lightTheta = 1.0f;
 
 	return (brdfTheta * lightTheta) / (l * l);
 }
