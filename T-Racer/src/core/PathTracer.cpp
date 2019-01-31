@@ -265,7 +265,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 			// Here we render the object.
 		
-			T_racer_Math::Ray ray = sceneObject->generateRay(tX, tY);
+			T_racer_Math::Ray ray = sceneObject->generateRay(tX / 800.0f, tY / 600.0f);
 			intersectionDisc = sceneObject->trace(ray);
 
 			if (intersectionDisc.triangleID != T_RACER_TRIANGLE_NULL)
@@ -279,7 +279,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
 
 				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
-				tracePath(collisions.ray, irradiance, lightPath);
+				//tracePath(collisions.ray, irradiance, lightPath);
 
 				for (int i = 0; i < lightPath.size(); i++)
 				{
@@ -323,23 +323,21 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	T_racer_Material* material = materials.retrieveMaterial(pathVertex->BRDFMaterialID);
 	T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(); // Picks out a random light source to sample.
 
-	T_racer_SampledDirection brdf_wi = material->Sample(nullptr, sampler, *pathVertex);
-	lightRay = T_racer_Math::Ray(pathVertex->hitPoint, brdf_wi.direction);
-
-	T_racer_SampledDirection light_wi = lightSource->Sample(*pathVertex, lightRay, lightSourcePath);
+	T_racer_SampledDirection light_pos = lightSource->Sample(*pathVertex, lightRay, lightSourcePath);
 
 	if (isLightVisible(lightSource, pathVertex) == false)
 	{
-		// return T_racer_Math::Colour(0, 0, 0);
+		 return T_racer_Math::Colour(0, 0, 0);
 	}
-	float gTerm = geometryTerm(light_wi, brdf_wi, pathVertex, lightSource, lightSourcePath);
-
-	// assert(visible != 0.0f);
+	T_racer_Path_Vertex lightVertex;
+	lightVertex.isLightSource = true;
+	lightVertex.hitPoint = lightSource->getPosition();
+	float gTerm = geometryTerm(pathVertex, &lightVertex);
 
 	T_racer_Math::Colour brdfLightValue = lightSource->Evaluate(*pathVertex);
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex).getPixelValue(0, 0);
 
-	Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour * (/*visible* */ gTerm)  / light_wi.probabilityDensity;
+	Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour * (/*visible* */ gTerm);// / light_wi.probabilityDensity;
 
 	return Ld;
 }
@@ -351,13 +349,14 @@ bool T_racer_Renderer_PathTracer::isLightVisible(T_racer_Light_Base* lightSource
 }
 
 // Geometry term depends on the light source in question.
-float T_racer_Renderer_PathTracer::geometryTerm(T_racer_SampledDirection& Light_wi, T_racer_SampledDirection& brdf_wi, T_racer_Path_Vertex* pathVertex, T_racer_Light_Base* lightSource, T_racer_Path_Vertex& lightVertex)
+float T_racer_Renderer_PathTracer::geometryTerm(T_racer_Path_Vertex* pathVertex, T_racer_Path_Vertex *lightVertex)
 {
-	float brdfTheta = T_racer_Math::dot(brdf_wi.direction, pathVertex->normal);
-	float lightTheta = lightSource->surfaceCosine(lightVertex);
+	T_racer_Math::Vector wi;
+	wi = lightVertex->hitPoint - pathVertex->hitPoint;
+	float l;
+	l = wi.normaliseSelfWithMagnitude();
+	float brdfTheta = T_racer_Math::dot(wi, pathVertex->normal);
+	float lightTheta = 1.0f;//
 
-	T_racer_Math::Vector xN = pathVertex->hitPoint;
-	T_racer_Math::Vector xL = lightVertex.hitPoint;
-
-	return (brdfTheta * lightTheta) / pow((xL-xN).Magnitude(), 2);
+	return (brdfTheta * lightTheta) / (l * l);
 }

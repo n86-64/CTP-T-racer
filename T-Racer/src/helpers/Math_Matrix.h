@@ -356,9 +356,13 @@ namespace T_racer_Math
 	{
 		// TODO - Review this matrix in order to solve issues with camera and possibly BVH.
 		// The forward and right matracies.
-		Vector forward = (targetPos - eyePos).normalise();
-		Vector right = cross(forward, up).normalise();
-		Vector lUp = cross(right, forward);
+		//Vector forward = (targetPos - eyePos).normalise();
+		//Vector right = cross(forward, up).normalise();
+		//Vector lUp = cross(right, forward);
+
+		Vector forward = (eyePos - targetPos).normalise();
+		Vector right = cross(up, forward).normalise();
+		Vector lUp = cross(forward, right);
 		
 		return Matrix4X4
 		(

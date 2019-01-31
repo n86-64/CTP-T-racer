@@ -37,6 +37,8 @@ public:
 	T_racer_Math::Vector  getPosition() const { return position; }
 	T_racer_Math::Vector  getForward() { return position + target; }
 
+	void getCameraCords(T_racer_Math::Vector& w, T_racer_Math::Vector& u, T_racer_Math::Vector& v);
+
 private:
 	float fov = radians(90.0f); // fov on the y-axis.
 	float resX, resY;

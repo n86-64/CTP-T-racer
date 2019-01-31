@@ -74,6 +74,7 @@ namespace T_racer_Math
 
 		// Uitlity functions.
 		float Magnitude();
+		float MagnitudeSq();
 
 
 	public:

@@ -35,7 +35,7 @@ public:
 	void				 setPosition(T_racer_Math::Vector newPos) { position = newPos; }
 
 protected:
-	T_racer_Math::Colour	intensity = T_racer_Math::Colour(10000.0f, 10000.0f, 10000.0f);
+	T_racer_Math::Colour	intensity = T_racer_Math::Colour(1.0f, 1.0f, 1.0f);
 
 	// TODO - Add any additional required variables here. 
 	T_racer_Math::Vector    position;

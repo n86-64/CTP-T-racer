@@ -87,27 +87,11 @@ void T_racer_Scene::setupScene()
 	bvh.generateSceneBVH(name, &sceneTriangles);
 }
 
-T_racer_BVH_CollisionQueue_t T_racer_Scene::traceRay(int x, int y)
+
+T_racer_TriangleIntersection T_racer_Scene::trace(T_racer_Math::Ray ray)
 {
-	T_racer_BVH_CollisionQueue_t collisions;
-	collisions.ray = generateRay(x, y);
-	bvh.checkForIntersections(&collisions.ray);
-	//collisions.triangleIndexes = bvh.getPossibleCollisions().triangleIndexes;
-
-	return collisions;
+	return bvh.checkForIntersections(&ray);
 }
-
-T_racer_BVH_CollisionQueue_t T_racer_Scene::traceRay(T_racer_Math::Vector origin, T_racer_Math::Vector direction)
-{
-	T_racer_BVH_CollisionQueue_t collisions;
-	collisions.ray.setPosition(origin);
-	collisions.ray.setDirection(direction);
-	bvh.checkForIntersections(&collisions.ray);
-	//collisions.triangleIndexes = bvh.getPossibleCollisions().triangleIndexes;
-
-	return collisions;
-}
-
 
 T_racer_TriangleIntersection T_racer_Scene::trace(T_racer_Math::Vector origin, T_racer_Math::Vector direction)
 {
@@ -115,11 +99,11 @@ T_racer_TriangleIntersection T_racer_Scene::trace(T_racer_Math::Vector origin, T
 	return bvh.checkForIntersections(&ray);
 }
 
-T_racer_TriangleIntersection T_racer_Scene::trace(T_racer_Math::Ray ray)
-{
-	//T_racer_Math::Ray iRay = ray;
-	return bvh.checkForIntersections(&ray);
-}
+//T_racer_TriangleIntersection T_racer_Scene::trace(T_racer_Math::Ray ray)
+//{
+//	//T_racer_Math::Ray iRay = ray;
+//	return bvh.checkForIntersections(&ray);
+//}
 
 T_racer_TriangleIntersection T_racer_Scene::trace(int x, int y)
 {
@@ -151,21 +135,39 @@ T_racer_Light_Base* T_racer_Scene::retrieveOneLightSource()
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 {
 	// Here lets generate a ray. 
-	T_racer_Math::Ray     ray;
-	T_racer_CameraTransform  camTransform = mainCamera->getCameraTransform();
+	//T_racer_Math::Ray     ray;
+	//T_racer_CameraTransform  camTransform = mainCamera->getCameraTransform();
 
-	T_racer_Math::Matrix4X4 worldTransform = /*camTransform.projection **/ camTransform.view;
-	worldTransform = T_racer_Math::getInverseMatrix(worldTransform);
+	//T_racer_Math::Matrix4X4 worldTransform = /*camTransform.projection;*/  camTransform.view;
+	//worldTransform = T_racer_Math::getInverseMatrix(worldTransform);
 
-	float imageAspectRatio = mainCamera->getAspectRatio();
-	float Px = (2 * ((xPos + 0.5) / display->getWidth()) - 1) * tan(mainCamera->getFoV() / 2) * imageAspectRatio;
-	float Py = (1 - 2 * ((yPos + 0.5) / display->getHeight()) * tan(mainCamera->getFoV() / 2));
+	//float imageAspectRatio = mainCamera->getAspectRatio();
+	//float Px = (2 * ((xPos + 0.5) / display->getWidth()) - 1) * tan(mainCamera->getFoV() / 2) * imageAspectRatio;
+	//float Py = (1 - 2 * ((yPos + 0.5) / display->getHeight()) * tan(mainCamera->getFoV() / 2));
 
-	T_racer_Math::Vector rayOrigin = mainCamera->getPosition();
-	T_racer_Math::Vector  rayDirection = T_racer_Math::Vector(Px, Py,  mainCamera->getForward().Z);
-	
-	ray.setPosition(worldTransform * rayOrigin);
-	ray.setDirection(((worldTransform * rayDirection) - ray.getPosition()).normalise()); // it's a direction so don't forget to normalize 
+	//T_racer_Math::Vector rayOrigin = mainCamera->getPosition();
+	//T_racer_Math::Vector  rayDirection = T_racer_Math::Vector(Px, Py,  mainCamera->getForward().Z);
+	//
+	//ray.setPosition(worldTransform * rayOrigin);
+	//ray.setDirection(((worldTransform * rayDirection) - ray.getPosition()).normalise()); // it's a direction so don't forget to normalize 
 
-	return ray;
+	//return ray;
+
+	// Shirley Method. 
+	float theta = mainCamera->getFoV();
+	float half_height = tan(theta / 2);
+	float half_width = mainCamera->getAspectRatio() * half_height;
+	T_racer_Math::Vector origin = mainCamera->getPosition();
+
+	T_racer_Math::Vector w, u, v; 
+	mainCamera->getCameraCords(w, u, v);
+
+	T_racer_Math::Vector lower_left_corner(-half_width, -half_height, -1.0f);
+	lower_left_corner = origin - u * half_width  - v * half_height - w; 
+	T_racer_Math::Vector horizontal =  u * half_width * 2 ;
+	T_racer_Math::Vector vertical = v * half_height * 2;
+
+	 T_racer_Math::Ray testRay = T_racer_Math::Ray(origin, ((lower_left_corner + horizontal * xPos + vertical * yPos) - origin).normalise());
+
+	 return testRay;
 }

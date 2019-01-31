@@ -174,7 +174,13 @@ namespace T_racer_Math
 
 	float Vector::Magnitude()
 	{
-		float value = pow(this->values[0], 2) + pow(this->values[1], 2) + pow(this->values[2], 2);
+		float value = (values[0] * values[0]) + (values[1] * values[1]) + (values[2] * values[2]);
 		return sqrt(value);
+	}
+
+	float Vector::MagnitudeSq()
+	{
+		float value = (values[0] * values[0]) + (values[1] * values[1]) + (values[2] * values[2]);
+		return value;
 	}
 }
