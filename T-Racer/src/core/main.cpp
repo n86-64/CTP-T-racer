@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 	testScene.setMainCamera(&testCam);
 
 	testScene.addLight(light1);
-	testScene.loadModel("resources/cube.obj");
+	testScene.loadModel("resources/bunny.obj");
 
 	trpt.setDisplay(&window);
 	trpt.setScene(&testScene);

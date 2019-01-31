@@ -2,11 +2,13 @@
 #include "PathTracer.h"
 
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
-constexpr float T_RACER_LUMINANCE_VALUE = 0.0f;
+constexpr float T_RACER_LUMINANCE_VALUE = 0.1f;
 
 constexpr int T_RACER_SAMPLE_COUNT = 1;
 
 constexpr int T_RACER_PATH_INITIAL_COUNT = 20;
+
+constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived. 
 
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
@@ -190,9 +192,14 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		pathTroughput = pathTroughput / wi.probabilityDensity;
 
 		//	pathTroughput = ((pathTroughput * brdfValue) * T_racer_Math::dot(wi.direction, lightPath[pathIndex].normal)) / wi.probabilityDensity;
-		terminatePath = !RussianRoulette(pathTroughput, &lightPath[pathIndex]);
 
-		lightPath[pathIndex].pathColour = pathTroughput;
+	    lightPath[pathIndex].pathColour = pathTroughput;
+
+		if (pathIndex > T_RACER_MINIMUM_BOUNCE) 
+		{
+			terminatePath = !RussianRoulette(pathTroughput, &lightPath[pathIndex]);
+		}
+
 
 		// else trace the scene again.
 		// If we hit a light source also terminate the path.
@@ -334,7 +341,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	T_racer_Math::Colour brdfLightValue = lightSource->Evaluate(*pathVertex);
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex).getPixelValue(0, 0);
 
-	Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour *  gTerm;// / light_wi.probabilityDensity;
+	Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour *  gTerm; // / light_wi.probabilityDensity;
 
 	return Ld;
 }
