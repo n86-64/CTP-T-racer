@@ -207,13 +207,12 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	
 	T_racer_Material* material = materials.retrieveMaterial(pathVertex->BRDFMaterialID);
 	T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(); // Picks out a random light source to sample.
+	T_racer_SampledDirection light_pos = lightSource->Sample(*pathVertex, lightRay, lightSourcePath);
 
-	if (isLightVisible(lightSource, pathVertex) == false)
+	if (!sceneObject->visible(lightSourcePath.hitPoint, pathVertex->hitPoint))
 	{
 		return Ld;
 	}
-
-	T_racer_SampledDirection light_pos = lightSource->Sample(*pathVertex, lightRay, lightSourcePath);
 
 	float gTerm = geometryTerm(light_pos, pathVertex, &lightSourcePath);
 
@@ -226,12 +225,6 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	}
 
 	return Ld;
-}
-
-// Performs a shadow ray check on the object.
-bool T_racer_Renderer_PathTracer::isLightVisible(T_racer_Light_Base* lightSource, T_racer_Path_Vertex* pathVertex)
-{
-	return sceneObject->visible(lightSource->getPosition(), pathVertex->hitPoint);
 }
 
 // Geometry term depends on the light source in question.
