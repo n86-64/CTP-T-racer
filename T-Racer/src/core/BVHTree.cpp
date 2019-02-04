@@ -1,5 +1,4 @@
 #include <queue>
-#include <deque>
 
 #include "helpers/FileReader.h"
 
@@ -10,8 +9,8 @@
 // Constants derived from PBRT 3rd edition (p.g. 207)
 constexpr int T_RACER_BVH_COST_TRAVERSAL_NODES = 1;
 constexpr int T_RACER_BVH_COST_INTERSECTION_TRIANGLE = 80;
+
 constexpr int T_RACER_BVH_TRIANGLE_MAX_QUOTA = 2;
-constexpr float T_RACER_BVH_PARTITION = -1.0f;
 constexpr int T_RACER_BVH_QUEUE_MAX_DEPTH = 50;
 
 // Predicate for sorting triangles along an axis.
@@ -83,7 +82,6 @@ T_racer_TriangleIntersection T_racer_BVH_Tree::checkForIntersections(T_racer_Mat
 
 				nodeToCheckIndex = nodeToCheckIndex + 1;
 			}
-
 			else
 			{
 				// its a leaf we dont need to check this anymore.
@@ -113,7 +111,6 @@ T_racer_TriangleIntersection T_racer_BVH_Tree::checkForIntersections(T_racer_Mat
 
 bool T_racer_BVH_Tree::visible(T_racer_Math::Ray* ray, const float t)
 {
-
 	int nodesToCheck[T_RACER_BVH_QUEUE_MAX_DEPTH];
 	std::fill_n(nodesToCheck, T_RACER_BVH_QUEUE_MAX_DEPTH, -1);
 	int nodeToCheckIndex = 0;
@@ -398,11 +395,6 @@ void T_racer_BVH_Tree::getSplitCost(int nodeIndex, BVHSplitInfo& splitInfo)
 			rightBox.enlargeBox((*sceneObjects)[primatives[right].primativeID].getCollider());
 		}
 
-		//leftBox.enlargeBox((*sceneObjects)[primatives[0].primativeID].getCollider());
-		//leftBox.enlargeBox((*sceneObjects)[primatives[leftCount].primativeID].getCollider());
-		//rightBox.enlargeBox((*sceneObjects)[primatives[leftCount].primativeID].getCollider());
-		//rightBox.enlargeBox((*sceneObjects)[primatives[primatives.size() - 1].primativeID].getCollider());
-
 		leftCost = (getGeometricProbibility(leftBox, parentSA) * (T_RACER_BVH_COST_INTERSECTION_TRIANGLE * leftCount));
 		rightCost = getGeometricProbibility(rightBox, parentSA) * T_RACER_BVH_COST_INTERSECTION_TRIANGLE * rightCount;
 
@@ -463,16 +455,10 @@ BVHSplitInfo T_racer_BVH_Tree::shouldPartition(int nodeIndex)
 		}
 	}
 
-	// Should we split.
-	// If so generate the boxes used from splitting.
-	// else just set to false.
-//	bestCost.split = (bestCost.splitCost != INFINITY);
-
 	return bestCost;
 }
 
 float T_racer_BVH_Tree::getGeometricProbibility(T_racer_Collider_AABB& col, float invSurfaceArea)
 {
-	//return col.getSurfaceArea() * invSurfaceArea;
 	return col.getSurfaceArea() / invSurfaceArea;
 }

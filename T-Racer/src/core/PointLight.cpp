@@ -8,6 +8,7 @@ T_racer_Math::Colour T_racer_Light_Point::Evaluate(T_racer_Path_Vertex & pathVer
 
 T_racer_SampledDirection T_racer_Light_Point::Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay, T_racer_Path_Vertex& lightSourcePath)
 {
+	lightSourcePath.isPointLightSource = true;
 	lightSourcePath.hitPoint = position;
 
 	T_racer_SampledDirection dir;

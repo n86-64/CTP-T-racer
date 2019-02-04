@@ -34,9 +34,10 @@ namespace T_racer_Math
 
 		Vector  getHitPoint(float t) { return position + (direction * t); }
 
-	private:
 		Vector  position;
 		Vector  direction;
+
+	private:
 		Vector  inverseDirection; // TODO - Apply inverse direction to the ray.
 		Vector  incomingRayDirection;
 		float	magnitude = INFINITY; // Maybe need, not sure.

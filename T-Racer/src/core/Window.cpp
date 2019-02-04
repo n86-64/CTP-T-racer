@@ -25,7 +25,7 @@ void T_racer_Display_Window::update()
 		}
 	}
 
-	window.clear();
+	//window.clear();
 	copyImageToFramebuffer();
 	window.display();
 }
