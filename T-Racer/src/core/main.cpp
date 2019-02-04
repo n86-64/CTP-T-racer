@@ -54,11 +54,11 @@ int main(int argc, char* argv[])
 	T_racer_Renderer_PathTracer  trpt;
 
 	T_racer_Scene testScene;
-	testScene.setName("Cubey");
+	testScene.setName("cornell2");
 	testScene.setMainCamera(&testCam);
 
 	testScene.addLight(light1);
-	testScene.loadModel("resources/bunny.obj");
+	testScene.loadModel("resources/cornell2.obj");
 
 	trpt.setDisplay(&window);
 	trpt.setScene(&testScene);

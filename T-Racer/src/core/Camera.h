@@ -43,6 +43,6 @@ private:
 	float resX, resY;
 	float near = 0.1f, far = 100.0f;
 
-	T_racer_Math::Vector    position = T_racer_Math::Vector(0.0f, 0.0f, -0.5f);
+	T_racer_Math::Vector    position = T_racer_Math::Vector(0.0f, 0.0f, -9.0f);
 	T_racer_Math::Vector    target = T_racer_Math::forward;
 };

@@ -227,6 +227,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	return Ld;
 }
 
+
 // Geometry term depends on the light source in question.
 float T_racer_Renderer_PathTracer::geometryTerm(T_racer_SampledDirection dir, T_racer_Path_Vertex* pathVertex, T_racer_Path_Vertex *lightVertex)
 {
