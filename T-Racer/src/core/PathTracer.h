@@ -33,5 +33,5 @@ private:
 	bool RussianRoulette(T_racer_Math::Colour& colour, T_racer_Path_Vertex* pathIndex);
 	T_racer_Math::Colour calculateDirectLighting(T_racer_Path_Vertex* pathIndex, T_racer_Math::Colour& col);
 	bool isLightVisible(T_racer_Light_Base* lightSource, T_racer_Path_Vertex* pathVertex);
-	float geometryTerm(T_racer_Path_Vertex* pathVertex, T_racer_Path_Vertex *lightVertex);
+	float geometryTerm(T_racer_SampledDirection dir, T_racer_Path_Vertex* pathVertex, T_racer_Path_Vertex *lightVertex);
 };

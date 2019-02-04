@@ -85,7 +85,7 @@ bool Triangle::isIntersectingShadow(T_racer_Math::Ray ray, const float maxt)
 
 	float t;
 
-	t = T_racer_Math::dot(qVec, v2v0);
+	t = T_racer_Math::dot(qVec, v2v0) * determinant;
 
 	if (t > maxt || t < 1e-4)
 	{

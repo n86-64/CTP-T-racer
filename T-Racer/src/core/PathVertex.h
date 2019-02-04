@@ -24,5 +24,5 @@ struct T_racer_Path_Vertex
 	T_racer_Math::Vector    wo; // incoming ray direction. 
 	T_racer_Math::Colour    pathColour;
 	unsigned int			BRDFMaterialID = 0;
-	bool					isLightSource = false;
+	bool					isPointLightSource = false;
 };
