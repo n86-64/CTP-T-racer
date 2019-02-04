@@ -13,7 +13,6 @@
 #include "helpers/Math_Vector.h"
 #include "helpers/Math_Trig.h"
 
-
 #include "Transform.h"
 
 class T_racer_Camera 

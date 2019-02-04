@@ -159,7 +159,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
 				lightPath[0].hitPoint = ray.position + (ray.direction * intersectionDisc.t);
-				lightPath[0].normal = primative->getNormal().normalise();
+				lightPath[0].normal = primative->normal;
 				lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
 				lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
 
@@ -175,6 +175,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			lightPath.clear();
 
 			display->setColourValue((width - 1) - tX, (height - 1) - tY, lightValue);
+			//display->setColourValue(tX, tY, lightValue);
 		}
 
 		compleatedTiles++;

@@ -21,7 +21,7 @@ public:
 	T_racer_Collider_AABB() = default;
 	T_racer_Collider_AABB(T_racer_Math::Vector  vMin, T_racer_Math::Vector vMax);
 
-	bool isIntersected(T_racer_Math::Ray  ray);
+	bool isIntersected(T_racer_Math::Ray*  ray);
 	bool isIntersected(T_racer_Collider_AABB box);
 
 	void enlargeBox(T_racer_Math::Vector point);

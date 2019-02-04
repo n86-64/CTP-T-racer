@@ -8,12 +8,12 @@ T_racer_Collider_AABB::T_racer_Collider_AABB(T_racer_Math::Vector vMin, T_racer_
 	max(vMax)
 {}
 
-bool T_racer_Collider_AABB::isIntersected(T_racer_Math::Ray ray)
+bool T_racer_Collider_AABB::isIntersected(T_racer_Math::Ray* ray)
 {	
-	T_racer_Math::Vector inv = ray.getInverseDirection();
+	T_racer_Math::Vector inv = ray->getInverseDirection();
 
-	T_racer_Math::Vector point0 = (min - ray.getPosition()) * inv;
-	T_racer_Math::Vector point1 = (max - ray.getPosition()) * inv;
+	T_racer_Math::Vector point0 = (min - ray->position) * inv;
+	T_racer_Math::Vector point1 = (max - ray->position) * inv;
 
 	T_racer_Math::Vector tMin = T_racer_Math::min(point0, point1); 
 	T_racer_Math::Vector tMax = T_racer_Math::max(point0, point1);

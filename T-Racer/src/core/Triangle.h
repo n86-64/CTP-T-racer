@@ -26,14 +26,12 @@ public:
 	Triangle() = default;
 	Triangle(T_racer_Vertex v1, T_racer_Vertex v2, T_racer_Vertex v3);
 
-	T_racer_TriangleIntersection   isIntersecting(T_racer_Math::Ray  ray);
+	T_racer_TriangleIntersection   isIntersecting(T_racer_Math::Ray*  ray);
 	T_racer_Math::Vector		   interpolatePoint(T_racer_TriangleIntersection iCoord);
 	T_racer_Math::Vector           interpolateNormals(T_racer_TriangleIntersection iCoord);
 	void						   generateBoundingBox();
-	bool						   isIntersectingShadow(T_racer_Math::Ray ray, const float maxt);
-	T_racer_Math::Vector		   getOrthnormalBasis();
+	bool						   isIntersectingShadow(T_racer_Math::Ray* ray, const float maxt);
 	
-	T_racer_Math::Matrix3X3		   createShadingFrame(); // Returns an orthonormal 3X3 projection matrix.
 	T_racer_Math::Matrix3X3		   createShadingFrame(T_racer_Math::Vector v);
 
 	T_racer_Math::Vector		   getNormal();
@@ -42,10 +40,8 @@ public:
 
 	int							   getMaterialIndex() const { return materialID; }
 
-	T_racer_Math::Vector		   getHitPoint(T_racer_TriangleIntersection& it) {
-		return (verticies[0].position * it.u) + (verticies[1].position * it.v)
-			+ (verticies[2].position * it.w);
-	}
+	T_racer_Math::Vector		   normal;
+
 
 private:
 	T_racer_Math::Vector getMinVector();

@@ -49,17 +49,17 @@ public:
 	int getNumberOfTriangles() { return triIndex.size(); }
 	int getTriangle(int index) { return triIndex[index]; }
 
+	std::vector<int>       triIndex;
 
-
-private:
 	// The box that represents the AABB.
 	T_racer_Collider_AABB  box;
+
+private:
 
 	int					   parentIndex = T_RACER_NODE_NULL;
 	int					   lNodeIndex = T_RACER_NODE_NULL;
 	int					   rNodeIndex = T_RACER_NODE_NULL;
 
-	std::vector<int>       triIndex;
 
 	float				   nodeCost = INFINITY;
 };

@@ -60,7 +60,6 @@ T_racer_TriangleIntersection T_racer_BVH_Tree::checkForIntersections(T_racer_Mat
 	// Perform the intersection test for the ray.
 
 	int nodesToCheck[T_RACER_BVH_QUEUE_MAX_DEPTH];
-	std::fill_n(nodesToCheck, T_RACER_BVH_QUEUE_MAX_DEPTH, -1);
 	int nodeToCheckIndex = 0;
 	nodesToCheck[nodeToCheckIndex] = 0;
 
@@ -72,7 +71,7 @@ T_racer_TriangleIntersection T_racer_BVH_Tree::checkForIntersections(T_racer_Mat
 	{
 		currentNode = &nodes[nodesToCheck[nodeToCheckIndex]];
 
-		if (currentNode->getBounds()->isIntersected(*ray))
+		if (currentNode->box.isIntersected(ray))
 		{
 			if (currentNode->getLeftNode() != T_RACER_NODE_NULL &&
 				currentNode->getRightNode() != T_RACER_NODE_NULL)
@@ -86,14 +85,14 @@ T_racer_TriangleIntersection T_racer_BVH_Tree::checkForIntersections(T_racer_Mat
 			{
 				// its a leaf we dont need to check this anymore.
 
-				for (int i = 0; i < currentNode->getTriangleIndexList().size(); i++)
+				for (int i = 0; i < currentNode->triIndex.size(); i++)
 				{
 					T_racer_TriangleIntersection  triIntersectiont;
-					triIntersectiont = (*sceneObjects)[currentNode->getTriangleIndexList()[i]].isIntersecting(*ray);
+					triIntersectiont = (*sceneObjects)[currentNode->triIndex[i]].isIntersecting(ray);
 					if (triIntersectiont.intersection && triIntersectiont.t < triIntersection.t)
 					{
 						triIntersection = triIntersectiont;
-						triIntersection.triangleID = currentNode->getTriangleIndexList()[i];
+						triIntersection.triangleID = currentNode->triIndex[i];
 					}
 				}
 				nodesToCheck[nodeToCheckIndex] = -1;
@@ -112,7 +111,6 @@ T_racer_TriangleIntersection T_racer_BVH_Tree::checkForIntersections(T_racer_Mat
 bool T_racer_BVH_Tree::visible(T_racer_Math::Ray* ray, const float t)
 {
 	int nodesToCheck[T_RACER_BVH_QUEUE_MAX_DEPTH];
-	std::fill_n(nodesToCheck, T_RACER_BVH_QUEUE_MAX_DEPTH, -1);
 	int nodeToCheckIndex = 0;
 	nodesToCheck[nodeToCheckIndex] = 0;
 
@@ -124,7 +122,7 @@ bool T_racer_BVH_Tree::visible(T_racer_Math::Ray* ray, const float t)
 		{
 			currentNode = &nodes[nodesToCheck[nodeToCheckIndex]];
 
-			if (currentNode->getBounds()->isIntersected(*ray))
+			if (currentNode->box.isIntersected(ray))
 			{
 				if (currentNode->getLeftNode() != T_RACER_NODE_NULL &&
 					currentNode->getRightNode() != T_RACER_NODE_NULL)
@@ -139,11 +137,9 @@ bool T_racer_BVH_Tree::visible(T_racer_Math::Ray* ray, const float t)
 				{
 					// its a leaf we dont need to check this anymore.
 
-					for (int i = 0; i < currentNode->getTriangleIndexList().size(); i++)
+					for (int i = 0; i < currentNode->triIndex.size(); i++)
 					{
-						T_racer_TriangleIntersection  triIntersectiont;
-						triIntersectiont = (*sceneObjects)[currentNode->getTriangleIndexList()[i]].isIntersecting(*ray);
-						if (triIntersectiont.intersection && triIntersectiont.t < t && triIntersectiont.t > 0)
+						if ((*sceneObjects)[currentNode->triIndex[i]].isIntersectingShadow(ray, t))
 						{
 							return false;
 						}
