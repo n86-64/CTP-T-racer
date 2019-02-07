@@ -66,7 +66,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	{
 		surfaceMaterial = materials.retrieveMaterial(lightPath[pathIndex].BRDFMaterialID);
 		wi = surfaceMaterial->Sample(&ray, sampler, lightPath[pathIndex]);
-		brdfValue = surfaceMaterial->Evaluate(&ray, lightPath[pathIndex]).getPixelValue(0, 0);
+		brdfValue = surfaceMaterial->Evaluate(&ray, lightPath[pathIndex]);
 
 		pathTroughput = pathTroughput * brdfValue;
 		pathTroughput = pathTroughput * T_racer_Math::dot(wi.direction, lightPath[pathIndex].normal);
@@ -222,13 +222,9 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 
 	float gTerm = geometryTerm(light_pos, pathVertex, &lightSourcePath);
 
-	//if(gTerm > 0.0f)
-	//{
-		T_racer_Math::Colour brdfLightValue = lightSource->Evaluate(*pathVertex);
-		T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex).getPixelValue(0, 0);
-
-		Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour *  gTerm / light_pos.probabilityDensity;
-	//}
+	T_racer_Math::Colour brdfLightValue = lightSource->Evaluate(*pathVertex);
+	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex);
+	Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour *  gTerm / light_pos.probabilityDensity;
 
 	return Ld;
 }
