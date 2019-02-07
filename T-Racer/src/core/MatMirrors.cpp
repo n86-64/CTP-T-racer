@@ -12,10 +12,7 @@ T_racer_Math::Colour T_racer_Materials_Mirror::Evaluate(T_racer_Math::Ray * ray,
 		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
 	}
 
-	float reflectV = 0.0f;
-	T_racer_Math::Vector v = ray->getincomingRayDirection() / 2.0f;
-	reflectV = T_racer_Math::dot(v, pathVertex.normal);
-
+	//if(lookupColout)
 
 	return lookupColour;
 }

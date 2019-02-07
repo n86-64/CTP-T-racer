@@ -122,9 +122,13 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 {
 	// Data types for rendering threaded.
 	T_racer_TriangleIntersection intersectionDisc;
+	T_racer_Math::Sampler sampler;
+
+	T_racer_Math::Vector bias;
 
 	T_racer_Math::Colour irradiance;
 	T_racer_Math::Colour lightValue;
+	T_racer_Math::Colour lightSigma;
 
 	std::vector<T_racer_Path_Vertex>  lightPath;
 	lightPath.reserve(T_RACER_PATH_INITIAL_COUNT);
@@ -145,41 +149,45 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 		for (tX; tX < tWidth; tX++)
 		{
-			irradiance = T_racer_Math::Colour(1.0f, 1.0f, 1.0f);
-			lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
+			lightSigma = T_racer_Math::Colour(0.0, 0.0f, 0.0f);
 
 			// Here we render the object.
-			T_racer_Math::Ray ray = sceneObject->generateRay(tX / width, tY / height);
-			intersectionDisc = sceneObject->trace(ray);
-
-			if (intersectionDisc.triangleID != T_RACER_TRIANGLE_NULL)
+			for (int i = 0; i < T_RACER_SAMPLE_COUNT; i++)
 			{
-				Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
-				lightPath.emplace_back(T_racer_Path_Vertex());
-				lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
-				lightPath[0].hitPoint = ray.position + (ray.direction * intersectionDisc.t);
-				lightPath[0].normal = primative->normal;
-				lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
-				lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
+				//bias = sampler.Random2();
+				irradiance = T_racer_Math::Colour(1.0f, 1.0f, 1.0f);
+				lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
 
-				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
-				tracePath(ray, irradiance, lightPath);
+				T_racer_Math::Ray ray = sceneObject->generateRay((tX / width) , (tY / height));
+				intersectionDisc = sceneObject->trace(ray);
 
-				for (int i = 0; i < lightPath.size(); i++)
+				if (intersectionDisc.triangleID != T_RACER_TRIANGLE_NULL)
 				{
-					lightValue.colour = lightValue.colour + calculateDirectLighting(&lightPath[i], irradiance).colour;
+					Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
+					lightPath.emplace_back(T_racer_Path_Vertex());
+					lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
+					lightPath[0].hitPoint = ray.position + (ray.direction * intersectionDisc.t);
+					lightPath[0].normal = primative->normal;
+					lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
+					lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
+
+					// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
+					tracePath(ray, irradiance, lightPath);
+
+					for (int i = 0; i < lightPath.size(); i++)
+					{
+						lightValue.colour = lightValue.colour + calculateDirectLighting(&lightPath[i], irradiance).colour;
+					}
+
 				}
 
-			//	display->setColourValue((width - 1) - tX, (height - 1) - tY, irradiance);
+				lightSigma.colour = lightSigma.colour + lightValue.colour;
+				lightPath.clear();
 			}
-			//else 
-			//{
-			//	display->setColourValue((width - 1) - tX, (height - 1) - tY, lightValue);
-			//}
 
-			lightPath.clear();
+			lightSigma.colour = lightSigma.colour / T_RACER_SAMPLE_COUNT;
 
-			display->setColourValue((width - 1) - tX, (height - 1) - tY, lightValue);
+			display->setColourValue((width - 1) - tX, (height - 1) - tY, lightSigma);
 			//display->setColourValue(tX, tY, lightValue);
 			
 		}
