@@ -18,7 +18,7 @@ public:
 
 	// Inherited via T_racer_Display
 	void init(float resolutionX, float resolutionY) override;
-	void update() override;
+	void update() override { writeToDisplay(this->frameBuffer); };
 
 	// Code for parsong to a pfm file is provided by 
 	// Tom bashford rodgers. 

@@ -4,6 +4,7 @@ void T_racer_Display_TGA::init(float resolutionX, float resolutionY)
 {
 	resX = resolutionX;
 	resY = resolutionY;
+	frameBuffer = new Image(resX, resY);
 	return;
 }
 

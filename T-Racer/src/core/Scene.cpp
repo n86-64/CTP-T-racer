@@ -12,6 +12,13 @@
 T_racer_Scene::T_racer_Scene()
 {}
 
+T_racer_Scene::~T_racer_Scene()
+{
+	display = nullptr;
+	mainCamera = nullptr;
+	printf("Exiting."); 
+}
+
 void T_racer_Scene::addResourceObject(T_racer_Resource* newRes)
 {
 	sceneResources.push_back(std::unique_ptr<T_racer_Resource>(newRes));

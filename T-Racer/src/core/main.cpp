@@ -42,14 +42,17 @@ int main(int argc, char* argv[])
 	T_racer_Display_Window  window;
 	T_racer_Display_TGA  tga;
 	T_racer_Display_PFM  pfm;
-
 	T_racer_Camera  testCam;
+	
 	T_racer_Light_Point* light1 = new T_racer_Light_Point();
 	light1->setPosition(T_racer_Math::Vector(300.0f, 200.0f, -300.0f));
 
+	window.init(1920, 1080);
 
-	window.init(800, 600);
-//	window.writeToDisplay(&test);
+	tga.init(1920, 1080);
+	tga.setDisplayName("Test.tga");
+	pfm.init(1920, 1080);
+	pfm.setDisplayName("Test.pfm");
 
 	T_racer_Renderer_PathTracer  trpt;
 
@@ -64,18 +67,11 @@ int main(int argc, char* argv[])
 	trpt.setScene(&testScene);
 	trpt.Render();
 
-	//testScene.setDisplay(&window);
-	//testScene.Render();
-
 	while (!window.shouldQuit())
 	{
 		window.update();
 	}
 
-	//tga.init(1920, 1080);
-	//tga.setDisplayName("Test.tga");
-	//testScene.setDisplay(&tga);
-	//testScene.Render();
 
 	//pfm.init(1920, 1080);
 	//pfm.setDisplayName("Test.pfm");

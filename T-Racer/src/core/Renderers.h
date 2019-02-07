@@ -28,9 +28,7 @@ public:
 	virtual void Render() = 0;
 	void setDisplay(T_racer_Display* newDisplay);/* { display = newDisplay; }*/
 
-	void setScene(T_racer_Scene* newScene) { sceneObject = std::unique_ptr<T_racer_Scene>(newScene); 
-	sceneObject->setDisplay(display);
-	}
+	void setScene(T_racer_Scene* newScene) { sceneObject = newScene; sceneObject->setDisplay(display); }
 
 	virtual void renderThreaded() = 0; // Threaded path.
 
@@ -40,7 +38,7 @@ protected:
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath) = 0;
 
 protected:
-	std::unique_ptr<T_racer_Scene>		sceneObject;
+	T_racer_Scene*						sceneObject;
 	T_racer_MaterialManager				materials;
 	T_racer_TextureManager				textures;
 

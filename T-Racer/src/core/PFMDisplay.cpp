@@ -4,11 +4,7 @@ void T_racer_Display_PFM::init(float resolutionX, float resolutionY)
 {
 	resX = resolutionX;
 	resY = resolutionY;
-}
-
-void T_racer_Display_PFM::update()
-{
-	return;
+	frameBuffer = new Image(resX, resY);
 }
 
 void T_racer_Display_PFM::writeToDisplay(Image* imageBuffer)
@@ -43,7 +39,9 @@ void T_racer_Display_PFM::writeToDisplay(Image* imageBuffer)
 			}
 		}
 
+
 		fclose(file);
+		printf("Saved PFM.");
 	}
 	else
 	{

@@ -21,7 +21,7 @@ T_racer_Texture2D::T_racer_Texture2D(const T_racer_Texture2D & obj)
 	this->width = obj.width;
 	this->height = obj.height;
 	this->textureData = new float[width * height * 3];
-	memcpy(&this->textureData[0], obj.textureData, sizeof(float) * width * height * 3); // Copy the contents over to a new
+	memcpy(this->textureData, obj.textureData, sizeof(float) * width * height * 3); // Copy the contents over to a new
 }
 
 
@@ -56,7 +56,7 @@ T_racer_Math::Colour T_racer_Texture2D::interpolatePointBilinear(float u, float 
 		+ ( c01.colour * (1 - wU) * wV) + (c11.colour * wU * wV);
 
 	T_racer_Math::Colour outCol;
-	outCol.colour = T_racer_Math::Vector(colourVec.X, colourVec.Y, colourVec.Z);
+	outCol.colour = colourVec;
 
 	// Return the colour in the corrisponding pixel.
 	return outCol;

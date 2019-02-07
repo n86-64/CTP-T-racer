@@ -26,6 +26,7 @@ class T_racer_Scene
 {
 public:
 	T_racer_Scene();
+	~T_racer_Scene();
 
 	void addResourceObject(T_racer_Resource* newRes);
 	void setMainCamera(T_racer_Camera* newCam) { mainCamera = newCam; };
