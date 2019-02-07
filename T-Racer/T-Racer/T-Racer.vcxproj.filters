@@ -136,6 +136,12 @@
     <Filter Include="Helpers\FileIO">
       <UniqueIdentifier>{e03657ef-b619-458d-a638-13a0be6d2e70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Objects\Resource\Materials\Material Types\Diffuse">
+      <UniqueIdentifier>{43966599-1866-4efe-99ec-998f5ff2e0c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource\Materials\Material Types\Mirrors">
+      <UniqueIdentifier>{6482eb32-6d3b-4a4c-8bc7-04e10272c792}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\helpers\Math_Vector.cpp">
@@ -189,9 +195,6 @@
     <ClCompile Include="..\src\core\MaterialManager.cpp">
       <Filter>Core\Modules\MaterialManager</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\core\MatDiffuse.cpp">
-      <Filter>Core\Objects\Resource\Materials\Material Types</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\core\PathTracer.cpp">
       <Filter>Core\Renderers\Path-Tracer</Filter>
     </ClCompile>
@@ -213,6 +216,9 @@
     <ClCompile Include="..\src\core\main.cpp" />
     <ClCompile Include="..\src\core\Renderers.cpp">
       <Filter>Core\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MatDiffuse.cpp">
+      <Filter>Core\Objects\Resource\Materials\Material Types\Diffuse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -306,9 +312,6 @@
     <ClInclude Include="..\src\core\PathVertex.h">
       <Filter>Core\Paths</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\core\MatDiffuse.h">
-      <Filter>Core\Objects\Resource\Materials\Material Types</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Projections.h">
       <Filter>Helpers\Math\Projections</Filter>
     </ClInclude>
@@ -335,6 +338,9 @@
     </ClInclude>
     <ClInclude Include="..\src\helpers\Utility.h">
       <Filter>Helpers\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MatDiffuse.h">
+      <Filter>Core\Objects\Resource\Materials\Material Types\Diffuse</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
