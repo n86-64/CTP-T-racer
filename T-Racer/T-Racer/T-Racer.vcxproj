@@ -233,6 +233,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClCompile Include="..\src\core\MatDiffuse.cpp" />
     <ClCompile Include="..\src\core\MaterialManager.cpp" />
     <ClCompile Include="..\src\core\Materials.cpp" />
+    <ClCompile Include="..\src\core\MatMirrors.cpp" />
     <ClCompile Include="..\src\core\ModelLoader.cpp" />
     <ClCompile Include="..\src\core\PathTracer.cpp" />
     <ClCompile Include="..\src\core\PFMDisplay.cpp" />
@@ -263,6 +264,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\core\MaterialConstants.h" />
     <ClInclude Include="..\src\core\MaterialManager.h" />
     <ClInclude Include="..\src\core\Materials.h" />
+    <ClInclude Include="..\src\core\MatMirrors.h" />
     <ClInclude Include="..\src\core\ModelLoader.h" />
     <ClInclude Include="..\src\core\PathTracer.h" />
     <ClInclude Include="..\src\core\PathVertex.h" />

@@ -142,6 +142,9 @@
     <Filter Include="Core\Objects\Resource\Materials\Material Types\Mirrors">
       <UniqueIdentifier>{6482eb32-6d3b-4a4c-8bc7-04e10272c792}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Objects\Resource\Materials\Material Types\Glass">
+      <UniqueIdentifier>{7be3120e-3590-4f87-9979-194bb7204471}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\helpers\Math_Vector.cpp">
@@ -219,6 +222,9 @@
     </ClCompile>
     <ClCompile Include="..\src\core\MatDiffuse.cpp">
       <Filter>Core\Objects\Resource\Materials\Material Types\Diffuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MatMirrors.cpp">
+      <Filter>Core\Objects\Resource\Materials\Material Types\Mirrors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -341,6 +347,9 @@
     </ClInclude>
     <ClInclude Include="..\src\core\MatDiffuse.h">
       <Filter>Core\Objects\Resource\Materials\Material Types\Diffuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MatMirrors.h">
+      <Filter>Core\Objects\Resource\Materials\Material Types\Mirrors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

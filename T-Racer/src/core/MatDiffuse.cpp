@@ -1,6 +1,5 @@
 #include "helpers/Math_Ray.h"
 #include "helpers/Math_Projections.h"
-#include "Texture.h"
 
 #include "MatDiffuse.h"
 
@@ -24,7 +23,7 @@ T_racer_SampledDirection T_racer_Materials_BasicDiffuse::Sample(T_racer_Math::Ra
 	T_racer_SampledDirection dir;
 
 	T_racer_Math::Vector  samplePos = T_racer_Math::projToUnitDisk(matSampler.Random2());
-	samplePos.Z = sqrt(pow(samplePos.X, 2) + pow(samplePos.Y, 2));
+	samplePos.Z = sqrt((samplePos.X * samplePos.X) + (samplePos.Y * samplePos.Y));
 
 	// TODO - Convert to world space using orthonormal basis matrix.
 

@@ -1,6 +1,4 @@
 #include "helpers/Math_Ray.h"
-#include "helpers/Math_Projections.h"
-#include "Texture.h"
 
 #include "MatMirrors.h"
 
@@ -19,7 +17,6 @@ T_racer_Math::Colour T_racer_Materials_Mirror::Evaluate(T_racer_Math::Ray * ray,
 
 T_racer_SampledDirection T_racer_Materials_Mirror::Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler& matSampler, T_racer_Path_Vertex& pathVertex)
 {
-
 
 	return T_racer_SampledDirection();
 }
