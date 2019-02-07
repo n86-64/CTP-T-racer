@@ -149,7 +149,6 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
 
 			// Here we render the object.
-		
 			T_racer_Math::Ray ray = sceneObject->generateRay(tX / width, tY / height);
 			intersectionDisc = sceneObject->trace(ray);
 
@@ -170,12 +169,19 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				{
 					lightValue.colour = lightValue.colour + calculateDirectLighting(&lightPath[i], irradiance).colour;
 				}
+
+			//	display->setColourValue((width - 1) - tX, (height - 1) - tY, irradiance);
 			}
+			//else 
+			//{
+			//	display->setColourValue((width - 1) - tX, (height - 1) - tY, lightValue);
+			//}
 
 			lightPath.clear();
 
 			display->setColourValue((width - 1) - tX, (height - 1) - tY, lightValue);
 			//display->setColourValue(tX, tY, lightValue);
+			
 		}
 
 		compleatedTiles++;
@@ -216,13 +222,13 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 
 	float gTerm = geometryTerm(light_pos, pathVertex, &lightSourcePath);
 
-	if(gTerm > 0.0f)
-	{
+	//if(gTerm > 0.0f)
+	//{
 		T_racer_Math::Colour brdfLightValue = lightSource->Evaluate(*pathVertex);
 		T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex).getPixelValue(0, 0);
 
 		Ld.colour = pathVertex->pathColour.colour * col.colour * brdfLightValue.colour  * brdfSurfaceValue.colour *  gTerm / light_pos.probabilityDensity;
-	}
+	//}
 
 	return Ld;
 }
@@ -236,7 +242,7 @@ float T_racer_Renderer_PathTracer::geometryTerm(T_racer_SampledDirection dir, T_
 	// Consider better functions for determining probability density if needed. 
 	float l;
 	l = (pathVertex->hitPoint - lightVertex->hitPoint).MagnitudeSq();
-	float brdfTheta = T_racer_Math::dot(dir.direction, pathVertex->normal);
+	float brdfTheta = abs(T_racer_Math::dot(dir.direction, pathVertex->normal));
 	float lightTheta = lightVertex->isPointLightSource ?  1.0 : T_racer_Math::dot(dir.direction, lightVertex->normal);
 
 	return (brdfTheta * lightTheta) / l;

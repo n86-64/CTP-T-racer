@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 
 	T_racer_Camera  testCam;
 	T_racer_Light_Point* light1 = new T_racer_Light_Point();
-	light1->setPosition(T_racer_Math::Vector(0.0f, 0.0f, -2.0f));
+	light1->setPosition(T_racer_Math::Vector(300.0f, 200.0f, -300.0f));
 
 
 	window.init(800, 600);
@@ -54,11 +54,11 @@ int main(int argc, char* argv[])
 	T_racer_Renderer_PathTracer  trpt;
 
 	T_racer_Scene testScene;
-	testScene.setName("cornell2");
+	testScene.setName("Cycles");
 	testScene.setMainCamera(&testCam);
 
 	testScene.addLight(light1);
-	testScene.loadModel("resources/cornell2.obj");
+	testScene.loadModel("resources/Cycles.obj");
 
 	trpt.setDisplay(&window);
 	trpt.setScene(&testScene);
