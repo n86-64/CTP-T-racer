@@ -4,7 +4,7 @@
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
 constexpr float T_RACER_LUMINANCE_VALUE = 0.1f;
 
-constexpr int T_RACER_SAMPLE_COUNT = 500;
+constexpr int T_RACER_SAMPLE_COUNT = 1;
 
 constexpr int T_RACER_PATH_INITIAL_COUNT = 20;
 
@@ -20,6 +20,8 @@ T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
+	threadCount = 1;
+
 
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -65,6 +67,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	{
 		surfaceMaterial = materials.retrieveMaterial(lightPath[pathIndex].BRDFMaterialID);
 		wi = surfaceMaterial->Sample(&ray, sampler, lightPath[pathIndex]);
+		ray = T_racer_Math::Ray(lightPath[pathIndex].hitPoint, wi.direction);
 		brdfValue = surfaceMaterial->Evaluate(&ray, lightPath[pathIndex]);
 
 		pathTroughput = pathTroughput * brdfValue;
@@ -85,7 +88,6 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		// then loop.
 		if (!terminatePath)
 		{
-			T_racer_Math::Ray ray(lightPath[pathIndex].hitPoint, wi.direction);
 			intersectDisc = sceneObject->trace(ray);
 
 			// TODO - Add routiene to check if this is a light source.

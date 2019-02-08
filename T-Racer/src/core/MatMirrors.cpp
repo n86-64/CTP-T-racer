@@ -12,7 +12,8 @@ T_racer_Math::Colour T_racer_Materials_Mirror::Evaluate(T_racer_Math::Ray * ray,
 		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
 	}
 
-	//if(lookupColout)
+	T_racer_Math::Vector halfVector = (ray->getDirection() + pathVertex.wo).normalise();
+	lookupColour = lookupColour * fmaxf(0.0f, T_racer_Math::dot(halfVector, pathVertex.normal));
 
 	return lookupColour;
 }
