@@ -3,7 +3,7 @@
 T_racer_Math::Sampler::Sampler()
 {
 	mersenneTwist = std::mt19937(rngEngine());
-	data = std::uniform_real_distribution<float>(-1.0f, 1.0f);
+	data = std::uniform_real_distribution<float>(0.0f, 1.0f);
 }
 
 float T_racer_Math::Sampler::Random()

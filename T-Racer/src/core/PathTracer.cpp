@@ -4,7 +4,7 @@
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
 constexpr float T_RACER_LUMINANCE_VALUE = 0.1f;
 
-constexpr int T_RACER_SAMPLE_COUNT = 1;
+constexpr int T_RACER_SAMPLE_COUNT = 500;
 
 constexpr int T_RACER_PATH_INITIAL_COUNT = 20;
 
@@ -61,7 +61,6 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	T_racer_Math::Colour  brdfValue;
 
 	int pathIndex = 0;
-	int triangleIndex = -1;
 	while (!terminatePath)
 	{
 		surfaceMaterial = materials.retrieveMaterial(lightPath[pathIndex].BRDFMaterialID);
@@ -91,13 +90,13 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 
 			// TODO - Add routiene to check if this is a light source.
 			// If so terminate else we will evaluate the next light path.
-			if (triangleIndex != -1)
+			if (intersectDisc.triangleID != -1)
 			{
 				// Create a new light path.
 				pathIndex++;
 
 				// Add to the light index.
-				Triangle* primative = sceneObject->getTriangleByIndex(triangleIndex);
+				Triangle* primative = sceneObject->getTriangleByIndex(intersectDisc.triangleID);
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				lightPath[pathIndex].BRDFMaterialID = primative->getMaterialIndex();
 				lightPath[pathIndex].hitPoint = lightPath[pathIndex].hitPoint + (wi.direction * intersectDisc.t);
