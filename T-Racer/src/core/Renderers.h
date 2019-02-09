@@ -14,8 +14,6 @@
 #include <atomic>
 
 #include "Scene.h"
-#include "MaterialManager.h"
-#include "TextureManager.h"
 #include "BaseLight.h"
 #include "Display.h"
 
@@ -28,7 +26,11 @@ public:
 	virtual void Render() = 0;
 	void setDisplay(T_racer_Display* newDisplay);/* { display = newDisplay; }*/
 
-	void setScene(T_racer_Scene* newScene) { sceneObject = newScene; sceneObject->setDisplay(display); }
+	void setScene(T_racer_Scene* newScene) 
+	{ 
+		sceneObject = newScene; sceneObject->setDisplay(display); 	
+		sceneObject->materials.retrieveMaterial(0)->setTexture(sceneObject->textures.createTexture("default"));
+	}
 
 	virtual void renderThreaded() = 0; // Threaded path.
 
@@ -39,8 +41,6 @@ protected:
 
 protected:
 	T_racer_Scene*						sceneObject;
-	T_racer_MaterialManager				materials;
-	T_racer_TextureManager				textures;
 
 	T_racer_Display*					display = nullptr;
 

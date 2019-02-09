@@ -37,6 +37,11 @@ void T_racer_Scene::loadModel(std::string modelName)
 	}
 }
 
+void T_racer_Scene::loadModelAssimp(std::string modelName)
+{
+	
+}
+
 void T_racer_Scene::Render()
 {
 }

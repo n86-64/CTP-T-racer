@@ -13,8 +13,6 @@ constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived.
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
 {
-	// Here we set up the deafault materials.
-	materials.retrieveMaterial(0)->setTexture(textures.createTexture("default"));
 }
 
 void T_racer_Renderer_PathTracer::Render()
@@ -64,7 +62,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	int pathIndex = 0;
 	while (!terminatePath)
 	{
-		surfaceMaterial = materials.retrieveMaterial(lightPath[pathIndex].BRDFMaterialID);
+		surfaceMaterial = sceneObject->materials.retrieveMaterial(lightPath[pathIndex].BRDFMaterialID);
 		wi = surfaceMaterial->Sample(&ray, sampler, lightPath[pathIndex]);
 		ray = T_racer_Math::Ray(lightPath[pathIndex].hitPoint, wi.direction);
 		brdfValue = surfaceMaterial->Evaluate(&ray, lightPath[pathIndex]);
@@ -220,7 +218,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	T_racer_Math::Colour Ld(0.0f, 0.0f, 0.0f);
 	T_racer_Path_Vertex  lightSourcePath;
 	
-	T_racer_Material* material = materials.retrieveMaterial(pathVertex->BRDFMaterialID);
+	T_racer_Material* material = sceneObject->materials.retrieveMaterial(pathVertex->BRDFMaterialID);
 	T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(); // Picks out a random light source to sample.
 	T_racer_SampledDirection light_pos = lightSource->Sample(*pathVertex, lightRay, lightSourcePath);
 

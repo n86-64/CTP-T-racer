@@ -14,10 +14,13 @@
 
 #include "Resource.h"
 #include "Triangle.h"
+#include "MaterialManager.h"
+#include "TextureManager.h"
 #include "Camera.h"
 #include "BVHTree.h"
 
 #include "helpers/Image.h"
+
 
 class T_racer_Display;
 class T_racer_Light_Base;
@@ -35,6 +38,8 @@ public:
 	void setName(std::string sceneName) { name = sceneName; }
 
 	void loadModel(std::string modelName);
+
+	void loadModelAssimp(std::string modelName);
 
 	void addLight(T_racer_Light_Base*  newLight) { sceneLights.emplace_back(newLight); }; // Adds a new light to the scene.
 
@@ -56,6 +61,11 @@ public:
 	T_racer_Light_Base* retrieveOneLightSource();
 
 	T_racer_Math::Ray generateRay(float xPos, float yPos);
+
+public:
+	// Manager objects which are acsessable properties. 
+	T_racer_MaterialManager				materials;
+	T_racer_TextureManager				textures;
 
 private:
 	std::string											name = "NULLScene"; 
