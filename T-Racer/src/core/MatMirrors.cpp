@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream>
 #include <string>
 #include "helpers/Math_Ray.h"
@@ -33,7 +34,10 @@ T_racer_SampledDirection T_racer_Materials_Mirror::Sample(T_racer_Math::Ray* ray
 	T_racer_SampledDirection  wi;
 	T_racer_Math::Vector transformedRayDirection = pathVertex.orthnormalBasis * ray->getincomingRayDirection();
 	
-	wi.direction = pathVertex.orthnormalBasis * -transformedRayDirection;
+	transformedRayDirection.X = -transformedRayDirection.X;
+	transformedRayDirection.Y = -transformedRayDirection.Y;
+
+	wi.direction = pathVertex.orthnormalBasis * transformedRayDirection;
 	wi.probabilityDensity = ProbabilityDensity(ray, wi, pathVertex);
 
 	return wi;
