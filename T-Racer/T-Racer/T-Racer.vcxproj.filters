@@ -232,7 +232,9 @@
     <ClCompile Include="..\src\core\MatGlass.cpp">
       <Filter>Core\Objects\Resource\Materials\Material Types\Glass</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\core\Mesh.cpp" />
+    <ClCompile Include="..\src\core\Mesh.cpp">
+      <Filter>Core\Objects\Resource\Meshes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
