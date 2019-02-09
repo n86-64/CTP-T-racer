@@ -4,7 +4,7 @@
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
 constexpr float T_RACER_LUMINANCE_VALUE = 0.1f;
 
-constexpr int T_RACER_SAMPLE_COUNT = 1;
+constexpr int T_RACER_SAMPLE_COUNT = 20;
 
 constexpr int T_RACER_PATH_INITIAL_COUNT = 20;
 
@@ -20,7 +20,7 @@ T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	threadCount = 1;
+	//threadCount = 1;
 
 
 	// Set up a pool of threads and render over multiple threads.
@@ -171,6 +171,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					lightPath[0].normal = primative->normal;
 					lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
 					lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
+					lightPath[0].wo = ray.getincomingRayDirection();
 
 					// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
 					tracePath(ray, irradiance, lightPath);

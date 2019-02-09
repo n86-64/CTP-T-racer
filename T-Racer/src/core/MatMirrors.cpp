@@ -1,3 +1,5 @@
+#include <iostream>
+#include <string>
 #include "helpers/Math_Ray.h"
 
 #include "MatMirrors.h"
@@ -13,9 +15,17 @@ T_racer_Math::Colour T_racer_Materials_Mirror::Evaluate(T_racer_Math::Ray * ray,
 	}
 
 	T_racer_Math::Vector halfVector = (ray->getDirection() + pathVertex.wo).normalise();
-	lookupColour = lookupColour * fmaxf(0.0f, T_racer_Math::dot(halfVector, pathVertex.normal));
+	float value = T_racer_Math::dot(halfVector, pathVertex.normal);
 
-	return lookupColour;
+	if (value > FLT_EPSILON) 
+	{
+		return lookupColour;
+	}
+
+	//T_racer_Math::Vector v = ray->direction - pathVertex.normal * 2 * pathVertex.normal * T_racer_Math::dot(ray->direction, pathVertex.normal); 
+	
+
+	return T_racer_Math::Colour(0,0,0);
 }
 
 T_racer_SampledDirection T_racer_Materials_Mirror::Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler& matSampler, T_racer_Path_Vertex& pathVertex)

@@ -22,6 +22,7 @@ struct T_racer_Path_Vertex
 	T_racer_Math::Matrix3X3 orthnormalBasis;
 	T_racer_Math::Vector	hitPoint;
 	T_racer_Math::Vector    wo; // incoming ray direction. 
+	T_racer_Math::Vector    wi;
 	T_racer_Math::Colour    pathColour;
 	unsigned int			BRDFMaterialID = 0;
 	bool					isPointLightSource = false;
