@@ -38,4 +38,6 @@ public:
 protected:
 	std::string						 name = "default";
 	T_racer_Texture2D*				 materialTexture = nullptr;
+
+	T_racer_Math::Colour			 albedo = T_racer_Math::Colour(1,1,1);
 };
