@@ -20,8 +20,7 @@ T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	threadCount = 1;
-
+	//threadCount = 1;
 
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
