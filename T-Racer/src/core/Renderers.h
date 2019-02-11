@@ -47,6 +47,7 @@ protected:
 	// Used for tile rendering.
 	std::atomic<int>					currentTile = 0;
 	std::atomic<int>					compleatedTiles = 0;
+	std::atomic<int>					sampleCount = 0;
 
 	int									tileCount = 0;
 	int									threadCount = 0;

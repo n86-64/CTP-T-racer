@@ -6,7 +6,7 @@
 
 T_racer_MaterialManager::T_racer_MaterialManager()
 {
-	materials.emplace_back(std::make_unique<T_racer_Materials_Dilectric_Glass>()); // Initialise a basic diffuse.
+	materials.emplace_back(std::make_unique<T_racer_Materials_BasicDiffuse>()); // Initialise a basic diffuse.
 }
 
 T_racer_Material* T_racer_MaterialManager::retrieveMaterial(int matID)
