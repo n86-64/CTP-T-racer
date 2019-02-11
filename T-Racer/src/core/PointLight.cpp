@@ -13,7 +13,7 @@ T_racer_SampledDirection T_racer_Light_Point::Sample(T_racer_Path_Vertex& pathVe
 
 	T_racer_SampledDirection dir;
 	dir.direction = (position - inputRay.position).normalise();
-	dir.probabilityDensity = 1.0f; 
+	dir.probabilityDensity = probabilityDensity(pathVertex, inputRay); 
 
 	return dir;
 }
