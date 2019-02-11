@@ -40,7 +40,7 @@ void T_racer_Scene::loadModel(std::string modelName)
 
 void T_racer_Scene::loadModelAssimp(std::string modelName)
 {
-	
+
 }
 
 void T_racer_Scene::Render()
@@ -115,7 +115,7 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 	T_racer_Math::Vector horizontal =  u * half_width * 2 ;
 	T_racer_Math::Vector vertical = v * half_height * 2;
 
-	T_racer_Math::Ray testRay = T_racer_Math::Ray(origin, ((lower_left_corner + horizontal * xPos + vertical * yPos) - origin).normalise());
+	T_racer_Math::Ray cameraRay = T_racer_Math::Ray(origin, ((lower_left_corner + horizontal * xPos + vertical * yPos) - origin).normalise());
 
-	 return testRay;
+	return cameraRay;
 }

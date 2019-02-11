@@ -4,7 +4,7 @@
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
 constexpr float T_RACER_LUMINANCE_VALUE = 0.1f;
 
-constexpr int T_RACER_SAMPLE_COUNT = 2000;
+constexpr int T_RACER_SAMPLE_COUNT = 100;
 
 constexpr int T_RACER_PATH_INITIAL_COUNT = 20;
 
@@ -188,9 +188,6 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 			lightSigma.colour = lightSigma.colour / T_RACER_SAMPLE_COUNT;
 			display->setColourValue((width - 1) - tX, (height - 1) - tY, lightSigma);
-
-			//display->setColourValue(tX, tY, lightValue);
-			
 		}
 
 		compleatedTiles++;

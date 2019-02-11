@@ -148,6 +148,9 @@
     <Filter Include="Core\Objects\Resource\Meshes">
       <UniqueIdentifier>{509b824a-4db0-40c2-980b-f3bce34c3d63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Objects\Resource\Lighting\Lights\Point Light">
+      <UniqueIdentifier>{22212630-1249-40a4-a0cc-770195ae8ffa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\helpers\Math_Vector.cpp">
@@ -207,9 +210,6 @@
     <ClCompile Include="..\src\core\Display.cpp">
       <Filter>Core\Displays</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\core\PointLight.cpp">
-      <Filter>Core\Objects\Resource\Lighting\Lights</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\core\BaseLight.cpp">
       <Filter>Core\Objects\Resource\Lighting</Filter>
     </ClCompile>
@@ -232,8 +232,8 @@
     <ClCompile Include="..\src\core\MatGlass.cpp">
       <Filter>Core\Objects\Resource\Materials\Material Types\Glass</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\core\Mesh.cpp">
-      <Filter>Core\Objects\Resource\Meshes</Filter>
+    <ClCompile Include="..\src\core\PointLight.cpp">
+      <Filter>Core\Objects\Resource\Lighting\Lights\Point Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -339,9 +339,6 @@
     <ClInclude Include="..\src\core\BaseLight.h">
       <Filter>Core\Objects\Resource\Lighting</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\core\PointLight.h">
-      <Filter>Core\Objects\Resource\Lighting\Lights</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\SampledObjects.h">
       <Filter>Core\Paths</Filter>
     </ClInclude>
@@ -366,8 +363,8 @@
     <ClInclude Include="..\src\helpers\Math_Error.h">
       <Filter>Helpers\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\core\Mesh.h">
-      <Filter>Core\Objects\Resource\Meshes</Filter>
+    <ClInclude Include="..\src\core\PointLight.h">
+      <Filter>Core\Objects\Resource\Lighting\Lights\Point Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
