@@ -76,6 +76,8 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 
 	    lightPath[pathIndex].pathColour = pathTroughput;
 
+		terminatePath = (pathTroughput.colour.X == 0.0f && pathTroughput.colour.Y == 0.0f && pathTroughput.colour.Z == 0.0f);
+
 		if (pathIndex > T_RACER_MINIMUM_BOUNCE) 
 		{
 			terminatePath = !RussianRoulette(pathTroughput, &lightPath[pathIndex]);

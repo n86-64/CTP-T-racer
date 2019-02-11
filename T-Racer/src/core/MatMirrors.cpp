@@ -22,19 +22,17 @@ T_racer_Math::Colour T_racer_Materials_Mirror::Evaluate(T_racer_Math::Ray* ray, 
 		return lookupColour;
 	}
 
-	//T_racer_Math::Vector v = ray->direction - pathVertex.normal * 2 * pathVertex.normal * T_racer_Math::dot(ray->direction, pathVertex.normal); 
-	
 	return T_racer_Math::Colour(0,0,0);
 }
 
 T_racer_SampledDirection T_racer_Materials_Mirror::Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler& matSampler, T_racer_Path_Vertex& pathVertex)
 {
 	T_racer_SampledDirection  wi;
-	T_racer_Math::Vector transformedRayDirection = ray->direction; //pathVertex.orthnormalBasis * ray->getincomingRayDirection();
-	
-	transformedRayDirection = transformedRayDirection - (pathVertex.normal * 2 * T_racer_Math::dot(pathVertex.normal, transformedRayDirection));
 
+	T_racer_Math::Vector transformedRayDirection = ray->direction; //pathVertex.orthnormalBasis * ray->getincomingRayDirection();
+	transformedRayDirection = transformedRayDirection - (pathVertex.normal * 2 * T_racer_Math::dot(pathVertex.normal, transformedRayDirection));
 	wi.direction = transformedRayDirection;
+
 	wi.probabilityDensity = ProbabilityDensity(ray, wi, pathVertex);
 
 	return wi;
