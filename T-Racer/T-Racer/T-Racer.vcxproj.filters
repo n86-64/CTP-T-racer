@@ -357,5 +357,8 @@
     <ClInclude Include="..\src\core\MatGlass.h">
       <Filter>Core\Objects\Resource\Materials\Material Types\Glass</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Error.h">
+      <Filter>Helpers\Math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

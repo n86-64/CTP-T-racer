@@ -23,11 +23,13 @@ public:
 	virtual float ProbabilityDensity(T_racer_Math::Ray * ray, T_racer_SampledDirection & sampledDir, T_racer_Path_Vertex & pathVertex) override;
 
 private:
-	float refractiveIndex = 1.5f; // The material refractive index. (for air n = 1)
-	bool refracting = false;
+	T_racer_Math::Colour shlickApproximation(T_racer_Math::Ray* incidentRay, T_racer_Math::Vector normal);
+	bool refracting(T_racer_Math::Ray* incidentRay, T_racer_Math::Vector normal);
 
-	float ni_nt = 1.0f; // The refraction ratio based on the material. 
+private:
+	float refractiveIndex = 1.5f; // The material refractive index. (for air n = 1)
 
 
 	T_racer_Math::Colour annuation = T_racer_Math::Colour(1.0f, 1.0f, 0.0f);
+	T_racer_Math::Colour absorbtionCoeficcent = T_racer_Math::Colour(1.0f, 1.0f, 1.0f); 
 };

@@ -5,6 +5,7 @@
 #include "Display.h"
 #include "Scene.h"
 #include "helpers/Math_Sampler.h"
+#include "helpers/Math_Error.h"
 
 #include "BaseLight.h"
 
@@ -77,7 +78,7 @@ bool T_racer_Scene::visible(T_racer_Math::Vector origin, T_racer_Math::Vector de
 	T_racer_Math::Vector direction = destination - origin;
 	float t = direction.normaliseSelfWithMagnitude();
 	T_racer_Math::Ray ray(origin, direction);
-	return bvh.visible(&ray, t - 0.0001f);
+	return bvh.visible(&ray, t - T_RACER_EPSILON);
 }
 
 bool T_racer_Scene::visibleDir(T_racer_Math::Vector origin, T_racer_Math::Vector direction)

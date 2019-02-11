@@ -45,9 +45,9 @@ int main(int argc, char* argv[])
 	T_racer_Camera  testCam;
 	
 	T_racer_Light_Point* light1 = new T_racer_Light_Point();
-	light1->setPosition(T_racer_Math::Vector(300.0f, 200.0f, -300.0f));
+	light1->setPosition(T_racer_Math::Vector(300.0f, 200.0f, 264.0f));
 
-	window.init(1920, 1080);
+	window.init(512, 512);
 
 	tga.init(1920, 1080);
 	tga.setDisplayName("Test.tga");

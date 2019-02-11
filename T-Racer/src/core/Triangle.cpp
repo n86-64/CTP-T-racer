@@ -1,8 +1,8 @@
 #include <cmath>
 
+#include "helpers/Math_Error.h"
 #include "Triangle.h"
 
-#define ELIPSION 1e-8
 
 Triangle::Triangle(T_racer_Vertex v1, T_racer_Vertex v2, T_racer_Vertex v3)
 {
@@ -26,7 +26,7 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray* ray)
 
 	// Check to see if we should continue.
 	// Here we can cull the triangle if nescessery. 
-	if (determinant <= ELIPSION) 
+	if (determinant <= T_RACER_EPSILON) 
 	{
 		intersect.intersection = false;
 		return intersect;
@@ -39,7 +39,7 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray* ray)
 
 	intersect.t = T_racer_Math::dot(qVec, v2v0) * determinant;
 
-	if (intersect.t == INFINITY || intersect.t < ELIPSION)
+	if (intersect.t == INFINITY || intersect.t < T_RACER_EPSILON)
 	{
 		intersect.intersection = false;
 		return intersect;
@@ -75,7 +75,7 @@ bool Triangle::isIntersectingShadow(T_racer_Math::Ray* ray, const float maxt)
 
 	// Check to see if we should continue.
 	// Here we can cull the triangle if nescessery. 
-	if (determinant <= ELIPSION)
+	if (determinant <= T_RACER_EPSILON)
 	{
 		return false;
 	}
@@ -89,7 +89,7 @@ bool Triangle::isIntersectingShadow(T_racer_Math::Ray* ray, const float maxt)
 
 	t = T_racer_Math::dot(qVec, v2v0) * determinant;
 
-	if (t > maxt || t < ELIPSION)
+	if (t > maxt || t < T_RACER_EPSILON)
 	{
 		return false;
 	}

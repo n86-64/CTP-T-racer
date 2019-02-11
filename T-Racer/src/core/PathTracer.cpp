@@ -93,7 +93,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 
 			// TODO - Add routiene to check if this is a light source.
 			// If so terminate else we will evaluate the next light path.
-			if (intersectDisc.triangleID != -1)
+			if (intersectDisc.triangleID != T_RACER_TRIANGLE_NULL)
 			{
 				// Create a new light path.
 				pathIndex++;
@@ -231,7 +231,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 		return Ld;
 	}
 
-	float gTerm = geometryTerm(light_pos, pathVertex, &lightSourcePath);
+	float gTerm = geometryTerm(pathVertex, &lightSourcePath);
 
 	T_racer_Math::Colour brdfLightValue = lightSource->Evaluate(*pathVertex);
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex);
@@ -242,15 +242,16 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 
 
 // Geometry term depends on the light source in question.
-float T_racer_Renderer_PathTracer::geometryTerm(T_racer_SampledDirection dir, T_racer_Path_Vertex* pathVertex, T_racer_Path_Vertex *lightVertex)
+float T_racer_Renderer_PathTracer::geometryTerm(T_racer_Path_Vertex* pathVertex, T_racer_Path_Vertex *lightVertex)
 {
 	// TODO - Work out a better approch for working out the hitpoint for geometry term.
 	// Consider using flags or related tools for differentiating light sources.
 	// Consider better functions for determining probability density if needed. 
 	float l;
-	l = (pathVertex->hitPoint - lightVertex->hitPoint).MagnitudeSq();
-	float brdfTheta = abs(T_racer_Math::dot(dir.direction, pathVertex->normal));
-	float lightTheta = lightVertex->isPointLightSource ?  1.0 : T_racer_Math::dot(dir.direction, lightVertex->normal);
+	T_racer_Math::Vector dir = lightVertex->hitPoint - pathVertex->hitPoint;
+	l = dir.normaliseSelfWithMagnitude();
+	float brdfTheta = fmaxf(T_racer_Math::dot(dir, pathVertex->normal), 0.0f);
+	float lightTheta = lightVertex->isPointLightSource ?  1.0 : -fmaxf(T_racer_Math::dot(dir, lightVertex->normal), 0.0f);
 
 	return (brdfTheta * lightTheta) / l;
 }
