@@ -4,7 +4,7 @@
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
 constexpr float T_RACER_LUMINANCE_VALUE = 0.1f;
 
-constexpr int T_RACER_SAMPLE_COUNT = 500;
+constexpr int T_RACER_SAMPLE_COUNT = 1;
 
 constexpr int T_RACER_PATH_INITIAL_COUNT = 20;
 

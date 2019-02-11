@@ -23,11 +23,13 @@ public:
 	virtual float ProbabilityDensity(T_racer_Math::Ray * ray, T_racer_SampledDirection & sampledDir, T_racer_Path_Vertex & pathVertex) override;
 
 private:
-	T_racer_Math::Colour shlickApproximation(T_racer_Math::Ray* incidentRay, T_racer_Math::Vector normal);
-	bool refracting(T_racer_Math::Ray* incidentRay, T_racer_Math::Vector normal);
+	T_racer_Math::Colour evaluateFresnel(float cosi, T_racer_Math::Vector incidentVector, float& ei, float& et);
+	T_racer_Math::Colour reflectanceFresnel(float cosI, float cosT, float ei, float et);
+
 
 private:
-	float refractiveIndex = 1.5f; // The material refractive index. (for air n = 1)
+	float refractiveIndexI = 1.0f;
+	float refractiveIndexT = 1.5f; // The material refractive index. (for air n = 1)
 
 
 	T_racer_Math::Colour annuation = T_racer_Math::Colour(1.0f, 1.0f, 0.0f);

@@ -22,6 +22,7 @@ namespace T_racer_Math
 		{
 			colour = Vector(r, g, b);
 		}
+		Colour(float rgb) { colour = Vector(rgb, rgb, rgb); }
 
 		Vector  colour	   = Vector(1.0f, 1.0f, 1.0f);
 		Vector	 luminance = Vector(1.0f, 1.0f, 1.0f);  // Weighting of colour values.
