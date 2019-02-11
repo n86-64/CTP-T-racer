@@ -145,6 +145,9 @@
     <Filter Include="Core\Objects\Resource\Materials\Material Types\Glass">
       <UniqueIdentifier>{7be3120e-3590-4f87-9979-194bb7204471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Objects\Resource\Meshes">
+      <UniqueIdentifier>{509b824a-4db0-40c2-980b-f3bce34c3d63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\helpers\Math_Vector.cpp">
@@ -228,6 +231,9 @@
     </ClCompile>
     <ClCompile Include="..\src\core\MatGlass.cpp">
       <Filter>Core\Objects\Resource\Materials\Material Types\Glass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Mesh.cpp">
+      <Filter>Core\Objects\Resource\Meshes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -359,6 +365,9 @@
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Error.h">
       <Filter>Helpers\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Mesh.h">
+      <Filter>Core\Objects\Resource\Meshes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
