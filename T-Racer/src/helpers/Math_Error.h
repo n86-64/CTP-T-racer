@@ -12,5 +12,5 @@
 
 // Derived from PBRT (p.g. 95).
 #define T_RACER_TRIANGLE_EPSILON 1e-8
-#define T_RACER_EPSILON	1e-3 
+#define T_RACER_EPSILON	1e-4 
 

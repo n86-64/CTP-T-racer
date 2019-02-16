@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 	T_racer_Camera  testCam;
 	
 	T_racer_Light_Point* light1 = new T_racer_Light_Point();
-	light1->setPosition(T_racer_Math::Vector(300.0f, 200.0f, 264.0f));
+	light1->setPosition(T_racer_Math::Vector(1.2f, 1.2f, 0.4f));
 
 	window.init(512, 512);
 
