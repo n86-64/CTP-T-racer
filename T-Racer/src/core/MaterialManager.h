@@ -19,7 +19,9 @@ public:
 	T_racer_MaterialManager();
 
 	T_racer_Material*   retrieveMaterial(int matID);
+	T_racer_Material*   retrieveMaterial(std::string name);
 
 private:
 	std::vector<std::unique_ptr<T_racer_Material>>  materials;
+	int matSize = 0;
 };

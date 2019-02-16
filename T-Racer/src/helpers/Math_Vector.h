@@ -12,6 +12,9 @@
 
 #include <cmath>
 
+#include "assimp/vector2.h"
+#include "assimp/vector3.h"
+
 // A set of vector operations that can be called at any time. 
 namespace T_racer_Math
 {
@@ -26,6 +29,8 @@ namespace T_racer_Math
 		Vector(float x, float y, float z);
 		Vector(float x, float y, float z, float w);
 		Vector(const Vector&  vector);
+		Vector(aiVector2D vector) { values[0] = vector.x; values[1] = vector.y; };
+		Vector(aiVector3D vector) { values[0] = vector.x; values[1] = vector.y; values[2] = vector.z; };
 
 		// get/set components.
 		float x() { return values[0]; };

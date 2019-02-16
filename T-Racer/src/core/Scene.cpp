@@ -7,6 +7,8 @@
 #include "helpers/Math_Sampler.h"
 #include "helpers/Math_Error.h"
 
+#include "SkeletalMesh.h"
+
 #include "BaseLight.h"
 
 
@@ -40,7 +42,9 @@ void T_racer_Scene::loadModel(std::string modelName)
 
 void T_racer_Scene::loadModelAssimp(std::string modelName)
 {
-
+	// Load model along with texture and material info. Assign for rendering. 
+	T_racer_Resource_SkeletalMesh skeletalMesh;
+	skeletalMesh.loadSkeletalMesh(modelName); 
 }
 
 void T_racer_Scene::Render()

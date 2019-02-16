@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: Cornell-Test.ma
-//Last modified: Sat, Feb 16, 2019 05:48:49 PM
+//Last modified: Sat, Feb 16, 2019 08:38:17 PM
 //Codeset: 1252
 requires maya "2016";
 currentUnit -l centimeter -a degree -t film;
@@ -13,13 +13,13 @@ fileInfo "license" "student";
 createNode transform -s -n "persp";
 	rename -uid "C4BEC4E4-4B55-EA2C-6132-A4AD4757FD99";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -19.874442709142457 17.758837076931922 -45.927127297915938 ;
-	setAttr ".r" -type "double3" -19.538352729601336 203.39999999999682 0 ;
+	setAttr ".t" -type "double3" -6.9779521835312615 5.2741073172840753 -17.09894986041337 ;
+	setAttr ".r" -type "double3" -15.938352729648885 562.19999999995048 0 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "DD4CE504-486B-5C8F-C191-B9B85D7A6C83";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 53.100572399496663;
+	setAttr ".coi" 19.206303938952043;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -140,6 +140,20 @@ createNode mesh -n "Cycles:MeshShape" -p "Cycles:Mesh";
 	setAttr ".cvd" -type "dataPolyComponent" Index_Data Vertex 0 ;
 	setAttr ".pd[0]" -type "dataPolyComponent" Index_Data UV 0 ;
 	setAttr ".hfd" -type "dataPolyComponent" Index_Data Face 0 ;
+createNode transform -n "pSphere1";
+	rename -uid "D7E70952-45BB-F92A-C0E2-FC9AC98C81F1";
+	setAttr ".t" -type "double3" 1.2335358007469568 1.2159854522919304 -2.1967290952175338 ;
+	setAttr ".s" -type "double3" 0.27026169953886159 0.27026169953886159 0.32340217343708166 ;
+createNode mesh -n "pSphereShape1" -p "pSphere1";
+	rename -uid "6A25110E-4D86-BAFF-BB00-909926352507";
+	setAttr -k off ".v";
+	setAttr ".vir" yes;
+	setAttr ".vif" yes;
+	setAttr ".uvst[0].uvsn" -type "string" "map1";
+	setAttr ".cuvs" -type "string" "map1";
+	setAttr ".dcc" -type "string" "Ambient+Diffuse";
+	setAttr ".covm[0]"  0 1 1;
+	setAttr ".cdvm[0]"  0 1 1;
 createNode lightLinker -s -n "lightLinker1";
 	rename -uid "5D22F41A-4FFD-5093-B091-81B8030BB49E";
 	setAttr -s 7 ".lnk";
@@ -295,6 +309,8 @@ createNode script -n "sceneConfigurationScriptNode";
 	rename -uid "4CD5B052-48C2-7518-E751-CD920B0D4CBC";
 	setAttr ".b" -type "string" "playbackOptions -min 1 -max 120 -ast 1 -aet 200 ";
 	setAttr ".st" 6;
+createNode polySphere -n "polySphere1";
+	rename -uid "6118F136-4F5D-3DDB-3ABA-12BD6A6219A2";
 select -ne :time1;
 	setAttr ".o" 1;
 	setAttr ".unw" 1;
@@ -321,6 +337,8 @@ select -ne :defaultResolution;
 select -ne :hardwareRenderGlobals;
 	setAttr ".ctrs" 256;
 	setAttr ".btrs" 512;
+select -ne :ikSystem;
+	setAttr -s 4 ".sol";
 connectAttr "Cycles:groupId1.id" "Cycles:MeshShape.iog.og[0].gid";
 connectAttr "Cycles:Emitter.mwc" "Cycles:MeshShape.iog.og[0].gco";
 connectAttr "Cycles:groupId2.id" "Cycles:MeshShape.iog.og[1].gid";
@@ -331,6 +349,7 @@ connectAttr "Cycles:groupId4.id" "Cycles:MeshShape.iog.og[3].gid";
 connectAttr "Cycles:cbox_red.mwc" "Cycles:MeshShape.iog.og[3].gco";
 connectAttr "Cycles:groupId5.id" "Cycles:MeshShape.iog.og[4].gid";
 connectAttr "Cycles:cbox_green.mwc" "Cycles:MeshShape.iog.og[4].gco";
+connectAttr "polySphere1.out" "pSphereShape1.i";
 relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
 relationship "link" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
 relationship "link" ":lightLinker1" "Cycles:Emitter.message" ":defaultLightSet.message";
@@ -383,4 +402,5 @@ connectAttr "Cycles:cbox_Material1.msg" ":defaultShaderList1.s" -na;
 connectAttr "Cycles:cbox_red1.msg" ":defaultShaderList1.s" -na;
 connectAttr "Cycles:cbox_green1.msg" ":defaultShaderList1.s" -na;
 connectAttr "defaultRenderLayer.msg" ":defaultRenderingList1.r" -na;
+connectAttr "pSphereShape1.iog" ":initialShadingGroup.dsm" -na;
 // End of Cornell-Test.ma

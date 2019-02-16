@@ -33,7 +33,7 @@ T_racer_SampledDirection T_racer_Materials_Dilectric_Glass::Sample(T_racer_Math:
 	float cosi = clamp(wo_local.Z, -1.0f, 1.0f);
 	float ratio = (ei / et);
 
-	float sinI2 = sqrtf(fmaxf(0.0f, 1.0f - wo_local.Z* wo_local.Z));
+	float sinI2 = sqrtf(fmaxf(0.0f, 1.0f - wo_local.Z * wo_local.Z));
 	float sinT2 = ratio * ratio * sinI2;
 
 	float cost = sqrt(fmaxf(0.0f, 1.0f - sinT2));

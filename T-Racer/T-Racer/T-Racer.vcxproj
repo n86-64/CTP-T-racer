@@ -155,7 +155,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies);assimp-vc140-mt.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)resources\*" "$(OutDir)resources\" /F /R /Y /I /S
@@ -175,7 +175,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies);assimp-vc140-mt.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)resources\*" "$(OutDir)resources\" /F /R /Y /I /S
@@ -216,7 +216,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies);assimp-vc140-mt.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)resources\*" "$(OutDir)resources\" /F /R /Y /I /S</Command>
@@ -235,12 +235,14 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClCompile Include="..\src\core\Materials.cpp" />
     <ClCompile Include="..\src\core\MatGlass.cpp" />
     <ClCompile Include="..\src\core\MatMirrors.cpp" />
+    <ClCompile Include="..\src\core\Mesh.cpp" />
     <ClCompile Include="..\src\core\ModelLoader.cpp" />
     <ClCompile Include="..\src\core\PathTracer.cpp" />
     <ClCompile Include="..\src\core\PFMDisplay.cpp" />
     <ClCompile Include="..\src\core\PointLight.cpp" />
     <ClCompile Include="..\src\core\Renderers.cpp" />
     <ClCompile Include="..\src\core\Scene.cpp" />
+    <ClCompile Include="..\src\core\SkeletalMesh.cpp" />
     <ClCompile Include="..\src\core\Texture.cpp" />
     <ClCompile Include="..\src\core\TextureManager.cpp" />
     <ClCompile Include="..\src\core\TGADisplay.cpp" />
@@ -267,6 +269,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\core\Materials.h" />
     <ClInclude Include="..\src\core\MatGlass.h" />
     <ClInclude Include="..\src\core\MatMirrors.h" />
+    <ClInclude Include="..\src\core\Mesh.h" />
     <ClInclude Include="..\src\core\ModelLoader.h" />
     <ClInclude Include="..\src\core\PathTracer.h" />
     <ClInclude Include="..\src\core\PathVertex.h" />
@@ -276,6 +279,7 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\core\Resource.h" />
     <ClInclude Include="..\src\core\SampledObjects.h" />
     <ClInclude Include="..\src\core\Scene.h" />
+    <ClInclude Include="..\src\core\SkeletalMesh.h" />
     <ClInclude Include="..\src\core\Texture.h" />
     <ClInclude Include="..\src\core\TextureManager.h" />
     <ClInclude Include="..\src\core\Transform.h" />

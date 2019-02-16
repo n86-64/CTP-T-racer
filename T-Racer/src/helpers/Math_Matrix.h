@@ -156,45 +156,6 @@ namespace T_racer_Math
 		T_racer_Math::Matrix4X4   inverseMatrix;
 		float inverseValue;
 		float d = 0.0f; // = getMatrixDeterminant(mat);
-
-
-		//if (d == 0.0f) 
-		//{
-		//	// there is no determinant. Return error matrix.
-		//	return ERROR_MATRIX;
-		//}
-
-		// TODO - Finsih implementation of gauss-Jorden inversion.
-		//for (int r = 0; r < 4; r++) 
-		//{
-		//	if (mat.value(r, r) != 1.0f) 
-		//	{
-		//		for (int i = 0; i < 4; i++) 
-		//		{
-		//			mat.value(r, i, mat.value(r, i) / mat.value(r, 0));
-		//		}
-
-		//		for (int i = 0; i < 4; i++)
-		//		{
-		//			inverseMatrix.value(r, i, mat.value(r, i) / mat.value(r, 0));
-		//		}
-		//	}
-
-		//	inverseValue = -mat.value(r + 1, r);
-
-		//	// Now we calculate the pivots.
-		//	for (int r2 = 0; r2 < 4; r2++) 
-		//	{
-		//		if (r2 != r) 
-		//		{
-		//			// perform the calculation.
-		//			for (int c2 = 0; c2 < 4; c2++) 
-		//			{
-		//				mat.value(r2, c2, (mat.value(r2, c2) - inverseValue) * mat.value(r2 - 1, c2));
-		//			}
-		//		}
-		//	}
-		//}
 		
 		// Source code retrieved from GLU project (OpenGL utility Library.) - https://github.com/jlyharia/Computer_GraphicsII/blob/master/gluInvertMatrix.h
 		inverseMatrix[0] = mat[5] * mat[10] * mat[15] -

@@ -13,6 +13,8 @@
 #include "helpers/FileReader.h"
 #include "helpers/Math_Vector.h"
 
+
+
 struct T_racer_Vertex 
 {
 	T_racer_Math::Vector		position;

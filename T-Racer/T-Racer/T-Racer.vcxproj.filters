@@ -145,11 +145,14 @@
     <Filter Include="Core\Objects\Resource\Materials\Material Types\Glass">
       <UniqueIdentifier>{7be3120e-3590-4f87-9979-194bb7204471}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource\Meshes">
-      <UniqueIdentifier>{509b824a-4db0-40c2-980b-f3bce34c3d63}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Objects\Resource\Lighting\Lights\Point Light">
       <UniqueIdentifier>{22212630-1249-40a4-a0cc-770195ae8ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource\Skeletal Meshes">
+      <UniqueIdentifier>{509b824a-4db0-40c2-980b-f3bce34c3d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Resource\Skeletal Meshes\Mesh Components">
+      <UniqueIdentifier>{528016b6-d42a-4575-83eb-44a64751f182}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +237,12 @@
     </ClCompile>
     <ClCompile Include="..\src\core\PointLight.cpp">
       <Filter>Core\Objects\Resource\Lighting\Lights\Point Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\SkeletalMesh.cpp">
+      <Filter>Core\Objects\Resource\Skeletal Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Mesh.cpp">
+      <Filter>Core\Objects\Resource\Skeletal Meshes\Mesh Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -365,6 +374,12 @@
     </ClInclude>
     <ClInclude Include="..\src\core\PointLight.h">
       <Filter>Core\Objects\Resource\Lighting\Lights\Point Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\SkeletalMesh.h">
+      <Filter>Core\Objects\Resource\Skeletal Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Mesh.h">
+      <Filter>Core\Objects\Resource\Skeletal Meshes\Mesh Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

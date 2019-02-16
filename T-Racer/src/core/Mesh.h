@@ -1,7 +1,7 @@
 /** @file Mesh.h
-*  @brief A mesh object.
+*  @brief A Component of a skeletal mesh that can be drawn.
 *
-*  Takes an imported skeletal mesh and loads them up on screen.
+*  Defines a mesh which forms part of a skeletal mesh.
 *
 *  @author Nathan Butt (n86-64)
 *  @bug No known bugs.
@@ -9,35 +9,21 @@
 
 #pragma once
 
-#include "assimp/scene.h"
-#include "assimp/Importer.hpp"
-#include "assimp/postprocess.h"
+#include <vector>
 
-#include "Resource.h"
+#include <assimp/mesh.h>
 
+#include "Vertex.h"
 #include "helpers/Math_Matrix.h"
 
-// Transform of the mesh. 
-struct T_racer_Transform 
-{
-	T_racer_Math::Matrix4X4 position;
-	T_racer_Math::Matrix4X4 rotation;
-	T_racer_Math::Matrix4X4 scale;
-};
-
-
-class T_Racer_Resource_Mesh : public T_racer_Resource
+class T_racer_Resource_SkeletalMesh_Mesh 
 {
 public:
-	T_Racer_Resource_Mesh() = default;
-
-	void loadMesh(std::string name);
-
-	// Gets the triangles for rendering in the scene. 
-	void aquireTriangles();
+	T_racer_Resource_SkeletalMesh_Mesh() = default;
+	T_racer_Resource_SkeletalMesh_Mesh(aiMesh* newMesh);
 
 private:
-	T_racer_Transform   meshTransform;
-
-	
+	// Verticies and indicies
+	std::vector<int>					modelIndicies;
+	std::vector<T_racer_Vertex>			modelVerticies;
 };

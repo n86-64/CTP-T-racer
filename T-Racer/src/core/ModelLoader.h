@@ -23,7 +23,7 @@ public:
 	void loadModel(std::string  pathNames);
 	std::vector<Triangle>*  getModelTriangles();
 
-
+	void loadModelRecursive(); 
 
 private:
 	std::vector<Triangle>  modelTriangles;
