@@ -1,5 +1,3 @@
-
-
 #include "Mesh.h"
 
 T_racer_Resource_SkeletalMesh_Mesh::T_racer_Resource_SkeletalMesh_Mesh(aiMesh* newMesh)

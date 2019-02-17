@@ -1,12 +1,15 @@
 #include <queue>
 
+#include "MaterialManager.h"
+#include "TextureManager.h"
+
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
 #include "SkeletalMesh.h"
 
-bool T_racer_Resource_SkeletalMesh::loadSkeletalMesh(std::string name)
+bool T_racer_Resource_SkeletalMesh::loadSkeletalMesh(std::string name, T_racer_MaterialManager* materials, T_racer_TextureManager* textures)
 {
 	Assimp::Importer fileLoader;
 
@@ -29,14 +32,15 @@ bool T_racer_Resource_SkeletalMesh::loadSkeletalMesh(std::string name)
 		T_racer_Math::Matrix4X4   transform;
 
 		// Here we load the meshes into the scene. 
-		loadMeshesInAssimpScene(sceneObject);
+		loadMeshesInAssimpScene(sceneObject, materials, textures);
 		loadNodesRecursive(sceneObject->mRootNode, transform, -1);
 		return true;
 	}
 }
 
-std::vector<Triangle> T_racer_Resource_SkeletalMesh::draw()
+std::vector<Triangle> T_racer_Resource_SkeletalMesh::draw(T_racer_MaterialManager* materials, T_racer_TextureManager* textures)
 {
+	Triangle                                newPrimative;
 	std::vector<Triangle>					modelTriangles;
 	T_racer_Resource_SkeletalMesh_Node*		node = nullptr;
 
@@ -64,7 +68,9 @@ std::vector<Triangle> T_racer_Resource_SkeletalMesh::draw()
 				if (vIndex == 3) 
 				{
 					vIndex = 0;
-					modelTriangles.emplace_back(Triangle(verts[0], verts[1], verts[2]));
+					newPrimative = Triangle(verts[0], verts[1], verts[2]);
+					newPrimative.setMaterialIndex(meshes[index].materialID);
+					modelTriangles.emplace_back(newPrimative);
 				}
 			}
 		}
@@ -90,7 +96,9 @@ std::vector<Triangle> T_racer_Resource_SkeletalMesh::draw()
 				if (vIndex == 3)
 				{
 					vIndex = 0;
-					modelTriangles.emplace_back(Triangle(verts[0], verts[1], verts[2]));
+					newPrimative = Triangle(verts[0], verts[1], verts[2]);
+					newPrimative.setMaterialIndex(meshes[j].materialID);
+					modelTriangles.emplace_back(newPrimative);
 				}
 			}
 		}
@@ -99,11 +107,18 @@ std::vector<Triangle> T_racer_Resource_SkeletalMesh::draw()
 	return modelTriangles;
 }
 
-void T_racer_Resource_SkeletalMesh::loadMeshesInAssimpScene(const aiScene* scene)
+void T_racer_Resource_SkeletalMesh::loadMeshesInAssimpScene(const aiScene* scene, T_racer_MaterialManager* materials, T_racer_TextureManager* textures)
 {
+	T_racer_Resource_SkeletalMesh_Mesh newMesh;
+	int matIndex = -1;
+
+	// Load materials and textures here. 
 	for (int i = 0; i < scene->mNumMeshes; i++) 
 	{
-		meshes.emplace_back(T_racer_Resource_SkeletalMesh_Mesh(scene->mMeshes[i]));
+		newMesh = T_racer_Resource_SkeletalMesh_Mesh(scene->mMeshes[i]);
+		matIndex = materials->createMaterial(scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
+		newMesh.materialID = matIndex;
+		meshes.emplace_back(newMesh);
 	}
 }
 

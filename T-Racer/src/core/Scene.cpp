@@ -44,9 +44,9 @@ void T_racer_Scene::loadModelAssimp(std::string modelName)
 {
 	// Load model along with texture and material info. Assign for rendering. 
 	T_racer_Resource_SkeletalMesh skeletalMesh;
-	if (skeletalMesh.loadSkeletalMesh(modelName)) 
+	if (skeletalMesh.loadSkeletalMesh(modelName, &materials, &textures)) 
 	{
-		std::vector<Triangle> triangles = skeletalMesh.draw(); // INEFFICENT - Needs changing. 
+		std::vector<Triangle> triangles = skeletalMesh.draw(&materials, &textures); // INEFFICENT - Needs changing. 
 		for (Triangle& tri : triangles)
 		{
 			// Laod the triangles into the scene temporaraly.

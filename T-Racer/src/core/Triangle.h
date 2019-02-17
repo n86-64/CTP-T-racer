@@ -39,6 +39,7 @@ public:
 	T_racer_Collider_AABB&		   getCollider() { return collider; };
 
 	int							   getMaterialIndex() const { return materialID; }
+	void						   setMaterialIndex(int id) { materialID = id; }
 
 	T_racer_Math::Vector		   normal;
 

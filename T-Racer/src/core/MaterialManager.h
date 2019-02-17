@@ -13,13 +13,19 @@
 
 #include  "core/Materials.h"
 
+struct aiMaterial;
+
+constexpr int T_RACER_MATERIAL_NULL = -1;
+
 class T_racer_MaterialManager
 {
 public:
 	T_racer_MaterialManager();
 
+
+	int				    createMaterial(std::string name);
+	int					createMaterial(const aiMaterial* matData);
 	T_racer_Material*   retrieveMaterial(int matID);
-	T_racer_Material*   retrieveMaterial(std::string name);
 
 private:
 	std::vector<std::unique_ptr<T_racer_Material>>  materials;

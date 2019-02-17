@@ -20,17 +20,21 @@
 struct aiScene;
 struct aiNode;
 
+class T_racer_MaterialManager;
+class T_racer_TextureManager;
+
 class T_racer_Resource_SkeletalMesh 
 {
 public:
 	T_racer_Resource_SkeletalMesh() = default;
 
-	bool loadSkeletalMesh(std::string name);
+	bool loadSkeletalMesh(std::string name, T_racer_MaterialManager* materials, T_racer_TextureManager* textures);
 
-	std::vector<Triangle>  draw();
+	// Load the triangles with the assistance of nodes.
+	std::vector<Triangle>  draw(T_racer_MaterialManager* materials, T_racer_TextureManager* textures);
 
 private:
-	void loadMeshesInAssimpScene(const aiScene* scene);
+	void loadMeshesInAssimpScene(const aiScene* scene, T_racer_MaterialManager* materials, T_racer_TextureManager* textures);
 	void loadNodesRecursive(const aiNode* scene, T_racer_Math::Matrix4X4 transform, int parent);
 
 private:
