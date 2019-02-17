@@ -6,7 +6,7 @@
 
 #include "SkeletalMesh.h"
 
-void T_racer_Resource_SkeletalMesh::loadSkeletalMesh(std::string name)
+bool T_racer_Resource_SkeletalMesh::loadSkeletalMesh(std::string name)
 {
 	Assimp::Importer fileLoader;
 
@@ -14,15 +14,14 @@ void T_racer_Resource_SkeletalMesh::loadSkeletalMesh(std::string name)
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
-		aiProcess_SortByPType |
-		aiProcess_ConvertToLeftHanded
+		aiProcess_SortByPType
 	);
 
 	if (!sceneObject)
 	{
 		// Return reporting an error in the process.
 		printf("ERROR - Failed tp load model object.");
-		return;
+		return false;
 	}
 	else
 	{
@@ -31,8 +30,8 @@ void T_racer_Resource_SkeletalMesh::loadSkeletalMesh(std::string name)
 
 		// Here we load the meshes into the scene. 
 		loadMeshesInAssimpScene(sceneObject);
-		loadNodesRecursive(sceneObject->mRootNode, transform, 0);
-		
+		loadNodesRecursive(sceneObject->mRootNode, transform, -1);
+		return true;
 	}
 }
 
@@ -69,9 +68,35 @@ std::vector<Triangle> T_racer_Resource_SkeletalMesh::draw()
 				}
 			}
 		}
+
+		for (int nIndex : node->getChildren()) 
+		{
+			nodeToRender.emplace(nIndex);
+		}
+
+		nodeToRender.pop();
 	}
 
-	return ;
+	if (modelTriangles.size() == 0) 
+	{
+		for (int j = 0; j < meshes.size(); j++)
+		{
+			// Loads the models into ram.
+			for (int i = 0; i < meshes[j].modelIndicies.size(); i++)
+			{
+				verts[vIndex] = meshes[j].modelVerticies[meshes[j].modelIndicies[i]];
+				vIndex++;
+
+				if (vIndex == 3)
+				{
+					vIndex = 0;
+					modelTriangles.emplace_back(Triangle(verts[0], verts[1], verts[2]));
+				}
+			}
+		}
+	}
+
+	return modelTriangles;
 }
 
 void T_racer_Resource_SkeletalMesh::loadMeshesInAssimpScene(const aiScene* scene)

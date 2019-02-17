@@ -25,7 +25,7 @@ class T_racer_Resource_SkeletalMesh
 public:
 	T_racer_Resource_SkeletalMesh() = default;
 
-	void loadSkeletalMesh(std::string name);
+	bool loadSkeletalMesh(std::string name);
 
 	std::vector<Triangle>  draw();
 
