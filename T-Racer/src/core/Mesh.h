@@ -22,7 +22,6 @@ public:
 	T_racer_Resource_SkeletalMesh_Mesh() = default;
 	T_racer_Resource_SkeletalMesh_Mesh(aiMesh* newMesh);
 
-private:
 	// Verticies and indicies
 	std::vector<int>					modelIndicies;
 	std::vector<T_racer_Vertex>			modelVerticies;

@@ -27,7 +27,7 @@ public:
 
 	void loadSkeletalMesh(std::string name);
 
-	std::vector<Triangle>*  getModelTriangles() {};
+	std::vector<Triangle>  draw();
 
 private:
 	void loadMeshesInAssimpScene(const aiScene* scene);
@@ -37,7 +37,7 @@ private:
 	std::string name;
 
 	// Nodes and meshes of the object. 
-	std::vector<std::unique_ptr<T_racer_Resource_SkeletalMesh_Mesh>> meshes;
+	std::vector<T_racer_Resource_SkeletalMesh_Mesh>					meshes;
 	std::vector<T_racer_Resource_SkeletalMesh_Node>					 nodes;
 
 };
