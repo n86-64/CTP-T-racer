@@ -11,9 +11,14 @@ T_racer_Math::Colour T_racer_Materials_BasicDiffuse::Evaluate(T_racer_Math::Ray*
 	if (materialTexture) 
 	{
 		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
-		lookupColour.colour = lookupColour.colour / (float)M_PI;
 		//outputTex.copyPixelValues(0, 0, lookupColour.colour.X, lookupColour.colour.Y, lookupColour.colour.Z);
 	}
+	else 
+	{
+		lookupColour = albedo;
+	}
+
+	lookupColour.colour = lookupColour.colour / (float)M_PI;
 
 	return lookupColour;
 }

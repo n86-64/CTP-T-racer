@@ -27,5 +27,4 @@ public:
 	std::vector<T_racer_Vertex>			modelVerticies;
 
 	int materialID = 0;
-
 };

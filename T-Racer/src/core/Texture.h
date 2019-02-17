@@ -13,12 +13,15 @@
 #include <cmath>
 #include "helpers/Math_Colour.h"
 
+struct aiTexture;
+
 class T_racer_Texture2D 
 {
 public:
 	T_racer_Texture2D() = default;
 	T_racer_Texture2D(int texWidth, int texHeight);
 	T_racer_Texture2D(const T_racer_Texture2D& obj);
+	T_racer_Texture2D(aiTexture* newTexture);
 	
 	~T_racer_Texture2D() 
 	{

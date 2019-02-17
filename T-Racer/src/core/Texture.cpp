@@ -1,4 +1,7 @@
 #include <memory>
+
+#include <assimp/texture.h>
+
 #include "Texture.h"
 
 T_racer_Texture2D::T_racer_Texture2D(int texWidth, int texHeight)
@@ -24,6 +27,11 @@ T_racer_Texture2D::T_racer_Texture2D(const T_racer_Texture2D & obj)
 	memcpy(this->textureData, obj.textureData, sizeof(float) * width * height * 3); // Copy the contents over to a new
 }
 
+T_racer_Texture2D::T_racer_Texture2D(aiTexture* newTexture)
+{
+	// Here we load the textures from the model.
+
+}
 
 void T_racer_Texture2D::copyPixelValues(int x, int y, float r, float g, float b)
 {

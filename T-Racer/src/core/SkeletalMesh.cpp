@@ -116,7 +116,7 @@ void T_racer_Resource_SkeletalMesh::loadMeshesInAssimpScene(const aiScene* scene
 	for (int i = 0; i < scene->mNumMeshes; i++) 
 	{
 		newMesh = T_racer_Resource_SkeletalMesh_Mesh(scene->mMeshes[i]);
-		matIndex = materials->createMaterial(scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
+		matIndex = materials->createMaterial(scene, scene->mMaterials[scene->mMeshes[i]->mMaterialIndex], textures);
 		newMesh.materialID = matIndex;
 		meshes.emplace_back(newMesh);
 	}

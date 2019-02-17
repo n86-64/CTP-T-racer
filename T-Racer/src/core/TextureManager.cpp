@@ -27,6 +27,24 @@ T_racer_Texture2D* T_racer_TextureManager::createTexture(std::string textureName
 	return tex;
 }
 
+T_racer_Texture2D * T_racer_TextureManager::createTexture(std::string name, aiTexture* texture)
+{
+	T_racer_Texture2D*  tex = nullptr;
+	auto  result = textures.find(name);
+
+	if (result != textures.end())
+	{
+		tex = result->second.get();
+	}
+	else
+	{
+		// Texture is embedded so create from assimp directly.
+		textures.emplace(std::pair<std::string, std::unique_ptr<T_racer_Texture2D>>(name, new T_racer_Texture2D(texture)));
+	}
+
+	return tex;
+}
+
 T_racer_Texture2D* T_racer_TextureManager::loadTexture(std::string texName)
 {
 	sf::Image  imageFile;

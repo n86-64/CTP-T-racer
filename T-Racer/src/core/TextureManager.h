@@ -15,7 +15,7 @@
 
 #include "Texture.h"
 
-
+struct aiTexture;
 
 class T_racer_TextureManager 
 {
@@ -23,6 +23,7 @@ public:
 	T_racer_TextureManager();
 
 	T_racer_Texture2D*   createTexture(std::string textureName);
+	T_racer_Texture2D*	 createTexture(std::string name, aiTexture* texture);
 
 private:
 	T_racer_Texture2D* loadTexture(std::string texName);

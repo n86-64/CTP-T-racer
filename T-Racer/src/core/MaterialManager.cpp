@@ -1,4 +1,5 @@
 #include <assimp/material.h>
+#include <assimp/scene.h>
 
 // The diffrent material types.
 #include "MatDiffuse.h"
@@ -6,6 +7,7 @@
 #include "MatGlass.h"
 
 #include "MaterialManager.h"
+#include "TextureManager.h"
 
 T_racer_MaterialManager::T_racer_MaterialManager()
 {
@@ -26,10 +28,12 @@ int T_racer_MaterialManager::createMaterial(std::string name)
 	return T_RACER_MATERIAL_NULL;
 }
 
-int T_racer_MaterialManager::createMaterial(const aiMaterial* matData)
+int T_racer_MaterialManager::createMaterial(const aiScene* scene, const aiMaterial* matData, T_racer_TextureManager* textures)
 {
 	aiString aiName; std::string name;
+	int textureIndex = -1;
 	matData->Get(AI_MATKEY_NAME, aiName);
+	AI_MATKEY_TEXTURE(aiTextureType_DIFFUSE, textureIndex);
 	name = aiName.C_Str();
 
 	int matIndex = createMaterial(name);
@@ -39,6 +43,28 @@ int T_racer_MaterialManager::createMaterial(const aiMaterial* matData)
 		// Create the material. Set it to diffuse for now. (Need a good way to determine diffrent properties.)
 		T_racer_Material*  newMat = new T_racer_Materials_BasicDiffuse();
 		newMat->setName(name);
+
+		// Set the texture.
+		if (textureIndex == -1) 
+		{
+			aiString path;
+			if (AI_FAILURE == matData->GetTexture(aiTextureType_DIFFUSE, 0, &path))
+			{
+				// No texture, set an albedo.
+				aiColor3D diffColour;
+				matData->Get(AI_MATKEY_COLOR_DIFFUSE, diffColour);
+				newMat->albedo = T_racer_Math::Colour(diffColour.r, diffColour.g, diffColour.b);
+			}
+			else 
+			{
+				newMat->setTexture(textures->createTexture(path.C_Str()));
+			}
+		}
+		else 
+		{
+			newMat->setTexture(textures->createTexture(name, scene->mTextures[textureIndex]));
+		}
+
 		materials.emplace_back(newMat);
 		matIndex = materials.size() - 1;
 	}

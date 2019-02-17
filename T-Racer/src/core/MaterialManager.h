@@ -14,6 +14,9 @@
 #include  "core/Materials.h"
 
 struct aiMaterial;
+struct aiScene;
+
+class T_racer_TextureManager;
 
 constexpr int T_RACER_MATERIAL_NULL = -1;
 
@@ -24,7 +27,7 @@ public:
 
 
 	int				    createMaterial(std::string name);
-	int					createMaterial(const aiMaterial* matData);
+	int					createMaterial(const aiScene* scene, const aiMaterial* matData, T_racer_TextureManager* textures);
 	T_racer_Material*   retrieveMaterial(int matID);
 
 private:
