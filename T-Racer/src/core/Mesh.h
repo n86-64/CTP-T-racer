@@ -26,4 +26,7 @@ private:
 	// Verticies and indicies
 	std::vector<int>					modelIndicies;
 	std::vector<T_racer_Vertex>			modelVerticies;
+
+	int materialID = 0;
+
 };

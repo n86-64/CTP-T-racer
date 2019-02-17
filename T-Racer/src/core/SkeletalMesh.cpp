@@ -39,6 +39,28 @@ void T_racer_Resource_SkeletalMesh::loadMeshesInAssimpScene(const aiScene* scene
 	}
 }
 
-void T_racer_Resource_SkeletalMesh::loadNodesRecursive(const aiNode * scene, T_racer_Math::Matrix4X4 transform)
+void T_racer_Resource_SkeletalMesh::loadNodesRecursive(const aiNode * scene, T_racer_Math::Matrix4X4 transform, int parent)
 {
+	T_racer_Math::Matrix4X4 model = transform * T_racer_Math::Matrix4X4(scene->mTransformation);
+
+	nodes.emplace_back(T_racer_Resource_SkeletalMesh_Node());
+
+	T_racer_Resource_SkeletalMesh_Node* newNode = &nodes[nodes.size() - 1];
+	newNode->setParent(parent);
+	newNode->setModelMatrix(model);
+
+	newNode->setMeshSize(scene->mNumMeshes);
+
+	nodes.emplace_back(newNode);
+	int index = nodes.size() - 1;
+
+	if (parent != -1)
+	{
+		nodes[parent].addChild(index);
+	}
+
+	for (int j = 0; j < scene->mNumChildren; j++)
+	{
+		loadNodesRecursive(scene->mChildren[j], model, index);
+	}
 }

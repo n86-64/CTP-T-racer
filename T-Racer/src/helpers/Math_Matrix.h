@@ -13,6 +13,8 @@ constexpr int MATRIX_ELEMENTS_COUNT_4X4 = 16;
 constexpr int MATRIX_ELEMENTS_COUNT_3X3 = 9;
 
 #include <math.h>
+#include <assimp/matrix4x4.h>
+
 #include "Math_Vector.h"
 
 namespace T_racer_Math 
@@ -43,6 +45,18 @@ namespace T_racer_Math
 			matrix[14] = m32;
 			matrix[15] = m33;
 		};
+
+		Matrix4X4(const aiMatrix4x4& newMat) 
+		{
+			Matrix4X4
+			(
+				newMat.a1, newMat.a2, newMat.a3, newMat.a4,
+				newMat.b1, newMat.b2, newMat.b3, newMat.b4,
+				newMat.c1, newMat.c2, newMat.c3, newMat.c4,
+				newMat.d1, newMat.d2, newMat.d3, newMat.d4
+			);
+		}
+
 
 		// Return a value from the matrix.
 		float value(int row, int column) 

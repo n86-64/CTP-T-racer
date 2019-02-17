@@ -9,15 +9,13 @@
 
 #pragma once
 
-#include <vector>
 #include <string>
-
-#include "helpers/Math_Matrix.h"
 
 #include "Resource.h"
 #include "Triangle.h"
 
 #include "Mesh.h"
+#include "MeshNode.h"
 
 struct aiScene;
 struct aiNode;
@@ -33,12 +31,13 @@ public:
 
 private:
 	void loadMeshesInAssimpScene(const aiScene* scene);
-	void loadNodesRecursive(const aiNode* scene, T_racer_Math::Matrix4X4 transform);
+	void loadNodesRecursive(const aiNode* scene, T_racer_Math::Matrix4X4 transform, int parent);
 
 private:
 	std::string name;
 
 	// Nodes and meshes of the object. 
 	std::vector<std::unique_ptr<T_racer_Resource_SkeletalMesh_Mesh>> meshes;
+	std::vector<T_racer_Resource_SkeletalMesh_Node>					 nodes;
 
 };
