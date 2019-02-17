@@ -159,7 +159,8 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)resources\*" "$(OutDir)resources\" /F /R /Y /I /S
-xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
+xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S
+xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copys dependancies to the executable directory. Allows them to be run.</Message>
@@ -179,7 +180,8 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)resources\*" "$(OutDir)resources\" /F /R /Y /I /S
-xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
+xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S
+xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copys dependancies to the executable directory. Allows them to be run.</Message>
@@ -219,7 +221,9 @@ xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
       <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies);assimp-vc140-mt.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)resources\*" "$(OutDir)resources\" /F /R /Y /I /S</Command>
+      <Command>xcopy "$(SolutionDir)resources\*" "$(OutDir)resources\" /F /R /Y /I /S
+xcopy "$(SolutionDir)lib\SFML-2.5.1\bin\*" "$(OutDir)" /F /R /Y /I /S
+xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
