@@ -20,6 +20,7 @@ public:
 	virtual T_racer_Math::Colour Evaluate(T_racer_Path_Vertex& pathVertex) override;
 	virtual T_racer_SampledDirection  Sample(T_racer_Path_Vertex & pathVertex, T_racer_Math::Ray & inputRay, T_racer_Path_Vertex& lightSourcePath) override;
 	virtual float probabilityDensity(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray & inputRay) override;
-
 	virtual float surfaceCosine(T_racer_Path_Vertex& vertex) override;
+
+	virtual T_racer_TriangleIntersection doesIntersect(T_racer_Math::Ray* ray) override;
 };

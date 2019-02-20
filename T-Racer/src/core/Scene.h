@@ -44,7 +44,6 @@ public:
 	void addLight(T_racer_Light_Base*  newLight) { sceneLights.emplace_back(newLight); }; // Adds a new light to the scene.
 
 	// Render a single frame and add to a display. 
-	void Render();
 	void setDisplay(T_racer_Display* newDisplay); 
 
 	// Renderer Routienes
@@ -61,6 +60,8 @@ public:
 	T_racer_Light_Base* retrieveOneLightSource();
 
 	T_racer_Math::Ray generateRay(float xPos, float yPos);
+
+	T_racer_TriangleIntersection  hitsLightSource(T_racer_Math::Ray* ray);
 
 public:
 	// Manager objects which are acsessable properties. 

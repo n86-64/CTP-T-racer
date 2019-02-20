@@ -28,3 +28,8 @@ float T_racer_Light_Point::surfaceCosine(T_racer_Path_Vertex& vertex)
 {
 	return 1.0f;
 }
+
+T_racer_TriangleIntersection T_racer_Light_Point::doesIntersect(T_racer_Math::Ray* ray)
+{
+	return T_racer_TriangleIntersection();
+}

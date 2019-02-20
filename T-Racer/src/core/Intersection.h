@@ -24,9 +24,11 @@ struct T_racer_TriangleIntersection
 	void setW() { w = 1 - u - v; }
 
 	int triangleID = -1;
+	int lightTriangleID = -1;
+	int lightID = -1;
 
 	T_racer_TriangleIntersection()
 	{
-		t = FLT_MAX;
+		t = INFINITY;
 	}
 };

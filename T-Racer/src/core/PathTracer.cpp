@@ -4,7 +4,7 @@
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
 constexpr float T_RACER_LUMINANCE_VALUE = 0.1f;
 
-constexpr int T_RACER_SAMPLE_COUNT = 500;
+constexpr int T_RACER_SAMPLE_COUNT = 1;
 
 constexpr int T_RACER_PATH_INITIAL_COUNT = 20;
 
@@ -122,6 +122,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 {
 	// Data types for rendering threaded.
 	T_racer_TriangleIntersection intersectionDisc;
+	T_racer_TriangleIntersection lightSourceHit;
 	T_racer_Math::Sampler sampler;
 
 	T_racer_Math::Vector bias;
@@ -159,9 +160,16 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
 
 				T_racer_Math::Ray ray = sceneObject->generateRay((tX / width) , (tY / height));
-				intersectionDisc = sceneObject->trace(ray);
 
-				if (intersectionDisc.triangleID != T_RACER_TRIANGLE_NULL)
+				// Test to see if it hits a light source
+				intersectionDisc = sceneObject->trace(ray);
+				lightSourceHit = sceneObject->hitsLightSource(&ray);
+
+				if (lightSourceHit.intersection && lightSourceHit.t < intersectionDisc.t) 
+				{
+					lightValue = irradiance;
+				}
+				else if (intersectionDisc.triangleID != T_RACER_TRIANGLE_NULL)
 				{
 					Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
 					lightPath.emplace_back(T_racer_Path_Vertex());
@@ -217,6 +225,11 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	T_racer_Math::Colour Ld(0.0f, 0.0f, 0.0f);
 	T_racer_Path_Vertex  lightSourcePath;
 	
+	if (pathVertex->isFresnelSurface) 
+	{
+		return col;
+	}
+
 	T_racer_Material* material = sceneObject->materials.retrieveMaterial(pathVertex->BRDFMaterialID);
 	T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(); // Picks out a random light source to sample.
 	T_racer_SampledDirection light_pos = lightSource->Sample(*pathVertex, lightRay, lightSourcePath);
@@ -246,7 +259,7 @@ float T_racer_Renderer_PathTracer::geometryTerm(T_racer_Path_Vertex* pathVertex,
 	T_racer_Math::Vector dir = lightVertex->hitPoint - pathVertex->hitPoint;
 	l = dir.normaliseSelfWithMagnitude();
 	float brdfTheta = fmaxf(T_racer_Math::dot(dir, pathVertex->normal), 0.0f);
-	float lightTheta = lightVertex->isPointLightSource ?  1.0 : -fmaxf(T_racer_Math::dot(dir, lightVertex->normal), 0.0f);
+	float lightTheta = lightVertex->isPointLightSource ?  1.0 : fmaxf(T_racer_Math::dot(dir, lightVertex->normal), 0.0f);
 
 	return (brdfTheta * lightTheta) / l;
 }

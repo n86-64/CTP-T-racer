@@ -11,6 +11,7 @@
 #include "helpers/Math_Sampler.h"
 #include "PathTracer.h"
 #include "PointLight.h"
+#include "AreaLight.h"
 
 
 // The application entry point.
@@ -44,7 +45,18 @@ int main(int argc, char* argv[])
 	T_racer_Display_PFM  pfm;
 	T_racer_Camera  testCam;
 	
-	T_racer_Light_Point* light1 = new T_racer_Light_Point();
+	// lights
+	T_racer_Light_Point*  light1 = new T_racer_Light_Point();
+	T_racer_Light_Area*   aLight = new T_racer_Light_Area();
+	
+	T_racer_Vertex  a;
+	a.position = T_racer_Math::Vector(1.015684, 2.612167, 1.082442);
+	T_racer_Vertex  b;
+	b.position = T_racer_Math::Vector(1.015684, 2.612167, 1.583131);
+	T_racer_Vertex  c;
+	c.position = T_racer_Math::Vector(1.635585, 2.612167, 1.082442);
+	aLight->addTriangle(a, b, c);
+	
 	light1->setPosition(T_racer_Math::Vector(1.2f, 1.2f, 0.4f));
 
 	window.init(512, 512);
@@ -60,7 +72,7 @@ int main(int argc, char* argv[])
 	testScene.setName("Cycles");
 	testScene.setMainCamera(&testCam);
 
-	testScene.addLight(light1);
+	testScene.addLight(aLight);
 	testScene.loadModelAssimp("resources/Cycles.obj");
 
 	trpt.setDisplay(&window);

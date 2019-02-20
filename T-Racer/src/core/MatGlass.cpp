@@ -28,6 +28,8 @@ T_racer_SampledDirection T_racer_Materials_Dilectric_Glass::Sample(T_racer_Math:
 	// Determine if we need to refract or reflect the light here.
 	T_racer_SampledDirection  wi;
 
+	pathVertex.isFresnelSurface = true;
+
 	T_racer_Math::Vector wo_local = pathVertex.orthnormalBasis * pathVertex.wo;
 	float ei = refractiveIndexI, et = refractiveIndexT;
 	float cosi = clamp(wo_local.Z, -1.0f, 1.0f);

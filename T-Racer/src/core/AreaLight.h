@@ -16,9 +16,10 @@
 #include "Triangle.h"
 #include "BaseLight.h"
 
-class T_Racer_Light_Area : public T_racer_Light_Base 
+class T_racer_Light_Area : public T_racer_Light_Base 
 {
 public: 
+	T_racer_Light_Area();
 
 	virtual T_racer_Math::Colour Evaluate(T_racer_Path_Vertex & pathVertex) override;
 	virtual T_racer_SampledDirection Sample(T_racer_Path_Vertex & pathVertex, T_racer_Math::Ray & inputRay, T_racer_Path_Vertex & lightSourceVertex) override;
@@ -27,6 +28,8 @@ public:
 
 	// Add triangles to the light.
 	void  addTriangle(T_racer_Vertex a, T_racer_Vertex b, T_racer_Vertex c) { triangles.emplace_back(Triangle(a,b,c)); }
+
+	virtual T_racer_TriangleIntersection doesIntersect(T_racer_Math::Ray* ray) override;
 
 private:
 	float pdfPoint = 0.0f;

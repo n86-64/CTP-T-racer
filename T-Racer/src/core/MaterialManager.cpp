@@ -40,8 +40,10 @@ int T_racer_MaterialManager::createMaterial(const aiScene* scene, const aiMateri
 
 	if (matIndex == T_RACER_MATERIAL_NULL) 
 	{
+		T_racer_Material*  newMat;
 		// Create the material. Set it to diffuse for now. (Need a good way to determine diffrent properties.)
-		T_racer_Material*  newMat = new T_racer_Materials_BasicDiffuse();
+		newMat = new T_racer_Materials_BasicDiffuse();
+
 		newMat->setName(name);
 
 		// Set the texture.

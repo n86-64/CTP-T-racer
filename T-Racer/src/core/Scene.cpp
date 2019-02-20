@@ -55,10 +55,6 @@ void T_racer_Scene::loadModelAssimp(std::string modelName)
 	}
 }
 
-void T_racer_Scene::Render()
-{
-}
-
 void T_racer_Scene::setDisplay(T_racer_Display* newDisplay)
 {
 	display = newDisplay;
@@ -101,7 +97,7 @@ bool T_racer_Scene::visible(T_racer_Math::Vector origin, T_racer_Math::Vector de
 bool T_racer_Scene::visibleDir(T_racer_Math::Vector origin, T_racer_Math::Vector direction)
 {
 	T_racer_Math::Ray ray(origin, direction);
-	return bvh.visible(&ray, FLT_MAX);
+	return bvh.visible(&ray, INFINITY);
 }
 
 T_racer_Light_Base* T_racer_Scene::retrieveOneLightSource()
@@ -130,4 +126,21 @@ T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 	T_racer_Math::Ray cameraRay = T_racer_Math::Ray(origin, ((lower_left_corner + horizontal * xPos + vertical * yPos) - origin).normalise());
 
 	return cameraRay;
+}
+
+T_racer_TriangleIntersection T_racer_Scene::hitsLightSource(T_racer_Math::Ray* ray)
+{
+	T_racer_TriangleIntersection  returnIntersection; 
+	T_racer_TriangleIntersection  intersection;
+
+	for (int i = 0; i < sceneLights.size(); i++) 
+	{
+		intersection = sceneLights[i]->doesIntersect(ray);
+		if (intersection.intersection && intersection.t < returnIntersection.t) 
+		{
+			returnIntersection = intersection;
+		}
+	}
+
+	return returnIntersection;
 }
