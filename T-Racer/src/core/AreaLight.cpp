@@ -20,6 +20,8 @@ T_racer_SampledDirection T_Racer_Light_Area::Sample(T_racer_Path_Vertex& pathVer
 		{
 			T_racer_Math::Vector samplePos = T_racer_Math::projToUnitDisk(sampler.Random2());
 			samplePos.Z = sqrt((samplePos.X * samplePos.X) + (samplePos.Y * samplePos.Y));
+			
+			lightSourceVertex.hitPoint = triangles[i].samplePoint();
 			wi.direction = pathVertex.orthnormalBasis * samplePos;
 			wi.probabilityDensity = probabilityDensity(pathVertex, inputRay);
 			wi.probabilityDensityArea = 1 / triangles[i].getSurfaceArea();

@@ -1,6 +1,8 @@
 #include <cmath>
 
 #include "helpers/Math_Error.h"
+#include "helpers/Math_Sampler.h"
+
 #include "Triangle.h"
 
 
@@ -146,6 +148,23 @@ float Triangle::getSurfaceArea()
 	T_racer_Math::Vector  v2v0 = verticies[2].position - verticies[0].position;
 
 	return T_racer_Math::cross(v1v0, v2v0).Magnitude() * 0.5f;
+}
+
+T_racer_Math::Vector Triangle::samplePoint()
+{
+	T_racer_Math::Sampler sampler;
+	T_racer_Math::Vector  sampleVal;
+
+	sampleVal = sampler.Random2();
+
+	float sul = sqrtf(sampleVal.X);
+	float u = 0.0f, v = 0.0f, w = 0.0f;
+
+	u = 1.0f - sul;
+	v = sampleVal.Y * sul;
+	w = 1 - u - v;
+
+	return (verticies[0].position * u) + (verticies[1].position * v) * (verticies[2].position * w);
 }
 
 T_racer_Math::Vector Triangle::getNormal()

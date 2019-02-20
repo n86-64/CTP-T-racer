@@ -12,6 +12,7 @@
 // The direction the ray should travel along with the probibility density.
 struct T_racer_SampledDirection
 {
+	T_racer_Math::Vector point;
 	T_racer_Math::Vector direction;
 	float				 probabilityDensity;
 
