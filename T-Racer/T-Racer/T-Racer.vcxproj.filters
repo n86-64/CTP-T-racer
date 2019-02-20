@@ -49,9 +49,6 @@
     <Filter Include="Core\Objects\Camera">
       <UniqueIdentifier>{3f0a6433-dae5-4913-b278-f8746c59dfe0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource">
-      <UniqueIdentifier>{d8fe427b-3e89-4cf0-b555-0f65ee9a1e2b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Displays">
       <UniqueIdentifier>{784b15cc-a342-48d3-8313-913c5a52a9dd}</UniqueIdentifier>
     </Filter>
@@ -72,9 +69,6 @@
     </Filter>
     <Filter Include="Helpers\Math\Trig">
       <UniqueIdentifier>{977b9fbf-941a-475e-b175-ad87bc77f9cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Objects\Resource\Models">
-      <UniqueIdentifier>{f30b3bd7-71ae-4316-ac59-6395eee4b746}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\BVH">
       <UniqueIdentifier>{c56648c3-52c1-4f04-8cfc-893c38254ba9}</UniqueIdentifier>
@@ -115,50 +109,53 @@
     <Filter Include="Core\Renderers\Path-Tracer">
       <UniqueIdentifier>{595f7e72-5fb5-4c0f-9c7f-03d88b0637be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource\Textures">
-      <UniqueIdentifier>{b8609122-c8cc-44dc-bde9-d18dea9065c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Objects\Resource\Materials">
-      <UniqueIdentifier>{0067694e-5235-4d9e-b077-58e85403ee13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Objects\Resource\Materials\Material Types">
-      <UniqueIdentifier>{9c2fc4d2-6127-4349-974b-280f61f70e44}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Modules\MaterialManager">
       <UniqueIdentifier>{7baa985f-11ce-4916-9394-40b14847452e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Objects\Resource\Lighting">
-      <UniqueIdentifier>{a2018fcc-8e8d-456a-ba2d-5d7033cd624d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Objects\Resource\Lighting\Lights">
-      <UniqueIdentifier>{131fee7a-e7c4-4b2c-ae64-8ede047906f8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Helpers\FileIO">
       <UniqueIdentifier>{e03657ef-b619-458d-a638-13a0be6d2e70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource\Materials\Material Types\Diffuse">
-      <UniqueIdentifier>{43966599-1866-4efe-99ec-998f5ff2e0c0}</UniqueIdentifier>
+    <Filter Include="Core\Objects\Lighting">
+      <UniqueIdentifier>{a2018fcc-8e8d-456a-ba2d-5d7033cd624d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource\Materials\Material Types\Mirrors">
-      <UniqueIdentifier>{6482eb32-6d3b-4a4c-8bc7-04e10272c792}</UniqueIdentifier>
+    <Filter Include="Core\Objects\Lighting\Lights">
+      <UniqueIdentifier>{131fee7a-e7c4-4b2c-ae64-8ede047906f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource\Materials\Material Types\Glass">
-      <UniqueIdentifier>{7be3120e-3590-4f87-9979-194bb7204471}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Objects\Resource\Lighting\Lights\Point Light">
+    <Filter Include="Core\Objects\Lighting\Lights\Point Light">
       <UniqueIdentifier>{22212630-1249-40a4-a0cc-770195ae8ffa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource\Skeletal Meshes">
+    <Filter Include="Core\Objects\Lighting\Lights\Area Light">
+      <UniqueIdentifier>{fd38625a-84c7-4a8d-b8f8-cde5028ae827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Materials">
+      <UniqueIdentifier>{0067694e-5235-4d9e-b077-58e85403ee13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Materials\Material Types">
+      <UniqueIdentifier>{9c2fc4d2-6127-4349-974b-280f61f70e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Materials\Material Types\Diffuse">
+      <UniqueIdentifier>{43966599-1866-4efe-99ec-998f5ff2e0c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Materials\Material Types\Mirrors">
+      <UniqueIdentifier>{6482eb32-6d3b-4a4c-8bc7-04e10272c792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Materials\Material Types\Glass">
+      <UniqueIdentifier>{7be3120e-3590-4f87-9979-194bb7204471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Models">
+      <UniqueIdentifier>{f30b3bd7-71ae-4316-ac59-6395eee4b746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Skeletal Meshes">
       <UniqueIdentifier>{509b824a-4db0-40c2-980b-f3bce34c3d63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource\Skeletal Meshes\Mesh Components">
+    <Filter Include="Core\Objects\Skeletal Meshes\Mesh Components">
       <UniqueIdentifier>{528016b6-d42a-4575-83eb-44a64751f182}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource\Skeletal Meshes\Nodes">
+    <Filter Include="Core\Objects\Skeletal Meshes\Nodes">
       <UniqueIdentifier>{c6ea2799-a034-4932-afa8-22f569d64672}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Objects\Resource\Lighting\Lights\Area Light">
-      <UniqueIdentifier>{fd38625a-84c7-4a8d-b8f8-cde5028ae827}</UniqueIdentifier>
+    <Filter Include="Core\Objects\Textures">
+      <UniqueIdentifier>{b8609122-c8cc-44dc-bde9-d18dea9065c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -193,13 +190,13 @@
       <Filter>Core\Displays\TGA</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Texture.cpp">
-      <Filter>Core\Objects\Resource\Textures</Filter>
+      <Filter>Core\Objects\Textures</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\TextureManager.cpp">
       <Filter>Core\Modules\TextureManager</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\ModelLoader.cpp">
-      <Filter>Core\Objects\Resource\Models</Filter>
+      <Filter>Core\Objects\Models</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\BVHNode.cpp">
       <Filter>Core\BVH\Node</Filter>
@@ -220,10 +217,10 @@
       <Filter>Core\Displays</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\BaseLight.cpp">
-      <Filter>Core\Objects\Resource\Lighting</Filter>
+      <Filter>Core\Objects\Lighting</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Materials.cpp">
-      <Filter>Core\Objects\Resource\Materials</Filter>
+      <Filter>Core\Objects\Materials</Filter>
     </ClCompile>
     <ClCompile Include="..\src\helpers\FileReader.cpp">
       <Filter>Helpers\FileIO</Filter>
@@ -233,28 +230,28 @@
       <Filter>Core\Renderers</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\MatDiffuse.cpp">
-      <Filter>Core\Objects\Resource\Materials\Material Types\Diffuse</Filter>
+      <Filter>Core\Objects\Materials\Material Types\Diffuse</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\MatMirrors.cpp">
-      <Filter>Core\Objects\Resource\Materials\Material Types\Mirrors</Filter>
+      <Filter>Core\Objects\Materials\Material Types\Mirrors</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\MatGlass.cpp">
-      <Filter>Core\Objects\Resource\Materials\Material Types\Glass</Filter>
+      <Filter>Core\Objects\Materials\Material Types\Glass</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\PointLight.cpp">
-      <Filter>Core\Objects\Resource\Lighting\Lights\Point Light</Filter>
+      <Filter>Core\Objects\Lighting\Lights\Point Light</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\SkeletalMesh.cpp">
-      <Filter>Core\Objects\Resource\Skeletal Meshes</Filter>
+      <Filter>Core\Objects\Skeletal Meshes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\Mesh.cpp">
-      <Filter>Core\Objects\Resource\Skeletal Meshes\Mesh Components</Filter>
+      <Filter>Core\Objects\Skeletal Meshes\Mesh Components</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\MeshNode.cpp">
-      <Filter>Core\Objects\Resource\Skeletal Meshes\Nodes</Filter>
+      <Filter>Core\Objects\Skeletal Meshes\Nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\core\AreaLight.cpp">
-      <Filter>Core\Objects\Resource\Lighting\Lights\Area Light</Filter>
+      <Filter>Core\Objects\Lighting\Lights\Area Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -294,9 +291,6 @@
     <ClInclude Include="..\src\core\Scene.h">
       <Filter>Core\Structures\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\core\Resource.h">
-      <Filter>Core\Objects\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\Display.h">
       <Filter>Core\Displays</Filter>
     </ClInclude>
@@ -310,7 +304,7 @@
       <Filter>Core\Displays\PFM</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Texture.h">
-      <Filter>Core\Objects\Resource\Textures</Filter>
+      <Filter>Core\Objects\Textures</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\TextureManager.h">
       <Filter>Core\Modules\TextureManager</Filter>
@@ -319,7 +313,7 @@
       <Filter>Helpers\Math\Trig</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\ModelLoader.h">
-      <Filter>Core\Objects\Resource\Models</Filter>
+      <Filter>Core\Objects\Models</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\BVHNode.h">
       <Filter>Core\BVH\Node</Filter>
@@ -334,7 +328,7 @@
       <Filter>Core\BVH\Tree</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Materials.h">
-      <Filter>Core\Objects\Resource\Materials</Filter>
+      <Filter>Core\Objects\Materials</Filter>
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Sampler.h">
       <Filter>Helpers\Math\Sampling</Filter>
@@ -358,13 +352,13 @@
       <Filter>Core\Renderers\Path-Tracer</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\BaseLight.h">
-      <Filter>Core\Objects\Resource\Lighting</Filter>
+      <Filter>Core\Objects\Lighting</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\SampledObjects.h">
       <Filter>Core\Paths</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\MaterialConstants.h">
-      <Filter>Core\Objects\Resource\Materials</Filter>
+      <Filter>Core\Objects\Materials</Filter>
     </ClInclude>
     <ClInclude Include="..\src\helpers\FileReader.h">
       <Filter>Helpers\FileIO</Filter>
@@ -373,31 +367,34 @@
       <Filter>Helpers\Memory</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\MatDiffuse.h">
-      <Filter>Core\Objects\Resource\Materials\Material Types\Diffuse</Filter>
+      <Filter>Core\Objects\Materials\Material Types\Diffuse</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\MatMirrors.h">
-      <Filter>Core\Objects\Resource\Materials\Material Types\Mirrors</Filter>
+      <Filter>Core\Objects\Materials\Material Types\Mirrors</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\MatGlass.h">
-      <Filter>Core\Objects\Resource\Materials\Material Types\Glass</Filter>
+      <Filter>Core\Objects\Materials\Material Types\Glass</Filter>
     </ClInclude>
     <ClInclude Include="..\src\helpers\Math_Error.h">
       <Filter>Helpers\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\PointLight.h">
-      <Filter>Core\Objects\Resource\Lighting\Lights\Point Light</Filter>
+      <Filter>Core\Objects\Lighting\Lights\Point Light</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\SkeletalMesh.h">
-      <Filter>Core\Objects\Resource\Skeletal Meshes</Filter>
+      <Filter>Core\Objects\Skeletal Meshes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Mesh.h">
-      <Filter>Core\Objects\Resource\Skeletal Meshes\Mesh Components</Filter>
+      <Filter>Core\Objects\Skeletal Meshes\Mesh Components</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\MeshNode.h">
-      <Filter>Core\Objects\Resource\Skeletal Meshes\Nodes</Filter>
+      <Filter>Core\Objects\Skeletal Meshes\Nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\AreaLight.h">
-      <Filter>Core\Objects\Resource\Lighting\Lights\Area Light</Filter>
+      <Filter>Core\Objects\Lighting\Lights\Area Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Resource.h">
+      <Filter>Core\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

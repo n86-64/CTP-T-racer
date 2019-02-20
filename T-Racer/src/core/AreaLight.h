@@ -14,7 +14,6 @@
 #include <vector>
 
 #include "Triangle.h"
-
 #include "BaseLight.h"
 
 class T_Racer_Light_Area : public T_racer_Light_Base 
@@ -25,6 +24,9 @@ public:
 	virtual T_racer_SampledDirection Sample(T_racer_Path_Vertex & pathVertex, T_racer_Math::Ray & inputRay, T_racer_Path_Vertex & lightSourceVertex) override;
 	virtual float probabilityDensity(T_racer_Path_Vertex & pathVertex, T_racer_Math::Ray & inputRay) override;
 	virtual float surfaceCosine(T_racer_Path_Vertex & vertex) override;
+
+	// Add triangles to the light.
+	void  addTriangle(T_racer_Vertex a, T_racer_Vertex b, T_racer_Vertex c) { triangles.emplace_back(Triangle(a,b,c)); }
 
 private:
 	float pdfPoint = 0.0f;

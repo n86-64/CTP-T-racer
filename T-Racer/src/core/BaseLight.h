@@ -13,7 +13,6 @@
 #include "SampledObjects.h"
 
 #include "helpers/Math_Ray.h"
-#include "helpers/Math_Colour.h"
 
 
 class T_racer_Light_Base 

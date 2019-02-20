@@ -12,10 +12,15 @@
 #include "Math_Trig.h"
 #include "Math_Vector.h"
 
+//namespace T_racer_Math 
+//{
+//	Vector projToUnitDisk(Vector  seed);
+//}
+
 namespace T_racer_Math 
 {
 	// Implements Shirly-Chiu projection method (http://psgraphics.blogspot.com/2011/01/improved-code-for-concentric-map.html)
-	Vector projToUnitDisk(Vector seed)
+	inline Vector projToUnitDisk(Vector seed)
 	{
 		double phi, r;
 
