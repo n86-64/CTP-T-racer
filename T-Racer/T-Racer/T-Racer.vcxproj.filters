@@ -253,7 +253,9 @@
     <ClCompile Include="..\src\core\MeshNode.cpp">
       <Filter>Core\Objects\Resource\Skeletal Meshes\Nodes</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\core\AreaLight.cpp" />
+    <ClCompile Include="..\src\core\AreaLight.cpp">
+      <Filter>Core\Objects\Resource\Lighting\Lights\Area Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
