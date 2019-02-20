@@ -34,6 +34,8 @@ public:
 	
 	T_racer_Math::Matrix3X3		   createShadingFrame(T_racer_Math::Vector v);
 
+	float						   getSurfaceArea();
+
 	T_racer_Math::Vector		   getNormal();
 
 	T_racer_Collider_AABB&		   getCollider() { return collider; };

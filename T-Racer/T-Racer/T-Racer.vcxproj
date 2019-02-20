@@ -228,6 +228,7 @@ xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\AABB.cpp" />
+    <ClCompile Include="..\src\core\AreaLight.cpp" />
     <ClCompile Include="..\src\core\BaseLight.cpp" />
     <ClCompile Include="..\src\core\BVHNode.cpp" />
     <ClCompile Include="..\src\core\BVHTree.cpp" />
@@ -261,6 +262,7 @@ xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\core\AABB.h" />
+    <ClInclude Include="..\src\core\AreaLight.h" />
     <ClInclude Include="..\src\core\BaseLight.h" />
     <ClInclude Include="..\src\core\BVHNode.h" />
     <ClInclude Include="..\src\core\BVHTests.h" />

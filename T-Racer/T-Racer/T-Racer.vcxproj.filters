@@ -157,6 +157,9 @@
     <Filter Include="Core\Objects\Resource\Skeletal Meshes\Nodes">
       <UniqueIdentifier>{c6ea2799-a034-4932-afa8-22f569d64672}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Objects\Resource\Lighting\Lights\Area Light">
+      <UniqueIdentifier>{fd38625a-84c7-4a8d-b8f8-cde5028ae827}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\helpers\Math_Vector.cpp">
@@ -250,6 +253,7 @@
     <ClCompile Include="..\src\core\MeshNode.cpp">
       <Filter>Core\Objects\Resource\Skeletal Meshes\Nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\AreaLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
@@ -389,6 +393,9 @@
     </ClInclude>
     <ClInclude Include="..\src\core\MeshNode.h">
       <Filter>Core\Objects\Resource\Skeletal Meshes\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\AreaLight.h">
+      <Filter>Core\Objects\Resource\Lighting\Lights\Area Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

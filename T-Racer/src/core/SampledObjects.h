@@ -14,4 +14,7 @@ struct T_racer_SampledDirection
 {
 	T_racer_Math::Vector direction;
 	float				 probabilityDensity;
+
+	// pdf values for area lights.
+	float				 probabilityDensityArea;
 };
