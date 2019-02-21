@@ -21,10 +21,10 @@ class T_racer_Renderer_Base
 {
 public:
 	T_racer_Renderer_Base() = default;
-	virtual ~T_racer_Renderer_Base() = default;
+	virtual ~T_racer_Renderer_Base();
 
 	virtual void Render() = 0;
-	void setDisplay(T_racer_Display* newDisplay);/* { display = newDisplay; }*/
+	void setDisplay(T_racer_Display* newDisplay);
 	void setDisplay(JSONFileReader displayName);
 
 	void setScene(T_racer_Scene* newScene) 
@@ -34,6 +34,8 @@ public:
 	}
 
 	virtual void renderThreaded() = 0; // Threaded path.
+
+	virtual void postDisplayUpdate() {};
 
 protected:
 
@@ -54,4 +56,6 @@ protected:
 	int									threadCount = 0;
 	T_racer_Math::Vector				tileSize = T_racer_Math::Vector(INFINITY, INFINITY);
 	std::vector<std::thread>			tileThreads; 
+
+	bool								initFromFile = false;
 };

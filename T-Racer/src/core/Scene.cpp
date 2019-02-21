@@ -34,6 +34,7 @@ void T_racer_Scene::loadScene(JSONFileReader file)
 {
 	// Parse succsessful, we can now load the file
 	name = file.buffer["SceneName"].as_string();
+
 }
 
 void T_racer_Scene::loadModel(std::string modelName)

@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 	file.setFilePath("resources/cornell.trs");
 	file.parseFile();
 
-	T_racer_Display_Window  window;
+	//T_racer_Display_Window  window;
 	T_racer_Display_TGA  tga;
 	T_racer_Display_PFM  pfm;
 	T_racer_Camera  testCam;
@@ -45,12 +45,12 @@ int main(int argc, char* argv[])
 	
 	light1->setPosition(T_racer_Math::Vector(1.2f, 1.2f, 0.4f));
 
-	window.init(512, 512);
+	//window.init(512, 512);
 
 	tga.init(1920, 1080);
-	tga.setDisplayName("Test.tga");
+	tga.setDisplayName("Test");
 	pfm.init(1920, 1080);
-	pfm.setDisplayName("Test.pfm");
+	pfm.setDisplayName("Test");
 
 	T_racer_Renderer_PathTracer  trpt;
 
@@ -62,15 +62,16 @@ int main(int argc, char* argv[])
 	testScene.addLight(light1);
 	testScene.loadModelAssimp("resources/Cycles.obj");
 
-	trpt.setDisplay(&window);
+	trpt.setDisplay(file);
 	trpt.setScene(&testScene);
 	trpt.Render();
+	trpt.postDisplayUpdate();
 
 	// TODO - Move that to display object. 
-	while (!window.shouldQuit())
-	{
-		window.update();
-	}
+	//while (!window.shouldQuit())
+	//{
+	//	window.update();
+	//}
 
 
 	//pfm.init(1920, 1080);

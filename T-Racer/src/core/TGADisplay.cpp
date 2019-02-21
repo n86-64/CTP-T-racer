@@ -82,5 +82,5 @@ void T_racer_Display_TGA::writeToDisplay(Image* imageBuffer)
 
 void T_racer_Display_TGA::setDisplayName(std::string name)
 {
-	displayName = name;
+	displayName = name + ".tga";
 }

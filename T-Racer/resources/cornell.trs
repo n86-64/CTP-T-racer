@@ -3,6 +3,7 @@
 	
 	"Display": 
 	{
+		"Name": "TestRender",
 		"Type": "Window",
 		"ResX": 512,
 		"ResY": 512

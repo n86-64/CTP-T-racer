@@ -24,6 +24,8 @@ public:
 	virtual void renderThreaded() override;
 	virtual void Render() override;
 
+	virtual void postDisplayUpdate() override { while (!display->quit) { display->update(); } }
+
 protected:
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance) override;
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath) override;

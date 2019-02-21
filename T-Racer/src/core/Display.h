@@ -32,9 +32,10 @@ public:
 
 	void setColourValue(int x, int y, T_racer_Math::Colour newCol);
 
+	bool     quit = false;
+
 protected:
 	std::string displayName;
-	bool     quit = false;
 	Image*    frameBuffer;
 
 	// DEPRECATED!!! - Information is provided by image. 
