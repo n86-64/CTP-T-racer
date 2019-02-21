@@ -151,7 +151,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\Assimp\include;$(SolutionDir)lib\jsoncons</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -172,7 +172,7 @@ xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\Assimp\include;$(SolutionDir)lib\jsoncons</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Assimp\lib\x64;$(SolutionDir)lib\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -212,7 +212,7 @@ xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\Assimp\include;$(SolutionDir)lib\jsoncons</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -255,6 +255,7 @@ xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClCompile Include="..\src\core\Triangle.cpp" />
     <ClCompile Include="..\src\helpers\FileReader.cpp" />
     <ClCompile Include="..\src\core\Window.cpp" />
+    <ClCompile Include="..\src\helpers\JSONFileParser.cpp" />
     <ClCompile Include="..\src\helpers\Math_Matrix.cpp" />
     <ClCompile Include="..\src\helpers\Math_Ray.cpp" />
     <ClCompile Include="..\src\helpers\Math_Sampler.cpp" />
@@ -297,6 +298,7 @@ xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\helpers\FileReader.h" />
     <ClInclude Include="..\src\core\Window.h" />
     <ClInclude Include="..\src\helpers\Image.h" />
+    <ClInclude Include="..\src\helpers\JSONFileParser.h" />
     <ClInclude Include="..\src\helpers\Math_Colour.h" />
     <ClInclude Include="..\src\helpers\Math_Error.h" />
     <ClInclude Include="..\src\helpers\Math_neumeric.h" />

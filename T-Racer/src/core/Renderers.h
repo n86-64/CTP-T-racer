@@ -25,6 +25,7 @@ public:
 
 	virtual void Render() = 0;
 	void setDisplay(T_racer_Display* newDisplay);/* { display = newDisplay; }*/
+	void setDisplay(JSONFileReader displayName);
 
 	void setScene(T_racer_Scene* newScene) 
 	{ 

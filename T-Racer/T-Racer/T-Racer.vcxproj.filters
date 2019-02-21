@@ -157,6 +157,9 @@
     <Filter Include="Core\Objects\Textures">
       <UniqueIdentifier>{b8609122-c8cc-44dc-bde9-d18dea9065c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\FileIO\JSON">
+      <UniqueIdentifier>{71944785-e9aa-4003-ab97-c082477c7cbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\helpers\Math_Vector.cpp">
@@ -252,6 +255,9 @@
     </ClCompile>
     <ClCompile Include="..\src\core\AreaLight.cpp">
       <Filter>Core\Objects\Lighting\Lights\Area Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\JSONFileParser.cpp">
+      <Filter>Helpers\FileIO\JSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,6 +401,9 @@
     </ClInclude>
     <ClInclude Include="..\src\core\Resource.h">
       <Filter>Core\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\JSONFileParser.h">
+      <Filter>Helpers\FileIO\JSON</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

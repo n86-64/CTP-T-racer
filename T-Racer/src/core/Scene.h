@@ -21,6 +21,8 @@
 
 #include "helpers/Image.h"
 
+#include "helpers/JSONFileParser.h"
+
 
 class T_racer_Display;
 class T_racer_Light_Base;
@@ -34,6 +36,8 @@ public:
 	void addResourceObject(T_racer_Resource* newRes);
 	void setMainCamera(T_racer_Camera* newCam) { mainCamera = newCam; };
 	
+	void loadScene(JSONFileReader file);
+
 	std::string getName() { return name; }
 	void setName(std::string sceneName) { name = sceneName; }
 

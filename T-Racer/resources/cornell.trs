@@ -1,0 +1,15 @@
+{
+	"SceneName": "Cornell",
+	
+	"Display": 
+	{
+		"Type": "Window",
+		"ResX": 512,
+		"ResY": 512
+	},
+	
+	"Light1":
+	{
+		"Type" : "Light"
+	}
+}

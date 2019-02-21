@@ -13,6 +13,8 @@
 #include "PointLight.h"
 #include "AreaLight.h"
 
+#include "helpers/JSONFileParser.h"
+
 
 // The application entry point.
 int main(int argc, char* argv[]) 
@@ -20,25 +22,9 @@ int main(int argc, char* argv[])
 	// A SET OF TODOs:
 	// 1. Add parameterisation to the renderer so that parameters can be set for the renderer.
 	// 2. Add abstraction for objects such as the window for multiplatform movement.
-
-	T_racer_Math::Vector testvec(1.0f, 1.0f, 1.0f, 1.0f);
-	T_racer_Math::Matrix4X4  matTest;
-	T_racer_Math::Matrix4X4  matTest2;
-
-	T_racer_Math::Matrix4X4 testmat3
-	(
-		2, 5, -8, 1,
-		1, 2, -3, 1,
-		-3, -5, 2, 1,
-		1, 1, 1, 1
-	);
-
-	T_racer_Math::getInverseMatrix(testmat3);
-
-	Image test(800, 600, T_racer_Math::Colour(0.0f,0.0f,0.0f));
-	Image test2; 
-
-	test2 = test;
+	JSONFileReader  file;
+	file.setFilePath("resources/cornell.trs");
+	file.parseFile();
 
 	T_racer_Display_Window  window;
 	T_racer_Display_TGA  tga;
@@ -69,16 +55,18 @@ int main(int argc, char* argv[])
 	T_racer_Renderer_PathTracer  trpt;
 
 	T_racer_Scene testScene;
+	testScene.loadScene(file);
 	testScene.setName("Cycles");
 	testScene.setMainCamera(&testCam);
 
-	testScene.addLight(aLight);
+	testScene.addLight(light1);
 	testScene.loadModelAssimp("resources/Cycles.obj");
 
 	trpt.setDisplay(&window);
 	trpt.setScene(&testScene);
 	trpt.Render();
 
+	// TODO - Move that to display object. 
 	while (!window.shouldQuit())
 	{
 		window.update();

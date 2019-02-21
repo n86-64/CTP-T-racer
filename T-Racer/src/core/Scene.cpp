@@ -1,5 +1,8 @@
 #define _USE_MATH_DEFINES
 #include <cmath> 
+#include <fstream>
+
+#include <jsoncons/json.hpp>
 
 #include "ModelLoader.h"
 #include "Display.h"
@@ -25,6 +28,12 @@ T_racer_Scene::~T_racer_Scene()
 void T_racer_Scene::addResourceObject(T_racer_Resource* newRes)
 {
 	sceneResources.push_back(std::unique_ptr<T_racer_Resource>(newRes));
+}
+
+void T_racer_Scene::loadScene(JSONFileReader file)
+{
+	// Parse succsessful, we can now load the file
+	name = file.buffer["SceneName"].as_string();
 }
 
 void T_racer_Scene::loadModel(std::string modelName)
