@@ -22,9 +22,14 @@ int main(int argc, char* argv[])
 	// A SET OF TODOs:
 	// 1. Add parameterisation to the renderer so that parameters can be set for the renderer.
 	// 2. Add abstraction for objects such as the window for multiplatform movement.
+
+	std::cout << "T-Racer Rendering System. UWE dissertation project. \n" << 
+		"Copyright Nathan Butt 2019 \n"
+		<< "Starting Render." << std::endl;
+
+
 	JSONFileReader  file;
 	file.setFilePath("resources/cornell.trs");
-	file.parseFile();
 
 	//T_racer_Display_Window  window;
 	T_racer_Display_TGA  tga;
@@ -56,7 +61,6 @@ int main(int argc, char* argv[])
 
 	T_racer_Scene testScene;
 	testScene.loadScene(file);
-	testScene.setName("Cycles");
 	testScene.setMainCamera(&testCam);
 
 	testScene.addLight(light1);

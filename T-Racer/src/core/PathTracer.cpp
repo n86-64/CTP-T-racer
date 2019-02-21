@@ -34,6 +34,7 @@ void T_racer_Renderer_PathTracer::Render()
 		while (compleatedTiles != tileCount) 
 		{
 			display->update();
+			if (display->quit) { return; }
 		}
 
 		return;
@@ -192,6 +193,8 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 				lightSigma.colour = lightSigma.colour + lightValue.colour;
 				lightPath.clear();
+
+				if (display->quit) { return; }
 			}
 
 			lightSigma.colour = lightSigma.colour / T_RACER_SAMPLE_COUNT;

@@ -11,6 +11,8 @@
 	
 	"Light1":
 	{
-		"Type" : "Light"
-	}
+		"Type": "Light"
+	},
+	
+	"BVH": "Cornell.trbh"
 }

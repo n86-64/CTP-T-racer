@@ -1,9 +1,0 @@
-{
-	"SceneName": "Cornell",
-	"Display": "Window.",
-	
-	"Light1":
-	{
-		"Type" : "Light"
-	}
-}

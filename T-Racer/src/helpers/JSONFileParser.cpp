@@ -10,6 +10,7 @@
 void JSONFileReader::setFilePath(std::string new_file_path)
 {
 	file_path = new_file_path;
+	parseFile();
 }
 
 bool JSONFileReader::parseFile()
