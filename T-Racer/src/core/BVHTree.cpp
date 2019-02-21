@@ -164,7 +164,7 @@ bool T_racer_BVH_Tree::visible(T_racer_Math::Ray* ray, const float t)
 bool T_racer_BVH_Tree::loadBVHFromFile(std::string& name)
 {
 	std::string  value;
-	std::string path = "resources/BVH/" + name + ".trbh";
+	std::string path = "resources/" + name + ".trbh";
 	T_racer_Buffer  buffer(path);
 
 	if (!buffer.readFile()) 
@@ -232,7 +232,7 @@ bool T_racer_BVH_Tree::loadBVHFromFile(std::string& name)
 void T_racer_BVH_Tree::saveBVHToFile(std::string& name)
 {
 	std::string bufferStr;
-	std::string path = name + ".trbh";
+	std::string path = "resources/" + name + ".trbh";
 	T_racer_Buffer  buffer(path);
 
 	T_racer_Math::Vector  minVec;

@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 		"Copyright Nathan Butt 2019 \n"
 		<< "Starting Render." << std::endl;
 
-
+	// TODO - Add a command line parameter to load a file. 
 	JSONFileReader  file;
 	file.setFilePath("resources/cornell.trs");
 
@@ -49,8 +49,6 @@ int main(int argc, char* argv[])
 	aLight->addTriangle(a, b, c);
 	
 	light1->setPosition(T_racer_Math::Vector(1.2f, 1.2f, 0.4f));
-
-	//window.init(512, 512);
 
 	tga.init(1920, 1080);
 	tga.setDisplayName("Test");

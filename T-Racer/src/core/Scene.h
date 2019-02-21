@@ -67,12 +67,15 @@ public:
 
 	T_racer_TriangleIntersection  hitsLightSource(T_racer_Math::Ray* ray);
 
+	void		setAppPath(std::string path) { appPath = path; }
+
 public:
 	// Manager objects which are acsessable properties. 
 	T_racer_MaterialManager				materials;
 	T_racer_TextureManager				textures;
 
 private:
+	std::string											appPath = "";
 	std::string											name = "NULLScene"; 
 	std::vector<std::unique_ptr<T_racer_Resource>>		sceneResources;
 	std::vector<Triangle>								sceneTriangles;

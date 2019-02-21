@@ -14,5 +14,11 @@
 		"Type": "Light"
 	},
 	
+	"Cornell Box":
+	{
+		"Type": "Mesh"
+		
+	},
+	
 	"BVH": "Cornell.trbh"
 }
