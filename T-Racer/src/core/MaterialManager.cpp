@@ -28,7 +28,7 @@ int T_racer_MaterialManager::createMaterial(std::string name)
 	return T_RACER_MATERIAL_NULL;
 }
 
-int T_racer_MaterialManager::createMaterial(const aiScene* scene, const aiMaterial* matData, T_racer_TextureManager* textures)
+int T_racer_MaterialManager::createMaterial(const aiScene* scene, const aiMaterial* matData, T_racer_TextureManager* textures, std::string matType)
 {
 	aiString aiName; std::string name;
 	int textureIndex = -1;
@@ -40,9 +40,12 @@ int T_racer_MaterialManager::createMaterial(const aiScene* scene, const aiMateri
 
 	if (matIndex == T_RACER_MATERIAL_NULL) 
 	{
-		T_racer_Material*  newMat;
+		T_racer_Material*  newMat = nullptr;
 		// Create the material. Set it to diffuse for now. (Need a good way to determine diffrent properties.)
-		newMat = new T_racer_Materials_BasicDiffuse();
+		if(matType == "Diffuse") { newMat = new T_racer_Materials_BasicDiffuse(); }
+		else if (matType == "Mirror") { newMat = new T_racer_Materials_Mirror(); }
+		else if(matType == "Glass") {newMat = new T_racer_Materials_Dilectric_Glass(); }
+		else { newMat = new T_racer_Materials_BasicDiffuse(); }
 
 		newMat->setName(name);
 

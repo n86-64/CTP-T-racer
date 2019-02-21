@@ -28,13 +28,13 @@ class T_racer_Resource_SkeletalMesh
 public:
 	T_racer_Resource_SkeletalMesh() = default;
 
-	bool loadSkeletalMesh(std::string name, T_racer_MaterialManager* materials, T_racer_TextureManager* textures);
+	bool loadSkeletalMesh(std::string name, T_racer_MaterialManager* materials, T_racer_TextureManager* textures, std::string matType);
 
 	// Load the triangles with the assistance of nodes.
 	std::vector<Triangle>  draw(T_racer_MaterialManager* materials, T_racer_TextureManager* textures);
 
 private:
-	void loadMeshesInAssimpScene(const aiScene* scene, T_racer_MaterialManager* materials, T_racer_TextureManager* textures);
+	void loadMeshesInAssimpScene(const aiScene* scene, T_racer_MaterialManager* materials, T_racer_TextureManager* textures, std::string matType);
 	void loadNodesRecursive(const aiNode* scene, T_racer_Math::Matrix4X4 transform, int parent);
 
 private:

@@ -6,7 +6,6 @@
 
 T_racer_Light_Area::T_racer_Light_Area()
 {
-	intensity.colour = T_racer_Math::Vector(1, 1, 1);
 }
 
 T_racer_Math::Colour T_racer_Light_Area::Evaluate(T_racer_Path_Vertex& pathVertex)

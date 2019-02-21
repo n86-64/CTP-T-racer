@@ -36,5 +36,13 @@ T_racer_TriangleIntersection T_racer_Light_Point::doesIntersect(T_racer_Math::Ra
 
 void T_racer_Light_Point::init(jsoncons::key_value<std::string, jsoncons::json> & initValues)
 {
-	position = T_racer_Math::Vector(1.2f, 1.2f, 0.4f);
+	position = T_racer_Math::Vector(
+		initValues.value()["Position"][0].as_double(),
+		initValues.value()["Position"][1].as_double(),
+		initValues.value()["Position"][2].as_double());
+
+	intensity.colour = T_racer_Math::Vector(
+		initValues.value()["Intensity"][0].as_double(),
+		initValues.value()["Intensity"][1].as_double(),
+		initValues.value()["Intensity"][2].as_double());
 }

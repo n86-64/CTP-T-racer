@@ -43,7 +43,7 @@ public:
 
 	void loadModel(std::string modelName);
 
-	void loadModelAssimp(std::string modelName);
+	void loadModelAssimp(std::string modelName, std::string matType);
 
 	void addLight(T_racer_Light_Base*  newLight) { sceneLights.emplace_back(newLight); }; // Adds a new light to the scene.
 

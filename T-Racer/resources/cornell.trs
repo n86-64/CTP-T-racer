@@ -3,7 +3,7 @@
 	
 	"Display": 
 	{
-		"Name": "TestRender",
+		"Name": "T-Racer Cornell Scene - Monte Carlo.",
 		"Type": "Window",
 		"ResX": 512,
 		"ResY": 512
@@ -17,13 +17,17 @@
 	"Light1":
 	{
 		"Type": "Light",
-		"LightType" : "Point"
+		"LightType" : "Point",
+		"Position": [1.2, 1.2, 0.4],
+		"Intensity": [100.0, 100.0, 100.0]
 	},
 	
 	"Cornell Box":
 	{
 		"Type": "Mesh",
 		"MeshName": "Cycles.obj",
-		"Mesh Material" : "Diffuse"
+		"Mesh Material" : "Diffuse",
+		"Colour": [1.0, 1.0, 1.0],
+		"Texture": "Null"
 	}
 }

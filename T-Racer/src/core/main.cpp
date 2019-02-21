@@ -62,7 +62,6 @@ int main(int argc, char* argv[])
 	testScene.setMainCamera(&testCam);
 
 //	testScene.addLight(light1);
-	testScene.loadModelAssimp("resources/Cycles.obj");
 
 	trpt.setDisplay(file);
 	trpt.setScene(&testScene);

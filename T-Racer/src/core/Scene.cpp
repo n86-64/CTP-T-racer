@@ -57,6 +57,7 @@ void T_racer_Scene::loadScene(JSONFileReader file)
 			else if (member.value()["Type"].as_string() == "Mesh")
 			{
 				// Here we load a mesh.
+				loadModelAssimp("resources/" + member.value()["MeshName"].as_string(), member.value()["Mesh Material"].as_string());
 			}
 		}
 	}
@@ -75,11 +76,11 @@ void T_racer_Scene::loadModel(std::string modelName)
 	}
 }
 
-void T_racer_Scene::loadModelAssimp(std::string modelName)
+void T_racer_Scene::loadModelAssimp(std::string modelName, std::string matType)
 {
 	// Load model along with texture and material info. Assign for rendering. 
 	T_racer_Resource_SkeletalMesh skeletalMesh;
-	if (skeletalMesh.loadSkeletalMesh(modelName, &materials, &textures)) 
+	if (skeletalMesh.loadSkeletalMesh(modelName, &materials, &textures, matType)) 
 	{
 		std::vector<Triangle> triangles = skeletalMesh.draw(&materials, &textures); // INEFFICENT - Needs changing. 
 		for (Triangle& tri : triangles)
