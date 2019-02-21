@@ -67,17 +67,5 @@ int main(int argc, char* argv[])
 	trpt.Render();
 	trpt.postDisplayUpdate();
 
-	// TODO - Move that to display object. 
-	//while (!window.shouldQuit())
-	//{
-	//	window.update();
-	//}
-
-
-	//pfm.init(1920, 1080);
-	//pfm.setDisplayName("Test.pfm");
-	//pfm.writeToDisplay(&test);
-
-	
 	return 0;
 }
