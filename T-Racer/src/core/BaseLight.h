@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <jsoncons/json.hpp>
+
 #include "helpers/Math_Ray.h"
 
 #include "PathVertex.h"
@@ -21,6 +23,8 @@ class T_racer_Light_Base
 public:
 	T_racer_Light_Base() = default;
 	virtual ~T_racer_Light_Base() = default;
+
+	virtual void init(jsoncons::key_value<std::string, jsoncons::json>& initValues) = 0;
 
 	virtual T_racer_Math::Colour Evaluate(T_racer_Path_Vertex& pathVertex) = 0;
 	virtual T_racer_SampledDirection Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay, T_racer_Path_Vertex& lightSourceVertex) = 0;

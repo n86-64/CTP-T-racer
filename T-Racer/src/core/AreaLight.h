@@ -21,6 +21,9 @@ class T_racer_Light_Area : public T_racer_Light_Base
 public: 
 	T_racer_Light_Area();
 
+	// Inherited via T_racer_Light_Base
+	virtual void init(jsoncons::key_value<std::string, jsoncons::json> & initValues) override;
+
 	virtual T_racer_Math::Colour Evaluate(T_racer_Path_Vertex & pathVertex) override;
 	virtual T_racer_SampledDirection Sample(T_racer_Path_Vertex & pathVertex, T_racer_Math::Ray & inputRay, T_racer_Path_Vertex & lightSourceVertex) override;
 	virtual float probabilityDensity(T_racer_Path_Vertex & pathVertex, T_racer_Math::Ray & inputRay) override;

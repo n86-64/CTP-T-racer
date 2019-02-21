@@ -9,16 +9,21 @@
 		"ResY": 512
 	},
 	
+	"Camera":
+	{
+		"Type": "Camera"
+	},
+	
 	"Light1":
 	{
-		"Type": "Light"
+		"Type": "Light",
+		"LightType" : "Point"
 	},
 	
 	"Cornell Box":
 	{
-		"Type": "Mesh"
-		
-	},
-	
-	"BVH": "Cornell.trbh"
+		"Type": "Mesh",
+		"MeshName": "Cycles.obj",
+		"Mesh Material" : "Diffuse"
+	}
 }

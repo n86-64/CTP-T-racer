@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 	c.position = T_racer_Math::Vector(1.635585, 2.612167, 1.082442);
 	aLight->addTriangle(a, b, c);
 	
-	light1->setPosition(T_racer_Math::Vector(1.2f, 1.2f, 0.4f));
+	//light1->setPosition();
 
 	tga.init(1920, 1080);
 	tga.setDisplayName("Test");
@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 	testScene.loadScene(file);
 	testScene.setMainCamera(&testCam);
 
-	testScene.addLight(light1);
+//	testScene.addLight(light1);
 	testScene.loadModelAssimp("resources/Cycles.obj");
 
 	trpt.setDisplay(file);

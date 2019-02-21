@@ -2,8 +2,6 @@
 #include <cmath> 
 #include <fstream>
 
-#include <jsoncons/json.hpp>
-
 #include "ModelLoader.h"
 #include "Display.h"
 #include "Scene.h"
@@ -12,8 +10,8 @@
 
 #include "SkeletalMesh.h"
 
-#include "BaseLight.h"
-
+#include "PointLight.h"
+#include "AreaLight.h"
 
 T_racer_Scene::T_racer_Scene()
 {}
@@ -32,9 +30,36 @@ void T_racer_Scene::addResourceObject(T_racer_Resource* newRes)
 
 void T_racer_Scene::loadScene(JSONFileReader file)
 {
+	std::string type;
+
 	// Parse succsessful, we can now load the file
 	name = file.buffer["SceneName"].as_string();
 	
+	for (auto& member : file.buffer.members()) 
+	{
+		if (member.name() != "SceneName") 
+		{
+			if (member.value()["Type"].as_string() == "Light")
+			{
+				T_racer_Light_Base* newLight = nullptr;
+				if (member.value()["LightType"].as_string() == "Point")
+				{
+					newLight = new T_racer_Light_Point();
+				}
+				else if (member.value()["LightType"].as_string() == "Area")
+				{
+					newLight = new T_racer_Light_Area();
+				}
+
+				newLight->init(member);
+				addLight(newLight);
+			}
+			else if (member.value()["Type"].as_string() == "Mesh")
+			{
+				// Here we load a mesh.
+			}
+		}
+	}
 }
 
 void T_racer_Scene::loadModel(std::string modelName)
