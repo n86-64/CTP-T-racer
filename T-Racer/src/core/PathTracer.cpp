@@ -186,6 +186,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
 					lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
 					lightPath[0].wo = ray.getincomingRayDirection();
+					lightPath[0].pathColour = irradiance;
 
 					// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
 					tracePath(ray, irradiance, lightPath);
