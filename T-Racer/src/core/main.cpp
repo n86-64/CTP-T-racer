@@ -34,21 +34,7 @@ int main(int argc, char* argv[])
 	//T_racer_Display_Window  window;
 	T_racer_Display_TGA  tga;
 	T_racer_Display_PFM  pfm;
-//	T_racer_Camera  testCam;
-	
-	// lights
-	T_racer_Light_Point*  light1 = new T_racer_Light_Point();
-	T_racer_Light_Area*   aLight = new T_racer_Light_Area();
-	
-	T_racer_Vertex  a;
-	a.position = T_racer_Math::Vector(1.015684, 2.612167, 1.082442);
-	T_racer_Vertex  b;
-	b.position = T_racer_Math::Vector(1.015684, 2.612167, 1.583131);
-	T_racer_Vertex  c;
-	c.position = T_racer_Math::Vector(1.635585, 2.612167, 1.082442);
-	aLight->addTriangle(a, b, c);
-	
-	//light1->setPosition();
+
 
 	tga.init(1920, 1080);
 	tga.setDisplayName("Test");
@@ -59,9 +45,6 @@ int main(int argc, char* argv[])
 
 	T_racer_Scene testScene;
 	testScene.loadScene(file);
-//	testScene.setMainCamera(&testCam);
-
-//	testScene.addLight(light1);
 
 	trpt.setDisplay(file);
 	trpt.setScene(&testScene);

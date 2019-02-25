@@ -1,0 +1,40 @@
+{
+	"SceneName": "Cornell",
+	
+	"Display": 
+	{
+		"Name": "Cornell Scene",
+		"Type": "Window",
+		"ResX": 512,
+		"ResY": 512
+	},
+	
+	"Camera":
+	{
+		"Type": "Camera",
+		"Position": [1.2, 1.2, -2.0],
+		"fov": 90.0
+	},
+	
+	"Light1":
+	{
+		"Type": "Light",
+		"LightType" : "Area",
+		"Intensity": [10.0, 10.0, 10.0],
+		"NumberOfVertices": 3,
+		"Vertices": [
+			[1.015684, 2.612167, 1.082442],
+			[1.015684, 2.612167, 1.583131],
+			[1.635585, 2.612167, 1.082442]
+		]
+	},
+	
+	"Cornell Box":
+	{
+		"Type": "Mesh",
+		"MeshName": "Cycles.obj",
+		"Mesh Material" : "Diffuse",
+		"Colour": [1.0, 1.0, 1.0],
+		"Texture": "Null"
+	}
+}
