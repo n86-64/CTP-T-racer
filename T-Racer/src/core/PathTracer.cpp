@@ -203,7 +203,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 			//}
 
-			display->setColourValue((width - 1) - tX, (height - 1) - tY, totalRadiance[tX + ((int)tWidth * tY)] / sampleCount);
+			display->setColourValue(tX, (height - 1) - tY, totalRadiance[tX + ((int)tWidth * tY)] / sampleCount);
 		}
 
 		compleatedTiles++;

@@ -15,30 +15,23 @@ T_racer_Math::Colour T_racer_Light_Area::Evaluate(T_racer_Path_Vertex& pathVerte
 
 T_racer_SampledDirection T_racer_Light_Area::Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray & inputRay, T_racer_Path_Vertex & lightSourceVertex)
 {
+	srand(NULL);
+	int triIndex = rand() % triangles.size();
 	T_racer_Math::Sampler  sampler;
 	T_racer_SampledDirection wi;
 
 	lightSourceVertex.isPointLightSource = false;
 
-	for (int i = 0; i < triangles.size(); i++) 
-	{
-		if (triangles[i].isIntersecting(&inputRay).intersection) 
-		{
-			T_racer_Math::Vector samplePos = T_racer_Math::projToUnitDisk(sampler.Random2());
-			samplePos.Z = sqrt((samplePos.X * samplePos.X) + (samplePos.Y * samplePos.Y));
+	T_racer_Math::Vector samplePos = T_racer_Math::projToUnitDisk(sampler.Random2());
+	samplePos.Z = sqrt((samplePos.X * samplePos.X) + (samplePos.Y * samplePos.Y));
 			
-			lightSourceVertex.hitPoint = triangles[i].samplePoint();
-			wi.direction = pathVertex.orthnormalBasis * samplePos;
-			wi.probabilityDensity = probabilityDensity(pathVertex, inputRay);
-			wi.probabilityDensityArea = 1 / triangles[i].getSurfaceArea();
-			wi.direction.normaliseSelf();
-			pdfDirection = wi.probabilityDensity;
+	lightSourceVertex.hitPoint = triangles[triIndex].samplePoint();
+	wi.direction = pathVertex.orthnormalBasis * samplePos;
+	wi.probabilityDensity = probabilityDensity(pathVertex, inputRay);
+	wi.probabilityDensityArea = 1 / triangles[triIndex].getSurfaceArea();
+	wi.direction.normaliseSelf();
+	pdfDirection = wi.probabilityDensity;
 
-			return wi;
-		}
-	}
-
-	// Here we account for cases where the ray intersects with no light. 
 	return wi;
 }
 
@@ -70,8 +63,26 @@ T_racer_TriangleIntersection T_racer_Light_Area::doesIntersect(T_racer_Math::Ray
 	return intersect;
 }
 
-void T_racer_Light_Area::init(jsoncons::key_value<std::string, jsoncons::json> & initValues)
+void T_racer_Light_Area::init(jsoncons::key_value<std::string, jsoncons::json>& initValues)
 {
 	// Get array of triangles here. 
+	int size = initValues.value()["NumberOfVertices"].as_int();
+	triangles.reserve((int)size / 3);
 
+	T_racer_Vertex  v[3];
+
+	for (int i = 0; i < size; i++) 
+	{
+		v[i % 3].position = T_racer_Math::Vector(initValues.value()["Vertices"][i][0].as_double(),
+			initValues.value()["Vertices"][i][1].as_double(),
+			initValues.value()["Vertices"][i][2].as_double());
+		
+		// create the traingle. 
+		if (i % 2 == 0 && i != 0) 
+		{
+			triangles.emplace_back(v[0], v[1], v[2]);
+		}
+	}
+
+	intensity.colour = T_racer_Math::Vector( initValues.value()["Intensity"][0].as_double(), initValues.value()["Intensity"][1].as_double(), initValues.value()["Intensity"][2].as_double());
 }
