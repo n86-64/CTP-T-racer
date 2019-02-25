@@ -28,7 +28,7 @@
 	{
 		"Type": "Mesh",
 		"MeshName": "Cycles.obj",
-		"Mesh Material" : "Diffuse",
+		"Mesh Material" : "Mirror",
 		"Colour": [1.0, 1.0, 1.0],
 		"Texture": "Null"
 	}

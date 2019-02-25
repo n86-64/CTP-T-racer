@@ -13,6 +13,10 @@ T_racer_Math::Colour T_racer_Materials_Mirror::Evaluate(T_racer_Math::Ray* ray, 
 	{
 		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
 	}
+	else 
+	{
+		lookupColour = albedo;
+	}
 
 	T_racer_Math::Vector halfVector = (ray->direction + pathVertex.wo).normalise();
 	float value = T_racer_Math::dot(halfVector, pathVertex.normal);
