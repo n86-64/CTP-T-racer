@@ -197,12 +197,10 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 				}
 
-			//	lightSigma.colour = lightSigma.colour + lightValue.colour;
+				if (display->quit) { return; }
 				totalRadiance[tX + ((int)tWidth * tY)].colour = totalRadiance[tX + ((int)tWidth * tY)].colour + lightValue.colour;
-
 				lightPath.clear();
 
-				if (display->quit) { return; }
 			//}
 
 			display->setColourValue((width - 1) - tX, (height - 1) - tY, totalRadiance[tX + ((int)tWidth * tY)] / sampleCount);
@@ -212,6 +210,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 		if (compleatedTiles == tileCount) 
 		{
+			std::cout << "Sample Count - " << sampleCount << std::endl;
 			compleatedTiles = 0;
 			currentTile = 0;
 			sampleCount++;
