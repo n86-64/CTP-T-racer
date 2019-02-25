@@ -72,5 +72,6 @@ T_racer_TriangleIntersection T_racer_Light_Area::doesIntersect(T_racer_Math::Ray
 
 void T_racer_Light_Area::init(jsoncons::key_value<std::string, jsoncons::json> & initValues)
 {
+	// Get array of triangles here. 
 
 }

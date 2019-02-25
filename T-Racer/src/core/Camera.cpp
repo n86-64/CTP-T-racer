@@ -1,5 +1,16 @@
 #include "Camera.h"
 
+void T_racer_Camera::init(jsoncons::key_value<std::string, jsoncons::json>& initValues)
+{
+	position = T_racer_Math::Vector(
+		initValues.value()["Position"][0].as_double(),
+		initValues.value()["Position"][1].as_double(),
+		initValues.value()["Position"][2].as_double()
+	);
+
+	fov = radians(initValues.value()["fov"].as_double());
+}
+
 T_racer_CameraTransform T_racer_Camera::getCameraTransform()
 {
 	T_racer_CameraTransform  transform;

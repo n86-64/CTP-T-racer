@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 	//T_racer_Display_Window  window;
 	T_racer_Display_TGA  tga;
 	T_racer_Display_PFM  pfm;
-	T_racer_Camera  testCam;
+//	T_racer_Camera  testCam;
 	
 	// lights
 	T_racer_Light_Point*  light1 = new T_racer_Light_Point();
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
 
 	T_racer_Scene testScene;
 	testScene.loadScene(file);
-	testScene.setMainCamera(&testCam);
+//	testScene.setMainCamera(&testCam);
 
 //	testScene.addLight(light1);
 

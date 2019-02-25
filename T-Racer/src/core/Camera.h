@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "jsoncons/json.hpp"
+
 #include "helpers/Math_Matrix.h"
 #include "helpers/Math_Vector.h"
 #include "helpers/Math_Trig.h"
@@ -20,6 +22,8 @@ class T_racer_Camera
 public:
 	T_racer_Camera() = default;
 
+	void init(jsoncons::key_value<std::string, jsoncons::json> & initValues);
+
 	// Creates a view and perspective matrix for the corrisponding camera. 
 	T_racer_CameraTransform  getCameraTransform();
 
@@ -29,7 +33,7 @@ public:
 
 	float getNearZ() const { return near; }
 	float getFarZ() const { return far; }
-
+	
 	void setResolution(float x, float y) { resX = x; resY = y; }
 	float getAspectRatio() const { return resX / resY; }
 

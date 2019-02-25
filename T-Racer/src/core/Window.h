@@ -24,7 +24,7 @@ public:
 	void update() override;
     void writeToDisplay(Image* imageBuffer) override;
 
-	void setDisplayName(std::string name) override { displayName = name; window.setTitle(name); } 
+	void setDisplayName(std::string name) override { displayName = name; window.setTitle("T-Racer Render Result: " + name); } 
 
 	bool shouldQuit() const { return quit; }
 

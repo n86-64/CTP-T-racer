@@ -10,11 +10,7 @@
 #pragma once
 
 #include "PathVertex.h"
-
 #include "Renderers.h"
-
-// The russian roulette constant.
-constexpr int T_RACER_SAMPLER_RR_CONSTANT = 0.1f;
 
 class T_racer_Renderer_PathTracer : public T_racer_Renderer_Base  
 {

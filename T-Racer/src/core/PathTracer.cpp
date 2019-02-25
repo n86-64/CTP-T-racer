@@ -1,3 +1,5 @@
+#include "helpers/Utility.h"
+
 #include "Display.h"
 #include "PathTracer.h"
 
@@ -13,6 +15,7 @@ constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived.
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
 {
+	T_RACER_RELEASE_RESOURCE((void*&)display);
 }
 
 void T_racer_Renderer_PathTracer::Render()

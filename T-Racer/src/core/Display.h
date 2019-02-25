@@ -37,7 +37,5 @@ public:
 protected:
 	std::string displayName;
 	Image*    frameBuffer;
-
-	// DEPRECATED!!! - Information is provided by image. 
 	float    resX, resY;
 };

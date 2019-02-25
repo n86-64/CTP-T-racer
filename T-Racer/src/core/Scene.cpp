@@ -5,6 +5,8 @@
 #include "ModelLoader.h"
 #include "Display.h"
 #include "Scene.h"
+
+#include "helpers/Utility.h"
 #include "helpers/Math_Sampler.h"
 #include "helpers/Math_Error.h"
 
@@ -14,7 +16,9 @@
 #include "AreaLight.h"
 
 T_racer_Scene::T_racer_Scene()
-{}
+{
+	T_RACER_RELEASE_RESOURCE((void*&)mainCamera);
+}
 
 T_racer_Scene::~T_racer_Scene()
 {
@@ -58,6 +62,11 @@ void T_racer_Scene::loadScene(JSONFileReader file)
 			{
 				// Here we load a mesh.
 				loadModelAssimp("resources/" + member.value()["MeshName"].as_string(), member.value()["Mesh Material"].as_string());
+			}
+			else if (member.value()["Type"].as_string() == "Camera") 
+			{
+				mainCamera = new T_racer_Camera();
+				mainCamera->init(member);
 			}
 		}
 	}
