@@ -24,7 +24,7 @@ namespace T_racer_Math
 		}
 		Colour(float rgb) { colour = Vector(rgb, rgb, rgb); }
 
-		Vector  colour	   = Vector(1.0f, 1.0f, 1.0f);
+		Vector  colour	   = Vector(0.0f, 0.0f, 0.0f);
 		Vector	 luminance = Vector(1.0f, 1.0f, 1.0f);  // Weighting of colour values.
 
 		float getLuminance() { return dot(colour, Vector(0.2126, 0.7152, 0.0722)); };

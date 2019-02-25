@@ -3,7 +3,7 @@
 	
 	"Display": 
 	{
-		"Name": "Cornell Scene - Monte Carlo.",
+		"Name": "Cornell Scene",
 		"Type": "Window",
 		"ResX": 512,
 		"ResY": 512

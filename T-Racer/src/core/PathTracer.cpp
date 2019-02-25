@@ -146,6 +146,10 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 	tWidth = display->getWidth();
 	tHeight = display->getHeight();
 
+	lightSigma = T_racer_Math::Colour(0.0, 0.0f, 0.0f);
+
+	T_racer_Math::Colour*  totalRadiance = new T_racer_Math::Colour[(int)tWidth * (int)tHeight];
+
 	while (currentTile < tHeight) 
 	{
 		int tX = 0;
@@ -154,11 +158,10 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 		for (tX; tX < tWidth; tX++)
 		{
-			lightSigma = T_racer_Math::Colour(0.0, 0.0f, 0.0f);
 
 			// Here we render the object.
-			for (int i = 0; i < T_RACER_SAMPLE_COUNT; i++)
-			{
+			//for (int i = 0; i < T_RACER_SAMPLE_COUNT; i++)
+			//{
 				//bias = sampler.Random2();
 				irradiance = T_racer_Math::Colour(1.0f, 1.0f, 1.0f);
 				lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
@@ -194,17 +197,31 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 				}
 
-				lightSigma.colour = lightSigma.colour + lightValue.colour;
+			//	lightSigma.colour = lightSigma.colour + lightValue.colour;
+				totalRadiance[tX + ((int)tWidth * tY)].colour = totalRadiance[tX + ((int)tWidth * tY)].colour + lightValue.colour;
+
 				lightPath.clear();
 
 				if (display->quit) { return; }
-			}
+			//}
 
-			lightSigma.colour = lightSigma.colour / T_RACER_SAMPLE_COUNT;
-			display->setColourValue((width - 1) - tX, (height - 1) - tY, lightSigma);
+			display->setColourValue((width - 1) - tX, (height - 1) - tY, totalRadiance[tX + ((int)tWidth * tY)] / sampleCount);
 		}
 
 		compleatedTiles++;
+
+		if (compleatedTiles == tileCount) 
+		{
+			compleatedTiles = 0;
+			currentTile = 0;
+			sampleCount++;
+		}
+	}
+
+	if (totalRadiance) 
+	{
+		delete totalRadiance;
+		totalRadiance = nullptr;
 	}
 
 	return;
