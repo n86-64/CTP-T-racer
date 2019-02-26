@@ -3,7 +3,10 @@
 
 void T_racer_Display_Window::init(float resolutionX, float resolutionY)
 {
+	sf::Image iconTex;
+	iconTex.loadFromFile("icon.png");
 	window.create(sf::VideoMode(resolutionX, resolutionY),"T-Racer Result.");
+	window.setIcon(32, 32, iconTex.getPixelsPtr());
 	frameTexture.create(resolutionX, resolutionY);
 	frameTexture.setView(window.getView());
 
