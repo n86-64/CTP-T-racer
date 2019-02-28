@@ -172,6 +172,17 @@ namespace T_racer_Math
 		return magnitude;
 	}
 
+	float Vector::normaliseSelfWithMagnitudeSq()
+	{
+		float valuesq = (values[0] * values[0]) + (values[1] * values[1]) + (values[2] * values[2]);
+		float value = 1.0f / sqrtf(valuesq);
+		this->values[0] *= value;
+		this->values[1] *= value;
+		this->values[2] *= value;
+
+		return valuesq;
+	}
+
 	float Vector::Magnitude()
 	{
 		float value = (values[0] * values[0]) + (values[1] * values[1]) + (values[2] * values[2]);

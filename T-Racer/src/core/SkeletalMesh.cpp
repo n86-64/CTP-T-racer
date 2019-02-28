@@ -51,7 +51,6 @@ std::vector<Triangle> T_racer_Resource_SkeletalMesh::draw(T_racer_MaterialManage
 
 	T_racer_Vertex  verts[3];
 
-
 	while (nodeToRender.size() > 0) 
 	{
 		node = &nodes[nodeToRender.front()];

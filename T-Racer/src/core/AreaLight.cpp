@@ -22,15 +22,12 @@ T_racer_SampledDirection T_racer_Light_Area::Sample(T_racer_Path_Vertex& pathVer
 
 	lightSourceVertex.isPointLightSource = false;
 	lightSourceVertex.normal = triangles[triIndex].getNormal();
-
-	T_racer_Math::Vector samplePos = T_racer_Math::projToUnitDisk(sampler.Random2());
-	samplePos.Z = sqrt((samplePos.X * samplePos.X) + (samplePos.Y * samplePos.Y));
 			
 	lightSourceVertex.hitPoint = triangles[triIndex].samplePoint();
-	wi.direction = pathVertex.orthnormalBasis * samplePos;
+	wi.direction = (pathVertex.hitPoint - lightSourceVertex.hitPoint).normalise();  
 
-	wi.probabilityDensity = probabilityDensity(pathVertex, inputRay);
 	wi.probabilityDensityArea = 1 / triangles[triIndex].getSurfaceArea();
+	wi.probabilityDensity = wi.probabilityDensityArea;
 	wi.direction.normaliseSelf();
 
 	pdfDirection = wi.probabilityDensity;

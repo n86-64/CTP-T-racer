@@ -77,6 +77,8 @@ namespace T_racer_Math
 		// Returns the magnitude used to normalise this vector. 
 		float normaliseSelfWithMagnitude();
 
+		float normaliseSelfWithMagnitudeSq();
+
 		// Uitlity functions.
 		float Magnitude();
 		float MagnitudeSq();

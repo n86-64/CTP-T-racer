@@ -5,8 +5,8 @@
 	{
 		"Name": "Cornell Scene",
 		"Type": "Window",
-		"ResX": 512,
-		"ResY": 512
+		"ResX": 1920,
+		"ResY": 1080
 	},
 	
 	"Camera":
@@ -28,7 +28,7 @@
 	{
 		"Type": "Mesh",
 		"MeshName": "Cycles.obj",
-		"Mesh Material" : "Diffuse",
+		"Mesh Material" : "Mirror",
 		"Colour": [1.0, 1.0, 1.0],
 		"Texture": "Null"
 	}
