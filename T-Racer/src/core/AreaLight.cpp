@@ -10,7 +10,7 @@ T_racer_Light_Area::T_racer_Light_Area()
 
 T_racer_Math::Colour T_racer_Light_Area::Evaluate(T_racer_Path_Vertex& pathVertex)
 {
-	return T_racer_Math::dot(pathVertex.normal, pathVertex.wi) > 0 ? intensity : T_racer_Math::Colour(0,0,0);
+	return T_racer_Math::dot(pathVertex.normal, pathVertex.wo) > 0 ? intensity : T_racer_Math::Colour(0,0,0);
 }
 
 T_racer_SampledDirection T_racer_Light_Area::Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray & inputRay, T_racer_Path_Vertex & lightSourceVertex)
@@ -21,15 +21,18 @@ T_racer_SampledDirection T_racer_Light_Area::Sample(T_racer_Path_Vertex& pathVer
 	T_racer_SampledDirection wi;
 
 	lightSourceVertex.isPointLightSource = false;
+	lightSourceVertex.normal = triangles[triIndex].getNormal();
 
 	T_racer_Math::Vector samplePos = T_racer_Math::projToUnitDisk(sampler.Random2());
 	samplePos.Z = sqrt((samplePos.X * samplePos.X) + (samplePos.Y * samplePos.Y));
 			
 	lightSourceVertex.hitPoint = triangles[triIndex].samplePoint();
 	wi.direction = pathVertex.orthnormalBasis * samplePos;
+
 	wi.probabilityDensity = probabilityDensity(pathVertex, inputRay);
 	wi.probabilityDensityArea = 1 / triangles[triIndex].getSurfaceArea();
 	wi.direction.normaliseSelf();
+
 	pdfDirection = wi.probabilityDensity;
 
 	return wi;
