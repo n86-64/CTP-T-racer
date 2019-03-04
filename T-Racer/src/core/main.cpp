@@ -39,7 +39,8 @@ int main(int argc, char* argv[])
 	Triangle newTriangle(v1, v2, v3);
 	T_racer_Math::Ray    ray;
 
-	ray.setPosition(((v1.position * 0.33f) + (-v2.position * 0.33f) + (v3.position * 0.34f)));
+	ray.setPosition(((v1.position * 0.33f) + (v2.position * 0.33f) + (v3.position * 0.34f)));
+	ray.position.Y = -ray.position.Y;
 	ray.setDirection(T_racer_Math::Vector(0, 1, 0));
 
 

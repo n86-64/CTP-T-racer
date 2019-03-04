@@ -110,15 +110,15 @@ namespace T_racer_Math
 	
 	inline float dot(Vector a, Vector b) 
 	{
-		return (a.x() * b.x()) + (a.y() * b.y()) + (a.z() * b.z());
+		return (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z);
 	}
 
 	inline Vector cross(Vector a, Vector b) 
 	{
 		return Vector(
-			(a.y() * b.z()) - (a.z() * b.y()),
-			(a.z() * b.x()) - (a.x() * b.z()),
-			(a.x() * b.y()) - (a.y() * b.x())
+			(a.Y * b.Z) - (a.Z * b.Y),
+			(a.Z * b.X) - (a.X * b.Z),
+			(a.X * b.Y) - (a.Y * b.X)
 		);
 	}
 

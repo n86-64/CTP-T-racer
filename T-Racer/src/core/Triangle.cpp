@@ -22,97 +22,164 @@ T_racer_TriangleIntersection Triangle::isIntersecting(T_racer_Math::Ray* ray)
 	T_racer_Math::Vector  v1v0 = verticies[1].position - verticies[0].position;
 	T_racer_Math::Vector  v2v0 = verticies[2].position - verticies[0].position;
 
-	// Calculate the determinant for the matrix
-	T_racer_Math::Vector   pVec = T_racer_Math::cross(ray->direction, v2v0);
-	float determinant = T_racer_Math::dot(pVec, v1v0);
+	float rcp = 1.0f / T_racer_Math::dot(T_racer_Math::cross(v1v0, v2v0), ray->direction);
+	T_racer_Math::Vector v2 = verticies[0].position - ray->position;
 
-	// Check to see if we should continue.
-	// Here we can cull the triangle if nescessery. 
-	if (determinant <= T_RACER_EPSILON) 
+	intersect.t = T_racer_Math::dot(T_racer_Math::cross(v1v0, v2v0), v2) * rcp;
+
+	if (intersect.t < T_RACER_EPSILON)
 	{
 		intersect.intersection = false;
 		return intersect;
 	}
 
-	// Inverse the determinant for scaling. 
-	determinant = 1 / determinant;
-	T_racer_Math::Vector tVec = ray->position - verticies[0].position;
-	T_racer_Math::Vector qVec = T_racer_Math::cross(tVec, v1v0);
+	T_racer_Math::Vector v3 = T_racer_Math::cross(ray->direction, v2);
 
-	intersect.t = T_racer_Math::dot(qVec, v2v0) * determinant;
+	intersect.u = T_racer_Math::dot(v3, v2v0) * -rcp;
 
-	if (intersect.t == INFINITY || intersect.t < T_RACER_EPSILON)
-	{
-		intersect.intersection = false;
-		return intersect;
-	}
-
-	intersect.u = T_racer_Math::dot(pVec, tVec) * determinant;
 	if (intersect.u < 0.0f || intersect.u > 1.0f)
 	{
 		intersect.intersection = false;
 		return intersect;
 	}
-	intersect.v = T_racer_Math::dot(qVec, ray->direction) * determinant;
-	if (intersect.v < 0.0f || intersect.v > 1.0f)
+
+	intersect.v = T_racer_Math::dot(v3, v1v0) * rcp;
+
+	if (intersect.v < 0.0f || (intersect.v + intersect.u) > 1.0f)
 	{
 		intersect.intersection = false;
 		return intersect;
 	}
 
-	intersect.intersection = (intersect.v + intersect.u) <= 1.0f;
+	intersect.intersection = true;
 	intersect.setW();
 
 	return intersect;
+
+	//// Calculate the determinant for the matrix
+	//T_racer_Math::Vector   pVec = T_racer_Math::cross(ray->direction, v2v0);
+	//float determinant = T_racer_Math::dot(pVec, v1v0);
+
+	//// Check to see if we should continue.
+	//// Here we can cull the triangle if nescessery. 
+	//if (determinant <= T_RACER_EPSILON) 
+	//{
+	//	intersect.intersection = false;
+	//	return intersect;
+	//}
+
+	//// Inverse the determinant for scaling. 
+	//determinant = 1 / determinant;
+	//T_racer_Math::Vector tVec = ray->position - verticies[0].position;
+	//T_racer_Math::Vector qVec = T_racer_Math::cross(tVec, v1v0);
+
+	//intersect.t = T_racer_Math::dot(qVec, v2v0) * determinant;
+
+	//if (intersect.t == INFINITY || intersect.t < T_RACER_EPSILON)
+	//{
+	//	intersect.intersection = false;
+	//	return intersect;
+	//}
+
+	//intersect.u = T_racer_Math::dot(pVec, tVec) * determinant;
+	//if (intersect.u < 0.0f || intersect.u > 1.0f)
+	//{
+	//	intersect.intersection = false;
+	//	return intersect;
+	//}
+	//intersect.v = T_racer_Math::dot(qVec, ray->direction) * determinant;
+	//if (intersect.v < 0.0f || intersect.v > 1.0f)
+	//{
+	//	intersect.intersection = false;
+	//	return intersect;
+	//}
+
+	//intersect.intersection = (intersect.v + intersect.u) <= 1.0f;
+	//intersect.setW();
+
+	//return intersect;
 }
 
 bool Triangle::isIntersectingShadow(T_racer_Math::Ray* ray, const float maxt)
 {
+	T_racer_TriangleIntersection  intersect;
+
 	T_racer_Math::Vector  v1v0 = verticies[1].position - verticies[0].position;
 	T_racer_Math::Vector  v2v0 = verticies[2].position - verticies[0].position;
 
-	// Calculate the determinant for the matrix
-	T_racer_Math::Vector   pVec = T_racer_Math::cross(ray->direction, v2v0);
-	float determinant = T_racer_Math::dot(pVec, v1v0);
+	float rcp = 1.0f / T_racer_Math::dot(T_racer_Math::cross(v1v0, v2v0), ray->direction);
+	T_racer_Math::Vector v2 = verticies[0].position - ray->position;
 
-	// Check to see if we should continue.
-	// Here we can cull the triangle if nescessery. 
-	if (determinant <= T_RACER_EPSILON)
-	{
-		return false;
-	}
+	intersect.t = T_racer_Math::dot(T_racer_Math::cross(v1v0, v2v0), v2) * rcp;
 
-	// Inverse the determinant for scaling. 
-	determinant = 1 / determinant;
-	T_racer_Math::Vector tVec = ray->position - verticies[0].position;
-	T_racer_Math::Vector qVec = T_racer_Math::cross(tVec, v1v0);
-
-	float t;
-
-	t = T_racer_Math::dot(qVec, v2v0) * determinant;
-
-	if (t > maxt || t < T_RACER_EPSILON)
-	{
-		return false;
-	}
-
-	float u = T_racer_Math::dot(pVec, tVec) * determinant;
-	if (u < 0.0f || u > 1.0f)
-	{
-		return 0;
-	}
-	float v = T_racer_Math::dot(qVec, ray->direction) * determinant;
-	if (v < 0.0f || v > 1.0f)
+	if (intersect.t < T_RACER_EPSILON || intersect.t > maxt)
 	{
 		return 0;
 	}
 
-	if ((v + u) < 1.0f)
+	T_racer_Math::Vector v3 = T_racer_Math::cross(ray->direction, v2);
+
+	intersect.u = T_racer_Math::dot(v3, v2v0) * -rcp;
+
+	if (intersect.u < 0.0f || intersect.u > 1.0f)
 	{
-		return 1.0f;
+		return 0;
 	}
 
-	return 0;
+	intersect.v = T_racer_Math::dot(v3, v1v0) * rcp;
+
+	if (intersect.v < 0.0f || (intersect.v + intersect.u) > 1.0f)
+	{
+		return 0;
+	}
+
+	return 1;
+
+	//T_racer_Math::Vector  v1v0 = verticies[1].position - verticies[0].position;
+	//T_racer_Math::Vector  v2v0 = verticies[2].position - verticies[0].position;
+
+	//// Calculate the determinant for the matrix
+	//T_racer_Math::Vector   pVec = T_racer_Math::cross(ray->direction, v2v0);
+	//float determinant = T_racer_Math::dot(pVec, v1v0);
+
+	//// Check to see if we should continue.
+	//// Here we can cull the triangle if nescessery. 
+	//if (determinant <= T_RACER_EPSILON)
+	//{
+	//	return false;
+	//}
+
+	//// Inverse the determinant for scaling. 
+	//determinant = 1 / determinant;
+	//T_racer_Math::Vector tVec = ray->position - verticies[0].position;
+	//T_racer_Math::Vector qVec = T_racer_Math::cross(tVec, v1v0);
+
+	//float t;
+
+	//t = T_racer_Math::dot(qVec, v2v0) * determinant;
+
+	//if (t > maxt || t < T_RACER_EPSILON)
+	//{
+	//	return false;
+	//}
+
+	//float u = T_racer_Math::dot(pVec, tVec) * determinant;
+	//if (u < 0.0f || u > 1.0f)
+	//{
+	//	return 0;
+	//}
+	//float v = T_racer_Math::dot(qVec, ray->direction) * determinant;
+	//if (v < 0.0f || v > 1.0f)
+	//{
+	//	return 0;
+	//}
+
+	//if ((v + u) < 1.0f)
+	//{
+	//	return 1.0f;
+	//}
+
+	//return 0;
 }
 
 T_racer_Math::Matrix3X3 Triangle::createShadingFrame(T_racer_Math::Vector v)
