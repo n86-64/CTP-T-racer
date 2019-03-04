@@ -158,7 +158,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 		for (tX; tX < tWidth; tX++)
 		{
-
+			
 			// Here we render the object.
 			//for (int i = 0; i < T_RACER_SAMPLE_COUNT; i++)
 			//{
@@ -167,7 +167,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
 
 				T_racer_Math::Ray ray = sceneObject->generateRay((tX / width) , (tY / height));
-
+				
 				// Test to see if it hits a light source
 				intersectionDisc = sceneObject->trace(ray);
 				lightSourceHit = sceneObject->hitsLightSource(&ray);
