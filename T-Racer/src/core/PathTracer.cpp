@@ -172,7 +172,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				intersectionDisc = sceneObject->trace(ray);
 				lightSourceHit = sceneObject->hitsLightSource(&ray);
 
-				if (lightSourceHit.intersection && lightSourceHit.t < intersectionDisc.t) 
+				if (lightSourceHit.intersection /*&& lightSourceHit.t < intersectionDisc.t*/) 
 				{
 					lightValue = irradiance;
 				}
