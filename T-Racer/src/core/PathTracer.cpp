@@ -172,7 +172,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				intersectionDisc = sceneObject->trace(ray);
 				lightSourceHit = sceneObject->hitsLightSource(&ray);
 
-				if (lightSourceHit.intersection /*&& lightSourceHit.t < intersectionDisc.t*/) 
+				if (lightSourceHit.intersection && lightSourceHit.t < intersectionDisc.t) 
 				{
 					lightValue = irradiance;
 				}
@@ -283,6 +283,7 @@ float T_racer_Renderer_PathTracer::geometryTerm(T_racer_Path_Vertex* pathVertex,
 	lsq = dir.normaliseSelfWithMagnitudeSq();
 	float brdfTheta = fmaxf(T_racer_Math::dot(dir, pathVertex->normal), 0.0f);
 	float lightTheta = lightVertex->isPointLightSource ?  1.0 : fmaxf(T_racer_Math::dot(dir, lightVertex->normal), 0.0f);
+
 
 	return (brdfTheta * lightTheta) / lsq;
 }

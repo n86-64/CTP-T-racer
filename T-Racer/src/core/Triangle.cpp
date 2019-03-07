@@ -231,7 +231,7 @@ T_racer_Math::Vector Triangle::samplePoint()
 	v = sampleVal.Y * sul;
 	w = 1 - u - v;
 
-	return (verticies[0].position * u) + (verticies[1].position * v) * (verticies[2].position * w);
+	return (verticies[0].position * u) + (verticies[1].position * v) + (verticies[2].position * w);
 }
 
 T_racer_Math::Vector Triangle::getNormal()

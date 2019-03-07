@@ -20,7 +20,7 @@
 	{
 		"Type": "Light",
 		"LightType" : "Area",
-		"Intensity": [100.0, 100.0, 100.0],
+		"Intensity": [1000.0, 1000.0, 1000.0],
 		"NumberOfVertices": 3,
 		"Vertices": [
 			[1.065000, 2.639000, 1.135000],
