@@ -18,6 +18,15 @@ T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
 	T_RACER_RELEASE_RESOURCE((void*&)display);
 }
 
+T_racer_Renderer_PathTracer::~T_racer_Renderer_PathTracer()
+{
+	if (totalRadiance)
+	{
+		delete totalRadiance;
+		totalRadiance = nullptr;
+	}
+}
+
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
@@ -26,6 +35,7 @@ void T_racer_Renderer_PathTracer::Render()
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
 	{
+		totalRadiance = new T_racer_Math::Colour[(int)display->getWidth() * (int)display->getHeight()];
 		std::thread thread;
 		for (int i = 0; i < threadCount; i++) 
 		{
@@ -73,7 +83,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		brdfValue = surfaceMaterial->Evaluate(&ray, lightPath[pathIndex]);
 
 		pathTroughput = pathTroughput * brdfValue;
-		pathTroughput = pathTroughput * T_racer_Math::dot(wi.direction, lightPath[pathIndex].normal);
+		pathTroughput = pathTroughput * fabsf(T_racer_Math::dot(wi.direction, lightPath[pathIndex].normal));
 		pathTroughput = pathTroughput / wi.probabilityDensity;
 
 
@@ -108,7 +118,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				Triangle* primative = sceneObject->getTriangleByIndex(intersectDisc.triangleID);
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				lightPath[pathIndex].BRDFMaterialID = primative->getMaterialIndex();
-				lightPath[pathIndex].hitPoint = lightPath[pathIndex].hitPoint + (wi.direction * intersectDisc.t);
+				lightPath[pathIndex].hitPoint = lightPath[pathIndex - 1].hitPoint + (wi.direction * intersectDisc.t);
 				lightPath[pathIndex].wo = -wi.direction;
 				lightPath[pathIndex].normal = primative->getNormal().normalise();
 				lightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
@@ -151,8 +161,6 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 	tHeight = display->getHeight();
 
 	lightSigma = T_racer_Math::Colour(0.0, 0.0f, 0.0f);
-
-	T_racer_Math::Colour*  totalRadiance = new T_racer_Math::Colour[(int)tWidth * (int)tHeight];
 
 	while (currentTile < tHeight) 
 	{
@@ -197,7 +205,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					
 					for (int i = 0; i < lightPath.size(); i++)
 					{
-						lightValue.colour = lightValue.colour + calculateDirectLighting(&lightPath[i], irradiance).colour;
+						lightValue.colour = lightValue.colour + calculateDirectLighting(&lightPath[i]).colour;
 					}
 
 				}
@@ -222,12 +230,6 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 		}
 	}
 
-	if (totalRadiance) 
-	{
-		delete totalRadiance;
-		totalRadiance = nullptr;
-	}
-
 	return;
 }
 
@@ -236,17 +238,17 @@ bool T_racer_Renderer_PathTracer::RussianRoulette(T_racer_Math::Colour& colour, 
 {
 	T_racer_Math::Sampler   sampler;
 	float stopProbability = sampler.Random();
-	bool rr = (stopProbability <= T_RACER_LUMINANCE_VALUE); 
+	bool rr = (stopProbability < colour.getLuminance()); 
 
 	if (rr) 
 	{
-		colour.colour = colour.colour * (1.0f / 1.0f - stopProbability);
+		colour.colour = colour.colour * (1.0f / colour.getLuminance());
 	}
 
 	return rr;
 }
 
-T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_racer_Path_Vertex* pathVertex, T_racer_Math::Colour& col)
+T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_racer_Path_Vertex* pathVertex)
 {
 	T_racer_Math::Ray  lightRay;
 	T_racer_Math::Colour Ld(0.0f, 0.0f, 0.0f);
@@ -254,7 +256,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	
 	if (pathVertex->isFresnelSurface) 
 	{
-		return col;
+		return Ld;
 	}
 
 	T_racer_Material* material = sceneObject->materials.retrieveMaterial(pathVertex->BRDFMaterialID);
@@ -270,7 +272,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 
 	T_racer_Math::Colour lightValue = lightSource->Evaluate(*pathVertex);
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex);
-	Ld.colour = pathVertex->pathColour.colour * col.colour * lightValue.colour  * brdfSurfaceValue.colour *  gTerm / light_pos.probabilityDensity;
+	Ld.colour = pathVertex->pathColour.colour * lightValue.colour  * brdfSurfaceValue.colour *  gTerm / light_pos.probabilityDensity;
 	Ld.colour = Ld.colour;
 
 	return Ld;

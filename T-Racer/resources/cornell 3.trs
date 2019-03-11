@@ -20,7 +20,7 @@
 	{
 		"Type": "Light",
 		"LightType" : "Area",
-		"Intensity": [1000.0, 1000.0, 1000.0],
+		"Intensity": [500.0, 500.0, 500.0],
 		"NumberOfVertices": 3,
 		"Vertices": [
 			[1.065000, 2.539000, 1.035000],
@@ -42,7 +42,7 @@
 	{
 		"Type": "Mesh",
 		"MeshName": "CornellCube1.obj",
-		"Mesh Material" : "Glass",
+		"Mesh Material" : "Diffuse",
 		"Colour": [1.0, 1.0, 1.0],
 		"Texture": "Null"
 	},

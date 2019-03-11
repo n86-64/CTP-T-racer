@@ -16,6 +16,7 @@ class T_racer_Renderer_PathTracer : public T_racer_Renderer_Base
 {
 public:
 	T_racer_Renderer_PathTracer();
+	~T_racer_Renderer_PathTracer();
 
 	virtual void renderThreaded() override;
 	virtual void Render() override;
@@ -28,6 +29,9 @@ protected:
 
 private:
 	bool RussianRoulette(T_racer_Math::Colour& colour, T_racer_Path_Vertex* pathIndex);
-	T_racer_Math::Colour calculateDirectLighting(T_racer_Path_Vertex* pathIndex, T_racer_Math::Colour& col);
+	T_racer_Math::Colour calculateDirectLighting(T_racer_Path_Vertex* pathIndex);
 	float geometryTerm(T_racer_Path_Vertex* pathVertex, T_racer_Path_Vertex *lightVertex);
+
+private:
+	T_racer_Math::Colour*  totalRadiance = nullptr;
 };
