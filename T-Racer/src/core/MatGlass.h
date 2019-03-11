@@ -15,7 +15,7 @@
 class T_racer_Materials_Dilectric_Glass : public T_racer_Material 
 {
 public:
-	T_racer_Materials_Dilectric_Glass() = default;
+	T_racer_Materials_Dilectric_Glass();
 
 	// Inherited via T_racer_Material
 	virtual T_racer_Math::Colour Evaluate(T_racer_Math::Ray * ray, T_racer_Path_Vertex & pathVertex) override;
