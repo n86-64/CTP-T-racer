@@ -21,7 +21,7 @@ T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	threadCount = 1;
+	//threadCount = 1;
 	
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -51,6 +51,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 
 void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath)
 {
+	T_racer_TriangleIntersection  lightSourceHit;
 	T_racer_TriangleIntersection  intersectDisc;
 	T_racer_Material*  surfaceMaterial = nullptr;
 	bool terminatePath = false;
@@ -92,10 +93,13 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		if (!terminatePath)
 		{
 			intersectDisc = sceneObject->trace(ray);
+			lightSourceHit = sceneObject->hitsLightSource(&ray);
 
-			// TODO - Add routiene to check if this is a light source.
-			// If so terminate else we will evaluate the next light path.
-			if (intersectDisc.triangleID != T_RACER_TRIANGLE_NULL)
+			if (lightSourceHit.intersection && lightSourceHit.t < intersectDisc.t)
+			{
+				terminatePath = true;
+			}
+			else if (intersectDisc.triangleID != T_RACER_TRIANGLE_NULL)
 			{
 				// Create a new light path.
 				pathIndex++;
@@ -189,7 +193,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					lightPath[0].pathColour = irradiance;
 
 					// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
-					//tracePath(ray, irradiance, lightPath);
+					tracePath(ray, irradiance, lightPath);
 					
 					for (int i = 0; i < lightPath.size(); i++)
 					{
@@ -267,6 +271,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	T_racer_Math::Colour lightValue = lightSource->Evaluate(*pathVertex);
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex);
 	Ld.colour = pathVertex->pathColour.colour * col.colour * lightValue.colour  * brdfSurfaceValue.colour *  gTerm / light_pos.probabilityDensity;
+	Ld.colour = Ld.colour;
 
 	return Ld;
 }

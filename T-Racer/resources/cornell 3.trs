@@ -1,5 +1,5 @@
 {
-	"SceneName": "Cornell",
+	"SceneName": "Cornell Brokendown",
 	
 	"Display": 
 	{
@@ -32,8 +32,26 @@
 	"Cornell Box":
 	{
 		"Type": "Mesh",
-		"MeshName": "Cycles.obj",
+		"MeshName": "CornellShell.obj",
 		"Mesh Material" : "Diffuse",
+		"Colour": [1.0, 1.0, 1.0],
+		"Texture": "Null"
+	},
+	
+	"Cornell Short Cube":
+	{
+		"Type": "Mesh",
+		"MeshName": "CornellCube1.obj",
+		"Mesh Material" : "Diffuse",
+		"Colour": [1.0, 1.0, 1.0],
+		"Texture": "Null"
+	},
+	
+	"Cornell Long Cube":
+	{
+		"Type": "Mesh",
+		"MeshName": "CornellCube2.obj",
+		"Mesh Material" : "Mirror",
 		"Colour": [1.0, 1.0, 1.0],
 		"Texture": "Null"
 	}
