@@ -42,7 +42,7 @@
 	{
 		"Type": "Mesh",
 		"MeshName": "CornellCube1.obj",
-		"Mesh Material" : "Diffuse",
+		"Mesh Material" : "Glass",
 		"Colour": [1.0, 1.0, 1.0],
 		"Texture": "Null"
 	},
@@ -51,7 +51,7 @@
 	{
 		"Type": "Mesh",
 		"MeshName": "CornellCube2.obj",
-		"Mesh Material" : "Mirror",
+		"Mesh Material" : "Diffuse",
 		"Colour": [1.0, 1.0, 1.0],
 		"Texture": "Null"
 	}

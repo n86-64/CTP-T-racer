@@ -6,11 +6,16 @@
 T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate(T_racer_Math::Ray* ray, T_racer_Path_Vertex & pathVertex)
 {
 	// Here we aprroximate the colour based on refreaction.
+	T_racer_Math::Colour returnColour; 
 	T_racer_Math::Colour lookupColour;
 
 	if (materialTexture)
 	{
 		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
+	}
+	else 
+	{
+		lookupColour = albedo;
 	}
 
 	T_racer_Math::Vector wo_local = pathVertex.orthnormalBasis * pathVertex.wo;
@@ -32,15 +37,20 @@ T_racer_SampledDirection T_racer_Materials_Dilectric_Glass::Sample(T_racer_Math:
 
 	T_racer_Math::Vector wo_local = pathVertex.orthnormalBasis * pathVertex.wo;
 	float ei = refractiveIndexI, et = refractiveIndexT;
-	float cosi = clamp(wo_local.Z, -1.0f, 1.0f);
+
+	bool entering = (wo_local.Z > 0.0f);
+	if (!entering) { std::swap(ei, et); }
+
 	float ratio = (ei / et);
 
 	float sinI2 = sqrtf(fmaxf(0.0f, 1.0f - wo_local.Z * wo_local.Z));
 	float sinT2 = ratio * ratio * sinI2;
 
+	if (sinT2 > 1.0f) { return wi; }
+
 	float cost = sqrt(fmaxf(0.0f, 1.0f - sinT2));
 
-	if (cosi > 0.0f) { cost = -cost; }
+	if (entering) { cost = -cost; }
 
 	wi.direction = pathVertex.orthnormalBasis * T_racer_Math::Vector(ratio * -wo_local.X, ratio * -wo_local.Y, cost);
 	wi.probabilityDensity = 1.0f; 

@@ -21,7 +21,7 @@ T_racer_Math::Colour T_racer_Materials_Mirror::Evaluate(T_racer_Math::Ray* ray, 
 	T_racer_Math::Vector halfVector = (ray->direction + pathVertex.wo).normalise();
 	float value = T_racer_Math::dot(halfVector, pathVertex.normal);
 
-	if (value > FLT_EPSILON) 
+	if (value > FLT_EPSILON)
 	{
 		return lookupColour;
 	}
@@ -35,8 +35,11 @@ T_racer_SampledDirection T_racer_Materials_Mirror::Sample(T_racer_Math::Ray* ray
 
 	pathVertex.isFresnelSurface = true;
 
-	T_racer_Math::Vector transformedRayDirection = ray->direction; //pathVertex.orthnormalBasis * ray->getincomingRayDirection();
-	transformedRayDirection = transformedRayDirection - (pathVertex.normal * 2 * T_racer_Math::dot(pathVertex.normal, transformedRayDirection));
+	T_racer_Math::Vector transformedRayDirection = pathVertex.orthnormalBasis * ray->direction; //ray->direction;
+	//transformedRayDirection = transformedRayDirection - (pathVertex.normal * 2 * T_racer_Math::dot(pathVertex.normal, transformedRayDirection));
+	transformedRayDirection.X = -transformedRayDirection.X;
+	transformedRayDirection.Z = -transformedRayDirection.Z;
+	transformedRayDirection = pathVertex.orthnormalBasis * transformedRayDirection;
 	wi.direction = transformedRayDirection;
 
 	wi.probabilityDensity = ProbabilityDensity(ray, wi, pathVertex);
