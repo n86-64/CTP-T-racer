@@ -136,7 +136,6 @@ bool T_racer_BVH_Tree::visible(T_racer_Math::Ray* ray, const float t)
 				else
 				{
 					// its a leaf we dont need to check this anymore.
-
 					for (int i = 0; i < currentNode->triIndex.size(); i++)
 					{
 						if ((*sceneObjects)[currentNode->triIndex[i]].isIntersectingShadow(ray, t))

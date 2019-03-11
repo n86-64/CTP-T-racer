@@ -181,7 +181,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
 					lightPath.emplace_back(T_racer_Path_Vertex());
 					lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
-					lightPath[0].hitPoint = ray.position + (ray.direction * intersectionDisc.t);
+					lightPath[0].hitPoint =  ray.position + (ray.direction * intersectionDisc.t);
 					lightPath[0].normal = primative->normal;
 					lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
 					lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);

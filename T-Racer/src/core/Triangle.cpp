@@ -138,18 +138,18 @@ bool Triangle::isIntersectingShadow(T_racer_Math::Ray* ray, const float maxt)
 	//T_racer_Math::Vector  v1v0 = verticies[1].position - verticies[0].position;
 	//T_racer_Math::Vector  v2v0 = verticies[2].position - verticies[0].position;
 
-	//// Calculate the determinant for the matrix
+	// Calculate the determinant for the matrix
 	//T_racer_Math::Vector   pVec = T_racer_Math::cross(ray->direction, v2v0);
 	//float determinant = T_racer_Math::dot(pVec, v1v0);
 
-	//// Check to see if we should continue.
-	//// Here we can cull the triangle if nescessery. 
+	// Check to see if we should continue.
+	// Here we can cull the triangle if nescessery. 
 	//if (determinant <= T_RACER_EPSILON)
 	//{
 	//	return false;
 	//}
 
-	//// Inverse the determinant for scaling. 
+	// Inverse the determinant for scaling. 
 	//determinant = 1 / determinant;
 	//T_racer_Math::Vector tVec = ray->position - verticies[0].position;
 	//T_racer_Math::Vector qVec = T_racer_Math::cross(tVec, v1v0);

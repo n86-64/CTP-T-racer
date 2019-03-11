@@ -46,6 +46,7 @@ public:
 
 	T_racer_Math::Vector		   normal;
 
+	T_racer_Vertex   verticies[VERTEX_COUNT] = { 0 };
 
 private:
 	T_racer_Math::Vector getMinVector();
@@ -53,6 +54,5 @@ private:
 
 private:
 	T_racer_Collider_AABB					collider;
-	T_racer_Vertex   verticies[VERTEX_COUNT] = { 0 };
 	unsigned int					  materialID = 0;
 };
