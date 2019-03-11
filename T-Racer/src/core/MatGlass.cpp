@@ -51,7 +51,7 @@ T_racer_SampledDirection T_racer_Materials_Dilectric_Glass::Sample(T_racer_Math:
 
 	float ratio = (ei / et);
 
-	float sinI2 = sqrtf(fmaxf(0.0f, 1.0f - wo_local.Z * wo_local.Z));
+	float sinI2 = 1.0f - (wo_local.Z * wo_local.Z);
 	float sinT2 = ratio * ratio * sinI2;
 
 	if (sinT2 > 1.0f) { return wi; }
