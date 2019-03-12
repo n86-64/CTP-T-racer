@@ -155,6 +155,38 @@ namespace T_racer_Math
 		INFINITY, INFINITY, INFINITY
 	);
 
+	inline Matrix4X4 transposeMatrix4x4(Matrix4X4& mat) 
+	{
+		Matrix4X4 transposedMatrix;
+
+		// transpose the matrix. 
+		for (int r = 0; r < 4; r++) 
+		{
+			for (int c = 0; c < 4; c++) 
+			{
+				transposedMatrix.value(c, r, mat.value(r, c));
+			}
+		}
+
+		return transposedMatrix;
+	}
+
+	inline Matrix3X3 transposeMatrix3x3(Matrix3X3& mat)
+	{
+		Matrix3X3 transposedMatrix;
+
+		// transpose the matrix. 
+		for (int r = 0; r < 3; r++)
+		{
+			for (int c = 0; c < 3; c++)
+			{
+				transposedMatrix.value(c, r, mat.value(r, c));
+			}
+		}
+
+		return transposedMatrix;
+	}
+
 	inline float getMatrixDeterminant(Matrix4X4 mat) 
 	{
 		float d1 = mat.value(0, 0) + mat.value(1, 1) + mat.value(2, 2) + mat.value(3, 3);

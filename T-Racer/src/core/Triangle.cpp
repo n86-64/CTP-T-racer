@@ -201,12 +201,16 @@ T_racer_Math::Matrix3X3 Triangle::createShadingFrame(T_racer_Math::Vector v)
 
 	v3 = T_racer_Math::cross(v, v2);
 
-	return T_racer_Math::Matrix3X3 // Returns an outhogonal matrix.
+	T_racer_Math::Matrix3X3 shadingFrame = T_racer_Math::Matrix3X3 // Returns an outhogonal matrix.
 	(
 		v2.X, v2.Y, v2.Z,
 		v3.X, v3.Y, v3.Z,
 		v.X, v.Y, v.Z
 	);
+
+	shadingFrame = T_racer_Math::transposeMatrix3x3(shadingFrame);
+
+	return shadingFrame;
 }
 
 float Triangle::getSurfaceArea()

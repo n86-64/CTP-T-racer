@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 
 	// TODO - Add a command line parameter to load a file. 
 	JSONFileReader  file;
-	file.setFilePath("resources/cornell 3.trs");
+	file.setFilePath("resources/cornell 2.trs");
 
 	//T_racer_Display_Window  window;
 	T_racer_Display_TGA  tga;
