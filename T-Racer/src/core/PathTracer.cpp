@@ -256,7 +256,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	
 	if (pathVertex->isFresnelSurface) 
 	{
-		return Ld;
+		return pathVertex->pathColour;
 	}
 
 	T_racer_Material* material = sceneObject->materials.retrieveMaterial(pathVertex->BRDFMaterialID);

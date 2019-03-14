@@ -35,10 +35,10 @@ T_racer_SampledDirection T_racer_Materials_Mirror::Sample(T_racer_Math::Ray* ray
 
 	pathVertex.isFresnelSurface = true;
 
-	T_racer_Math::Vector transformedRayDirection = pathVertex.orthnormalBasis * ray->direction; //ray->direction;
+	T_racer_Math::Vector transformedRayDirection = pathVertex.orthnormalBasis * ray->getincomingRayDirection(); //ray->direction;
 	//transformedRayDirection = transformedRayDirection - (pathVertex.normal * 2 * T_racer_Math::dot(pathVertex.normal, transformedRayDirection));
 	transformedRayDirection.X = -transformedRayDirection.X;
-	transformedRayDirection.Z = -transformedRayDirection.Z;
+	transformedRayDirection.Y = -transformedRayDirection.Y;
 	transformedRayDirection = pathVertex.orthnormalBasis * transformedRayDirection;
 	wi.direction = transformedRayDirection;
 
