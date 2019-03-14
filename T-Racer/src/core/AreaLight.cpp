@@ -71,18 +71,33 @@ void T_racer_Light_Area::init(jsoncons::key_value<std::string, jsoncons::json>& 
 
 	T_racer_Vertex  v[3];
 
+	//for (int i = 0; i < size; i++) 
+	//{
+	//	v[i % 3].position = T_racer_Math::Vector(initValues.value()["Vertices"][i][0].as_double(),
+	//		initValues.value()["Vertices"][i][1].as_double(),
+	//		initValues.value()["Vertices"][i][2].as_double());
+	//	
+	//	// create the traingle. 
+	//	if (i % 2 == 0 && i != 0) 
+	//	{
+	//		triangles.emplace_back(v[0], v[1], v[2]);
+	//	}
+	//}
+
+
 	for (int i = 0; i < size; i++) 
 	{
-		v[i % 3].position = T_racer_Math::Vector(initValues.value()["Vertices"][i][0].as_double(),
-			initValues.value()["Vertices"][i][1].as_double(),
-			initValues.value()["Vertices"][i][2].as_double());
-		
-		// create the traingle. 
-		if (i % 2 == 0 && i != 0) 
+		if (i % 3 == 0 && i != 0)
 		{
 			triangles.emplace_back(v[0], v[1], v[2]);
 		}
+
+		v[i % 3].position = T_racer_Math::Vector(initValues.value()["Vertices"][i][0].as_double(),
+			initValues.value()["Vertices"][i][1].as_double(),
+			initValues.value()["Vertices"][i][2].as_double());
 	}
+
+	triangles.emplace_back(v[0], v[1], v[2]);
 
 	intensity.colour = T_racer_Math::Vector( initValues.value()["Intensity"][0].as_double(), initValues.value()["Intensity"][1].as_double(), initValues.value()["Intensity"][2].as_double());
 }

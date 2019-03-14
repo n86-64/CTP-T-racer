@@ -118,7 +118,7 @@ bool Triangle::isIntersectingShadow(T_racer_Math::Ray* ray, const float maxt)
 	}
 
 	T_racer_Math::Vector v3 = T_racer_Math::cross(ray->direction, v2);
-
+	
 	intersect.u = T_racer_Math::dot(v3, v2v0) * -rcp;
 
 	if (intersect.u < 0.0f || intersect.u > 1.0f)
@@ -276,7 +276,7 @@ T_racer_Math::Vector Triangle::interpolatePoint(T_racer_TriangleIntersection iCo
 
 	// TODO - Fetch colour from texture.
 	returnCoord = (verticies[0].texCoord * iCoord.u) + (verticies[1].texCoord * iCoord.v) + (verticies[2].texCoord * iCoord.w);
-
+	
 	return returnCoord;
 }
 
