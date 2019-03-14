@@ -35,11 +35,10 @@ T_racer_SampledDirection T_racer_Materials_Mirror::Sample(T_racer_Math::Ray* ray
 
 	pathVertex.isFresnelSurface = true;
 
-	T_racer_Math::Vector transformedRayDirection = pathVertex.orthnormalBasis * ray->getincomingRayDirection(); //ray->direction;
-	//transformedRayDirection = transformedRayDirection - (pathVertex.normal * 2 * T_racer_Math::dot(pathVertex.normal, transformedRayDirection));
+	T_racer_Math::Vector transformedRayDirection = pathVertex.orthnormalBasis * ray->getincomingRayDirection();
 	transformedRayDirection.X = -transformedRayDirection.X;
 	transformedRayDirection.Y = -transformedRayDirection.Y;
-	transformedRayDirection = pathVertex.orthnormalBasis * transformedRayDirection;
+	transformedRayDirection = T_racer_Math::transposeMatrix3x3(pathVertex.orthnormalBasis) * transformedRayDirection;
 	wi.direction = transformedRayDirection;
 
 	wi.probabilityDensity = ProbabilityDensity(ray, wi, pathVertex);
