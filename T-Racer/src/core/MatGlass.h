@@ -23,7 +23,7 @@ public:
 	virtual float ProbabilityDensity(T_racer_Math::Ray * ray, T_racer_SampledDirection & sampledDir, T_racer_Path_Vertex & pathVertex) override;
 
 private:
-	T_racer_Math::Colour evaluateFresnel(float cosi, T_racer_Math::Vector incidentVector, float& ei, float& et);
+	T_racer_Math::Colour evaluateFresnel(float cosi, float& ei, float& et);
 	T_racer_Math::Colour reflectanceFresnel(float cosI, float cosT, float ei, float et);
 
 
