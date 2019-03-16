@@ -41,6 +41,11 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate(T_racer_Math::R
 	return returnColour;
 }
 
+T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate2(T_racer_SampledDirection & wi, T_racer_Path_Vertex & pathVertex)
+{
+	return T_racer_Math::Colour();
+}
+
 T_racer_SampledDirection T_racer_Materials_Dilectric_Glass::Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler & matSampler, T_racer_Path_Vertex & pathVertex)
 {
 	// Determine if we need to refract or reflect the light here.
@@ -66,7 +71,6 @@ T_racer_SampledDirection T_racer_Materials_Dilectric_Glass::Sample(T_racer_Math:
 		return wi;
 	}
 
-
 	bool entering = (wo_local.Z > 0.0f);
 	if (!entering) { std::swap(ei, et); }
 
@@ -87,7 +91,49 @@ T_racer_SampledDirection T_racer_Materials_Dilectric_Glass::Sample(T_racer_Math:
 	return wi;
 }
 
-float T_racer_Materials_Dilectric_Glass::ProbabilityDensity(T_racer_Math::Ray * ray, T_racer_SampledDirection & sampledDir, T_racer_Path_Vertex & pathVertex)
+T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::SampleMaterial(T_racer_Math::Sampler & matSampler, T_racer_SampledDirection & wi, T_racer_Path_Vertex & pathVertex)
+{
+	pathVertex.isFresnelSurface = true;
+
+	T_racer_Math::Vector wo_local = pathVertex.orthnormalBasis * pathVertex.wo;
+
+	float ei = refractiveIndexI, et = refractiveIndexT;
+
+	// Evaluate Fresnel
+	T_racer_Math::Colour col = evaluateFresnel(wo_local.Z, ei, et);
+	// Sample Reflection or Refraction
+	float reflw;
+	reflw = col.getLuminance();
+	if (matSampler.Random() < reflw)
+	{
+		wo_local.X = -wo_local.X;
+		wo_local.Y = -wo_local.Y;
+		wi.direction = T_racer_Math::transposeMatrix3x3(pathVertex.orthnormalBasis) * wo_local;
+		wi.probabilityDensity = reflw;
+		return col;
+	}
+
+	bool entering = (wo_local.Z > 0.0f);
+	if (!entering) { std::swap(ei, et); }
+
+	float ratio = (ei / et);
+
+	float sinI2 = 1.0f - (wo_local.Z * wo_local.Z);
+	float sinT2 = ratio * ratio * sinI2;
+
+	if (sinT2 > 1.0f) { return col; }
+
+	float cost = sqrt(fmaxf(0.0f, 1.0f - sinT2));
+
+	if (entering) { cost = -cost; }
+
+	wi.direction = T_racer_Math::transposeMatrix3x3(pathVertex.orthnormalBasis) * T_racer_Math::Vector(ratio * -wo_local.X, ratio * -wo_local.Y, cost);
+	wi.probabilityDensity = 1.0f - reflw;
+
+	return col;
+}
+
+float T_racer_Materials_Dilectric_Glass::ProbabilityDensity(T_racer_SampledDirection& sampledDir, T_racer_Path_Vertex& pathVertex)
 {
 	return 1.0f;
 }

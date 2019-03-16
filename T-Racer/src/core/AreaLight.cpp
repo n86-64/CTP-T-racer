@@ -1,5 +1,6 @@
 #include "helpers/Math_Sampler.h"
 #include "helpers/Math_Projections.h"
+#include "helpers/Math_Error.h"
 
 #include "AreaLight.h"
 
@@ -10,7 +11,7 @@ T_racer_Light_Area::T_racer_Light_Area()
 
 T_racer_Math::Colour T_racer_Light_Area::Evaluate(T_racer_Path_Vertex& pathVertex)
 {
-	return T_racer_Math::dot(pathVertex.normal, pathVertex.wo) > 0 ? intensity : T_racer_Math::Colour(0,0,0);
+	return T_racer_Math::dot(pathVertex.normal, pathVertex.wo) > T_RACER_EPSILON ? intensity : T_racer_Math::Colour(0,0,0);
 }
 
 T_racer_SampledDirection T_racer_Light_Area::Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray & inputRay, T_racer_Path_Vertex & lightSourceVertex)

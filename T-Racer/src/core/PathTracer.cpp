@@ -78,10 +78,14 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	while (!terminatePath)
 	{
 		surfaceMaterial = sceneObject->materials.retrieveMaterial(lightPath[pathIndex].BRDFMaterialID);
-		wi = surfaceMaterial->Sample(&ray, sampler, lightPath[pathIndex]);
+		//wi = surfaceMaterial->Sample(&ray, sampler, lightPath[pathIndex]);
+		//ray = T_racer_Math::Ray(lightPath[pathIndex].hitPoint, wi.direction);
+		//brdfValue = surfaceMaterial->Evaluate(&ray, lightPath[pathIndex]);
+		//
+		// new brdf approch.
+		brdfValue = surfaceMaterial->SampleMaterial(sampler, wi, lightPath[pathIndex]);
 		ray = T_racer_Math::Ray(lightPath[pathIndex].hitPoint, wi.direction);
-		brdfValue = surfaceMaterial->Evaluate(&ray, lightPath[pathIndex]);
-
+		
 		pathTroughput = pathTroughput * brdfValue;
 		pathTroughput = pathTroughput * fabsf(T_racer_Math::dot(wi.direction, lightPath[pathIndex].normal));
 		pathTroughput = pathTroughput / wi.probabilityDensity;
@@ -209,7 +213,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					}
 
 				}
-
+				
 				if (display->quit) { return; }
 				totalRadiance[tX + ((int)tWidth * tY)].colour = totalRadiance[tX + ((int)tWidth * tY)].colour + lightValue.colour;
 				lightPath.clear();

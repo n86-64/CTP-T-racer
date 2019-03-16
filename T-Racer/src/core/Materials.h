@@ -27,8 +27,10 @@ public:
 	T_racer_Material() = default;
 
 	virtual T_racer_Math::Colour	 Evaluate(T_racer_Math::Ray* ray, T_racer_Path_Vertex& pathVertex) = 0;
+	virtual T_racer_Math::Colour	 Evaluate2(T_racer_SampledDirection& wi, T_racer_Path_Vertex& pathVertex) { return T_racer_Math::Colour(0, 0, 0); }
 	virtual T_racer_SampledDirection Sample(T_racer_Math::Ray* ray, T_racer_Math::Sampler& matSampler, T_racer_Path_Vertex& pathVertex) = 0;
-	virtual float					 ProbabilityDensity(T_racer_Math::Ray* ray, T_racer_SampledDirection& sampledDir, T_racer_Path_Vertex& pathVertex) = 0;
+	virtual T_racer_Math::Colour     SampleMaterial(T_racer_Math::Sampler& matSampler, T_racer_SampledDirection& wi, T_racer_Path_Vertex& pathVertex) { return T_racer_Math::Colour(0,0,0); }
+	virtual float					 ProbabilityDensity(T_racer_SampledDirection& sampledDir, T_racer_Path_Vertex& pathVertex) = 0;
 
 	std::string getName() const { return name; }
 	void		setName(std::string value) { name = value; }
