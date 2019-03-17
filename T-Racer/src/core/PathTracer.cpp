@@ -30,7 +30,7 @@ T_racer_Renderer_PathTracer::~T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	//threadCount = 1;
+	threadCount = 1;
 	
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -107,7 +107,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		if (!terminatePath)
 		{
 			intersectDisc = sceneObject->trace(ray);
-			lightSourceHit = sceneObject->hitsLightSource(&ray);
+ 			lightSourceHit = sceneObject->hitsLightSource(&ray);
 
 			if (lightSourceHit.intersection && lightSourceHit.t < intersectDisc.t)
 			{

@@ -130,6 +130,9 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::SampleMaterial(T_racer_M
 	wi.direction = T_racer_Math::transposeMatrix3x3(pathVertex.orthnormalBasis) * T_racer_Math::Vector(ratio * -wo_local.X, ratio * -wo_local.Y, cost);
 	wi.probabilityDensity = 1.0f - reflw;
 
+	T_racer_Math::Vector  wi_local = pathVertex.orthnormalBasis * wi.direction;
+	// col.colour = (col.colour / fabsf(wi_local.Z)) * (T_racer_Math::Colour(1, 1, 1).colour - col.colour) * ((et*et) / (ei*ei));
+
 	return col;
 }
 
@@ -144,7 +147,8 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::evaluateFresnel(float co
 	float cosT = 0.0f;
 
 	cosi = clamp(cosi, -1.0f, 1.0f);
-	if (cosi > 0.0f)
+	bool entering = cosi > 0.0f;
+	if (!entering)
 	{
 		std::swap(ei, et);
 	}
