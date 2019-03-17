@@ -1,11 +1,12 @@
 #include "helpers/Math_neumeric.h"
 #include "helpers/Math_Ray.h"
+#include "helpers/Math_Error.h"
 
 #include "MatGlass.h"
 
 T_racer_Materials_Dilectric_Glass::T_racer_Materials_Dilectric_Glass()
 {
-	albedo = T_racer_Math::Colour(0.2, 0.2, 0.2);
+	albedo = T_racer_Math::Colour(1.0, 1.0, 1.0);
 }
 
 T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate(T_racer_Math::Ray* ray, T_racer_Path_Vertex & pathVertex)
@@ -30,7 +31,7 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate(T_racer_Math::R
 
 	if (!(wo_local.Z > 0)) { swap(ei, et); }
 
-	T_racer_Math::Colour col = evaluateFresnel(cosi, ei, et);
+	T_racer_Math::Colour col = evaluateFresnel(cosi);
 	if (wo_local.Z * wi_local.Z > 0)
 	{
 		returnColour.colour = (lookupColour.colour / fabsf(wi_local.Z));
@@ -58,7 +59,7 @@ T_racer_SampledDirection T_racer_Materials_Dilectric_Glass::Sample(T_racer_Math:
 	float ei = refractiveIndexI, et = refractiveIndexT;
 
 	// Evaluate Fresnel
-	T_racer_Math::Colour col = evaluateFresnel(wo_local.Z, ei, et);
+	T_racer_Math::Colour col = evaluateFresnel(wo_local.Z);
 	// Sample Reflection or Refraction
 	float reflw;
 	reflw = col.getLuminance();
@@ -100,7 +101,7 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::SampleMaterial(T_racer_M
 	float ei = refractiveIndexI, et = refractiveIndexT;
 
 	// Evaluate Fresnel
-	T_racer_Math::Colour col = evaluateFresnel(wo_local.Z, ei, et);
+	T_racer_Math::Colour col = evaluateFresnel(wo_local.Z);
 	// Sample Reflection or Refraction
 	float reflw;
 	reflw = col.getLuminance();
@@ -121,9 +122,9 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::SampleMaterial(T_racer_M
 	float sinI2 = 1.0f - (wo_local.Z * wo_local.Z);
 	float sinT2 = ratio * ratio * sinI2;
 
-	if (sinT2 > 1.0f) { return col; }
+	if (sinT2 > 1.0f) { return T_racer_Math::Colour(0,0,0); }
 
-	float cost = sqrt(fmaxf(0.0f, 1.0f - sinT2));
+	float cost = sqrtf(fmaxf(0.0f, 1.0f - sinT2));
 
 	if (entering) { cost = -cost; }
 
@@ -131,7 +132,7 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::SampleMaterial(T_racer_M
 	wi.probabilityDensity = 1.0f - reflw;
 
 	T_racer_Math::Vector  wi_local = pathVertex.orthnormalBasis * wi.direction;
-	// col.colour = (col.colour / fabsf(wi_local.Z)) * (T_racer_Math::Colour(1, 1, 1).colour - col.colour) * ((et*et) / (ei*ei));
+	col.colour = (col.colour / fabsf(wi_local.Z)) * (T_racer_Math::Colour(1, 1, 1).colour - col.colour) * ((et*et) / (ei*ei));
 
 	return col;
 }
@@ -141,10 +142,10 @@ float T_racer_Materials_Dilectric_Glass::ProbabilityDensity(T_racer_SampledDirec
 	return 1.0f;
 }
 
-T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::evaluateFresnel(float cosi, float& ei, float& et)
+T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::evaluateFresnel(float cosi)
 {
 	T_racer_Math::Colour contribution;
-	float cosT = 0.0f;
+	float ei = refractiveIndexI, et = refractiveIndexT;
 
 	cosi = clamp(cosi, -1.0f, 1.0f);
 	bool entering = cosi > 0.0f;
@@ -162,7 +163,7 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::evaluateFresnel(float co
 	}
 	else 
 	{
-		cosT = sqrtf(fmaxf(0.0f, 1.0f - sint * sint));
+		float cosT = sqrtf(fmaxf(0.0f, 1.0f - sint * sint));
 		contribution = reflectanceFresnel(fabsf(cosi), cosT, ei, et);
 	}
 

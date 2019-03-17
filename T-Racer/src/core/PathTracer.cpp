@@ -6,7 +6,7 @@
 constexpr int  T_RACER_TRIANGLE_NULL = -1;
 constexpr float T_RACER_LUMINANCE_VALUE = 0.1f;
 
-constexpr int T_RACER_SAMPLE_COUNT = 1;
+// constexpr int T_RACER_SAMPLE_COUNT = 1;
 
 constexpr int T_RACER_PATH_INITIAL_COUNT = 20;
 
@@ -30,7 +30,7 @@ T_racer_Renderer_PathTracer::~T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	threadCount = 1;
+	//threadCount = 1;
 	
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -260,7 +260,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	
 	if (pathVertex->isFresnelSurface) 
 	{
-		return pathVertex->pathColour;
+		return Ld;
 	}
 
 	T_racer_Material* material = sceneObject->materials.retrieveMaterial(pathVertex->BRDFMaterialID);
