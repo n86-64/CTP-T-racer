@@ -128,7 +128,10 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::SampleMaterial(T_racer_M
 
 	if (entering) { cost = -cost; }
 
-	wi.direction = T_racer_Math::transposeMatrix3x3(pathVertex.orthnormalBasis) * T_racer_Math::Vector(ratio * -wo_local.X, ratio * -wo_local.Y, cost);
+	float SinIoverSinT = sinI2 / sinT2;
+	SinIoverSinT = sqrtf(SinIoverSinT);
+
+	wi.direction = T_racer_Math::transposeMatrix3x3(pathVertex.orthnormalBasis) * T_racer_Math::Vector(SinIoverSinT * -wo_local.X, SinIoverSinT * -wo_local.Y, cost);
 	wi.probabilityDensity = 1.0f - reflw;
 
 	T_racer_Math::Vector  wi_local = pathVertex.orthnormalBasis * wi.direction;
