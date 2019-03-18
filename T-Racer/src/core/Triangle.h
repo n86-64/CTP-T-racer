@@ -24,6 +24,7 @@ class Triangle
 {
 public:
 	Triangle() = default;
+	Triangle(T_racer_Vertex* v1, T_racer_Vertex* v2, T_racer_Vertex* v3);
 	Triangle(T_racer_Vertex v1, T_racer_Vertex v2, T_racer_Vertex v3);
 
 	T_racer_TriangleIntersection   isIntersecting(T_racer_Math::Ray*  ray);
@@ -38,6 +39,7 @@ public:
 	T_racer_Math::Vector		   samplePoint();
 
 	T_racer_Math::Vector		   getNormal();
+	T_racer_Math::Vector		   getSmoothNormal(T_racer_TriangleIntersection& intersect);
 
 	T_racer_Collider_AABB&		   getCollider() { return collider; };
 

@@ -62,6 +62,7 @@ public:
 	Triangle*   getTriangleByIndex(int index) { return &sceneTriangles[index]; }
 
 	T_racer_Light_Base* retrieveOneLightSource();
+	T_racer_Light_Base* retrieveLightByIndex(int i) { return sceneLights[i].get(); }
 
 	T_racer_Math::Ray generateRay(float xPos, float yPos);
 

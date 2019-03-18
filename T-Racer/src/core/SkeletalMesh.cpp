@@ -50,6 +50,8 @@ std::vector<Triangle> T_racer_Resource_SkeletalMesh::draw(T_racer_MaterialManage
 	int vIndex = 0;
 
 	T_racer_Vertex  verts[3];
+	T_racer_Math::Vector interpolatedNormal;
+
 
 	while (nodeToRender.size() > 0) 
 	{
@@ -68,6 +70,13 @@ std::vector<Triangle> T_racer_Resource_SkeletalMesh::draw(T_racer_MaterialManage
 				{
 					vIndex = 0;
 					newPrimative = Triangle(verts[0], verts[1], verts[2]);
+
+					// Add the smooth normals together.
+					interpolatedNormal = T_racer_Math::cross(verts[1].position - verts[0].position, verts[2].position - verts[0].position);
+					meshes[index].modelVerticies[meshes[index].modelIndicies[i - 2]].normalSmooth += interpolatedNormal;
+					meshes[index].modelVerticies[meshes[index].modelIndicies[i - 1]].normalSmooth += interpolatedNormal;
+					meshes[index].modelVerticies[meshes[index].modelIndicies[i]].normalSmooth += interpolatedNormal;
+
 					newPrimative.setMaterialIndex(meshes[index].materialID);
 					modelTriangles.emplace_back(newPrimative);
 				}
@@ -96,10 +105,23 @@ std::vector<Triangle> T_racer_Resource_SkeletalMesh::draw(T_racer_MaterialManage
 				{
 					vIndex = 0;
 					newPrimative = Triangle(verts[0], verts[1], verts[2]);
+
+					// Add the 
+					//interpolatedNormal = T_racer_Math::cross(verts[1].position - verts[0].position, verts[2].position - verts[0].position);
+					//meshes[vIndex].modelVerticies[meshes[vIndex].modelIndicies[i - 2]].normalSmooth += interpolatedNormal;
+					//meshes[vIndex].modelVerticies[meshes[vIndex].modelIndicies[i - 1]].normalSmooth += interpolatedNormal;
+					//meshes[vIndex].modelVerticies[meshes[vIndex].modelIndicies[i]].normalSmooth += interpolatedNormal;
+
+
 					newPrimative.setMaterialIndex(meshes[j].materialID);
 					modelTriangles.emplace_back(newPrimative);
 				}
 			}
+
+			//for (T_racer_Vertex& vertex :  meshes[j].modelVerticies) 
+			//{
+			//	vertex.normalSmooth.normaliseSelf();
+			//}
 		}
 	}
 

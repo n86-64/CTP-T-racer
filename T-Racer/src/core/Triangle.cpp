@@ -6,6 +6,16 @@
 #include "Triangle.h"
 
 
+Triangle::Triangle(T_racer_Vertex* v1, T_racer_Vertex* v2, T_racer_Vertex* v3)
+{
+	verticies[0] = *v1;
+	verticies[1] = *v2;
+	verticies[2] = *v3;
+
+	// TODO - Sum the normals beforehand and then set the normals of the triangles.
+
+}
+
 Triangle::Triangle(T_racer_Vertex v1, T_racer_Vertex v2, T_racer_Vertex v3)
 {
 	verticies[0] = v1;
@@ -244,6 +254,11 @@ T_racer_Math::Vector Triangle::getNormal()
 	T_racer_Math::Vector  v2v0 = verticies[2].position - verticies[0].position;
 
 	return T_racer_Math::cross(v1v0, v2v0).normalise();
+}
+
+T_racer_Math::Vector Triangle::getSmoothNormal(T_racer_TriangleIntersection& intersect)
+{
+	return (verticies[0].normal * intersect.w) + (verticies[1].normal * intersect.u) + (verticies[2].normal * intersect.v);
 }
 
 T_racer_Math::Vector Triangle::getMinVector()

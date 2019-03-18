@@ -40,6 +40,8 @@ public:
 
 	virtual T_racer_TriangleIntersection  doesIntersect(T_racer_Math::Ray* ray) = 0;
 
+	T_racer_Math::Colour getIntensity() { return intensity; }
+
 protected:
 	T_racer_Math::Colour	intensity = T_racer_Math::Colour(10.0f, 10.0f, 10.0f);
 

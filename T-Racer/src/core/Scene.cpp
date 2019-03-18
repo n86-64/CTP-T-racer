@@ -184,6 +184,7 @@ T_racer_TriangleIntersection T_racer_Scene::hitsLightSource(T_racer_Math::Ray* r
 		if (intersection.intersection && intersection.t < returnIntersection.t) 
 		{
 			returnIntersection = intersection;
+			returnIntersection.lightID = i;
 		}
 	}
 

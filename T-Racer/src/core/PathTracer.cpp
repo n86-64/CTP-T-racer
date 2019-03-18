@@ -99,7 +99,10 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		{
 			terminatePath = !RussianRoulette(pathTroughput, &lightPath[pathIndex]);
 		}
-
+		if (pathIndex > 100)
+		{
+			terminatePath = true;
+		}
 
 		// else trace the scene again.
 		// If we hit a light source also terminate the path.
@@ -112,6 +115,11 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 			if (lightSourceHit.intersection && lightSourceHit.t < intersectDisc.t)
 			{
 				terminatePath = true;
+				pathIndex++;
+				lightPath.emplace_back(T_racer_Path_Vertex());
+				lightPath[pathIndex].pathColour = pathTroughput * sceneObject->retrieveLightByIndex(lightSourceHit.lightID)->getIntensity();
+				lightPath[pathIndex].hitPoint = lightPath[pathIndex - 1].hitPoint + (wi.direction * intersectDisc.t);
+				lightPath[pathIndex].isOnLightSource = true;
 			}
 			else if (intersectDisc.triangleID != T_RACER_TRIANGLE_NULL)
 			{
@@ -124,7 +132,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				lightPath[pathIndex].BRDFMaterialID = primative->getMaterialIndex();
 				lightPath[pathIndex].hitPoint = lightPath[pathIndex - 1].hitPoint + (wi.direction * intersectDisc.t);
 				lightPath[pathIndex].wo = -wi.direction;
-				lightPath[pathIndex].normal = primative->getNormal().normalise();
+				lightPath[pathIndex].normal = primative->normal;
 				lightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
 				lightPath[pathIndex].orthnormalBasis = primative->createShadingFrame(lightPath[pathIndex].normal);
 				lightPath[pathIndex].pathColour = pathTroughput;
@@ -209,7 +217,15 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					
 					for (int i = 0; i < lightPath.size(); i++)
 					{
-						lightValue.colour = lightValue.colour + calculateDirectLighting(&lightPath[i]).colour;
+						if (lightPath[i].isOnLightSource && lightPath[i - 1].isFresnelSurface == true) 
+						{
+							// Do something diffrent.
+							lightValue.colour += lightPath[i].pathColour.colour;
+						}
+						else 
+						{
+							lightValue.colour = lightValue.colour + calculateDirectLighting(&lightPath[i]).colour;
+						}
 					}
 
 				}

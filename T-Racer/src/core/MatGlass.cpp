@@ -1,3 +1,5 @@
+#include <cassert>
+
 #include "helpers/Math_neumeric.h"
 #include "helpers/Math_Ray.h"
 #include "helpers/Math_Error.h"
@@ -111,7 +113,7 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::SampleMaterial(T_racer_M
 		wo_local.Y = -wo_local.Y;
 		wi.direction = T_racer_Math::transposeMatrix3x3(pathVertex.orthnormalBasis) * wo_local;
 		wi.probabilityDensity = reflw;
-		return col;
+		return (albedo * col);
 	}
 
 	bool entering = (wo_local.Z > 0.0f);
@@ -131,11 +133,11 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::SampleMaterial(T_racer_M
 	float SinIoverSinT = sinI2 / sinT2;
 	SinIoverSinT = sqrtf(SinIoverSinT);
 
-	wi.direction = T_racer_Math::transposeMatrix3x3(pathVertex.orthnormalBasis) * T_racer_Math::Vector(SinIoverSinT * -wo_local.X, SinIoverSinT * -wo_local.Y, cost);
+	wi.direction = T_racer_Math::transposeMatrix3x3(pathVertex.orthnormalBasis) * T_racer_Math::Vector(ratio * -wo_local.X, ratio * -wo_local.Y, cost);
 	wi.probabilityDensity = 1.0f - reflw;
 
 	T_racer_Math::Vector  wi_local = pathVertex.orthnormalBasis * wi.direction;
-	col.colour = (col.colour / fabsf(wi_local.Z)) * (T_racer_Math::Colour(1, 1, 1).colour - col.colour) * ((et*et) / (ei*ei));
+	col.colour = (albedo.colour / fabsf(wi_local.Z)) * (T_racer_Math::Colour(1, 1, 1).colour - col.colour) * ((et*et) / (ei*ei));
 
 	return col;
 }
@@ -168,7 +170,9 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::evaluateFresnel(float co
 	{
 		float cosT = sqrtf(fmaxf(0.0f, 1.0f - sint * sint));
 		contribution = reflectanceFresnel(fabsf(cosi), cosT, ei, et);
+		assert(contribution.colour.X <= 1.0f && contribution.colour.Y <= 1.0f && contribution.colour.Z <= 1.0f);
 	}
+
 
 	return contribution;
 }
@@ -179,10 +183,10 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::reflectanceFresnel(float
 	T_racer_Math::Colour etCol(et, et, et);
 
 	T_racer_Math::Colour parallelLight;
-	parallelLight.colour = (etCol.colour * cosI) - (eiCol.colour * cosT) / (etCol.colour * cosI) + (eiCol.colour * cosT);
+	parallelLight.colour = ((etCol.colour * cosI) - (eiCol.colour * cosT)) / ((etCol.colour * cosI) + (eiCol.colour * cosT));
 	
 	T_racer_Math::Colour purpendicularLight;
-	purpendicularLight.colour = (eiCol.colour * cosI) - (etCol.colour * cosT) / (eiCol.colour * cosI) + (etCol.colour * cosT);
+	purpendicularLight.colour = ((eiCol.colour * cosI) - (etCol.colour * cosT)) / ((eiCol.colour * cosI) + (etCol.colour * cosT));
 
 	T_racer_Math::Colour returnValue;
 	returnValue.colour = ((parallelLight.colour * parallelLight.colour) + (purpendicularLight.colour * purpendicularLight.colour)) * 0.5f;

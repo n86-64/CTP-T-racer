@@ -38,11 +38,17 @@ namespace T_racer_Math
 			);
 		}
 
-		Colour operator*(Colour& col) 
+		Colour operator*(Colour col) 
 		{
 			Vector val = this->colour * col.colour;
 			return Colour(val.X, val.Y, val.Z);
 		}
+
+		//Colour operator*(Colour col)
+		//{
+		//	Vector val = this->colour * col.colour;
+		//	return Colour(val.X, val.Y, val.Z);
+		//}
 
 		Colour operator*(float scalier)
 		{
