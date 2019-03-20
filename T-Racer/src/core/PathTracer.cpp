@@ -90,6 +90,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		pathTroughput = pathTroughput * fabsf(T_racer_Math::dot(wi.direction, lightPath[pathIndex].normal));
 		pathTroughput = pathTroughput / wi.probabilityDensity;
 
+		assert(!isnan(pathTroughput.colour.X) && !isnan(pathTroughput.colour.Y) && !isnan(pathTroughput.colour.Z));
 
 	    lightPath[pathIndex].pathColour = pathTroughput;
 
@@ -99,7 +100,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		{
 			terminatePath = !RussianRoulette(pathTroughput, &lightPath[pathIndex]);
 		}
-		if (pathIndex > 100)
+		if (pathIndex > 10)
 		{
 			terminatePath = true;
 		}
