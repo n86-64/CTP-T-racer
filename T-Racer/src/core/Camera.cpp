@@ -21,9 +21,9 @@ T_racer_CameraTransform T_racer_Camera::getCameraTransform()
 
 void T_racer_Camera::getCameraCords(T_racer_Math::Vector& w, T_racer_Math::Vector& u, T_racer_Math::Vector& v)
 {
-	w = (position - (position + target)).normalise();
-	u = (T_racer_Math::cross(T_racer_Math::up, w)).normalise();
-	v = T_racer_Math::cross(w, u);
+	w = (position - (position + target)).normalise(); // view forward vector
+	u = (T_racer_Math::cross(T_racer_Math::up, w)).normalise(); // top vector
+	v = T_racer_Math::cross(w, u); // right vector
 }
 
 float T_racer_Camera::cameraImportance(T_racer_Math::Vector camDirection)
@@ -39,6 +39,7 @@ float T_racer_Camera::cameraImportance(T_racer_Math::Vector camDirection)
 void T_racer_Camera::setupCamera()
 {
 	// Shirley Method. 
+	// position + target = forward view vector. Direction the camera is facing. 
 	float aspectRatio = getAspectRatio();
 	float theta = fov;
 	float half_height = tan(theta / 2);
@@ -51,11 +52,44 @@ void T_racer_Camera::setupCamera()
 	lower_left_corner = position - u * half_width - v * half_height - w;
 	horizontal = u * half_width * 2;
 	vertical = v * half_height * 2;
+	top = position + u * half_height + v; 
 
-	cameraPlane = T_racer_Math::dot(position + target, T_racer_Math::up);
+	cameraPlane = T_racer_Math::dot((position - (position + target)), T_racer_Math::up);
 
 	// Calculates camera alpha term.
 	A = 2.0f * tanf(0.5f * ((fov / 360.0f) * 2.0f * M_PI));
 	A *= A;
 	A *= aspectRatio;
+}
+
+int T_racer_Camera::pixelPointOnCamera(T_racer_Math::Vector point)
+{
+	float t;
+	T_racer_Math::Vector dirPoint;
+	T_racer_Math::Vector v;
+	dirPoint = point - position;
+	dirPoint.normalise();
+
+	T_racer_Math::Vector v;
+	t = cameraPlane / T_racer_Math::dot(dirPoint, position + target);
+	dirPoint = dirPoint * t;
+	dirPoint = -(dirPoint - top);
+
+	int x = 0;
+	int y = 0;
+	v = dirPoint / horizontal;
+	x = T_racer_Math::firstPositiveInVec(horizontal, v);
+	v = dirPoint / vertical;
+	y = T_racer_Math::firstPositiveInVec(vertical, v);
+
+	int index = 0;
+
+	if (x > -1 && x < resX && y > -1 && y < resY) 
+	{
+		return  (y * (int)resX) + x;
+	}
+	else 
+	{
+		return -1;
+	}
 }

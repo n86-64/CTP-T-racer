@@ -46,11 +46,14 @@ public:
 
 	void setupCamera();
 
+	int pixelPointOnCamera(T_racer_Math::Vector point);
+
 public:
 	// Camera coordiante values.
 	T_racer_Math::Vector lower_left_corner;
 	T_racer_Math::Vector horizontal;
 	T_racer_Math::Vector vertical;
+	T_racer_Math::Vector top;
 
 private:
 	// Light tracer values.

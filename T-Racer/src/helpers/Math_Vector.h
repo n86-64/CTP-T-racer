@@ -15,6 +15,8 @@
 #include "assimp/vector2.h"
 #include "assimp/vector3.h"
 
+#include "helpers/Math_Error.h"
+
 // A set of vector operations that can be called at any time. 
 namespace T_racer_Math
 {
@@ -120,6 +122,22 @@ namespace T_racer_Math
 			(a.Z * b.X) - (a.X * b.Z),
 			(a.X * b.Y) - (a.Y * b.X)
 		);
+	}
+
+	inline float firstPositiveInVec(Vector& v1, Vector& v2) 
+	{
+		Vector v11(fabsf(v1.X), fabsf(v1.Y), fabsf(v1.Z));
+
+		if (v11.X > v11.Y && v11.X > v11.Z) 
+		{
+			return (v2.X + T_RACER_EPSILON);
+		}
+		else if (v11.Y > v11.X && v11.Y > v11.Z) 
+		{
+			return (v2.Y + T_RACER_EPSILON);
+		}
+
+		return (v2.Z + T_RACER_EPSILON);
 	}
 
 	// A series of vector constants.
