@@ -25,3 +25,13 @@ void T_racer_Camera::getCameraCords(T_racer_Math::Vector& w, T_racer_Math::Vecto
 	u = (T_racer_Math::cross(T_racer_Math::up, w)).normalise();
 	v = T_racer_Math::cross(w, u);
 }
+
+float T_racer_Camera::cameraImportance(T_racer_Math::Vector camDirection)
+{
+	float theta;
+	theta = T_racer_Math::dot(camDirection, position + target);
+	theta = theta * theta * theta;
+	theta = A / theta;
+
+	return theta;
+}
