@@ -51,6 +51,7 @@ struct Image
 		colour_values = new T_racer_Math::Colour[w * h];
 	};
 
+
 	T_racer_Math::Colour  operator()(int x, int y) 
 	{
 		int point = (y * width) + x;
@@ -61,6 +62,11 @@ struct Image
 	{
 		int point = (y * width) + x;
 		colour_values[point] = col;
+	}
+
+	void  operator()(int index, T_racer_Math::Colour col)
+	{
+		colour_values[index] = col;
 	}
 
 	Image operator=(const Image& image) 

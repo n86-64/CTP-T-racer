@@ -31,6 +31,7 @@ public:
 	float getHeight() const { return resY; }
 
 	void setColourValue(int x, int y, T_racer_Math::Colour newCol);
+	void setColourValue(int index, T_racer_Math::Colour newCol);
 
 	bool     quit = false;
 

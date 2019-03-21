@@ -15,7 +15,7 @@ constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived.
 
 // Temporary solution until the bidirectional elements are added.
 #define LIGHT_TRACER_INTEGRATOR
-#define PATH_TRACER_INTEGRATOR
+//#define PATH_TRACER_INTEGRATOR
 
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
@@ -35,7 +35,7 @@ T_racer_Renderer_PathTracer::~T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	//threadCount = 1;
+	threadCount = 1;
 	
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -59,7 +59,7 @@ void T_racer_Renderer_PathTracer::Render()
 	}
 }
 
-void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath)
+void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath, int startingPath)
 {
 	T_racer_TriangleIntersection  lightSourceHit;
 	T_racer_TriangleIntersection  intersectDisc;
@@ -74,7 +74,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	T_racer_SampledDirection  wi;
 	T_racer_Math::Colour  brdfValue;
 
-	int pathIndex = 0;
+	int pathIndex = startingPath;
 	while (!terminatePath)
 	{
 		surfaceMaterial = sceneObject->materials.retrieveMaterial(lightPath[pathIndex].BRDFMaterialID);
@@ -122,6 +122,10 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				lightPath[pathIndex].hitPoint = lightPath[pathIndex - 1].hitPoint + (wi.direction * intersectDisc.t);
 				lightPath[pathIndex].isOnLightSource = true;
 				lightPath[pathIndex].lightSourceId = lightSourceHit.lightID;
+
+#ifdef LIGHT_TRACER_INTEGRATOR
+				lightPath[pathIndex].lightSourceId = lightPath[0].lightSourceId;
+#endif
 			}
 			else if (intersectDisc.triangleID != T_RACER_TRIANGLE_NULL)
 			{
@@ -138,6 +142,10 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				lightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
 				lightPath[pathIndex].orthnormalBasis = primative->createShadingFrame(lightPath[pathIndex].normal);
 				lightPath[pathIndex].pathColour = pathTroughput;
+
+#ifdef LIGHT_TRACER_INTEGRATOR
+				lightPath[pathIndex].lightSourceId = lightPath[0].lightSourceId;
+#endif
 
 			}
 			else
@@ -170,7 +178,6 @@ void T_racer_Renderer_PathTracer::tracePathLight(T_racer_Math::Colour& irradianc
 	{
 
 
-		
 		if (pathIndex > T_RACER_MINIMUM_BOUNCE)
 		{
 			terminatePath = !RussianRoulette(pathTroughput, &lightPath[pathIndex]);
@@ -190,6 +197,8 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 	T_racer_Math::Colour irradiance;
 	T_racer_Math::Colour lightValue;
 	T_racer_Math::Colour lightSigma;
+
+	T_racer_Math::Ray ray;
 
 	std::vector<T_racer_Path_Vertex>  lightPath;
 	lightPath.reserve(T_RACER_PATH_INITIAL_COUNT);
@@ -216,7 +225,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
 
 #ifdef  PATH_TRACER_INTEGRATOR
-			T_racer_Math::Ray ray = sceneObject->generateRay((tX / width) , (tY / height));
+			ray = sceneObject->generateRay((tX / width) , (tY / height));
 				
 			// Test to see if it hits a light source
 			intersectionDisc = sceneObject->trace(ray);
@@ -239,7 +248,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					lightPath[0].pathColour = irradiance;
 
 					// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
-					tracePath(ray, irradiance, lightPath);
+					tracePath(ray, irradiance, lightPath, 0);
 					
 					for (int i = 0; i < lightPath.size(); i++)
 					{
@@ -255,6 +264,12 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					}
 
 			}
+
+			if (display->quit) { return; }
+			totalRadiance[tX + ((int)tWidth * tY)].colour = totalRadiance[tX + ((int)tWidth * tY)].colour + lightValue.colour;
+			lightPath.clear();
+
+			display->setColourValue(tX, (height - 1) - tY, totalRadiance[tX + ((int)tWidth * tY)] / sampleCount);
 #endif 
 
 			// light tracer integrator. 
@@ -281,16 +296,17 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			{
 				Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
 				lightPath.emplace_back(T_racer_Path_Vertex());
-				lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
-				lightPath[0].hitPoint = ray.position + (ray.direction * intersectionDisc.t);
-				lightPath[0].normal = primative->normal;
-				lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
-				lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
-				lightPath[0].wo = ray.getincomingRayDirection();
-				lightPath[0].pathColour = irradiance;
+				lightPath[1].BRDFMaterialID = primative->getMaterialIndex();
+				lightPath[1].hitPoint = ray.position + (ray.direction * intersectionDisc.t);
+				lightPath[1].normal = primative->normal;
+				lightPath[1].uv = primative->interpolatePoint(intersectionDisc);
+				lightPath[1].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
+				lightPath[1].wo = ray.getincomingRayDirection();
+				lightPath[1].pathColour = irradiance;
+				lightPath[1].lightSourceId = lightPath[0].lightSourceId;
 
 				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
-				tracePath(ray, irradiance, lightPath);
+				tracePath(ray, irradiance, lightPath, 1);
 
 				for (int i = 0; i < lightPath.size(); i++)
 				{
@@ -301,19 +317,18 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					//}
 					//else
 					//{
-						lightValue.colour = lightValue.colour + directLightingLightTracer(&lightPath[i]).colour;
+					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
+					if (imagePlaneIndex != -1) 
+					{
+						totalRadiance[imagePlaneIndex].colour +=  directLightingLightTracer(&lightPath[i]).colour;
+						display->setColourValue(imagePlaneIndex, totalRadiance[imagePlaneIndex] / sampleCount);
+					}
+						
 				//	}
 				}
 
 			}
 #endif
-
-				
-			if (display->quit) { return; }
-			totalRadiance[tX + ((int)tWidth * tY)].colour = totalRadiance[tX + ((int)tWidth * tY)].colour + lightValue.colour;
-			lightPath.clear();
-
-			display->setColourValue(tX, (height - 1) - tY, totalRadiance[tX + ((int)tWidth * tY)] / sampleCount);
 		}
 
 		compleatedTiles++;
@@ -411,9 +426,8 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::directLightingLightTracer(T_ra
 	}
 	
 	float gTermCamera = cameraTerm(pathVertex);
-	int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(pathVertex->hitPoint);
 
-	if (gTermCamera > 0 && imagePlaneIndex == -1) 
+	if (gTermCamera > 0) 
 	{
 		return Ld; 
 	}

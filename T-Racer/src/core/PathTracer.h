@@ -24,7 +24,7 @@ public:
 	virtual void postDisplayUpdate() override { while (!display->quit) { display->update(); } }
 
 protected:
-	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath) override;
+	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath, int startingPath) override;
 	void tracePathLight(T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath);
 
 private:
@@ -34,7 +34,7 @@ private:
 	
 	// light tracer functions.
 	float cameraTerm(T_racer_Path_Vertex* pathVertex);
-	T_racer_Math::Colour geometryTermLightTracer(T_racer_Path_Vertex* pathVertex);
+	T_racer_Math::Colour directLightingLightTracer(T_racer_Path_Vertex* pathVertex);
 
 private:
 	T_racer_Math::Colour*  totalRadiance = nullptr;
