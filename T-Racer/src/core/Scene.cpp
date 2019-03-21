@@ -153,6 +153,13 @@ T_racer_Light_Base* T_racer_Scene::retrieveOneLightSource()
 	return sceneLights[rand() % sceneLights.size()].get();
 }
 
+T_racer_Light_Base * T_racer_Scene::retrieveOneLightSource(int & lightIndex)
+{
+	srand(NULL);
+	lightIndex = rand() % sceneLights.size();
+	return sceneLights[lightIndex].get();
+}
+
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 {
 	T_racer_Math::Vector  camPos = mainCamera->getPosition();

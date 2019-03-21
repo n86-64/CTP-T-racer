@@ -35,6 +35,7 @@ public:
 	virtual T_racer_TriangleIntersection doesIntersect(T_racer_Math::Ray* ray) override;
 
 	virtual T_racer_Path_Vertex SamplePoint(float& pdf) override;
+	virtual T_racer_SampledDirection SampleDirection(T_racer_Math::Sampler* sampler, T_racer_Path_Vertex* pathVertex);
 
 private:
 	float pdfPoint = 0.0f;
