@@ -35,3 +35,27 @@ float T_racer_Camera::cameraImportance(T_racer_Math::Vector camDirection)
 
 	return theta;
 }
+
+void T_racer_Camera::setupCamera()
+{
+	// Shirley Method. 
+	float aspectRatio = getAspectRatio();
+	float theta = fov;
+	float half_height = tan(theta / 2);
+	float half_width = aspectRatio * half_height;
+
+	T_racer_Math::Vector w, u, v;
+	getCameraCords(w, u, v);
+
+	lower_left_corner = T_racer_Math::Vector(-half_width, -half_height, -1.0f);
+	lower_left_corner = position - u * half_width - v * half_height - w;
+	horizontal = u * half_width * 2;
+	vertical = v * half_height * 2;
+
+	cameraPlane = T_racer_Math::dot(position + target, T_racer_Math::up);
+
+	// Calculates camera alpha term.
+	A = 2.0f * tanf(0.5f * ((fov / 360.0f) * 2.0f * M_PI));
+	A *= A;
+	A *= aspectRatio;
+}

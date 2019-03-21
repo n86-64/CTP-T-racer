@@ -105,6 +105,7 @@ void T_racer_Scene::setDisplay(T_racer_Display* newDisplay)
 	display = newDisplay;
 	frameData.setSize(display->getWidth(), display->getHeight());
 	mainCamera->setResolution(display->getWidth(), display->getHeight());
+	mainCamera->setupCamera();
 }
 
 void T_racer_Scene::setupScene()
@@ -154,21 +155,8 @@ T_racer_Light_Base* T_racer_Scene::retrieveOneLightSource()
 
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 {
-	// Shirley Method. 
-	float theta = mainCamera->getFoV();
-	float half_height = tan(theta / 2);
-	float half_width = mainCamera->getAspectRatio() * half_height;
-	T_racer_Math::Vector origin = mainCamera->getPosition();
-
-	T_racer_Math::Vector w, u, v; 
-	mainCamera->getCameraCords(w, u, v);
-
-	T_racer_Math::Vector lower_left_corner(-half_width, -half_height, -1.0f);
-	lower_left_corner = origin - u * half_width  - v * half_height - w; 
-	T_racer_Math::Vector horizontal =  u * half_width * 2 ;
-	T_racer_Math::Vector vertical = v * half_height * 2;
-
-	T_racer_Math::Ray cameraRay = T_racer_Math::Ray(origin, ((lower_left_corner + horizontal * xPos + vertical * yPos) - origin).normalise());
+	T_racer_Math::Vector  camPos = mainCamera->getPosition();
+	T_racer_Math::Ray cameraRay = T_racer_Math::Ray(camPos, ((mainCamera->lower_left_corner + mainCamera->horizontal * xPos + mainCamera->vertical * yPos) - camPos).normalise());
 
 	return cameraRay;
 }

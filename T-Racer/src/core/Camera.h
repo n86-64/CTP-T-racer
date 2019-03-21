@@ -42,13 +42,23 @@ public:
 
 	void getCameraCords(T_racer_Math::Vector& w, T_racer_Math::Vector& u, T_racer_Math::Vector& v);
 
-	float cameraImportance(T_racer_Math::Vector camDirection);
+	float cameraImportance(T_racer_Math::Vector wi);
+
+	void setupCamera();
+
+public:
+	// Camera coordiante values.
+	T_racer_Math::Vector lower_left_corner;
+	T_racer_Math::Vector horizontal;
+	T_racer_Math::Vector vertical;
 
 private:
 	// Light tracer values.
 	float A;
 	float cameraPlane;
 
+
+private:
 	float fov = radians(90.0f); // fov on the y-axis.
 	float resX, resY;
 	float near = 0.1f, far = 100.0f;
