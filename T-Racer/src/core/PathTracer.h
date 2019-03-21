@@ -24,13 +24,17 @@ public:
 	virtual void postDisplayUpdate() override { while (!display->quit) { display->update(); } }
 
 protected:
-	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance) override;
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath) override;
+	void tracePathLight(T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath);
 
 private:
 	bool RussianRoulette(T_racer_Math::Colour& colour, T_racer_Path_Vertex* pathIndex);
 	T_racer_Math::Colour calculateDirectLighting(T_racer_Path_Vertex* pathIndex);
 	float geometryTerm(T_racer_Path_Vertex* pathVertex, T_racer_Path_Vertex *lightVertex);
+	
+	// light tracer functions.
+	float cameraTerm(T_racer_Path_Vertex* pathVertex);
+	T_racer_Math::Colour geometryTermLightTracer(T_racer_Path_Vertex* pathVertex);
 
 private:
 	T_racer_Math::Colour*  totalRadiance = nullptr;

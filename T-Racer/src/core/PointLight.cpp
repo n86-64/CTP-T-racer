@@ -34,6 +34,18 @@ T_racer_TriangleIntersection T_racer_Light_Point::doesIntersect(T_racer_Math::Ra
 	return T_racer_TriangleIntersection();
 }
 
+T_racer_Path_Vertex T_racer_Light_Point::SamplePoint(float& pdf)
+{
+	// Here we should sample a random direction.
+	T_racer_Path_Vertex newPath;
+	newPath.hitPoint = position;
+	newPath.isOnLightSource = true;
+
+	// will add new light paths later.
+
+	return newPath; 
+}
+
 void T_racer_Light_Point::init(jsoncons::key_value<std::string, jsoncons::json> & initValues)
 {
 	position = T_racer_Math::Vector(

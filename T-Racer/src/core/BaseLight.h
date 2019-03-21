@@ -28,6 +28,7 @@ public:
 
 	virtual T_racer_Math::Colour Evaluate(T_racer_Path_Vertex& pathVertex) = 0;
 	virtual T_racer_SampledDirection Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay, T_racer_Path_Vertex& lightSourceVertex) = 0;
+	virtual T_racer_Path_Vertex SamplePoint(float& pdf) = 0; // Made for light tracer.
 	virtual float probabilityDensity(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
 
 	// Determines the cosine value for the light source.

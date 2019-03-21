@@ -38,8 +38,6 @@ public:
 	virtual void postDisplayUpdate() {};
 
 protected:
-
-	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance) = 0;
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath) = 0;
 
 protected:

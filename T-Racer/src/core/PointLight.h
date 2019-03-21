@@ -27,4 +27,8 @@ public:
 
 	virtual T_racer_TriangleIntersection doesIntersect(T_racer_Math::Ray* ray) override;
 
+
+	// Inherited via T_racer_Light_Base
+	virtual T_racer_Path_Vertex SamplePoint(float& pdf) override;
+
 };

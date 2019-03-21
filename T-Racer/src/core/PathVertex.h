@@ -28,4 +28,5 @@ struct T_racer_Path_Vertex
 	bool					isOnLightSource = false;
 	unsigned int			BRDFMaterialID = 0;
 	bool					isPointLightSource = false;
+	int						lightSourceId = -1;
 };

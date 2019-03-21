@@ -64,6 +64,22 @@ T_racer_TriangleIntersection T_racer_Light_Area::doesIntersect(T_racer_Math::Ray
 	return bestIntersection;
 }
 
+T_racer_Path_Vertex T_racer_Light_Area::SamplePoint(float& pdf)
+{
+	srand(NULL);
+	int triIndex = rand() % triangles.size();
+	T_racer_Math::Sampler sampler;
+
+	T_racer_Path_Vertex initLightPath;
+	initLightPath.hitPoint = triangles[triIndex].samplePoint();
+	initLightPath.isOnLightSource = true;
+	initLightPath.normal = triangles[triIndex].normal;
+	initLightPath.orthnormalBasis = triangles[triIndex].createShadingFrame(initLightPath.normal);
+	pdf *= 1 / triangles[triIndex].getSurfaceArea();
+
+	return initLightPath;
+}
+
 void T_racer_Light_Area::init(jsoncons::key_value<std::string, jsoncons::json>& initValues)
 {
 	// Get array of triangles here. 
@@ -71,21 +87,6 @@ void T_racer_Light_Area::init(jsoncons::key_value<std::string, jsoncons::json>& 
 	triangles.reserve((int)size / 3);
 
 	T_racer_Vertex  v[3];
-
-	//for (int i = 0; i < size; i++) 
-	//{
-	//	v[i % 3].position = T_racer_Math::Vector(initValues.value()["Vertices"][i][0].as_double(),
-	//		initValues.value()["Vertices"][i][1].as_double(),
-	//		initValues.value()["Vertices"][i][2].as_double());
-	//	
-	//	// create the traingle. 
-	//	if (i % 2 == 0 && i != 0) 
-	//	{
-	//		triangles.emplace_back(v[0], v[1], v[2]);
-	//	}
-	//}
-
-
 	for (int i = 0; i < size; i++) 
 	{
 		if (i % 3 == 0 && i != 0)

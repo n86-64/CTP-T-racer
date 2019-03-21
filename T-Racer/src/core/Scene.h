@@ -42,13 +42,15 @@ public:
 	void setName(std::string sceneName) { name = sceneName; }
 
 	void loadModel(std::string modelName);
-
 	void loadModelAssimp(std::string modelName, std::string matType);
 
-	void addLight(T_racer_Light_Base*  newLight) { sceneLights.emplace_back(newLight); }; // Adds a new light to the scene.
+	void addLight(T_racer_Light_Base*  newLight) { sceneLights.emplace_back(newLight); } // Adds a new light to the scene.
+	float getProbabilityDensityLightSourceSelection() { return 1.0f / sceneLights.size(); }
 
 	// Render a single frame and add to a display. 
 	void setDisplay(T_racer_Display* newDisplay); 
+
+	T_racer_Camera* getMainCamera() { return mainCamera; }
 
 	// Renderer Routienes
 	void setupScene();
@@ -73,13 +75,14 @@ public:
 	T_racer_MaterialManager				materials;
 	T_racer_TextureManager				textures;
 
+	T_racer_Camera* mainCamera = nullptr;
+
 private:
 	std::string											name = "NULLScene"; 
 	std::vector<std::unique_ptr<T_racer_Resource>>		sceneResources;
 	std::vector<Triangle>								sceneTriangles;
 	std::vector<std::unique_ptr<T_racer_Light_Base>>	sceneLights;
 
-	T_racer_Camera* mainCamera = nullptr;
 	T_racer_Display* display;
 
 	Image          frameData;

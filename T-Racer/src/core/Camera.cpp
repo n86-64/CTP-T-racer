@@ -54,9 +54,9 @@ void T_racer_Camera::setupCamera()
 	vertical = v * half_height * 2;
 	top = position + u * half_height + v; 
 
-	cameraPlane = T_racer_Math::dot((position - (position + target)), T_racer_Math::up);
+	cameraPlane = T_racer_Math::dot((position - (position + target)), top);
 
-	// Calculates camera alpha term.
+	// Calculates camera A term.
 	A = 2.0f * tanf(0.5f * ((fov / 360.0f) * 2.0f * M_PI));
 	A *= A;
 	A *= aspectRatio;
@@ -70,7 +70,6 @@ int T_racer_Camera::pixelPointOnCamera(T_racer_Math::Vector point)
 	dirPoint = point - position;
 	dirPoint.normalise();
 
-	T_racer_Math::Vector v;
 	t = cameraPlane / T_racer_Math::dot(dirPoint, position + target);
 	dirPoint = dirPoint * t;
 	dirPoint = -(dirPoint - top);
