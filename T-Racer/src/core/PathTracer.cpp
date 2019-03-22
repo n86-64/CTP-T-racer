@@ -326,8 +326,10 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 						
 				//	}
 				}
-
 			}
+
+			if (display->quit) { return; }
+			lightPath.clear();
 #endif
 		}
 
@@ -427,7 +429,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::directLightingLightTracer(T_ra
 	
 	float gTermCamera = cameraTerm(pathVertex);
 
-	if (gTermCamera > 0) 
+	if (gTermCamera < 0) 
 	{
 		return Ld; 
 	}

@@ -77,9 +77,9 @@ int T_racer_Camera::pixelPointOnCamera(T_racer_Math::Vector point)
 	int x = 0;
 	int y = 0;
 	v = dirPoint / horizontal;
-	x = T_racer_Math::firstPositiveInVec(horizontal, v);
+	x = std::round(T_racer_Math::firstPositiveInVec(horizontal, v));
 	v = dirPoint / vertical;
-	y = T_racer_Math::firstPositiveInVec(vertical, v);
+	y = std::round(T_racer_Math::firstPositiveInVec(vertical, v));
 
 	int index = 0;
 
