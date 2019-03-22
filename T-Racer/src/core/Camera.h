@@ -40,7 +40,7 @@ public:
 	T_racer_Math::Vector  getPosition() const { return position; }
 	T_racer_Math::Vector  getForward() { return position + target; }
 
-	void getCameraCords(T_racer_Math::Vector& w, T_racer_Math::Vector& u, T_racer_Math::Vector& v);
+	void getCameraCords(T_racer_Math::Vector& a, T_racer_Math::Vector& b, T_racer_Math::Vector& c);
 
 	float cameraImportance(T_racer_Math::Vector wi);
 
@@ -54,6 +54,8 @@ public:
 	T_racer_Math::Vector horizontal;
 	T_racer_Math::Vector vertical;
 	T_racer_Math::Vector top;
+
+	T_racer_Math::Vector w, u, v;
 
 private:
 	// Light tracer values.

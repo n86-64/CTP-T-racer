@@ -45,7 +45,7 @@
 	{
 		"Type": "Mesh",
 		"MeshName": "CornellSphere.obj",
-		"Mesh Material" : "Glass",
+		"Mesh Material" : "Diffuse",
 		"Colour": [1.0, 1.0, 1.0],
 		"Texture": "Mirror"
 	}

@@ -136,8 +136,10 @@ namespace T_racer_Math
 		{
 			return (v2.Y + T_RACER_EPSILON);
 		}
-
-		return (v2.Z + T_RACER_EPSILON);
+		else 
+		{
+			return (v2.Z + T_RACER_EPSILON);
+		}
 	}
 
 	// A series of vector constants.
