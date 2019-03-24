@@ -46,6 +46,11 @@ float T_racer_Light_Area::surfaceCosine(T_racer_Path_Vertex & vertex)
 	return 0.0f;
 }
 
+T_racer_Math::Vector T_racer_Light_Area::getLightSurfaceNormal(int surfaceIndex)
+{
+	return triangles[surfaceIndex].getNormal();
+}
+
 T_racer_TriangleIntersection T_racer_Light_Area::doesIntersect(T_racer_Math::Ray* ray)
 {
 	T_racer_TriangleIntersection intersect;

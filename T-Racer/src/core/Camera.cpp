@@ -51,7 +51,7 @@ void T_racer_Camera::setupCamera()
 	lower_left_corner = position - u * half_width - v * half_height - w;
 	horizontal = u * half_width * 2;
 	vertical = v * half_height * 2;
-	top = w + u * half_height + v * half_width; 
+	top = position + u * half_height + v * half_width + w; 
 
 	cameraPlane = T_racer_Math::dot(w, top);
 
@@ -85,7 +85,7 @@ int T_racer_Camera::pixelPointOnCamera(T_racer_Math::Vector point)
 
 	if (x > -1 && x < resX && y > -1 && y < resY) 
 	{
-		return  (y * (int)resX) + x;
+		return (y * (int)resX) + x;
 	}
 	else 
 	{
