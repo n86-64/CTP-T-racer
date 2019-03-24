@@ -102,7 +102,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		{
 			terminatePath = !RussianRoulette(pathTroughput, &lightPath[pathIndex]);
 		}
-		if (pathIndex > 10)
+		if (pathIndex > 100)
 		{
 			terminatePath = true;
 		}

@@ -22,14 +22,14 @@ T_racer_CameraTransform T_racer_Camera::getCameraTransform()
 void T_racer_Camera::getCameraCords(T_racer_Math::Vector& a, T_racer_Math::Vector& b, T_racer_Math::Vector& c)
 {
 	a = (position - (position + target)).normalise(); // view forward vector
-	b = (T_racer_Math::cross(T_racer_Math::up, w)).normalise(); // top vector
-	c = T_racer_Math::cross(w, u); // right vector
+	b = (T_racer_Math::cross(T_racer_Math::up, w)).normalise(); // right vector
+	c = T_racer_Math::cross(w, u); // tup vector
 }
 
 float T_racer_Camera::cameraImportance(T_racer_Math::Vector camDirection)
 {
 	float theta;
-	theta = T_racer_Math::dot(camDirection, position + target);
+	theta = T_racer_Math::dot(camDirection, w);
 	theta = theta * theta * theta;
 	theta = A / theta;
 
@@ -51,7 +51,8 @@ void T_racer_Camera::setupCamera()
 	lower_left_corner = position - u * half_width - v * half_height - w;
 	horizontal = u * half_width * 2;
 	vertical = v * half_height * 2;
-	top = position + u * half_height + v * half_width + w; 
+	top = position + v * half_height + w; 
+	top.Z = fabsf(top.Z);
 
 	cameraPlane = T_racer_Math::dot(w, top);
 
