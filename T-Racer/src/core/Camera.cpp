@@ -22,14 +22,14 @@ T_racer_CameraTransform T_racer_Camera::getCameraTransform()
 void T_racer_Camera::getCameraCords(T_racer_Math::Vector& a, T_racer_Math::Vector& b, T_racer_Math::Vector& c)
 {
 	a = (position - (position + target)).normalise(); // view forward vector
-	b = (T_racer_Math::cross(T_racer_Math::up, w)).normalise(); // top vector
-	c = T_racer_Math::cross(w, u); // right vector
+	b = (T_racer_Math::cross(T_racer_Math::up, w)).normalise(); // right vector
+	c = T_racer_Math::cross(w, u); // tup vector
 }
 
 float T_racer_Camera::cameraImportance(T_racer_Math::Vector camDirection)
 {
 	float theta;
-	theta = T_racer_Math::dot(camDirection, position + target);
+	theta = fabsf(T_racer_Math::dot(camDirection, w)); // Use position + target if you need old state again.
 	theta = theta * theta * theta;
 	theta = A / theta;
 
@@ -88,7 +88,7 @@ int T_racer_Camera::pixelPointOnCamera(T_racer_Math::Vector point)
 
 	if (x > -1 && x < resX && y > -1 && y < resY) 
 	{
-		return  (y * (int)resX) + x;
+		return (y * (int)resX) + x;
 	}
 	else 
 	{

@@ -29,6 +29,8 @@ public:
 	virtual float probabilityDensity(T_racer_Path_Vertex & pathVertex, T_racer_Math::Ray & inputRay) override;
 	virtual float surfaceCosine(T_racer_Path_Vertex & vertex) override;
 
+	virtual T_racer_Math::Vector  getLightSurfaceNormal(int surfaceIndex) override;
+
 	// Add triangles to the light.
 	void  addTriangle(T_racer_Vertex a, T_racer_Vertex b, T_racer_Vertex c) { triangles.emplace_back(Triangle(a,b,c)); }
 

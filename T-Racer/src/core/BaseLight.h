@@ -35,6 +35,7 @@ public:
 	virtual T_racer_Path_Vertex SamplePoint(float& pdf) = 0; // Made for light tracer.
 	virtual float probabilityDensity(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray& inputRay) = 0;
 	virtual T_racer_SampledDirection SampleDirection(T_racer_Math::Sampler* sampler, T_racer_Path_Vertex* pathVertex) { return T_racer_SampledDirection(); };
+	virtual T_racer_Math::Vector  getLightSurfaceNormal(int surfaceIndex) { return T_racer_Math::Vector(); }
 
 	// Determines the cosine value for the light source.
 	virtual float surfaceCosine(T_racer_Path_Vertex& vertex) = 0;

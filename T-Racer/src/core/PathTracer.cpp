@@ -102,7 +102,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 		{
 			terminatePath = !RussianRoulette(pathTroughput, &lightPath[pathIndex]);
 		}
-		if (pathIndex > 10)
+		if (pathIndex > 100)
 		{
 			terminatePath = true;
 		}
@@ -117,13 +117,15 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 
 			if (lightSourceHit.intersection && lightSourceHit.t < intersectDisc.t)
 			{
+				T_racer_Light_Base* light = sceneObject->retrieveLightByIndex(lightSourceHit.lightID);
 				terminatePath = true;
 				pathIndex++;
 				lightPath.emplace_back(T_racer_Path_Vertex());
-				lightPath[pathIndex].pathColour = pathTroughput * sceneObject->retrieveLightByIndex(lightSourceHit.lightID)->getIntensity();
+				lightPath[pathIndex].pathColour = pathTroughput * light->getIntensity();
 				lightPath[pathIndex].hitPoint = lightPath[pathIndex - 1].hitPoint + (wi.direction * intersectDisc.t);
 				lightPath[pathIndex].isOnLightSource = true;
 				lightPath[pathIndex].lightSourceId = lightSourceHit.lightID;
+				lightPath[pathIndex].normal = light->getLightSurfaceNormal(lightSourceHit.lightTriangleID);
 
 //#ifdef LIGHT_TRACER_INTEGRATOR
 //				lightPath[pathIndex].lightSourceId = lightPath[0].lightSourceId;
@@ -320,7 +322,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					//else
 					//{
 					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
-					//std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
+					std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
 					if (imagePlaneIndex != -1) 
 					{
 						totalRadiance[imagePlaneIndex].colour +=  directLightingLightTracer(&lightPath[i]).colour;
