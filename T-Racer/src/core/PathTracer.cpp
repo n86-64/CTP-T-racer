@@ -35,7 +35,7 @@ T_racer_Renderer_PathTracer::~T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	threadCount = 1;
+	//threadCount = 1;
 	
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -283,7 +283,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			float pdfLight = sceneObject->getProbabilityDensityLightSourceSelection();
 			lightPath.emplace_back(lightSource->SamplePoint(pdfLight));
 			lightPath[0].lightSourceId = lightIndex;
-			irradiance = irradiance / pdfLight;
+			irradiance = (irradiance * lightSource->getIntensity()) / pdfLight;
 
 			// Add an aditional light path with direction and trace in said direction.
 			T_racer_SampledDirection  wi = sceneObject->retrieveLightByIndex(lightPath[0].lightSourceId)->SampleDirection(&sampler, &lightPath[0]);
@@ -322,11 +322,11 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					//else
 					//{
 					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
-					std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
+					//std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
 					if (imagePlaneIndex != -1) 
 					{
 						totalRadiance[imagePlaneIndex].colour +=  directLightingLightTracer(&lightPath[i]).colour;
-						display->setColourValue(imagePlaneIndex, totalRadiance[imagePlaneIndex] / sampleCount);
+						//display->setColourValue(imagePlaneIndex, totalRadiance[imagePlaneIndex] / sampleCount);
 					}
 						
 				//	}
@@ -340,11 +340,19 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 		compleatedTiles++;
 
+#ifdef LIGHT_TRACER_INTEGRATOR
+		for (int i = 0; i < display->getWidth() * display->getHeight(); i++)
+		{
+			display->setColourValue(i, totalRadiance[i] / sampleCount);
+		}
+#endif
+
 		if (compleatedTiles == tileCount) 
 		{
 			std::cout << "Sample Count - " << sampleCount << std::endl;
 			compleatedTiles = 0;
 			currentTile = 0;
+
 			sampleCount++;
 		}
 	}
@@ -444,7 +452,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::directLightingLightTracer(T_ra
 
 	if (pathVertex->isOnLightSource) 
 	{
-		Ld = light->getIntensity() * fabsf(T_racer_Math::dot(pathVertex->normal, cameraConnection)) * gTermCamera; 
+		Ld = pathVertex->pathColour * fabsf(T_racer_Math::dot(pathVertex->normal, cameraConnection)) * gTermCamera; 
 	}
 	else 
 	{
@@ -453,7 +461,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::directLightingLightTracer(T_ra
 		T_racer_SampledDirection wi;
 		wi.direction = cameraConnection.normalise();
 		T_racer_Math::Colour brdfValue = surfaceMaterial->Evaluate2(wi, *pathVertex);
-		Ld = pathVertex->pathColour * light->getIntensity() * brdfValue * fabsf(T_racer_Math::dot(pathVertex->normal, cameraConnection)) * gTermCamera;
+		Ld = pathVertex->pathColour * brdfValue * fabsf(T_racer_Math::dot(pathVertex->normal, cameraConnection)) * gTermCamera;
 	}
 
 	return Ld;

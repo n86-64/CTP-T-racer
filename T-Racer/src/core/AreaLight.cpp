@@ -88,12 +88,12 @@ T_racer_Path_Vertex T_racer_Light_Area::SamplePoint(float& pdf)
 T_racer_SampledDirection T_racer_Light_Area::SampleDirection(T_racer_Math::Sampler* sampler, T_racer_Path_Vertex* pathVertex)
 {
 	T_racer_Math::Vector sampleDir;
-	sampleDir = T_racer_Math::projToUnitDisk(sampler->Random());
+	sampleDir = T_racer_Math::projToUnitDisk(sampler->Random2());
 	sampleDir.Z = sqrt(1.0f - ((sampleDir.X * sampleDir.X) + (sampleDir.Y * sampleDir.Y)));
 
 	T_racer_SampledDirection wi;
 	wi.direction = T_racer_Math::transposeMatrix3x3(pathVertex->orthnormalBasis) * sampleDir;
-	wi.probabilityDensity = abs(T_racer_Math::dot(wi.direction, pathVertex->normal)) / M_PI;
+	wi.probabilityDensity = fabsf(T_racer_Math::dot(wi.direction, pathVertex->normal)) / M_PI;
 
 	return wi;
 }

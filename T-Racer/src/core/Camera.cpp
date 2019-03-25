@@ -59,7 +59,7 @@ void T_racer_Camera::setupCamera()
 	cameraPlane = T_racer_Math::dot(w, top);
 
 	// Calculates camera A term.
-	A = 2.0f * tanf(0.5f * ((fov / 360.0f) * 2.0f * M_PI)); // May be converting fov to radians even though its already in radians. Need to confirm. 
+	A = 2.0f * tanf(0.5f * fov); // May be converting fov to radians even though its already in radians. Need to confirm. 
 	A *= A;
 	A *= aspectRatio;
 }
