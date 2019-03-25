@@ -434,7 +434,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::directLightingLightTracer(T_ra
 	T_racer_Math::Colour Ld(0.0f, 0.0f, 0.0f);
 	T_racer_Math::Vector cameraConnection = pathVertex->hitPoint - sceneObject->mainCamera->getPosition();
 	cameraConnection.normaliseSelf();
-	if (pathVertex->isFresnelSurface && !sceneObject->visible(pathVertex->hitPoint, sceneObject->mainCamera->getPosition()))
+	if (pathVertex->isFresnelSurface || !sceneObject->visible(pathVertex->hitPoint, sceneObject->mainCamera->getPosition()))
 	{
 		return Ld;
 	}
@@ -457,7 +457,6 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::directLightingLightTracer(T_ra
 		// not a light source. We need to know the light we are going to trace from.
 		T_racer_Material* surfaceMaterial = sceneObject->materials.retrieveMaterial(pathVertex->BRDFMaterialID);
 		T_racer_SampledDirection wi;
-		wi.direction = cameraConnection.normalise();
 		T_racer_Math::Colour brdfValue = surfaceMaterial->Evaluate2(wi, *pathVertex);
 		Ld = pathVertex->pathColour * brdfValue * fabsf(T_racer_Math::dot(pathVertex->normal, cameraConnection)) * gTermCamera;
 	}
