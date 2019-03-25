@@ -51,7 +51,10 @@ void T_racer_Camera::setupCamera()
 	lower_left_corner = position - u * half_width - v * half_height - w;
 	horizontal = u * half_width * 2;
 	vertical = v * half_height * 2;
-	top = w + u * half_height + v * half_width; 
+	top = w + (u * half_height) + (v * half_width); 
+
+	dx = u * (2.0f * half_width / resX);
+	dy = v * (2.0f * half_height / resY);
 
 	cameraPlane = T_racer_Math::dot(w, top);
 
@@ -69,17 +72,17 @@ int T_racer_Camera::pixelPointOnCamera(T_racer_Math::Vector point)
 	dirPoint = point - position;
 	dirPoint.normaliseSelf();
 
-	t = cameraPlane / T_racer_Math::dot(dirPoint, w);
+	t = cameraPlane / fabsf(T_racer_Math::dot(dirPoint, w));
 	dirPoint = dirPoint * t;
-	std::cout << "t value: " << t << "\n";
+	//std::cout << "t value: " << t << "\n";
 	dirPoint = -(dirPoint - top);
 
 	int x = 0;
 	int y = 0;
-	vPlane = dirPoint / horizontal;
-	x = std::round(T_racer_Math::firstPositiveInVec(horizontal, vPlane));
-	vPlane = dirPoint / vertical;
-	y = std::round(T_racer_Math::firstPositiveInVec(vertical, vPlane));
+	vPlane = dirPoint / dx;
+	x =T_racer_Math::firstPositiveInVec(dx, vPlane);
+	vPlane = dirPoint / dy;
+	y = T_racer_Math::firstPositiveInVec(dy, vPlane);
 
 	int index = 0;
 

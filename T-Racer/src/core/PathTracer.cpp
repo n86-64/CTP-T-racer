@@ -320,7 +320,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 					//else
 					//{
 					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
-					std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
+					//std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
 					if (imagePlaneIndex != -1) 
 					{
 						totalRadiance[imagePlaneIndex].colour +=  directLightingLightTracer(&lightPath[i]).colour;
@@ -425,6 +425,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::directLightingLightTracer(T_ra
 	// Need a refrence to the light source. 
 	T_racer_Math::Colour Ld(0.0f, 0.0f, 0.0f);
 	T_racer_Math::Vector cameraConnection = pathVertex->hitPoint - sceneObject->mainCamera->getPosition();
+	cameraConnection.normaliseSelf();
 	if (pathVertex->isFresnelSurface && !sceneObject->visible(pathVertex->hitPoint, sceneObject->mainCamera->getPosition()))
 	{
 		return Ld;
