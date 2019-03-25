@@ -35,7 +35,7 @@ T_racer_Renderer_PathTracer::~T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	//threadCount = 1;
+	threadCount = 1;
 	
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -121,8 +121,13 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				terminatePath = true;
 				pathIndex++;
 				lightPath.emplace_back(T_racer_Path_Vertex());
-				lightPath[pathIndex].pathColour = pathTroughput * light->getIntensity();
-				lightPath[pathIndex].hitPoint = lightPath[pathIndex - 1].hitPoint + (wi.direction * intersectDisc.t);
+				#ifdef LIGHT_TRACER_INTEGRATOR
+					lightPath[pathIndex].pathColour = pathTroughput;
+				#else
+					lightPath[pathIndex].pathColour = pathTroughput * light->getIntensity();
+				#endif
+
+				lightPath[pathIndex].hitPoint = lightPath[pathIndex - 1].hitPoint + (wi.direction * lightSourceHit.t);
 				lightPath[pathIndex].isOnLightSource = true;
 				lightPath[pathIndex].lightSourceId = lightSourceHit.lightID;
 				lightPath[pathIndex].normal = light->getLightSurfaceNormal(lightSourceHit.lightTriangleID);
@@ -284,6 +289,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			lightPath.emplace_back(lightSource->SamplePoint(pdfLight));
 			lightPath[0].lightSourceId = lightIndex;
 			irradiance = (irradiance * lightSource->getIntensity()) / pdfLight;
+			lightPath[0].pathColour = irradiance;
 
 			// Add an aditional light path with direction and trace in said direction.
 			T_racer_SampledDirection  wi = sceneObject->retrieveLightByIndex(lightPath[0].lightSourceId)->SampleDirection(&sampler, &lightPath[0]);
@@ -309,27 +315,19 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				lightPath[1].pathColour = irradiance;
 				lightPath[1].lightSourceId = lightPath[0].lightSourceId;
 
+
+
 				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
 				tracePath(ray, irradiance, lightPath, 1);
 
 				for (int i = 0; i < lightPath.size(); i++)
 				{
-					//if (lightPath[i].isOnLightSource && lightPath[i - 1].isFresnelSurface == true)
-					//{
-					//	// Do something diffrent.
-					//	lightValue.colour += lightPath[i].pathColour.colour;
-					//}
-					//else
-					//{
 					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
 					//std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
 					if (imagePlaneIndex != -1) 
 					{
 						totalRadiance[imagePlaneIndex].colour +=  directLightingLightTracer(&lightPath[i]).colour;
-						//display->setColourValue(imagePlaneIndex, totalRadiance[imagePlaneIndex] / sampleCount);
 					}
-						
-				//	}
 				}
 			}
 
