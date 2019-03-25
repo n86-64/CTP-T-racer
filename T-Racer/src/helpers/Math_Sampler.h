@@ -30,10 +30,14 @@ namespace T_racer_Math
 		// Generates three random numbers.
 		T_racer_Math::Vector Random3();
 
+		// Genrates a random number
+		int RandomRange(int min, int max);
+
 	private:
 		// The RNG devices.
 		std::random_device  rngEngine;
 		std::mt19937    mersenneTwist;
 		std::uniform_real_distribution<float>   data;
+		std::uniform_int_distribution<int>		intData;
 	};
 };

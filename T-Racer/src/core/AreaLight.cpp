@@ -18,6 +18,7 @@ T_racer_SampledDirection T_racer_Light_Area::Sample(T_racer_Path_Vertex& pathVer
 {
 	srand(NULL);
 	int triIndex = rand() % triangles.size();
+
 	T_racer_Math::Sampler  sampler;
 	T_racer_SampledDirection wi;
 
@@ -73,7 +74,9 @@ T_racer_Path_Vertex T_racer_Light_Area::SamplePoint(float& pdf)
 {
 	srand(NULL);
 	int triIndex = rand() % triangles.size();
+
 	T_racer_Math::Sampler sampler;
+	triIndex = sampler.RandomRange(0, triangles.size() - 1);
 
 	T_racer_Path_Vertex initLightPath;
 	initLightPath.hitPoint = triangles[triIndex].samplePoint();
