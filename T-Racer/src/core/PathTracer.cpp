@@ -14,8 +14,8 @@ constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived.
 
 
 // Temporary solution until the bidirectional elements are added.
-//#define LIGHT_TRACER_INTEGRATOR
-#define PATH_TRACER_INTEGRATOR
+#define LIGHT_TRACER_INTEGRATOR
+//#define PATH_TRACER_INTEGRATOR
 
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
@@ -35,7 +35,7 @@ T_racer_Renderer_PathTracer::~T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	threadCount = 1;
+	//threadCount = 1;
 	
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -122,7 +122,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				pathIndex++;
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				#ifdef LIGHT_TRACER_INTEGRATOR
-					cameraPath[pathIndex].pathColour = pathTroughput;
+					lightPath[pathIndex].pathColour = pathTroughput;
 				#else
 					lightPath[pathIndex].pathColour = pathTroughput * light->getIntensity();
 				#endif
@@ -153,7 +153,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				lightPath[pathIndex].pathColour = pathTroughput;
 
 #ifdef LIGHT_TRACER_INTEGRATOR
-				cameraPath[pathIndex].lightSourceId = cameraPath[0].lightSourceId;
+				lightPath[pathIndex].lightSourceId = lightPath[0].lightSourceId;
 #endif
 
 			}
@@ -393,7 +393,7 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 				terminatePath = true;
 				pathIndex++;
 				LightPath.emplace_back(T_racer_Path_Vertex());
-				LightPath[pathIndex].pathColour = pathTroughput * light->getIntensity();
+				LightPath[pathIndex].pathColour = pathTroughput;
 				LightPath[pathIndex].hitPoint = LightPath[pathIndex - 1].hitPoint + (wi.direction * lightSourceHit.t);
 				LightPath[pathIndex].isOnLightSource = true;
 				LightPath[pathIndex].lightSourceId = lightSourceHit.lightID;
@@ -487,7 +487,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			}
 			totalRadiance[tX + ((int)tWidth * tY)].colour = totalRadiance[tX + ((int)tWidth * tY)].colour + lightValue.colour;
 			display->setColourValue(tX, (height - 1) - tY, totalRadiance[tX + ((int)tWidth * tY)] / sampleCount);
-#elif LIGHT_TRACER_INTEGRATOR
+#elif defined LIGHT_TRACER_INTEGRATOR
 			for (int i = 0; i < lightPath.size(); i++)
 			{
 				int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
