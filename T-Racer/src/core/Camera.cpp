@@ -72,7 +72,7 @@ int T_racer_Camera::pixelPointOnCamera(T_racer_Math::Vector point)
 	dirPoint = point - position;
 	dirPoint.normaliseSelf();
 
-	t = cameraPlane / fabsf(T_racer_Math::dot(dirPoint, w));
+	t = cameraPlane / T_racer_Math::dot(dirPoint, w);
 	dirPoint = dirPoint * t;
 	//std::cout << "t value: " << t << "\n";
 	dirPoint = -(dirPoint - top);
