@@ -3,7 +3,7 @@
 #include "Display.h"
 #include "PathTracer.h"
 
-constexpr int  T_RACER_TRIANGLE_NULL = -1;
+constexpr int  T_RACER_TRIANGLE_OR_INDEX_NULL = -1;
 constexpr float T_RACER_LUMINANCE_VALUE = 0.1f;
 
 // constexpr int T_RACER_SAMPLE_COUNT = 1;
@@ -136,7 +136,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 //				lightPath[pathIndex].lightSourceId = lightPath[0].lightSourceId;
 //#endif
 			}
-			else if (intersectDisc.triangleID != T_RACER_TRIANGLE_NULL)
+			else if (intersectDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
 			{
 				// Create a new light path.
 				pathIndex++;
@@ -243,7 +243,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			{
 				lightValue = irradiance;
 			}
-			else if (intersectionDisc.triangleID != T_RACER_TRIANGLE_NULL)
+			else if (intersectionDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
 			{
 					Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
 					lightPath.emplace_back(T_racer_Path_Vertex());
@@ -292,6 +292,8 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 			// Add an aditional light path with direction and trace in said direction.
 			T_racer_SampledDirection  wi = sceneObject->retrieveLightByIndex(lightPath[0].lightSourceId)->SampleDirection(&sampler, &lightPath[0]);
+
+
 			ray = T_racer_Math::Ray(lightPath[0].hitPoint, wi.direction);
 			
 			intersectionDisc = sceneObject->trace(ray);
@@ -301,7 +303,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			{
 				lightValue = irradiance;
 			}
-			else if (intersectionDisc.triangleID != T_RACER_TRIANGLE_NULL)
+			else if (intersectionDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
 			{
 				Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
 				lightPath.emplace_back(T_racer_Path_Vertex());
@@ -323,7 +325,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 				{
 					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
 					//std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
-					if (imagePlaneIndex != -1) 
+					if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL) 
 					{
 						totalRadiance[imagePlaneIndex].colour +=  directLightingLightTracer(&lightPath[i]).colour;
 					}
@@ -338,10 +340,10 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 		compleatedTiles++;
 
 #ifdef LIGHT_TRACER_INTEGRATOR
-		for (int i = 0; i < display->getWidth() * display->getHeight(); i++)
-		{
-			display->setColourValue(i, totalRadiance[i] / sampleCount);
-		}
+		//for (int i = 0; i < display->getWidth() * display->getHeight(); i++)
+		//{
+		//	display->setColourValue(i, totalRadiance[i] / sampleCount);
+		//}
 #endif
 
 		if (compleatedTiles == tileCount) 
@@ -349,6 +351,11 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			std::cout << "Sample Count - " << sampleCount << std::endl;
 			compleatedTiles = 0;
 			currentTile = 0;
+
+			for (int i = 0; i < display->getWidth() * display->getHeight(); i++)
+			{
+				display->setColourValue(i, totalRadiance[i] / sampleCount);
+			}
 
 			sampleCount++;
 		}

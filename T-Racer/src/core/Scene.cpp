@@ -163,7 +163,7 @@ T_racer_Light_Base * T_racer_Scene::retrieveOneLightSource(T_racer_Math::Sampler
 T_racer_Math::Ray T_racer_Scene::generateRay(float xPos, float yPos)
 {
 	T_racer_Math::Vector  camPos = mainCamera->getPosition();
-	T_racer_Math::Ray cameraRay = T_racer_Math::Ray(camPos, ((mainCamera->lower_left_corner + mainCamera->horizontal * xPos + mainCamera->vertical * yPos) - camPos).normalise());
+	T_racer_Math::Ray cameraRay = T_racer_Math::Ray(camPos, ((mainCamera->lower_left_corner + (mainCamera->horizontal * xPos) + (mainCamera->vertical * yPos)) - camPos).normalise());
 
 	return cameraRay;
 }
