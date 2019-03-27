@@ -14,8 +14,8 @@ constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived.
 
 
 // Temporary solution until the bidirectional elements are added.
-#define LIGHT_TRACER_INTEGRATOR
-//#define PATH_TRACER_INTEGRATOR
+//#define LIGHT_TRACER_INTEGRATOR
+#define PATH_TRACER_INTEGRATOR
 
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
@@ -352,10 +352,13 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			compleatedTiles = 0;
 			currentTile = 0;
 
+#ifdef LIGHT_TRACER_INTEGRATOR
 			for (int i = 0; i < display->getWidth() * display->getHeight(); i++)
 			{
 				display->setColourValue(i, totalRadiance[i] / sampleCount);
 			}
+
+#endif // LIGHT_TRACER_INTEGRATOR
 
 			sampleCount++;
 		}
