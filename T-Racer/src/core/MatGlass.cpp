@@ -44,7 +44,7 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate(T_racer_Math::R
 	return returnColour;
 }
 
-T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate2(T_racer_SampledDirection & wi, T_racer_Path_Vertex & pathVertex)
+T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate2(T_racer_SampledDirection& wi, T_racer_Path_Vertex& pathVertex)
 {
 	return T_racer_Math::Colour();
 }

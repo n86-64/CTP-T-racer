@@ -35,7 +35,7 @@ T_racer_Renderer_PathTracer::~T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	//threadCount = 1;
+	threadCount = 1;
 	
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -122,7 +122,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				pathIndex++;
 				lightPath.emplace_back(T_racer_Path_Vertex());
 				#ifdef LIGHT_TRACER_INTEGRATOR
-					lightPath[pathIndex].pathColour = pathTroughput;
+					cameraPath[pathIndex].pathColour = pathTroughput;
 				#else
 					lightPath[pathIndex].pathColour = pathTroughput * light->getIntensity();
 				#endif
@@ -153,7 +153,7 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 				lightPath[pathIndex].pathColour = pathTroughput;
 
 #ifdef LIGHT_TRACER_INTEGRATOR
-				lightPath[pathIndex].lightSourceId = lightPath[0].lightSourceId;
+				cameraPath[pathIndex].lightSourceId = cameraPath[0].lightSourceId;
 #endif
 
 			}
@@ -194,6 +194,236 @@ void T_racer_Renderer_PathTracer::tracePathLight(T_racer_Math::Colour& irradianc
 	}
 }
 
+void T_racer_Renderer_PathTracer::traceCameraPath(int tX, int tY, std::vector<T_racer_Path_Vertex>& cameraPath)
+{
+	T_racer_TriangleIntersection  lightSourceHit;
+	T_racer_TriangleIntersection  intersectDisc;
+	T_racer_Material*  surfaceMaterial = nullptr;
+	bool terminatePath = true;
+
+	// Calculate the initial ray.
+	T_racer_Math::Ray  ray = sceneObject->generateRay(tX / display->getWidth(), tY / display->getHeight());
+	int pathIndex = 0;
+
+	T_racer_SampledDirection  wi;
+	T_racer_Math::Colour  brdfValue;
+	T_racer_Math::Colour  pathTroughput = T_racer_Math::Colour(1,1,1);
+
+	intersectDisc = sceneObject->trace(ray);
+	lightSourceHit = sceneObject->hitsLightSource(&ray);
+
+	if (lightSourceHit.intersection && lightSourceHit.t < intersectDisc.t)
+	{
+		T_racer_Light_Base* light = sceneObject->retrieveLightByIndex(lightSourceHit.lightID);
+		cameraPath.emplace_back(T_racer_Path_Vertex());
+		cameraPath[0].pathColour = pathTroughput * light->getIntensity();
+		cameraPath[0].hitPoint = ray.position + (ray.direction * lightSourceHit.t);
+		cameraPath[0].isOnLightSource = true;
+		cameraPath[0].lightSourceId = lightSourceHit.lightID;
+		cameraPath[0].normal = light->getLightSurfaceNormal(lightSourceHit.lightTriangleID);
+		cameraPath[0].wo = ray.getincomingRayDirection();
+	}
+	else if (intersectDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
+	{
+		Triangle* primative = sceneObject->getTriangleByIndex(intersectDisc.triangleID);
+		cameraPath.emplace_back(T_racer_Path_Vertex());
+		cameraPath[0].BRDFMaterialID = primative->getMaterialIndex();
+		cameraPath[0].hitPoint = ray.position + (ray.direction * intersectDisc.t);
+		cameraPath[0].normal = primative->normal;
+		cameraPath[0].uv = primative->interpolatePoint(intersectDisc);
+		cameraPath[0].orthnormalBasis = primative->createShadingFrame(cameraPath[0].normal);
+		cameraPath[0].wo = ray.getincomingRayDirection();
+		cameraPath[0].pathColour = pathTroughput;
+		cameraPath[0].lightSourceId = cameraPath[0].lightSourceId;
+		terminatePath = false;
+	}
+
+	while (!terminatePath)
+	{
+		surfaceMaterial = sceneObject->materials.retrieveMaterial(cameraPath[pathIndex].BRDFMaterialID);
+
+		// new brdf approch.
+		brdfValue = surfaceMaterial->SampleMaterial(sampler, wi, cameraPath[pathIndex]);
+		ray = T_racer_Math::Ray(cameraPath[pathIndex].hitPoint, wi.direction);
+
+		pathTroughput = pathTroughput * brdfValue;
+		pathTroughput = pathTroughput * fabsf(T_racer_Math::dot(wi.direction, cameraPath[pathIndex].normal));
+		pathTroughput = pathTroughput / wi.probabilityDensity;
+
+		if (wi.probabilityDensity == 0.0f) { terminatePath = true; }
+
+		cameraPath[pathIndex].pathColour = pathTroughput;
+
+		terminatePath = (pathTroughput.colour.X == 0.0f && pathTroughput.colour.Y == 0.0f && pathTroughput.colour.Z == 0.0f);
+
+		if (pathIndex > T_RACER_MINIMUM_BOUNCE)
+		{
+			terminatePath = !RussianRoulette(pathTroughput, &cameraPath[pathIndex]);
+		}
+		if (pathIndex > 100)
+		{
+			terminatePath = true;
+		}
+
+		// else trace the scene again.
+		// If we hit a light source also terminate the path.
+		// then loop.
+		if (!terminatePath)
+		{
+			intersectDisc = sceneObject->trace(ray);
+			lightSourceHit = sceneObject->hitsLightSource(&ray);
+
+			if (lightSourceHit.intersection && lightSourceHit.t < intersectDisc.t)
+			{
+				T_racer_Light_Base* light = sceneObject->retrieveLightByIndex(lightSourceHit.lightID);
+				terminatePath = true;
+				pathIndex++;
+				cameraPath.emplace_back(T_racer_Path_Vertex());
+				cameraPath[pathIndex].pathColour = pathTroughput * light->getIntensity();
+				cameraPath[pathIndex].hitPoint = cameraPath[pathIndex - 1].hitPoint + (wi.direction * lightSourceHit.t);
+				cameraPath[pathIndex].isOnLightSource = true;
+				cameraPath[pathIndex].lightSourceId = lightSourceHit.lightID;
+				cameraPath[pathIndex].normal = light->getLightSurfaceNormal(lightSourceHit.lightTriangleID);
+			}
+			else if (intersectDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
+			{
+				// Create a new light path.
+				pathIndex++;
+
+				// Add to the light index.
+				Triangle* primative = sceneObject->getTriangleByIndex(intersectDisc.triangleID);
+				cameraPath.emplace_back(T_racer_Path_Vertex());
+				cameraPath[pathIndex].BRDFMaterialID = primative->getMaterialIndex();
+				cameraPath[pathIndex].hitPoint = cameraPath[pathIndex - 1].hitPoint + (wi.direction * intersectDisc.t);
+				cameraPath[pathIndex].wo = -wi.direction;
+				cameraPath[pathIndex].normal = primative->normal;
+				cameraPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
+				cameraPath[pathIndex].orthnormalBasis = primative->createShadingFrame(cameraPath[pathIndex].normal);
+				cameraPath[pathIndex].pathColour = pathTroughput;
+			}
+			else
+			{
+				terminatePath = true;
+			}
+		}
+	}
+}
+
+void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex>& LightPath)
+{
+	T_racer_TriangleIntersection  lightSourceHit;
+	T_racer_TriangleIntersection  intersectDisc;
+	T_racer_Material*  surfaceMaterial = nullptr;
+	bool terminatePath = true;
+
+	// Calculate the initial ray.
+	T_racer_Math::Ray  ray;
+	int pathIndex = 1;
+
+	T_racer_SampledDirection  wi;
+	T_racer_Math::Colour  brdfValue;
+	T_racer_Math::Colour  pathTroughput = T_racer_Math::Colour(1, 1, 1);
+
+	int lightIndex;
+	T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(&sampler, lightIndex);
+	float pdfLight = sceneObject->getProbabilityDensityLightSourceSelection();
+	LightPath.emplace_back(lightSource->SamplePoint(pdfLight));
+	LightPath[0].lightSourceId = lightIndex;
+	pathTroughput = (pathTroughput * lightSource->getIntensity()) / pdfLight;
+	LightPath[0].pathColour = pathTroughput;
+	wi = sceneObject->retrieveLightByIndex(LightPath[0].lightSourceId)->SampleDirection(&sampler, &LightPath[0]);
+	ray = T_racer_Math::Ray(LightPath[0].hitPoint, wi.direction);
+
+	intersectDisc = sceneObject->trace(ray);
+	lightSourceHit = sceneObject->hitsLightSource(&ray);
+
+	if (intersectDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
+	{
+		Triangle* primative = sceneObject->getTriangleByIndex(intersectDisc.triangleID);
+		LightPath.emplace_back(T_racer_Path_Vertex());
+		LightPath[1].BRDFMaterialID = primative->getMaterialIndex();
+		LightPath[1].hitPoint = ray.position + (ray.direction * intersectDisc.t);
+		LightPath[1].normal = primative->normal;
+		LightPath[1].uv = primative->interpolatePoint(intersectDisc);
+		LightPath[1].orthnormalBasis = primative->createShadingFrame(LightPath[1].normal);
+		LightPath[1].wo = ray.getincomingRayDirection();
+		LightPath[1].pathColour = pathTroughput;
+		LightPath[1].lightSourceId = LightPath[0].lightSourceId;
+		terminatePath = false;
+	}
+
+	while (!terminatePath)
+	{
+		surfaceMaterial = sceneObject->materials.retrieveMaterial(LightPath[pathIndex].BRDFMaterialID);
+
+		// new brdf approch.
+		brdfValue = surfaceMaterial->SampleMaterial(sampler, wi, LightPath[pathIndex]);
+		ray = T_racer_Math::Ray(LightPath[pathIndex].hitPoint, wi.direction);
+
+		pathTroughput = pathTroughput * brdfValue;
+		pathTroughput = pathTroughput * fabsf(T_racer_Math::dot(wi.direction, LightPath[pathIndex].normal));
+		pathTroughput = pathTroughput / wi.probabilityDensity;
+
+		if (wi.probabilityDensity == 0.0f) { terminatePath = true; }
+
+		LightPath[pathIndex].pathColour = pathTroughput;
+
+		terminatePath = (pathTroughput.colour.X == 0.0f && pathTroughput.colour.Y == 0.0f && pathTroughput.colour.Z == 0.0f);
+
+		if (pathIndex > T_RACER_MINIMUM_BOUNCE)
+		{
+			terminatePath = !RussianRoulette(pathTroughput, &LightPath[pathIndex]);
+		}
+		if (pathIndex > 100)
+		{
+			terminatePath = true;
+		}
+
+		// else trace the scene again.
+		// If we hit a light source also terminate the path.
+		// then loop.
+		if (!terminatePath)
+		{
+			intersectDisc = sceneObject->trace(ray);
+			lightSourceHit = sceneObject->hitsLightSource(&ray);
+
+			if (lightSourceHit.intersection && lightSourceHit.t < intersectDisc.t)
+			{
+				T_racer_Light_Base* light = sceneObject->retrieveLightByIndex(lightSourceHit.lightID);
+				terminatePath = true;
+				pathIndex++;
+				LightPath.emplace_back(T_racer_Path_Vertex());
+				LightPath[pathIndex].pathColour = pathTroughput * light->getIntensity();
+				LightPath[pathIndex].hitPoint = LightPath[pathIndex - 1].hitPoint + (wi.direction * lightSourceHit.t);
+				LightPath[pathIndex].isOnLightSource = true;
+				LightPath[pathIndex].lightSourceId = lightSourceHit.lightID;
+				LightPath[pathIndex].normal = light->getLightSurfaceNormal(lightSourceHit.lightTriangleID);
+			}
+			else if (intersectDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
+			{
+				// Create a new light path.
+				pathIndex++;
+
+				// Add to the light index.
+				Triangle* primative = sceneObject->getTriangleByIndex(intersectDisc.triangleID);
+				LightPath.emplace_back(T_racer_Path_Vertex());
+				LightPath[pathIndex].BRDFMaterialID = primative->getMaterialIndex();
+				LightPath[pathIndex].hitPoint = LightPath[pathIndex - 1].hitPoint + (wi.direction * intersectDisc.t);
+				LightPath[pathIndex].wo = -wi.direction;
+				LightPath[pathIndex].normal = primative->normal;
+				LightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
+				LightPath[pathIndex].orthnormalBasis = primative->createShadingFrame(LightPath[pathIndex].normal);
+				LightPath[pathIndex].pathColour = pathTroughput;
+				LightPath[pathIndex].lightSourceId = LightPath[0].lightSourceId;
+			}
+			else
+			{
+				terminatePath = true;
+			}
+		}
+	}
+}
+
 void T_racer_Renderer_PathTracer::renderThreaded()
 {
 	// Data types for rendering threaded.
@@ -204,11 +434,12 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 	T_racer_Math::Colour irradiance;
 	T_racer_Math::Colour lightValue;
-	T_racer_Math::Colour lightSigma;
 
 	T_racer_Math::Ray ray;
 
+	std::vector<T_racer_Path_Vertex>  cameraPath;
 	std::vector<T_racer_Path_Vertex>  lightPath;
+	cameraPath.reserve(T_RACER_PATH_INITIAL_COUNT);
 	lightPath.reserve(T_RACER_PATH_INITIAL_COUNT);
 	int tWidth;
 	int tHeight;
@@ -218,8 +449,6 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 	tWidth = display->getWidth();
 	tHeight = display->getHeight();
-
-	lightSigma = T_racer_Math::Colour(0.0, 0.0f, 0.0f);
 
 	while (currentTile < tHeight) 
 	{
@@ -232,6 +461,49 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			irradiance = T_racer_Math::Colour(1.0f, 1.0f, 1.0f);
 			lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
 
+			traceCameraPath(tX, tY, cameraPath);
+			traceLightPath(lightPath);
+
+#ifdef PATH_TRACER_INTEGRATOR
+			for (int i = 0; i < cameraPath.size(); i++)
+			{
+				if (cameraPath[i].isOnLightSource )
+				{
+					if (cameraPath[i - 1].isFresnelSurface == true) 
+					{
+						// Do something diffrent.
+						lightValue.colour += cameraPath[i].pathColour.colour;
+					}
+					else if(cameraPath.size() == 1)
+					{
+						lightValue.colour += T_racer_Math::Colour(1, 1, 1).colour;
+					}
+
+				}
+				else
+				{
+					lightValue.colour = lightValue.colour + calculateDirectLighting(&cameraPath[i]).colour;
+				}
+			}
+			totalRadiance[tX + ((int)tWidth * tY)].colour = totalRadiance[tX + ((int)tWidth * tY)].colour + lightValue.colour;
+			display->setColourValue(tX, (height - 1) - tY, totalRadiance[tX + ((int)tWidth * tY)] / sampleCount);
+#elif LIGHT_TRACER_INTEGRATOR
+			for (int i = 0; i < lightPath.size(); i++)
+			{
+				int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
+				//std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
+				if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL)
+				{
+					totalRadiance[imagePlaneIndex].colour += directLightingLightTracer(&lightPath[i]).colour;
+				}
+			}
+#endif
+			
+			if (display->quit) { return; }
+			lightPath.clear();
+			cameraPath.clear();
+
+/*
 #ifdef  PATH_TRACER_INTEGRATOR
 			ray = sceneObject->generateRay((tX / width) , (tY / height));
 				
@@ -246,28 +518,28 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			else if (intersectionDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
 			{
 					Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
-					lightPath.emplace_back(T_racer_Path_Vertex());
-					lightPath[0].BRDFMaterialID = primative->getMaterialIndex();
-					lightPath[0].hitPoint =  ray.position + (ray.direction * intersectionDisc.t);
-					lightPath[0].normal = primative->normal;
-					lightPath[0].uv = primative->interpolatePoint(intersectionDisc);
-					lightPath[0].orthnormalBasis = primative->createShadingFrame(lightPath[0].normal);
-					lightPath[0].wo = ray.getincomingRayDirection();
-					lightPath[0].pathColour = irradiance;
+					cameraPath.emplace_back(T_racer_Path_Vertex());
+					cameraPath[0].BRDFMaterialID = primative->getMaterialIndex();
+					cameraPath[0].hitPoint =  ray.position + (ray.direction * intersectionDisc.t);
+					cameraPath[0].normal = primative->normal;
+					cameraPath[0].uv = primative->interpolatePoint(intersectionDisc);
+					cameraPath[0].orthnormalBasis = primative->createShadingFrame(cameraPath[0].normal);
+					cameraPath[0].wo = ray.getincomingRayDirection();
+					cameraPath[0].pathColour = irradiance;
 
 					// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
-					tracePath(ray, irradiance, lightPath, 0);
+					tracePath(ray, irradiance, cameraPath, 0);
 					
-					for (int i = 0; i < lightPath.size(); i++)
+					for (int i = 0; i < cameraPath.size(); i++)
 					{
-						if (lightPath[i].isOnLightSource && lightPath[i - 1].isFresnelSurface == true) 
+						if (cameraPath[i].isOnLightSource && cameraPath[i - 1].isFresnelSurface == true) 
 						{
 							// Do something diffrent.
-							lightValue.colour += lightPath[i].pathColour.colour;
+							lightValue.colour += cameraPath[i].pathColour.colour;
 						}
 						else 
 						{
-							lightValue.colour = lightValue.colour + calculateDirectLighting(&lightPath[i]).colour;
+							lightValue.colour = lightValue.colour + calculateDirectLighting(&cameraPath[i]).colour;
 						}
 					}
 
@@ -275,7 +547,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 			if (display->quit) { return; }
 			totalRadiance[tX + ((int)tWidth * tY)].colour = totalRadiance[tX + ((int)tWidth * tY)].colour + lightValue.colour;
-			lightPath.clear();
+			cameraPath.clear();
 
 			display->setColourValue(tX, (height - 1) - tY, totalRadiance[tX + ((int)tWidth * tY)] / sampleCount);
 #endif 
@@ -285,16 +557,16 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			int lightIndex;
 			T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(&sampler, lightIndex);
 			float pdfLight = sceneObject->getProbabilityDensityLightSourceSelection();
-			lightPath.emplace_back(lightSource->SamplePoint(pdfLight));
-			lightPath[0].lightSourceId = lightIndex;
+			cameraPath.emplace_back(lightSource->SamplePoint(pdfLight));
+			cameraPath[0].lightSourceId = lightIndex;
 			irradiance = (irradiance * lightSource->getIntensity()) / pdfLight;
-			lightPath[0].pathColour = irradiance;
+			cameraPath[0].pathColour = irradiance;
 
 			// Add an aditional light path with direction and trace in said direction.
-			T_racer_SampledDirection  wi = sceneObject->retrieveLightByIndex(lightPath[0].lightSourceId)->SampleDirection(&sampler, &lightPath[0]);
+			T_racer_SampledDirection  wi = sceneObject->retrieveLightByIndex(cameraPath[0].lightSourceId)->SampleDirection(&sampler, &cameraPath[0]);
 
 
-			ray = T_racer_Math::Ray(lightPath[0].hitPoint, wi.direction);
+			ray = T_racer_Math::Ray(cameraPath[0].hitPoint, wi.direction);
 			
 			intersectionDisc = sceneObject->trace(ray);
 			lightSourceHit = sceneObject->hitsLightSource(&ray);
@@ -306,45 +578,39 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			else if (intersectionDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
 			{
 				Triangle* primative = sceneObject->getTriangleByIndex(intersectionDisc.triangleID);
-				lightPath.emplace_back(T_racer_Path_Vertex());
-				lightPath[1].BRDFMaterialID = primative->getMaterialIndex();
-				lightPath[1].hitPoint = ray.position + (ray.direction * intersectionDisc.t);
-				lightPath[1].normal = primative->normal;
-				lightPath[1].uv = primative->interpolatePoint(intersectionDisc);
-				lightPath[1].orthnormalBasis = primative->createShadingFrame(lightPath[1].normal);
-				lightPath[1].wo = ray.getincomingRayDirection();
-				lightPath[1].pathColour = irradiance;
-				lightPath[1].lightSourceId = lightPath[0].lightSourceId;
+				cameraPath.emplace_back(T_racer_Path_Vertex());
+				cameraPath[1].BRDFMaterialID = primative->getMaterialIndex();
+				cameraPath[1].hitPoint = ray.position + (ray.direction * intersectionDisc.t);
+				cameraPath[1].normal = primative->normal;
+				cameraPath[1].uv = primative->interpolatePoint(intersectionDisc);
+				cameraPath[1].orthnormalBasis = primative->createShadingFrame(cameraPath[1].normal);
+				cameraPath[1].wo = ray.getincomingRayDirection();
+				cameraPath[1].pathColour = irradiance;
+				cameraPath[1].lightSourceId = cameraPath[0].lightSourceId;
 
 
 
 				// Calculate the light paths. Divide result by N value for correct monte carlo estimation. 
-				tracePath(ray, irradiance, lightPath, 1);
+				tracePath(ray, irradiance, cameraPath, 1);
 
-				for (int i = 0; i < lightPath.size(); i++)
+				for (int i = 0; i < cameraPath.size(); i++)
 				{
-					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
+					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(cameraPath[i].hitPoint);
 					//std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
 					if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL) 
 					{
-						totalRadiance[imagePlaneIndex].colour +=  directLightingLightTracer(&lightPath[i]).colour;
+						totalRadiance[imagePlaneIndex].colour +=  directLightingLightTracer(&cameraPath[i]).colour;
 					}
 				}
 			}
 
 			if (display->quit) { return; }
-			lightPath.clear();
+			cameraPath.clear();
 #endif
+*/
 		}
 
 		compleatedTiles++;
-
-#ifdef LIGHT_TRACER_INTEGRATOR
-		//for (int i = 0; i < display->getWidth() * display->getHeight(); i++)
-		//{
-		//	display->setColourValue(i, totalRadiance[i] / sampleCount);
-		//}
-#endif
 
 		if (compleatedTiles == tileCount) 
 		{
