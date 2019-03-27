@@ -51,10 +51,10 @@ void T_racer_Camera::setupCamera()
 	lower_left_corner = position - u * half_width - v * half_height - w;
 	horizontal = u * half_width * 2;
 	vertical = v * half_height * 2;
-	top = w + (u * half_height) + (v * half_width); 
+	top = w + (v * half_height) + (u * half_width); 
 
-	dx = u * (2.0f * half_width / resX);
-	dy = v * (2.0f * half_height / resY);
+	dx = u * (2.0f * (half_width / resX));
+	dy = v * (2.0f * (half_height / resY));
 
 	cameraPlane = T_racer_Math::dot(w, top);
 

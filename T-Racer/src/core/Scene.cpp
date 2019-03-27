@@ -146,17 +146,17 @@ bool T_racer_Scene::visibleDir(T_racer_Math::Vector origin, T_racer_Math::Vector
 	return bvh.visible(&ray, INFINITY);
 }
 
-T_racer_Light_Base* T_racer_Scene::retrieveOneLightSource()
+T_racer_Light_Base* T_racer_Scene::retrieveOneLightSource(T_racer_Math::Sampler* sampler)
 {
 	// Not adiquite but it will ensure a good light source is selected.
-	srand(NULL);
-	return sceneLights[rand() % sceneLights.size()].get();
+	//srand(NULL);
+	return sceneLights[sampler->RandomRange(0, sceneLights.size() - 1)].get();
 }
 
-T_racer_Light_Base * T_racer_Scene::retrieveOneLightSource(int & lightIndex)
+T_racer_Light_Base * T_racer_Scene::retrieveOneLightSource(T_racer_Math::Sampler* sampler, int& lightIndex)
 {
-	srand(NULL);
-	lightIndex = rand() % sceneLights.size();
+	//srand(NULL);
+	lightIndex = sampler->RandomRange(0, sceneLights.size() - 1);
 	return sceneLights[lightIndex].get();
 }
 

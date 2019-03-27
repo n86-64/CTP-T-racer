@@ -38,4 +38,6 @@ private:
 
 private:
 	T_racer_Math::Colour*  totalRadiance = nullptr;
+
+	T_racer_Math::Sampler sampler;
 };

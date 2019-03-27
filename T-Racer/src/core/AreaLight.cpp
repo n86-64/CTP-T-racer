@@ -17,9 +17,11 @@ T_racer_Math::Colour T_racer_Light_Area::Evaluate(T_racer_Path_Vertex& pathVerte
 T_racer_SampledDirection T_racer_Light_Area::Sample(T_racer_Path_Vertex& pathVertex, T_racer_Math::Ray & inputRay, T_racer_Path_Vertex & lightSourceVertex)
 {
 	srand(NULL);
-	int triIndex = rand() % triangles.size();
+	int triIndex = 0; //rand() % triangles.size();
 
 	T_racer_Math::Sampler  sampler;
+	triIndex = sampler.RandomRange(0, triangles.size() - 1);
+
 	T_racer_SampledDirection wi;
 
 	lightSourceVertex.isPointLightSource = false;
@@ -73,7 +75,7 @@ T_racer_TriangleIntersection T_racer_Light_Area::doesIntersect(T_racer_Math::Ray
 T_racer_Path_Vertex T_racer_Light_Area::SamplePoint(float& pdf)
 {
 	srand(NULL);
-	int triIndex = rand() % triangles.size();
+	int triIndex = 0; // rand() % triangles.size();
 
 	T_racer_Math::Sampler sampler;
 	triIndex = sampler.RandomRange(0, triangles.size() - 1);

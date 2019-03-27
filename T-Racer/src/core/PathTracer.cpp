@@ -35,7 +35,7 @@ T_racer_Renderer_PathTracer::~T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	threadCount = 1;
+	//threadCount = 1;
 	
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -199,7 +199,6 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 	// Data types for rendering threaded.
 	T_racer_TriangleIntersection intersectionDisc;
 	T_racer_TriangleIntersection lightSourceHit;
-	T_racer_Math::Sampler sampler;
 
 	T_racer_Math::Vector bias;
 
@@ -284,7 +283,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			// light tracer integrator. 
 #ifdef LIGHT_TRACER_INTEGRATOR
 			int lightIndex;
-			T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(lightIndex);
+			T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(&sampler, lightIndex);
 			float pdfLight = sceneObject->getProbabilityDensityLightSourceSelection();
 			lightPath.emplace_back(lightSource->SamplePoint(pdfLight));
 			lightPath[0].lightSourceId = lightIndex;
@@ -384,7 +383,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	T_racer_Math::Ray  lightRay;
 	T_racer_Path_Vertex  lightSourcePath;
 	T_racer_Material* material = sceneObject->materials.retrieveMaterial(pathVertex->BRDFMaterialID);
-	T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(); // Picks out a random light source to sample.
+	T_racer_Light_Base* lightSource = sceneObject->retrieveOneLightSource(&sampler); // Picks out a random light source to sample.
 	T_racer_SampledDirection light_pos = lightSource->Sample(*pathVertex, lightRay, lightSourcePath);
 
 	if (!sceneObject->visible(lightSourcePath.hitPoint, pathVertex->hitPoint))
