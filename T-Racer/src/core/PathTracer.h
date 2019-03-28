@@ -24,8 +24,8 @@ public:
 	virtual void postDisplayUpdate() override { while (!display->quit) { display->update(); } }
 
 protected:
+	// DEPRICATED!!!.
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath, int startingPath) override;
-	void tracePathLight(T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath);
 
 	// Path integrators
 	void traceCameraPath(int tX, int tY, std::vector<T_racer_Path_Vertex>& cameraPath);

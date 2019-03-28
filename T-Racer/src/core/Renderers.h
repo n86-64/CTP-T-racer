@@ -38,6 +38,7 @@ public:
 	virtual void postDisplayUpdate() {};
 
 protected:
+	// DEPRICATED - Do not call. 
 	virtual void tracePath(T_racer_Math::Ray initialRay, T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath, int startingPath) = 0;
 	
 

@@ -35,7 +35,9 @@ T_racer_Renderer_PathTracer::~T_racer_Renderer_PathTracer()
 void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
-	//threadCount = 1;
+#ifdef _DEBUG
+	threadCount = 1;
+#endif // DEBUG
 	
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
@@ -167,33 +169,6 @@ void T_racer_Renderer_PathTracer::tracePath(T_racer_Math::Ray initialRay, T_race
 	irradiance = pathTroughput;
 }
 
-void T_racer_Renderer_PathTracer::tracePathLight(T_racer_Math::Colour& irradiance, std::vector<T_racer_Path_Vertex>& lightPath)
-{
-	T_racer_TriangleIntersection  lightSourceHit;
-	T_racer_TriangleIntersection  intersectDisc;
-	T_racer_Material*  surfaceMaterial = nullptr;
-	bool terminatePath = false;
-
-	T_racer_Math::Sampler  sampler;
-	T_racer_Math::Ray      ray;
-
-	T_racer_Math::Colour  pathTroughput = irradiance;
-
-	T_racer_SampledDirection  wi;
-	T_racer_Math::Colour  brdfValue;
-
-	int pathIndex = 1;
-	while (!terminatePath) 
-	{
-
-
-		if (pathIndex > T_RACER_MINIMUM_BOUNCE)
-		{
-			terminatePath = !RussianRoulette(pathTroughput, &lightPath[pathIndex]);
-		}
-	}
-}
-
 void T_racer_Renderer_PathTracer::traceCameraPath(int tX, int tY, std::vector<T_racer_Path_Vertex>& cameraPath)
 {
 	T_racer_TriangleIntersection  lightSourceHit;
@@ -208,7 +183,7 @@ void T_racer_Renderer_PathTracer::traceCameraPath(int tX, int tY, std::vector<T_
 	T_racer_SampledDirection  wi;
 	T_racer_Math::Colour  brdfValue;
 	T_racer_Math::Colour  pathTroughput = T_racer_Math::Colour(1,1,1);
-
+	
 	intersectDisc = sceneObject->trace(ray);
 	lightSourceHit = sceneObject->hitsLightSource(&ray);
 
@@ -329,9 +304,11 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 	float pdfLight = sceneObject->getProbabilityDensityLightSourceSelection();
 	LightPath.emplace_back(lightSource->SamplePoint(pdfLight));
 	LightPath[0].lightSourceId = lightIndex;
-	pathTroughput = (pathTroughput * lightSource->getIntensity()) / pdfLight;
-	LightPath[0].pathColour = pathTroughput;
+	pathTroughput = (pathTroughput) / pdfLight;
+	LightPath[0].pathColour = pathTroughput * lightSource->getIntensity();
 	wi = sceneObject->retrieveLightByIndex(LightPath[0].lightSourceId)->SampleDirection(&sampler, &LightPath[0]);
+	pathTroughput = pathTroughput * T_racer_Math::dot(LightPath[0].normal, wi.direction) / wi.probabilityDensity;
+	
 	ray = T_racer_Math::Ray(LightPath[0].hitPoint, wi.direction);
 
 	intersectDisc = sceneObject->trace(ray);
@@ -347,7 +324,7 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 		LightPath[1].uv = primative->interpolatePoint(intersectDisc);
 		LightPath[1].orthnormalBasis = primative->createShadingFrame(LightPath[1].normal);
 		LightPath[1].wo = ray.getincomingRayDirection();
-		LightPath[1].pathColour = pathTroughput;
+		LightPath[1].pathColour = pathTroughput * lightSource->getIntensity();
 		LightPath[1].lightSourceId = LightPath[0].lightSourceId;
 		terminatePath = false;
 	}
@@ -366,7 +343,7 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 
 		if (wi.probabilityDensity == 0.0f) { terminatePath = true; }
 
-		LightPath[pathIndex].pathColour = pathTroughput;
+		//LightPath[pathIndex].pathColour = pathTroughput * lightSource->getIntensity();
 
 		terminatePath = (pathTroughput.colour.X == 0.0f && pathTroughput.colour.Y == 0.0f && pathTroughput.colour.Z == 0.0f);
 
@@ -389,15 +366,15 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 
 			if (lightSourceHit.intersection && lightSourceHit.t < intersectDisc.t)
 			{
-				T_racer_Light_Base* light = sceneObject->retrieveLightByIndex(lightSourceHit.lightID);
+				//T_racer_Light_Base* light = sceneObject->retrieveLightByIndex(lightSourceHit.lightID);
 				terminatePath = true;
-				pathIndex++;
-				LightPath.emplace_back(T_racer_Path_Vertex());
-				LightPath[pathIndex].pathColour = pathTroughput;
-				LightPath[pathIndex].hitPoint = LightPath[pathIndex - 1].hitPoint + (wi.direction * lightSourceHit.t);
-				LightPath[pathIndex].isOnLightSource = true;
-				LightPath[pathIndex].lightSourceId = lightSourceHit.lightID;
-				LightPath[pathIndex].normal = light->getLightSurfaceNormal(lightSourceHit.lightTriangleID);
+				//pathIndex++;
+				//LightPath.emplace_back(T_racer_Path_Vertex());
+				//LightPath[pathIndex].pathColour = pathTroughput * lightSource->getIntensity();
+				//LightPath[pathIndex].hitPoint = LightPath[pathIndex - 1].hitPoint + (wi.direction * lightSourceHit.t);
+				//LightPath[pathIndex].isOnLightSource = true;
+				//LightPath[pathIndex].lightSourceId = lightSourceHit.lightID;
+				//LightPath[pathIndex].normal = light->getLightSurfaceNormal(lightSourceHit.lightTriangleID);
 			}
 			else if (intersectDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
 			{
@@ -413,7 +390,7 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 				LightPath[pathIndex].normal = primative->normal;
 				LightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
 				LightPath[pathIndex].orthnormalBasis = primative->createShadingFrame(LightPath[pathIndex].normal);
-				LightPath[pathIndex].pathColour = pathTroughput;
+				LightPath[pathIndex].pathColour = pathTroughput * lightSource->getIntensity();
 				LightPath[pathIndex].lightSourceId = LightPath[0].lightSourceId;
 			}
 			else
@@ -566,11 +543,9 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	}
 
 	float gTerm = geometryTerm(pathVertex, &lightSourcePath);
-
 	T_racer_Math::Colour lightValue = lightSource->Evaluate(*pathVertex);
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex);
 	Ld.colour = pathVertex->pathColour.colour * lightValue.colour  * brdfSurfaceValue.colour *  gTerm / light_pos.probabilityDensity;
-	Ld.colour = Ld.colour;
 
 	return Ld;
 }
@@ -586,7 +561,7 @@ float T_racer_Renderer_PathTracer::geometryTerm(T_racer_Path_Vertex* pathVertex,
 	T_racer_Math::Vector dir = lightVertex->hitPoint - pathVertex->hitPoint;
 	lsq = dir.normaliseSelfWithMagnitudeSq();
 	float brdfTheta = fmaxf(T_racer_Math::dot(dir, pathVertex->normal), 0.0f);
-	float lightTheta = lightVertex->isPointLightSource ?  1.0 : fmaxf(T_racer_Math::dot(dir, lightVertex->normal), 0.0f);
+	float lightTheta = lightVertex->isPointLightSource ?  1.0 : fmaxf(T_racer_Math::dot(-dir, lightVertex->normal), 0.0f);
 	return (brdfTheta * lightTheta) / lsq;
 }
 
@@ -631,6 +606,7 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::directLightingLightTracer(T_ra
 		T_racer_Material* surfaceMaterial = sceneObject->materials.retrieveMaterial(pathVertex->BRDFMaterialID);
 		T_racer_SampledDirection wi;
 		T_racer_Math::Colour brdfValue = surfaceMaterial->Evaluate2(wi, *pathVertex);
+
 		Ld = pathVertex->pathColour * brdfValue * fabsf(T_racer_Math::dot(pathVertex->normal, cameraConnection)) * gTermCamera;
 	}
 
