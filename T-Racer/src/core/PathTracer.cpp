@@ -324,7 +324,7 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 		LightPath[1].uv = primative->interpolatePoint(intersectDisc);
 		LightPath[1].orthnormalBasis = primative->createShadingFrame(LightPath[1].normal);
 		LightPath[1].wo = ray.getincomingRayDirection();
-		LightPath[1].pathColour = pathTroughput * lightSource->getIntensity();
+//		LightPath[1].pathColour = pathTroughput * lightSource->getIntensity();
 		LightPath[1].lightSourceId = LightPath[0].lightSourceId;
 		terminatePath = false;
 	}
@@ -343,7 +343,7 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 
 		if (wi.probabilityDensity == 0.0f) { terminatePath = true; }
 
-		//LightPath[pathIndex].pathColour = pathTroughput * lightSource->getIntensity();
+		LightPath[pathIndex].pathColour = pathTroughput * lightSource->getIntensity();
 
 		terminatePath = (pathTroughput.colour.X == 0.0f && pathTroughput.colour.Y == 0.0f && pathTroughput.colour.Z == 0.0f);
 
@@ -351,7 +351,7 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 		{
 			terminatePath = !RussianRoulette(pathTroughput, &LightPath[pathIndex]);
 		}
-		if (pathIndex > 100)
+		if (pathIndex > 3)
 		{
 			terminatePath = true;
 		}
@@ -366,15 +366,7 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 
 			if (lightSourceHit.intersection && lightSourceHit.t < intersectDisc.t)
 			{
-				//T_racer_Light_Base* light = sceneObject->retrieveLightByIndex(lightSourceHit.lightID);
 				terminatePath = true;
-				//pathIndex++;
-				//LightPath.emplace_back(T_racer_Path_Vertex());
-				//LightPath[pathIndex].pathColour = pathTroughput * lightSource->getIntensity();
-				//LightPath[pathIndex].hitPoint = LightPath[pathIndex - 1].hitPoint + (wi.direction * lightSourceHit.t);
-				//LightPath[pathIndex].isOnLightSource = true;
-				//LightPath[pathIndex].lightSourceId = lightSourceHit.lightID;
-				//LightPath[pathIndex].normal = light->getLightSurfaceNormal(lightSourceHit.lightTriangleID);
 			}
 			else if (intersectDisc.triangleID != T_RACER_TRIANGLE_OR_INDEX_NULL)
 			{
@@ -390,7 +382,7 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 				LightPath[pathIndex].normal = primative->normal;
 				LightPath[pathIndex].uv = primative->interpolatePoint(intersectDisc);
 				LightPath[pathIndex].orthnormalBasis = primative->createShadingFrame(LightPath[pathIndex].normal);
-				LightPath[pathIndex].pathColour = pathTroughput * lightSource->getIntensity();
+				//LightPath[pathIndex].pathColour = pathTroughput * lightSource->getIntensity();
 				LightPath[pathIndex].lightSourceId = LightPath[0].lightSourceId;
 			}
 			else
@@ -568,7 +560,7 @@ float T_racer_Renderer_PathTracer::geometryTerm(T_racer_Path_Vertex* pathVertex,
 float T_racer_Renderer_PathTracer::cameraTerm(T_racer_Path_Vertex * pathVertex)
 {
 	T_racer_Math::Vector dir = pathVertex->hitPoint - sceneObject->mainCamera->getPosition();
-	float lsq = dir.normaliseSelfWithMagnitude();
+	float lsq = dir.normaliseSelfWithMagnitudeSq();
 
 	float w = fabsf(T_racer_Math::dot(pathVertex->normal, dir)) / lsq;
 	w *= sceneObject->mainCamera->cameraImportance(dir);
