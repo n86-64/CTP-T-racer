@@ -199,7 +199,7 @@ void T_racer_Renderer_PathTracer::traceLightPath(std::vector<T_racer_Path_Vertex
 	pathTroughput = (pathTroughput) / pdfLight;
 	LightPath[0].pathColour = pathTroughput * lightSource->getIntensity();
 	wi = sceneObject->retrieveLightByIndex(LightPath[0].lightSourceId)->SampleDirection(&sampler, &LightPath[0]);
-	pathTroughput = pathTroughput * T_racer_Math::dot(LightPath[0].normal, wi.direction) / wi.probabilityDensity;
+	pathTroughput = pathTroughput * T_racer_Math::dot(LightPath[0].normal, wi.direction) / 1.0f;//wi.probabilityDensity; // TODO - Investigate this later. 
 	
 	ray = T_racer_Math::Ray(LightPath[0].hitPoint, wi.direction);
 
