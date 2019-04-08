@@ -27,6 +27,10 @@ public:
 	void traceCameraPath(int tX, int tY, std::vector<T_racer_Path_Vertex>& cameraPath);
 	void traceLightPath(std::vector<T_racer_Path_Vertex>& LightPath); 
 
+	void pathTrace(float x, float y, int tWidth, int height);
+	void lightTrace();
+	void BPT(float x, float y, int tWidth, int height);
+
 
 private:
 	bool RussianRoulette(T_racer_Math::Colour& colour, T_racer_Path_Vertex* pathIndex);

@@ -15,7 +15,8 @@ constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived.
 
 // Temporary solution until the bidirectional elements are added.
 //#define LIGHT_TRACER_INTEGRATOR
-#define PATH_TRACER_INTEGRATOR
+//#define PATH_TRACER_INTEGRATOR
+#define BPT_INTEGRATOR
 
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
@@ -322,42 +323,12 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			irradiance = T_racer_Math::Colour(1.0f, 1.0f, 1.0f);
 			lightValue = T_racer_Math::Colour(0.0f, 0.0f, 0.0f);
 
-			traceCameraPath(tX, tY, cameraPath);
-			traceLightPath(lightPath);
-
 #ifdef PATH_TRACER_INTEGRATOR
-			for (int i = 0; i < cameraPath.size(); i++)
-			{
-				if (cameraPath[i].isOnLightSource )
-				{
-					if (cameraPath[i - 1].isFresnelSurface == true) 
-					{
-						// Do something diffrent.
-						lightValue.colour += cameraPath[i].pathColour.colour;
-					}
-					else if(cameraPath.size() == 1)
-					{
-						lightValue.colour += T_racer_Math::Colour(1, 1, 1).colour;
-					}
-
-				}
-				else
-				{
-					lightValue.colour = lightValue.colour + calculateDirectLighting(&cameraPath[i]).colour;
-				}
-			}
-			totalRadiance[tX + ((int)tWidth * tY)].colour = totalRadiance[tX + ((int)tWidth * tY)].colour + lightValue.colour;
-			display->setColourValue(tX, (height - 1) - tY, totalRadiance[tX + ((int)tWidth * tY)] / sampleCount);
+			pathTrace(tX, tY, tWidth, height);
 #elif defined LIGHT_TRACER_INTEGRATOR
-			for (int i = 0; i < lightPath.size(); i++)
-			{
-				int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
-				//std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
-				if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL)
-				{
-					totalRadiance[imagePlaneIndex].colour += directLightingLightTracer(&lightPath[i]).colour;
-				}
-			}
+			lightTrace();
+#elif defined BPT_INTEGRATOR
+			BPT(tX, tY, tWidth, height);
 #endif
 			
 			if (display->quit) { return; }
@@ -373,7 +344,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			compleatedTiles = 0;
 			currentTile = 0;
 
-#ifdef LIGHT_TRACER_INTEGRATOR
+#ifdef LIGHT_TRACER_INTEGRATOR || BPT_INTEGRATOR
 			
 			for (int y = 0; y < display->getHeight(); y++)
 			{
@@ -390,6 +361,139 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 	}
 
 	return;
+}
+
+
+void T_racer_Renderer_PathTracer::pathTrace(float x, float y, int tWidth, int height)
+{
+	T_racer_Math::Colour lightValue;
+	std::vector<T_racer_Path_Vertex>  cameraPath;
+	traceCameraPath(x, y, cameraPath);
+
+	for (int i = 0; i < cameraPath.size(); i++)
+	{
+		if (cameraPath[i].isOnLightSource)
+		{
+			if (cameraPath[i - 1].isFresnelSurface == true)
+			{
+				// Do something diffrent.
+				lightValue.colour += cameraPath[i].pathColour.colour;
+			}
+			else if (cameraPath.size() == 1)
+			{
+				lightValue.colour += T_racer_Math::Colour(1, 1, 1).colour;
+			}
+
+		}
+		else
+		{
+			lightValue.colour = lightValue.colour + calculateDirectLighting(&cameraPath[i]).colour;
+		}
+	}
+
+	totalRadiance[(int)x + ((int)tWidth * (int)y)].colour = totalRadiance[(int)x + ((int)tWidth * (int)y)].colour + lightValue.colour;
+	display->setColourValue((int)x, (height - 1) - (int)y, totalRadiance[(int)x + ((int)tWidth * (int)y)] / sampleCount);
+}
+
+void T_racer_Renderer_PathTracer::lightTrace()
+{
+	std::vector<T_racer_Path_Vertex>  lightPath;
+
+	traceLightPath(lightPath);
+
+	for (int i = 0; i < lightPath.size(); i++)
+	{
+		int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
+		//std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
+		if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL)
+		{
+			totalRadiance[imagePlaneIndex].colour += directLightingLightTracer(&lightPath[i]).colour;
+		}
+	}
+}
+
+void T_racer_Renderer_PathTracer::BPT(float x, float y, int tWidth, int height)
+{
+	int i = 0;
+	int j = 0;
+	std::vector<T_racer_Path_Vertex>  cameraPath;
+	std::vector<T_racer_Path_Vertex>  lightPath;
+
+	traceCameraPath(x, y, cameraPath);
+	traceLightPath(lightPath);
+
+	T_racer_Light_Base* lightSource = sceneObject->retrieveLightByIndex(lightPath[0].lightSourceId);
+
+	for (i = 0; i < cameraPath.size(); i++) 
+	{
+		for (j = -1; j < lightPath.size(); j++) 
+		{
+
+			if (i == 0 && j == 0) 
+			{
+				// if i == 0 and j == 0 -> light on image plane
+				// Are camera[i] and light[j] visible?
+				// If yes
+				//    connect light to camera
+
+				if (sceneObject->visible(cameraPath[i].hitPoint, lightPath[j].hitPoint))
+				{
+					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[j].hitPoint);
+					totalRadiance[imagePlaneIndex].colour += directLightingLightTracer(&lightPath[j]).colour;
+				}
+			}
+			else if (i > 0 && j == -1) 
+			{
+				// if i > 0 and j == 0 and camera[i] is on light -> contribute to pixel
+				// if camera[i] is on the light
+				//    calculate paththroughput * light intensity
+				//    add to pixel
+
+				if (cameraPath[i].isOnLightSource) 
+				{
+					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(cameraPath[i].hitPoint);
+					if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL)
+					{
+						totalRadiance[imagePlaneIndex].colour += (cameraPath[i].pathColour * lightSource->getIntensity()).colour;
+					}
+				}
+			}
+			else if (i == 0 && j > 0) 
+			{
+				// if i == 0 and j > 0 connect to camera
+				// same as lighttracing
+
+				int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[i].hitPoint);
+				if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL)
+				{
+					totalRadiance[imagePlaneIndex].colour += directLightingLightTracer(&lightPath[i]).colour;
+				}
+			}
+			else if(i > 0 && j >= 0)
+			{
+				// if i > 0 and j >= 0 connect path vertices and contribute (to pixel)
+				// if camera[i] and light[j] are visible
+				//    compute G and > 0
+				//    calculate BRDF toward light[j] from camera[i] -> brdf1
+				//    calculate BRDF toward camera[i] from light[j] -> brdf2
+				//    contribute (light[j].pathcolour * camera[i].paththrought * brdf1 * brdf2 * G)
+
+				if (sceneObject->visible(cameraPath[i].hitPoint, lightPath[j].hitPoint)) 
+				{
+					float gterm = geometryTerm(&cameraPath[i], &lightPath[j]);
+
+					if (gterm > 0) 
+					{
+						T_racer_Material* matA = ;
+						T_racer_Material* matB = ;
+						totalRadiance[(int)x + ((int)tWidth * (int)y)].colour;
+					}
+
+				}
+
+			}
+		}
+	}
 }
 
 // Weight the value according to the luminance if the luminance is less than a random value.
