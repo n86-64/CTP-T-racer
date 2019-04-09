@@ -355,6 +355,7 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			{
 				for (int x = 0; x < display->getWidth(); x++)
 				{
+				//	assert(totalRadiance[(int)x + ((int)tWidth * (int)y)].colour.X >= 0.0f);
 					display->setColourValue(x, (height - 1) - y, totalRadiance[x + ((int)tWidth * y)] / sampleCount);
 				}
 			}
@@ -384,7 +385,7 @@ void T_racer_Renderer_PathTracer::pathTrace(float x, float y, int tWidth, int he
 				// Do something diffrent.
 				lightValue.colour += cameraPath[i].pathColour.colour;
 			}
-			else if (cameraPath.size() == 1)
+			else if (cameraPath.size() == 2)
 			{
 				lightValue.colour += T_racer_Math::Colour(1, 1, 1).colour;
 			}
@@ -502,9 +503,9 @@ void T_racer_Renderer_PathTracer::BPT(float x, float y, int tWidth, int height)
 							wiLight.direction = (cameraPath[i].hitPoint - lightPath[j].hitPoint).normalise();
 
 							T_racer_Math::Colour brdfA = matA->Evaluate2(wiCam, cameraPath[i]);
-							T_racer_Math::Colour brdfB = matA->Evaluate2(wiLight, lightPath[j]);
+							T_racer_Math::Colour brdfB = matB->Evaluate2(wiLight, lightPath[j]);
 
-							totalRadiance[(int)x + ((int)tWidth * (int)y)].colour += ((lightPath[i].pathColour * lightPath[j].pathColour * brdfA * brdfB * gterm).colour) / (i + j + 1 - 1);
+							totalRadiance[(int)x + ((int)tWidth * (int)y)].colour += ((cameraPath[i].pathColour * lightPath[j].pathColour * brdfA * brdfB * gterm).colour) / (i + j + 1 - 1);
 						}
 					}
 
@@ -514,7 +515,6 @@ void T_racer_Renderer_PathTracer::BPT(float x, float y, int tWidth, int height)
 		}
 	}
 
-	assert(totalRadiance[(int)x + ((int)tWidth * (int)y)].colour.X >= 0.0f);
 }
 
 // Weight the value according to the luminance if the luminance is less than a random value.
