@@ -29,4 +29,5 @@ struct T_racer_Path_Vertex
 	unsigned int			BRDFMaterialID = 0;
 	bool					isPointLightSource = false;
 	int						lightSourceId = -1;
+	bool					isCameraPathVertex = false;
 };

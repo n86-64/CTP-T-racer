@@ -85,7 +85,7 @@ T_racer_Path_Vertex T_racer_Light_Area::SamplePoint(float& pdf)
 	initLightPath.isOnLightSource = true;
 	initLightPath.normal = triangles[triIndex].normal;
 	initLightPath.orthnormalBasis = triangles[triIndex].createShadingFrame(initLightPath.normal);
-	pdf *= 1 / triangles[triIndex].getSurfaceArea();
+	pdf *= (1 / triangles[triIndex].getSurfaceArea());
 
 	return initLightPath;
 }

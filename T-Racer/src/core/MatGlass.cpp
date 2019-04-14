@@ -44,7 +44,7 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate(T_racer_Math::R
 	return returnColour;
 }
 
-T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate2(T_racer_SampledDirection & wi, T_racer_Path_Vertex & pathVertex)
+T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::Evaluate2(T_racer_SampledDirection& wi, T_racer_Path_Vertex& pathVertex)
 {
 	return T_racer_Math::Colour();
 }
@@ -102,6 +102,9 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::SampleMaterial(T_racer_M
 
 	float ei = refractiveIndexI, et = refractiveIndexT;
 
+	bool entering = (wo_local.Z > 0.0f);
+	if (!entering) { std::swap(ei, et); }
+
 	// Evaluate Fresnel
 	T_racer_Math::Colour col = evaluateFresnel(wo_local.Z);
 	// Sample Reflection or Refraction
@@ -115,9 +118,6 @@ T_racer_Math::Colour T_racer_Materials_Dilectric_Glass::SampleMaterial(T_racer_M
 		wi.probabilityDensity = reflw;
 		return (albedo * col);
 	}
-
-	bool entering = (wo_local.Z > 0.0f);
-	if (!entering) { std::swap(ei, et); }
 
 	float ratio = (ei / et);
 
