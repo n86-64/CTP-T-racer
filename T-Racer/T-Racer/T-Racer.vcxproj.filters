@@ -4,8 +4,406 @@
     <Filter Include="Helpers">
       <UniqueIdentifier>{ca14f9f3-55ee-4d95-bd81-872b0fa9c494}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{de7c39ca-66bd-4696-af76-1bcfd5c6a843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math">
+      <UniqueIdentifier>{7b036a5b-b1b4-40c6-860f-19d6da73b723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Vector">
+      <UniqueIdentifier>{b8fa26b8-526f-4adf-a6e9-c14aa616ffa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Matrix">
+      <UniqueIdentifier>{9d732198-4554-41cc-8095-3f33d997fd2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Colour">
+      <UniqueIdentifier>{616a7d6d-59f7-4fc7-bd6e-723bde3276d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Ray">
+      <UniqueIdentifier>{ad81c0f8-54c4-49ae-9a6a-2b1848368029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Memory">
+      <UniqueIdentifier>{11f764c2-3c94-4ad4-af5d-6bfbeeda50c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Memory\Image">
+      <UniqueIdentifier>{4589c29a-cfe4-419d-80da-2000a62dcd7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures">
+      <UniqueIdentifier>{705121cd-7d4b-4b2c-a17a-131473813528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Vertex">
+      <UniqueIdentifier>{4127f0cb-829a-44ab-abf1-89340f43eb43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\AABB">
+      <UniqueIdentifier>{f6e4ea21-654a-4f8c-b4e8-bc21c386188c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Transform">
+      <UniqueIdentifier>{f4d30049-540b-4a08-a44e-69f84584a7de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Scene">
+      <UniqueIdentifier>{1eea016f-6f84-42cc-bd29-4861d61ca757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects">
+      <UniqueIdentifier>{ca9882eb-42c0-4713-9d46-5afaa44df246}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Camera">
+      <UniqueIdentifier>{3f0a6433-dae5-4913-b278-f8746c59dfe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Displays">
+      <UniqueIdentifier>{784b15cc-a342-48d3-8313-913c5a52a9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Displays\PFM">
+      <UniqueIdentifier>{a5b222ce-6fd2-4d7a-92e2-5b73c8612b16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Displays\Window/LDR">
+      <UniqueIdentifier>{41cef452-74b4-4c4f-a4da-8f57805e8802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Displays\TGA">
+      <UniqueIdentifier>{0dd5cfbb-3cf6-4838-8273-2074faaa6ae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Modules">
+      <UniqueIdentifier>{71d97d95-a975-4f99-a980-603d677844e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Modules\TextureManager">
+      <UniqueIdentifier>{5213d3b7-817e-4e38-aea6-da34806e4283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Trig">
+      <UniqueIdentifier>{977b9fbf-941a-475e-b175-ad87bc77f9cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH">
+      <UniqueIdentifier>{c56648c3-52c1-4f04-8cfc-893c38254ba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH\Tree">
+      <UniqueIdentifier>{a44ad1ce-cdbf-4664-bbec-e4da80648454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH\Node">
+      <UniqueIdentifier>{62d76758-e280-450c-847b-6405d1c332b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\BVH\Data">
+      <UniqueIdentifier>{9807e3c0-4928-4c89-9715-bd68f920d338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Numeric">
+      <UniqueIdentifier>{05ae2bf4-37e1-49eb-9453-33172ee5d1f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Sampling">
+      <UniqueIdentifier>{a112ea01-a174-40a5-983c-e3711837978f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Dependancies">
+      <UniqueIdentifier>{d7da4135-9744-4125-99ed-375a880cb391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Paths">
+      <UniqueIdentifier>{6165ba71-b52e-4a40-9cff-5bea92db49af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Primatives">
+      <UniqueIdentifier>{85fd7598-b8db-4b93-9fda-98d8ae2740f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Structures\Primatives\Triangle">
+      <UniqueIdentifier>{52216c4c-3334-4940-a232-23eb2dc274f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Math\Projections">
+      <UniqueIdentifier>{6a655777-e147-4792-9410-ae5af9622df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Renderers">
+      <UniqueIdentifier>{71633785-2be9-482d-9d63-c6487bce6b7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Renderers\Path-Tracer">
+      <UniqueIdentifier>{595f7e72-5fb5-4c0f-9c7f-03d88b0637be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Modules\MaterialManager">
+      <UniqueIdentifier>{7baa985f-11ce-4916-9394-40b14847452e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\FileIO">
+      <UniqueIdentifier>{e03657ef-b619-458d-a638-13a0be6d2e70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Lighting">
+      <UniqueIdentifier>{a2018fcc-8e8d-456a-ba2d-5d7033cd624d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Lighting\Lights">
+      <UniqueIdentifier>{131fee7a-e7c4-4b2c-ae64-8ede047906f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Lighting\Lights\Point Light">
+      <UniqueIdentifier>{22212630-1249-40a4-a0cc-770195ae8ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Lighting\Lights\Area Light">
+      <UniqueIdentifier>{fd38625a-84c7-4a8d-b8f8-cde5028ae827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Materials">
+      <UniqueIdentifier>{0067694e-5235-4d9e-b077-58e85403ee13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Materials\Material Types">
+      <UniqueIdentifier>{9c2fc4d2-6127-4349-974b-280f61f70e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Materials\Material Types\Diffuse">
+      <UniqueIdentifier>{43966599-1866-4efe-99ec-998f5ff2e0c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Materials\Material Types\Mirrors">
+      <UniqueIdentifier>{6482eb32-6d3b-4a4c-8bc7-04e10272c792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Materials\Material Types\Glass">
+      <UniqueIdentifier>{7be3120e-3590-4f87-9979-194bb7204471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Models">
+      <UniqueIdentifier>{f30b3bd7-71ae-4316-ac59-6395eee4b746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Skeletal Meshes">
+      <UniqueIdentifier>{509b824a-4db0-40c2-980b-f3bce34c3d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Skeletal Meshes\Mesh Components">
+      <UniqueIdentifier>{528016b6-d42a-4575-83eb-44a64751f182}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Skeletal Meshes\Nodes">
+      <UniqueIdentifier>{c6ea2799-a034-4932-afa8-22f569d64672}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Objects\Textures">
+      <UniqueIdentifier>{b8609122-c8cc-44dc-bde9-d18dea9065c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\FileIO\JSON">
+      <UniqueIdentifier>{71944785-e9aa-4003-ab97-c082477c7cbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\helpers\Math_Vector.cpp">
+      <Filter>Helpers\Math\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\Math_Ray.cpp">
+      <Filter>Helpers\Math\Ray</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\Math_Matrix.cpp">
+      <Filter>Helpers\Math\Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Triangle.cpp">
+      <Filter>Core\Structures\Primatives\Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\AABB.cpp">
+      <Filter>Core\Structures\AABB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Camera.cpp">
+      <Filter>Core\Objects\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Scene.cpp">
+      <Filter>Core\Structures\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Window.cpp">
+      <Filter>Core\Displays\Window/LDR</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\PFMDisplay.cpp">
+      <Filter>Core\Displays\PFM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\TGADisplay.cpp">
+      <Filter>Core\Displays\TGA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Texture.cpp">
+      <Filter>Core\Objects\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\TextureManager.cpp">
+      <Filter>Core\Modules\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\ModelLoader.cpp">
+      <Filter>Core\Objects\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\BVHNode.cpp">
+      <Filter>Core\BVH\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\BVHTree.cpp">
+      <Filter>Core\BVH\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\Math_Sampler.cpp">
+      <Filter>Helpers\Math\Sampling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MaterialManager.cpp">
+      <Filter>Core\Modules\MaterialManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\PathTracer.cpp">
+      <Filter>Core\Renderers\Path-Tracer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Display.cpp">
+      <Filter>Core\Displays</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\BaseLight.cpp">
+      <Filter>Core\Objects\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Materials.cpp">
+      <Filter>Core\Objects\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\FileReader.cpp">
+      <Filter>Helpers\FileIO</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\core\main.cpp" />
+    <ClCompile Include="..\src\core\Renderers.cpp">
+      <Filter>Core\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MatDiffuse.cpp">
+      <Filter>Core\Objects\Materials\Material Types\Diffuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MatMirrors.cpp">
+      <Filter>Core\Objects\Materials\Material Types\Mirrors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MatGlass.cpp">
+      <Filter>Core\Objects\Materials\Material Types\Glass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\PointLight.cpp">
+      <Filter>Core\Objects\Lighting\Lights\Point Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\SkeletalMesh.cpp">
+      <Filter>Core\Objects\Skeletal Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Mesh.cpp">
+      <Filter>Core\Objects\Skeletal Meshes\Mesh Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\MeshNode.cpp">
+      <Filter>Core\Objects\Skeletal Meshes\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\AreaLight.cpp">
+      <Filter>Core\Objects\Lighting\Lights\Area Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\helpers\JSONFileParser.cpp">
+      <Filter>Helpers\FileIO\JSON</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\helpers\Math_Vector.h">
+      <Filter>Helpers\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Colour.h">
+      <Filter>Helpers\Math\Colour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Image.h">
+      <Filter>Helpers\Memory\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Ray.h">
+      <Filter>Helpers\Math\Ray</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Matrix.h">
+      <Filter>Helpers\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Vertex.h">
+      <Filter>Core\Structures\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Triangle.h">
+      <Filter>Core\Structures\Primatives\Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Intersection.h">
+      <Filter>Core\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\AABB.h">
+      <Filter>Core\Structures\AABB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Camera.h">
+      <Filter>Core\Objects\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Transform.h">
+      <Filter>Helpers\Math\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Scene.h">
+      <Filter>Core\Structures\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Display.h">
+      <Filter>Core\Displays</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Window.h">
+      <Filter>Core\Displays\Window/LDR</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\TGADisplay.h">
+      <Filter>Core\Displays\TGA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PFMDisplay.h">
+      <Filter>Core\Displays\PFM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Texture.h">
+      <Filter>Core\Objects\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\TextureManager.h">
+      <Filter>Core\Modules\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Trig.h">
+      <Filter>Helpers\Math\Trig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\ModelLoader.h">
+      <Filter>Core\Objects\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BVHNode.h">
+      <Filter>Core\BVH\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BVHTests.h">
+      <Filter>Core\BVH\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_neumeric.h">
+      <Filter>Helpers\Math\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BVHTree.h">
+      <Filter>Core\BVH\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Materials.h">
+      <Filter>Core\Objects\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Sampler.h">
+      <Filter>Helpers\Math\Sampling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\OBJ_Loader.h">
+      <Filter>Helpers\Dependancies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MaterialManager.h">
+      <Filter>Core\Modules\MaterialManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PathVertex.h">
+      <Filter>Core\Paths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Projections.h">
+      <Filter>Helpers\Math\Projections</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Renderers.h">
+      <Filter>Core\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PathTracer.h">
+      <Filter>Core\Renderers\Path-Tracer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\BaseLight.h">
+      <Filter>Core\Objects\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\SampledObjects.h">
+      <Filter>Core\Paths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MaterialConstants.h">
+      <Filter>Core\Objects\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\FileReader.h">
+      <Filter>Helpers\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Utility.h">
+      <Filter>Helpers\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MatDiffuse.h">
+      <Filter>Core\Objects\Materials\Material Types\Diffuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MatMirrors.h">
+      <Filter>Core\Objects\Materials\Material Types\Mirrors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MatGlass.h">
+      <Filter>Core\Objects\Materials\Material Types\Glass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\Math_Error.h">
+      <Filter>Helpers\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PointLight.h">
+      <Filter>Core\Objects\Lighting\Lights\Point Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\SkeletalMesh.h">
+      <Filter>Core\Objects\Skeletal Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Mesh.h">
+      <Filter>Core\Objects\Skeletal Meshes\Mesh Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\MeshNode.h">
+      <Filter>Core\Objects\Skeletal Meshes\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\AreaLight.h">
+      <Filter>Core\Objects\Lighting\Lights\Area Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Resource.h">
+      <Filter>Core\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\helpers\JSONFileParser.h">
+      <Filter>Helpers\FileIO\JSON</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

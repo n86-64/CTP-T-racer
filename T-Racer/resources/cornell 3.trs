@@ -1,0 +1,61 @@
+{
+	"SceneName": "Cornell Brokendown",
+	
+	"Display": 
+	{
+		"Name": "Cornell Scene",
+		"Type": "Window",
+		"ResX": 512,
+		"ResY": 512
+	},
+	
+	"Camera":
+	{
+		"Type": "Camera",
+		"Position": [1.2, 1.2, -1.5],
+		"fov": 90.0
+	},
+	
+	"Light1":
+	{
+		"Type": "Light",
+		"LightType" : "Area",
+		"Intensity": [200.0, 200.0, 200.0],
+		"NumberOfVertices": 6,
+		"Vertices": [
+			[1.635585, 2.612167, 1.583131],
+			[1.015684, 2.612167, 1.082442],
+			[1.015684, 2.612167, 1.583131],
+			[1.635585, 2.612167, 1.583131],
+			[1.635585, 2.612167, 1.082442],
+			[1.015684, 2.612167, 1.583131]
+		]
+	},
+	
+	"Cornell Box":
+	{
+		"Type": "Mesh",
+		"MeshName": "CornellShell.obj",
+		"Mesh Material" : "Diffuse",
+		"Colour": [1.0, 1.0, 1.0],
+		"Texture": "Null"
+	},
+	
+	"Cornell Short Cube":
+	{
+		"Type": "Mesh",
+		"MeshName": "CornellCube1.obj",
+		"Mesh Material" : "Diffuse",
+		"Colour": [1.0, 1.0, 1.0],
+		"Texture": "Null"
+	},
+	
+	"Cornell Long Cube":
+	{
+		"Type": "Mesh",
+		"MeshName": "CornellCube2.obj",
+		"Mesh Material" : "Diffuse",
+		"Colour": [1.0, 1.0, 1.0],
+		"Texture": "Null"
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"SceneName": "Cornell",
+	
+	"Display": 
+	{
+		"Name": "Cornell Scene",
+		"Type": "Window",
+		"ResX": 1920,
+		"ResY": 1080
+	},
+	
+	"Camera":
+	{
+		"Type": "Camera",
+		"Position": [1.2, 1.2, -2.0],
+		"fov": 90.0
+	},
+	
+	"Light1":
+	{
+		"Type": "Light",
+		"LightType" : "Point",
+		"Position": [1.2, 1.2, 0.4],
+		"Intensity": [10.0, 10.0, 10.0]
+	},
+	
+	"Cornell Box":
+	{
+		"Type": "Mesh",
+		"MeshName": "Cycles.obj",
+		"Mesh Material" : "Mirror",
+		"Colour": [1.0, 1.0, 1.0],
+		"Texture": "Null"
+	}
+}
