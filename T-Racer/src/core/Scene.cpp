@@ -61,7 +61,7 @@ void T_racer_Scene::loadScene(JSONFileReader file)
 			else if (member.value()["Type"].as_string() == "Mesh")
 			{
 				// Here we load a mesh.
-				loadModelAssimp("resources/" + member.value()["MeshName"].as_string(), member.value()["Mesh Material"].as_string());
+				loadModelAssimp("resources/" + member.value()["MeshName"].as_string(), member.value()["Mesh Material"].as_string(), member.value()["Texture"].as_string());
 			}
 			else if (member.value()["Type"].as_string() == "Camera") 
 			{
@@ -85,13 +85,13 @@ void T_racer_Scene::loadModel(std::string modelName)
 	}
 }
 
-void T_racer_Scene::loadModelAssimp(std::string modelName, std::string matType)
+void T_racer_Scene::loadModelAssimp(std::string modelName, std::string matType, std::string overrideTexture)
 {
 	// Load model along with texture and material info. Assign for rendering. 
 	T_racer_Resource_SkeletalMesh skeletalMesh;
-	if (skeletalMesh.loadSkeletalMesh(modelName, &materials, &textures, matType)) 
+	if (skeletalMesh.loadSkeletalMesh(modelName, &materials, &textures, matType, overrideTexture)) 
 	{
-		std::vector<Triangle> triangles = skeletalMesh.draw(&materials, &textures); // INEFFICENT - Needs changing. 
+		std::vector<Triangle> triangles = skeletalMesh.draw(&materials, &textures, overrideTexture); // INEFFICENT - Needs changing. 
 		for (Triangle& tri : triangles)
 		{
 			// Laod the triangles into the scene temporaraly.

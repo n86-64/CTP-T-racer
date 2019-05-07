@@ -27,7 +27,7 @@ public:
 
 
 	int				    createMaterial(std::string name);
-	int					createMaterial(const aiScene* scene, const aiMaterial* matData, T_racer_TextureManager* textures, std::string matType);
+	int					createMaterial(const aiScene* scene, const aiMaterial* matData, T_racer_TextureManager* textures, std::string matType, std::string overrideTexture);
 	T_racer_Material*   retrieveMaterial(int matID);
 
 private:

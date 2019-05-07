@@ -28,7 +28,7 @@ int T_racer_MaterialManager::createMaterial(std::string name)
 	return T_RACER_MATERIAL_NULL;
 }
 
-int T_racer_MaterialManager::createMaterial(const aiScene* scene, const aiMaterial* matData, T_racer_TextureManager* textures, std::string matType)
+int T_racer_MaterialManager::createMaterial(const aiScene* scene, const aiMaterial* matData, T_racer_TextureManager* textures, std::string matType, std::string overrideTexture)
 {
 	aiString aiName; std::string name;
 	int textureIndex = -1;
@@ -50,24 +50,31 @@ int T_racer_MaterialManager::createMaterial(const aiScene* scene, const aiMateri
 		newMat->setName(name);
 
 		// Set the texture.
-		if (textureIndex == -1) 
+		if (overrideTexture == "") 
 		{
-			aiString path;
-			if (AI_FAILURE == matData->GetTexture(aiTextureType_DIFFUSE, 0, &path))
+			if (textureIndex == -1)
 			{
-				// No texture, set an albedo.
-				aiColor3D diffColour;
-				matData->Get(AI_MATKEY_COLOR_DIFFUSE, diffColour);
-				newMat->albedo = T_racer_Math::Colour(diffColour.r, diffColour.g, diffColour.b);
+				aiString path;
+				if (AI_FAILURE == matData->GetTexture(aiTextureType_DIFFUSE, 0, &path))
+				{
+					// No texture, set an albedo.
+					aiColor3D diffColour;
+					matData->Get(AI_MATKEY_COLOR_DIFFUSE, diffColour);
+					newMat->albedo = T_racer_Math::Colour(diffColour.r, diffColour.g, diffColour.b);
+				}
+				else
+				{
+					newMat->setTexture(textures->createTexture(path.C_Str()));
+				}
 			}
-			else 
+			else
 			{
-				newMat->setTexture(textures->createTexture(path.C_Str()));
+				newMat->setTexture(textures->createTexture(name, scene->mTextures[textureIndex]));
 			}
 		}
 		else 
 		{
-			newMat->setTexture(textures->createTexture(name, scene->mTextures[textureIndex]));
+			newMat->setTexture(textures->createTexture(overrideTexture));
 		}
 
 		materials.emplace_back(newMat);

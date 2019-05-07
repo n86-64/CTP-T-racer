@@ -38,7 +38,7 @@
 		"MeshName": "CornellShell.obj",
 		"Mesh Material" : "Diffuse",
 		"Colour": [1.0, 1.0, 1.0],
-		"Texture": "Null"
+		"Texture": "resources//textures//image2.jpg"
 	},
 	
 	"Cornell Sphere":
@@ -47,6 +47,6 @@
 		"MeshName": "CornellSphere.obj",
 		"Mesh Material" : "Glass",
 		"Colour": [1.0, 1.0, 1.0],
-		"Texture": "Mirror"
+		"Texture": ""
 	}
 }

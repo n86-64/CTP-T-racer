@@ -35,7 +35,7 @@ T_racer_Texture2D::T_racer_Texture2D(aiTexture* newTexture)
 
 void T_racer_Texture2D::copyPixelValues(int x, int y, float r, float g, float b)
 {
-	int index = x + (y * height);
+	int index = x + (y * width);
 	textureData[index] = r;
 	textureData[index + 1] = g;
 	textureData[index + 2] = b;

@@ -42,7 +42,7 @@ public:
 	void setName(std::string sceneName) { name = sceneName; }
 
 	void loadModel(std::string modelName);
-	void loadModelAssimp(std::string modelName, std::string matType);
+	void loadModelAssimp(std::string modelName, std::string matType, std::string overrideTexture);
 
 	void addLight(T_racer_Light_Base*  newLight) { sceneLights.emplace_back(newLight); } // Adds a new light to the scene.
 	float getProbabilityDensityLightSourceSelection() { return 1.0f / sceneLights.size(); }

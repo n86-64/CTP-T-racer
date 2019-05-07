@@ -27,9 +27,18 @@ int main(int argc, char* argv[])
 		"Copyright Nathan Butt 2019 \n"
 		<< "Starting Render." << std::endl;
 
-	// TODO - Add a command line parameter to load a file. 
 	JSONFileReader  file;
-	file.setFilePath("resources/cornell 4.trs");
+
+	if (argc > 1) 
+	{
+		file.setFilePath(argv[1]);
+	}
+	else 
+	{
+		std::cout << "ERROR - File path not specified. Exiting \n";
+		std::cin;
+	}
+
 
 	//T_racer_Display_Window  window;
 	T_racer_Display_TGA  tga;
