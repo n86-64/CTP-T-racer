@@ -35,7 +35,7 @@ T_racer_Texture2D::T_racer_Texture2D(aiTexture* newTexture)
 
 void T_racer_Texture2D::copyPixelValues(int x, int y, float r, float g, float b)
 {
-	int index = x + (y * width);
+	int index = ((x * 3) + (y * width * 3));
 	textureData[index] = r;
 	textureData[index + 1] = g;
 	textureData[index + 2] = b;
@@ -50,15 +50,18 @@ T_racer_Math::Colour T_racer_Texture2D::interpolatePointBilinear(float u, float 
 	int Iu = ((int)floor(Tu)) % width;
 	int Iv = ((int)floor(Tv)) % height;
 
+	int Iu_1 = (Iu + 1) % width;
+	int Iv_1 = (Iv + 1) % height;
+
 	float wU = Tu - Iu;
 	float wV = Tv - Iv;
 
 	// Values for interpolation.
     // Here we will put the nearest pixel values.
 	T_racer_Math::Colour   c00 = getPixelValue(Iu, Iv);
-	T_racer_Math::Colour   c01 = getPixelValue(Iu + 1, Iv);
-	T_racer_Math::Colour   c10 = getPixelValue(Iu, Iv + 1);
-	T_racer_Math::Colour   c11 = getPixelValue(Iu + 1, Iv + 1);
+	T_racer_Math::Colour   c01 = getPixelValue(Iu_1, Iv);
+	T_racer_Math::Colour   c10 = getPixelValue(Iu, Iv_1);
+	T_racer_Math::Colour   c11 = getPixelValue(Iu_1, Iv_1);
 
 	T_racer_Math::Vector colourVec = (c00.colour * (1 - wU) * (1 - wV)) + (c01.colour * wU * (1 - wV)) 
 		+ ( c01.colour * (1 - wU) * wV) + (c11.colour * wU * wV);
@@ -72,10 +75,11 @@ T_racer_Math::Colour T_racer_Texture2D::interpolatePointBilinear(float u, float 
 
 T_racer_Math::Colour T_racer_Texture2D::getPixelValue(int x, int y)
 {
+	int index = ((x * 3) + (y * width * 3));
 	return T_racer_Math::Colour
 	(
-		textureData[x + (width * y)], 
-		textureData[x + (width * y) + 1], 
-		textureData[x + (width * y) + 2]
+		textureData[index], 
+		textureData[index + 1], 
+		textureData[index + 2]
 	);
 }

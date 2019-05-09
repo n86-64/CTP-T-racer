@@ -36,7 +36,8 @@ int main(int argc, char* argv[])
 	else 
 	{
 		std::cout << "ERROR - File path not specified. Exiting \n";
-		std::cin;
+		getchar();
+		return 1;
 	}
 
 
