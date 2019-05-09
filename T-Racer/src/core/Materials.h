@@ -39,6 +39,9 @@ public:
 
 	T_racer_Math::Colour			 albedo = T_racer_Math::Colour(1, 1, 1);
 
+	// Returns false if no texture can be sampled.
+	T_racer_Math::Colour			sampleTexture(float u, float v); 
+
 protected:
 	std::string						 name = "default";
 	T_racer_Texture2D*				 materialTexture = nullptr;

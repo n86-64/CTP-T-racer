@@ -7,17 +7,7 @@
 
 T_racer_Math::Colour T_racer_Materials_Mirror::Evaluate(T_racer_Math::Ray* ray, T_racer_Path_Vertex& pathVertex)
 {
-	T_racer_Math::Colour  lookupColour;
-
-	if (materialTexture)
-	{
-		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
-	}
-	else 
-	{
-		lookupColour = albedo;
-	}
-
+	T_racer_Math::Colour  lookupColour = sampleTexture(pathVertex.uv.X, pathVertex.uv.Y);
 	T_racer_Math::Vector halfVector = (ray->direction + pathVertex.wo).normalise();
 	float value = T_racer_Math::dot(halfVector, pathVertex.normal);
 
@@ -31,17 +21,7 @@ T_racer_Math::Colour T_racer_Materials_Mirror::Evaluate(T_racer_Math::Ray* ray, 
 
 T_racer_Math::Colour T_racer_Materials_Mirror::Evaluate2(T_racer_SampledDirection & wi, T_racer_Path_Vertex & pathVertex)
 {
-	T_racer_Math::Colour  lookupColour;
-
-	if (materialTexture)
-	{
-		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
-	}
-	else
-	{
-		lookupColour = albedo;
-	}
-
+	T_racer_Math::Colour  lookupColour = sampleTexture(pathVertex.uv.X, pathVertex.uv.Y);
 	T_racer_Math::Vector halfVector = (wi.direction + pathVertex.wo).normalise();
 	float value = T_racer_Math::dot(halfVector, pathVertex.normal);
 

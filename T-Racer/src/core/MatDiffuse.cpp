@@ -5,39 +5,13 @@
 
 T_racer_Math::Colour T_racer_Materials_BasicDiffuse::Evaluate(T_racer_Math::Ray* ray, T_racer_Path_Vertex& pathVertex)
 {
-	T_racer_Math::Colour  lookupColour;
-	T_racer_Texture2D  outputTex(1, 1); 
-
-	if (materialTexture) 
-	{
-		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
-	}
-	else 
-	{
-		lookupColour = albedo;
-	}
-
-	lookupColour.colour = lookupColour.colour / (float)M_PI;
-
+	T_racer_Math::Colour  lookupColour = sampleTexture(pathVertex.uv.X, pathVertex.uv.Y) / (float)M_PI;
 	return lookupColour;
 }
 
 T_racer_Math::Colour T_racer_Materials_BasicDiffuse::Evaluate2(T_racer_SampledDirection & wi, T_racer_Path_Vertex & pathVertex)
 {
-	T_racer_Math::Colour  lookupColour;
-	T_racer_Texture2D  outputTex(1, 1);
-
-	if (materialTexture)
-	{
-		lookupColour = materialTexture->interpolatePointBilinear(pathVertex.uv.X, pathVertex.uv.Y);
-	}
-	else
-	{
-		lookupColour = albedo;
-	}
-
-	lookupColour.colour = lookupColour.colour / (float)M_PI;
-
+	T_racer_Math::Colour  lookupColour = sampleTexture(pathVertex.uv.X, pathVertex.uv.Y) / (float)M_PI;
 	return lookupColour;
 }
 
