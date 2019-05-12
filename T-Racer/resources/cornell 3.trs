@@ -23,12 +23,12 @@
 		"Intensity": [200.0, 200.0, 200.0],
 		"NumberOfVertices": 6,
 		"Vertices": [
+			[1.015684, 2.612167, 1.583131],
+			[1.015684, 2.612167, 1.082442],
 			[1.635585, 2.612167, 1.583131],
 			[1.015684, 2.612167, 1.082442],
-			[1.015684, 2.612167, 1.583131],
-			[1.635585, 2.612167, 1.583131],
 			[1.635585, 2.612167, 1.082442],
-			[1.015684, 2.612167, 1.583131]
+			[1.635585, 2.612167, 1.583131]
 		]
 	},
 	
@@ -38,7 +38,7 @@
 		"MeshName": "CornellShell.obj",
 		"Mesh Material" : "Diffuse",
 		"Colour": [1.0, 1.0, 1.0],
-		"Texture": "Null"
+		"Texture": ""
 	},
 	
 	"Cornell Short Cube":
@@ -47,7 +47,7 @@
 		"MeshName": "CornellCube1.obj",
 		"Mesh Material" : "Diffuse",
 		"Colour": [1.0, 1.0, 1.0],
-		"Texture": "Null"
+		"Texture": ""
 	},
 	
 	"Cornell Long Cube":
@@ -56,6 +56,6 @@
 		"MeshName": "CornellCube2.obj",
 		"Mesh Material" : "Diffuse",
 		"Colour": [1.0, 1.0, 1.0],
-		"Texture": "Null"
+		"Texture": ""
 	}
 }

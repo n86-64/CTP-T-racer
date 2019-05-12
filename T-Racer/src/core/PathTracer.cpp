@@ -15,8 +15,8 @@ constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived.
 
 // Temporary solution until the bidirectional elements are added.
 //#define LIGHT_TRACER_INTEGRATOR
-//#define PATH_TRACER_INTEGRATOR
-#define BPT_INTEGRATOR
+#define PATH_TRACER_INTEGRATOR
+//#define BPT_INTEGRATOR
 
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
@@ -64,13 +64,14 @@ void T_racer_Renderer_PathTracer::Render()
 
 void T_racer_Renderer_PathTracer::traceCameraPath(int tX, int tY, std::vector<T_racer_Path_Vertex>& cameraPath)
 {
+	T_racer_Math::Sampler sampler;
 	T_racer_TriangleIntersection  lightSourceHit;
 	T_racer_TriangleIntersection  intersectDisc;
 	T_racer_Material*  surfaceMaterial = nullptr;
 	bool terminatePath = true;
 
 	// Calculate the initial ray.
-	T_racer_Math::Ray  ray = sceneObject->generateRay(tX / display->getWidth(), tY / display->getHeight());
+	T_racer_Math::Ray  ray = sceneObject->generateRay((tX + sampler.RandomRange(0.0f, 1.0f)) / display->getWidth(), (tY + sampler.RandomRange(0.0f, 1.0f)) / display->getHeight());
 	cameraPath.emplace_back(T_racer_Path_Vertex());
 	cameraPath[0].hitPoint = ray.position;
 	cameraPath[0].pathColour = T_racer_Math::Colour(0, 0, 0);
