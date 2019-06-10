@@ -61,5 +61,13 @@ namespace T_racer_Math
 			Vector val = this->colour / scalier;
 			return Colour(val.X, val.Y, val.Z);
 		}
+
+		// Sets colour to zero if colour value is infinate. Prevents infinite colour values.
+		void nanCheck() 
+		{
+			isnan(colour.X) ? colour.X = 0 : colour.X;
+			isnan(colour.Y) ? colour.Y = 0 : colour.Y;
+			isnan(colour.Z) ? colour.Z = 0 : colour.Z;
+		}
 	};
 }

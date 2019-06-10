@@ -37,7 +37,7 @@ void T_racer_Renderer_PathTracer::Render()
 {
 	sceneObject->setupScene();
 #ifdef _DEBUG
-	threadCount = 1;
+	//threadCount = 1;
 #endif // DEBUG
 	
 	// Set up a pool of threads and render over multiple threads.
@@ -124,9 +124,9 @@ void T_racer_Renderer_PathTracer::traceCameraPath(int tX, int tY, std::vector<T_
 		pathTroughput = pathTroughput * fabsf(T_racer_Math::dot(wi.direction, cameraPath[pathIndex].normal));
 		pathTroughput = pathTroughput / wi.probabilityDensity;
 
-		if (wi.probabilityDensity == 0.0f) { terminatePath = true; }
-
 		cameraPath[pathIndex].pathColour = pathTroughput;
+
+		if (wi.probabilityDensity == 0.0f) { cameraPath[pathIndex].pathColour = T_racer_Math::Colour(0, 0, 0); terminatePath = true; }
 
 		terminatePath = (pathTroughput.colour.X == 0.0f && pathTroughput.colour.Y == 0.0f && pathTroughput.colour.Z == 0.0f);
 
@@ -556,6 +556,8 @@ T_racer_Math::Colour T_racer_Renderer_PathTracer::calculateDirectLighting(T_race
 	T_racer_Math::Colour lightValue = lightSource->Evaluate(*pathVertex);
 	T_racer_Math::Colour brdfSurfaceValue = material->Evaluate(&lightRay, *pathVertex);
 	Ld.colour = pathVertex->pathColour.colour * lightValue.colour  * brdfSurfaceValue.colour *  gTerm / light_pos.probabilityDensity;
+	Ld.nanCheck();
+	// NaN check on colour values.
 
 	return Ld;
 }
