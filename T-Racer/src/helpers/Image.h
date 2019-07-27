@@ -16,6 +16,7 @@ struct Image
 	int							    width = 0;
 	int								height = 0;
 	T_racer_Math::Colour*			colour_values = nullptr;
+	int*							colour_augValue = nullptr;
 
 	Image() {}; // Constructs a blank image.
 	Image(int w, int h, T_racer_Math::Colour col) : Image(w, h)
@@ -32,7 +33,7 @@ struct Image
 		width = nWidth;
 		height = nHeight;
 		colour_values = new T_racer_Math::Colour[width * height] { T_racer_Math::Colour(0.0f, 0.0f, 0.0f) };
-
+		colour_augValue = new int[width * height]{ 1 };
 	}
 
 	// Copy Constructor for copying values across.
@@ -42,6 +43,7 @@ struct Image
 		this->width = image.width;
 		this->height = image.height;
 		memcpy(&this->colour_values[0], image.colour_values, sizeof(T_racer_Math::Colour) * image.width * image.height);
+		memcpy(&this->colour_augValue[0], image.colour_augValue, sizeof(int) * image.width * image.height);
 	}
 
 	Image(int w, int h) 
@@ -49,6 +51,7 @@ struct Image
 		width = w;
 		height = h;
 		colour_values = new T_racer_Math::Colour[w * h];
+		colour_augValue = new int[w * h];
 	};
 
 
@@ -56,6 +59,11 @@ struct Image
 	{
 		int point = (y * width) + x;
 		return colour_values[point];
+	}
+
+	T_racer_Math::Colour operator()(int index) 
+	{
+		return colour_values[index];
 	}
 
 	void  operator()(int x, int y, T_racer_Math::Colour col)
@@ -69,6 +77,28 @@ struct Image
 		colour_values[index] = col;
 	}
 
+	void setAugValue(int x, int y, int value) 
+	{
+		int point = (y * width) + x;
+		colour_augValue[point] = value;
+	}
+
+	void setAugValue(int index, int value)
+	{
+		colour_augValue[index] = value;
+	}
+
+	int getAugValue(int x, int y) 
+	{
+		int point = (y * width) + x;
+		return colour_augValue[point];
+	}
+
+	int getAugValue(int index) 
+	{
+		return colour_augValue[index];
+	}
+
 	Image operator=(const Image& image) 
 	{
 		return Image(image);
@@ -80,6 +110,12 @@ struct Image
 		{
 			delete[] colour_values;
 			colour_values = nullptr;
+		}
+
+		if (colour_augValue) 
+		{
+			delete[] colour_augValue;
+			colour_augValue = nullptr;
 		}
 	}
 };

@@ -15,8 +15,8 @@ constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived.
 
 // Temporary solution until the bidirectional elements are added.
 //#define LIGHT_TRACER_INTEGRATOR
-//#define PATH_TRACER_INTEGRATOR
-#define BPT_INTEGRATOR
+#define PATH_TRACER_INTEGRATOR
+//#define BPT_INTEGRATOR
 
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
@@ -55,6 +55,7 @@ void T_racer_Renderer_PathTracer::Render()
 		while (compleatedTiles != tileCount) 
 		{
 			display->update();
+			//display->setSampleCount(sampleCount);
 			if (display->quit) { return; }
 		}
 
@@ -394,8 +395,10 @@ void T_racer_Renderer_PathTracer::pathTrace(float x, float y, int tWidth, int he
 		}
 	}
 
-	totalRadiance[(int)x + ((int)tWidth * (int)y)].colour = totalRadiance[(int)x + ((int)tWidth * (int)y)].colour + lightValue.colour;
-	display->setColourValue((int)x, (height - 1) - (int)y, totalRadiance[(int)x + ((int)tWidth * (int)y)] / sampleCount);
+	// totalRadiance[(int)x + ((int)tWidth * (int)y)].colour = totalRadiance[(int)x + ((int)tWidth * (int)y)].colour + lightValue.colour;
+	display->incrementColourValue((int)x, (height - 1) - (int)y, lightValue);
+	display->setSampleCount((int)x, (height - 1) - (int)y, sampleCount);
+	//display->setColourValue((int)x, (height - 1) - (int)y, totalRadiance[(int)x + ((int)tWidth * (int)y)] / sampleCount);
 }
 
 void T_racer_Renderer_PathTracer::lightTrace()

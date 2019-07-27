@@ -45,7 +45,7 @@ void T_racer_Display_Window::copyImageToFramebuffer()
 	{
 		for (int x = 0; x < frameBuffer->width; x++)
 		{
-			col = (*frameBuffer)(x, y);
+			col = (*frameBuffer)(x, y) / (*frameBuffer).getAugValue(x, y);
 			frameImage.setPixel(x, y, getColour(col));
 		}
 	}

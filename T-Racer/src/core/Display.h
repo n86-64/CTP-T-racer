@@ -33,10 +33,18 @@ public:
 	void setColourValue(int x, int y, T_racer_Math::Colour newCol);
 	void setColourValue(int index, T_racer_Math::Colour newCol);
 
+	void incrementColourValue(int x, int y, T_racer_Math::Colour newCol);
+	void incrementColourValue(int index, T_racer_Math::Colour newCol);
+
+	void setSampleCount(int x, int y, int newCount);
+	void setSampleCount(int index, int newCount);
+	void setSampleCount(int newCount);
+
 	bool     quit = false;
 
 protected:
 	std::string displayName;
 	Image*    frameBuffer;
 	float    resX, resY;
+	int		sampleCount = 1;
 };

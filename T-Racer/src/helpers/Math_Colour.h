@@ -62,6 +62,12 @@ namespace T_racer_Math
 			return Colour(val.X, val.Y, val.Z);
 		}
 
+		Colour operator+(Colour col) 
+		{
+			Vector val = this->colour + col.colour;
+			return Colour(val.X, val.Y, val.Z);
+		}
+
 		// Sets colour to zero if colour value is infinate. Prevents infinite colour values.
 		void nanCheck() 
 		{
