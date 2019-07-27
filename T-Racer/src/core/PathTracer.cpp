@@ -457,7 +457,9 @@ void T_racer_Renderer_PathTracer::BPT(float x, float y, int tWidth, int height)
 					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(cameraPath[i].hitPoint);
 					if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL)
 					{
-						totalRadiance[imagePlaneIndex].colour += (cameraPath[i].pathColour * lightSource->getIntensity()).colour / (i + j + 1 - 1);
+						T_racer_Math::Colour col = (cameraPath[i].pathColour * lightSource->getIntensity()) / (i + j + 1 - 1);
+						col.nanCheck();
+						totalRadiance[imagePlaneIndex].colour += col.colour;
 					}
 				}
 			}
@@ -502,7 +504,9 @@ void T_racer_Renderer_PathTracer::BPT(float x, float y, int tWidth, int height)
 							T_racer_Math::Colour brdfA = matA->Evaluate2(wiCam, cameraPath[i]);
 							T_racer_Math::Colour brdfB = matB->Evaluate2(wiLight, lightPath[j]);
 
-							totalRadiance[(int)x + ((int)tWidth * (int)y)].colour += ((cameraPath[i].pathColour * lightPath[j].pathColour * brdfA * brdfB * gterm).colour) / (i + j + 1 - 1);
+							T_racer_Math::Colour col = ((cameraPath[i].pathColour * lightPath[j].pathColour * brdfA * brdfB * gterm)) / (i + j + 1 - 1);
+							col.nanCheck();
+							totalRadiance[(int)x + ((int)tWidth * (int)y)].colour += col.colour;
 						}
 					}
 
