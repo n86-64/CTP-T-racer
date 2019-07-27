@@ -33,7 +33,8 @@ struct Image
 		width = nWidth;
 		height = nHeight;
 		colour_values = new T_racer_Math::Colour[width * height] { T_racer_Math::Colour(0.0f, 0.0f, 0.0f) };
-		colour_augValue = new int[width * height]{ 1 };
+		colour_augValue = new int[width * height];
+		memset(colour_augValue, 1, width * height * sizeof(int));
 	}
 
 	// Copy Constructor for copying values across.
@@ -52,6 +53,7 @@ struct Image
 		height = h;
 		colour_values = new T_racer_Math::Colour[w * h];
 		colour_augValue = new int[w * h];
+		memset(colour_augValue, 1, width * height * sizeof(int));
 	};
 
 

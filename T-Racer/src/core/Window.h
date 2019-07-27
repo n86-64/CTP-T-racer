@@ -23,6 +23,7 @@ public:
 	void init(float resolutionX, float resolutionY) override;
 	void update() override;
     void writeToDisplay(Image* imageBuffer) override;
+	void clear() override;
 
 	void setDisplayName(std::string name) override { displayName = name; window.setTitle("T-Racer Render Result: " + name); } 
 

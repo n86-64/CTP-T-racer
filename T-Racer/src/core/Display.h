@@ -24,6 +24,7 @@ public:
 	virtual void init(float resolutionX, float resolutionY) = 0; 
 	virtual void update() = 0;
 	virtual void writeToDisplay(Image* imageBuffer) = 0;
+	virtual void clear() {};
 
 	virtual void setDisplayName(std::string name) = 0;
 

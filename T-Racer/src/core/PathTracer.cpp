@@ -14,8 +14,8 @@ constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived.
 
 
 // Temporary solution until the bidirectional elements are added.
-//#define LIGHT_TRACER_INTEGRATOR
-#define PATH_TRACER_INTEGRATOR
+#define LIGHT_TRACER_INTEGRATOR
+//#define PATH_TRACER_INTEGRATOR
 //#define BPT_INTEGRATOR
 
 
@@ -43,6 +43,7 @@ void T_racer_Renderer_PathTracer::Render()
 	// Set up a pool of threads and render over multiple threads.
 	if (threadCount > 0) 
 	{
+	//	display->clear();
 		totalRadiance = new T_racer_Math::Colour[(int)display->getWidth() * (int)display->getHeight()];
 		std::thread thread;
 		for (int i = 0; i < threadCount; i++) 
@@ -51,11 +52,11 @@ void T_racer_Renderer_PathTracer::Render()
 			thread.detach();
 		}
 
+
 		// Quick and dirty way of waiting for threads to execute.
 		while (compleatedTiles != tileCount) 
 		{
 			display->update();
-			//display->setSampleCount(sampleCount);
 			if (display->quit) { return; }
 		}
 
@@ -349,14 +350,14 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 
 #if defined(LIGHT_TRACER_INTEGRATOR) || defined(BPT_INTEGRATOR)
 			
-			for (int y = 0; y < display->getHeight(); y++)
-			{
-				for (int x = 0; x < display->getWidth(); x++)
-				{
-				//	assert(totalRadiance[(int)x + ((int)tWidth * (int)y)].colour.X >= 0.0f);
-					display->setColourValue(x, (height - 1) - y, totalRadiance[x + ((int)tWidth * y)] / sampleCount);
-				}
-			}
+			//for (int y = 0; y < display->getHeight(); y++)
+			//{
+			//	for (int x = 0; x < display->getWidth(); x++)
+			//	{
+			//	//	assert(totalRadiance[(int)x + ((int)tWidth * (int)y)].colour.X >= 0.0f);
+			//		display->setColourValue(x, (height - 1) - y, totalRadiance[x + ((int)tWidth * y)] / sampleCount);
+			//	}
+			//}
 
 #endif // LIGHT_TRACER_INTEGRATOR
 
@@ -413,7 +414,9 @@ void T_racer_Renderer_PathTracer::lightTrace()
 		//std::cout << "imagePlaneIndex value: " << imagePlaneIndex << "\n";
 		if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL)
 		{
-			totalRadiance[imagePlaneIndex].colour += directLightingLightTracer(&lightPath[i]).colour;
+			display->incrementColourValue(imagePlaneIndex, directLightingLightTracer(&lightPath[i]));
+			display->setSampleCount(imagePlaneIndex, sampleCount);
+			//totalRadiance[imagePlaneIndex].colour += directLightingLightTracer(&lightPath[i]).colour;
 		}
 	}
 }

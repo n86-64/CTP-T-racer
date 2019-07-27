@@ -37,6 +37,12 @@ void T_racer_Display_Window::writeToDisplay(Image* imageBuffer)
 	frameBuffer = imageBuffer;
 }
 
+void T_racer_Display_Window::clear()
+{
+	copyImageToFramebuffer();
+	window.display();
+}
+
 void T_racer_Display_Window::copyImageToFramebuffer()
 {
 	sf::Image frameImage = frameTexture.getTexture().copyToImage();
