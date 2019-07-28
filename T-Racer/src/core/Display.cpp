@@ -32,5 +32,5 @@ void T_racer_Display::setSampleCount(int index, int newCount)
 
 void T_racer_Display::setSampleCount(int newCount)
 {
-	sampleCount = newCount;
+	(*frameBuffer).setAugValue(newCount);
 }

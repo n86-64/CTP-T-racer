@@ -85,6 +85,12 @@ struct Image
 		colour_augValue[point] = value;
 	}
 
+	void setAugValue(int value) 
+	{
+		std::fill(colour_augValue, colour_augValue + (width * height * sizeof(int)), value);
+		//memset(colour_augValue, value, width * height * sizeof(int));
+	}
+
 	void setAugValue(int index, int value)
 	{
 		colour_augValue[index] = value;

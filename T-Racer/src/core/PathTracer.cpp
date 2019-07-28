@@ -14,9 +14,9 @@ constexpr int T_RACER_MINIMUM_BOUNCE = 4; // PBRT derived.
 
 
 // Temporary solution until the bidirectional elements are added.
-#define LIGHT_TRACER_INTEGRATOR
+//#define LIGHT_TRACER_INTEGRATOR
 //#define PATH_TRACER_INTEGRATOR
-//#define BPT_INTEGRATOR
+#define BPT_INTEGRATOR
 
 
 T_racer_Renderer_PathTracer::T_racer_Renderer_PathTracer()
@@ -348,16 +348,16 @@ void T_racer_Renderer_PathTracer::renderThreaded()
 			compleatedTiles = 0;
 			currentTile = 0;
 
-#if defined(LIGHT_TRACER_INTEGRATOR) || defined(BPT_INTEGRATOR)
+#if defined(LIGHT_TRACER_INTEGRATOR) || defined(BPT_INTEGRATOR) // Due to inconsistant changes on pixels. Global sample count application is needed.
 			
-			//for (int y = 0; y < display->getHeight(); y++)
-			//{
-			//	for (int x = 0; x < display->getWidth(); x++)
-			//	{
-			//	//	assert(totalRadiance[(int)x + ((int)tWidth * (int)y)].colour.X >= 0.0f);
-			//		display->setColourValue(x, (height - 1) - y, totalRadiance[x + ((int)tWidth * y)] / sampleCount);
-			//	}
-			//}
+			for (int y = 0; y < display->getHeight(); y++)
+			{
+				for (int x = 0; x < display->getWidth(); x++)
+				{
+				//	assert(totalRadiance[(int)x + ((int)tWidth * (int)y)].colour.X >= 0.0f);
+					display->setSampleCount(x, y, sampleCount);
+				}
+			}
 
 #endif // LIGHT_TRACER_INTEGRATOR
 
@@ -415,7 +415,7 @@ void T_racer_Renderer_PathTracer::lightTrace()
 		if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL)
 		{
 			display->incrementColourValue(imagePlaneIndex, directLightingLightTracer(&lightPath[i]));
-			display->setSampleCount(imagePlaneIndex, sampleCount);
+			//display->setSampleCount(imagePlaneIndex, sampleCount);
 			//totalRadiance[imagePlaneIndex].colour += directLightingLightTracer(&lightPath[i]).colour;
 		}
 	}
@@ -448,7 +448,7 @@ void T_racer_Renderer_PathTracer::BPT(float x, float y, int tWidth, int height)
 				if (sceneObject->visible(cameraPath[i].hitPoint, lightPath[j].hitPoint))
 				{
 					int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[j].hitPoint);
-					totalRadiance[imagePlaneIndex].colour += directLightingLightTracer(&lightPath[j]).colour;
+					display->incrementColourValue(imagePlaneIndex, directLightingLightTracer(&lightPath[j]));
 				}
 			}
 			else if (i > 0 && j == -1) 
@@ -465,7 +465,7 @@ void T_racer_Renderer_PathTracer::BPT(float x, float y, int tWidth, int height)
 					{
 						T_racer_Math::Colour col = (cameraPath[i].pathColour * lightSource->getIntensity()) / (i + j + 1 - 1);
 						col.nanCheck();
-						totalRadiance[imagePlaneIndex].colour += col.colour;
+						display->incrementColourValue(imagePlaneIndex, col);
 					}
 				}
 			}
@@ -477,7 +477,7 @@ void T_racer_Renderer_PathTracer::BPT(float x, float y, int tWidth, int height)
 				int imagePlaneIndex = sceneObject->mainCamera->pixelPointOnCamera(lightPath[j].hitPoint);
 				if (imagePlaneIndex != T_RACER_TRIANGLE_OR_INDEX_NULL)
 				{
-					totalRadiance[imagePlaneIndex].colour += directLightingLightTracer(&lightPath[j]).colour / (i + j + 1 - 1);
+					display->incrementColourValue(imagePlaneIndex, directLightingLightTracer(&lightPath[j]) / (i + j + 1 - 1));
 				}
 			}
 			else if(i > 0 && j >= 0)
@@ -512,7 +512,7 @@ void T_racer_Renderer_PathTracer::BPT(float x, float y, int tWidth, int height)
 
 							T_racer_Math::Colour col = ((cameraPath[i].pathColour * lightPath[j].pathColour * brdfA * brdfB * gterm)) / (i + j + 1 - 1);
 							col.nanCheck();
-							totalRadiance[(int)x + ((int)tWidth * (int)y)].colour += col.colour;
+							display->incrementColourValue(x, y, col);
 						}
 					}
 
