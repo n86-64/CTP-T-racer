@@ -34,12 +34,11 @@ public:
 
 	// TODO - Add custom copy constructor for texture.
 	void copyPixelValues(int x, int y, float r, float g, float b);
+	void copyPixelValues(int x, int y, T_racer_Math::Colour& col);
 
 	// perform bi-linear interpolation on the point using a UV poijnt (normalised between 0 and 1)
 	T_racer_Math::Colour  interpolatePointBilinear(float u, float v);
 	T_racer_Math::Colour  getPixelValue(int x, int y);
-
-
 
 private:
 	int width = 0;

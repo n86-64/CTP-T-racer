@@ -41,6 +41,13 @@ void T_racer_Texture2D::copyPixelValues(int x, int y, float r, float g, float b)
 	textureData[index + 2] = b;
 }
 
+void T_racer_Texture2D::copyPixelValues(int x, int y, T_racer_Math::Colour& col)
+{
+	int index = ((x * 3) + (y * width * 3));
+	textureData[index] = col.colour.X;
+	textureData[index + 1] = col.colour.Y;
+	textureData[index + 2] = col.colour.Z;
+}
 
 T_racer_Math::Colour T_racer_Texture2D::interpolatePointBilinear(float u, float v)
 {
@@ -82,4 +89,9 @@ T_racer_Math::Colour T_racer_Texture2D::getPixelValue(int x, int y)
 		textureData[index + 1], 
 		textureData[index + 2]
 	);
+}
+
+float* T_racer_Texture2D::operator()(int x, int y)
+{
+	return nullptr;
 }
