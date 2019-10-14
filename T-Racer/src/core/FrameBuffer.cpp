@@ -2,6 +2,10 @@
 
 #include "core/Texture.h"
 
+#ifdef _WIN32
+#pragma warning(disable : 4996)
+#endif
+
 T_racer_FrameBuffer::T_racer_FrameBuffer(float width, float height)
 	:w(width),
 	h(height)
@@ -24,6 +28,8 @@ void T_racer_FrameBuffer::writeToDiskTGA(std::string name)
 	unsigned char bits;    // Bit depth.
 	long Size;                 // Size of the picture.
 	int colorMode;
+	int width = w;
+	int height = h;
 
 	// Open file for output.
 	pFile = fopen(name.c_str(), "wb");
@@ -56,32 +62,32 @@ void T_racer_FrameBuffer::writeToDiskTGA(std::string name)
 	fwrite(&uselessInt, sizeof(short int), 1, pFile);
 
 	// Write the size that you want.
-	fwrite(&(w), sizeof(short int), 1, pFile);
-	fwrite(&(h), sizeof(short int), 1, pFile);
+	fwrite(&(width), sizeof(short int), 1, pFile);
+	fwrite(&(height), sizeof(short int), 1, pFile);
 	fwrite(&bits, sizeof(unsigned char), 1, pFile);
 
 	// Write useless data.
 	fwrite(&uselessChar, sizeof(unsigned char), 1, pFile);
 
 	// Get image size.
-	Size = w * h * colorMode;
+	Size = width * height * colorMode;
 
-	for (int y = 0; y < h; y++)
+	for (int y = 0; y < height; y++)
 	{
-		for (int x = 0; x < w; x++)
+		for (int x = 0; x < width; x++)
 		{
-			int i = (x + w * (h - y - 1)) * 3;
+			int i = (x + width * (y - 1)) * 3;
 
 			uint8_t c[3];
-			c[2] = fbTex->getPixelValue(x, y).getTonemappedColour(1.0f).Z;
-			c[1] = fbTex->getPixelValue(x, y).getTonemappedColour(1.0f).Y;
-			c[0] = fbTex->getPixelValue(x, y).getTonemappedColour(1.0f).X;
+			c[2] = fbTex->getPixelValue(x, height - y - 1).getTonemappedColour(1.0f).X;
+			c[1] = fbTex->getPixelValue(x, height - y - 1).getTonemappedColour(1.0f).Y;
+			c[0] = fbTex->getPixelValue(x, height - y - 1).getTonemappedColour(1.0f).Z;
 
 			fwrite(&c[0], sizeof(uint8_t), 3, pFile);
 		}
 	}
 
-	fprintf(stderr, "Saved TGA: %dx%d\n", w, h);
+	fprintf(stderr, "Saved TGA: %dx%d\n", width, height);
 
 	// close the file.
 	fclose(pFile);

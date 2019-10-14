@@ -16,6 +16,7 @@
 #include "Scene.h"
 #include "BaseLight.h"
 #include "Display.h"
+#include "FrameBuffer.h"
 
 class T_racer_Renderer_Base 
 {
@@ -26,6 +27,7 @@ public:
 	virtual void Render() = 0;
 	void setDisplay(T_racer_Display* newDisplay);
 	void setDisplay(JSONFileReader displayName);
+	void setFramebuffer(T_racer_FrameBuffer* fb);
 
 	void setScene(T_racer_Scene* newScene) 
 	{ 
@@ -53,4 +55,5 @@ protected:
 	std::vector<std::thread>			tileThreads; 
 
 	bool								initFromFile = false;
+	T_racer_FrameBuffer*				framebuffer = nullptr;
 };

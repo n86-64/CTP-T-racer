@@ -47,3 +47,8 @@ void T_racer_Renderer_Base::setDisplay(JSONFileReader displayName)
 	newDisplay->setDisplayName(name);
 	this->setDisplay(newDisplay);
 }
+
+void T_racer_Renderer_Base::setFramebuffer(T_racer_FrameBuffer* fb)
+{
+	framebuffer = fb;
+}

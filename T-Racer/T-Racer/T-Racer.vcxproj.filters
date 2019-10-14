@@ -160,6 +160,9 @@
     <Filter Include="Helpers\FileIO\JSON">
       <UniqueIdentifier>{71944785-e9aa-4003-ab97-c082477c7cbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Displays\FrameBuffer">
+      <UniqueIdentifier>{7779245b-8b13-4f31-a6af-80c6c36cac90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\helpers\Math_Vector.cpp">
@@ -258,6 +261,9 @@
     </ClCompile>
     <ClCompile Include="..\src\helpers\JSONFileParser.cpp">
       <Filter>Helpers\FileIO\JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\FrameBuffer.cpp">
+      <Filter>Core\Displays\FrameBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -404,6 +410,9 @@
     </ClInclude>
     <ClInclude Include="..\src\helpers\JSONFileParser.h">
       <Filter>Helpers\FileIO\JSON</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\FrameBuffer.h">
+      <Filter>Core\Displays\FrameBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

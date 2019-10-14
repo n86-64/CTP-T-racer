@@ -237,6 +237,7 @@ xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClCompile Include="..\src\core\BVHTree.cpp" />
     <ClCompile Include="..\src\core\Camera.cpp" />
     <ClCompile Include="..\src\core\Display.cpp" />
+    <ClCompile Include="..\src\core\FrameBuffer.cpp" />
     <ClCompile Include="..\src\core\main.cpp" />
     <ClCompile Include="..\src\core\MatDiffuse.cpp" />
     <ClCompile Include="..\src\core\MaterialManager.cpp" />
@@ -273,6 +274,7 @@ xcopy "$(SolutionDir)lib\Assimp\bin\*" "$(OutDir)" /F /R /Y /I /S</Command>
     <ClInclude Include="..\src\core\BVHTree.h" />
     <ClInclude Include="..\src\core\Camera.h" />
     <ClInclude Include="..\src\core\Display.h" />
+    <ClInclude Include="..\src\core\FrameBuffer.h" />
     <ClInclude Include="..\src\core\Intersection.h" />
     <ClInclude Include="..\src\core\MatDiffuse.h" />
     <ClInclude Include="..\src\core\MaterialConstants.h" />

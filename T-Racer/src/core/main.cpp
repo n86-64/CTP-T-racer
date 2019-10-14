@@ -51,14 +51,19 @@ int main(int argc, char* argv[])
 	pfm.setDisplayName("Test");
 
 	T_racer_Renderer_PathTracer  trpt;
+
+	T_racer_FrameBuffer* fb = new T_racer_FrameBuffer(512, 512); // Test object
 	
 	T_racer_Scene testScene;
 	testScene.loadScene(file);
 	
 	trpt.setDisplay(file);
+	trpt.setFramebuffer(fb);
 	trpt.setScene(&testScene);
 	trpt.Render();
 	trpt.postDisplayUpdate();
+
+	fb->writeToDiskTGA("test.tga");
 
 	return 0;
 }
