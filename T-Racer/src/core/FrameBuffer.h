@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <iostream>
+
 #include "helpers/Math_Colour.h"
 
 class T_racer_Texture2D;
@@ -18,13 +20,16 @@ class T_racer_Texture2D;
 
 class T_racer_FrameBuffer {
 public:
-	T_racer_FrameBuffer(int width, int height);
+	T_racer_FrameBuffer(float width, float height);
 	void write(T_racer_Math::Colour col, int x, int y);
-	
 
-	// Add any conversion code needed here. 
-	// Used for writing out data for use in a perticular display. 
+	// Save out the framebuffer to disk. 
+	// Use determined in render settings. 
+	void writeToDiskTGA(std::string name);
+	void writeToDiskPFM(std::string name);
 
 private:
 	T_racer_Texture2D* fbTex = nullptr;
+	float w = 0, h = 0;
+	int size = 0;
 };

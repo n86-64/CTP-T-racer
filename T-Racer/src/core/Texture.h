@@ -40,6 +40,8 @@ public:
 	T_racer_Math::Colour  interpolatePointBilinear(float u, float v);
 	T_racer_Math::Colour  getPixelValue(int x, int y);
 
+	T_racer_Math::Colour operator()(int x, int y);
+
 private:
 	int width = 0;
 	int height = 0;

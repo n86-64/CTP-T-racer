@@ -91,7 +91,13 @@ T_racer_Math::Colour T_racer_Texture2D::getPixelValue(int x, int y)
 	);
 }
 
-float* T_racer_Texture2D::operator()(int x, int y)
+T_racer_Math::Colour T_racer_Texture2D::operator()(int x, int y)
 {
-	return nullptr;
+	int index = ((x * 3) + (y * width * 3));
+	return T_racer_Math::Colour
+	(
+		textureData[index],
+		textureData[index + 1],
+		textureData[index + 2]
+	);
 }
