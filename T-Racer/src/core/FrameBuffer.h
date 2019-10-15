@@ -21,7 +21,20 @@ class T_racer_Texture2D;
 class T_racer_FrameBuffer {
 public:
 	T_racer_FrameBuffer(float width, float height);
+	~T_racer_FrameBuffer();
+
+
 	void write(T_racer_Math::Colour col, int x, int y);
+	void reset(float width, float height);
+	void clear();
+
+	// parameters of framebuffer.
+	const float getWidth() { return w; }
+	const float getHeight() { return h; }
+	const size_t getSize() { return (size_t)size; }
+
+	T_racer_Texture2D fetchFramebufferRaw();
+	T_racer_Texture2D fetchFramebufferTonemapped();
 
 	// Save out the framebuffer to disk. 
 	// Use determined in render settings. 
@@ -32,4 +45,7 @@ private:
 	T_racer_Texture2D* fbTex = nullptr;
 	float w = 0, h = 0;
 	int size = 0;
+	
+	// Framebuffer export settings.
+	float gamma = 1 / 2.2f;
 };

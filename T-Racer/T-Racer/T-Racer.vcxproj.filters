@@ -52,14 +52,8 @@
     <Filter Include="Core\Displays">
       <UniqueIdentifier>{784b15cc-a342-48d3-8313-913c5a52a9dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Displays\PFM">
-      <UniqueIdentifier>{a5b222ce-6fd2-4d7a-92e2-5b73c8612b16}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Displays\Window/LDR">
       <UniqueIdentifier>{41cef452-74b4-4c4f-a4da-8f57805e8802}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Displays\TGA">
-      <UniqueIdentifier>{0dd5cfbb-3cf6-4838-8273-2074faaa6ae2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Modules">
       <UniqueIdentifier>{71d97d95-a975-4f99-a980-603d677844e7}</UniqueIdentifier>
@@ -189,12 +183,6 @@
     <ClCompile Include="..\src\core\Window.cpp">
       <Filter>Core\Displays\Window/LDR</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\core\PFMDisplay.cpp">
-      <Filter>Core\Displays\PFM</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\core\TGADisplay.cpp">
-      <Filter>Core\Displays\TGA</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\core\Texture.cpp">
       <Filter>Core\Objects\Textures</Filter>
     </ClCompile>
@@ -308,12 +296,6 @@
     </ClInclude>
     <ClInclude Include="..\src\core\Window.h">
       <Filter>Core\Displays\Window/LDR</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\TGADisplay.h">
-      <Filter>Core\Displays\TGA</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\core\PFMDisplay.h">
-      <Filter>Core\Displays\PFM</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Texture.h">
       <Filter>Core\Objects\Textures</Filter>

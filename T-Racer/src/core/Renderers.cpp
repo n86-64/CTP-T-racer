@@ -35,8 +35,6 @@ void T_racer_Renderer_Base::setDisplay(JSONFileReader displayName)
 		else if (properties.name() == "Type") 
 		{
 			if (properties.value().as_string() == "Window") { newDisplay = new T_racer_Display_Window(); }
-			else if(properties.value().as_string() == "PFM") { newDisplay = new T_racer_Display_PFM(); }
-			else if (properties.value().as_string() == "TGA") { newDisplay = new T_racer_Display_TGA(); }
 		}
 		else if (properties.name() == "ResX") { x = properties.value().as_double(); }
 		else if (properties.name() == "ResY") { y = properties.value().as_double(); }

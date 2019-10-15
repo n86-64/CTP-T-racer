@@ -1,5 +1,6 @@
 #include "FrameBuffer.h"
 
+#include "helpers/Utility.h"
 #include "core/Texture.h"
 
 #ifdef _WIN32
@@ -14,9 +15,38 @@ T_racer_FrameBuffer::T_racer_FrameBuffer(float width, float height)
 	size = w * h * sizeof(float) * 3;
 }
 
+T_racer_FrameBuffer::~T_racer_FrameBuffer()
+{
+	T_RACER_RELEASE_RESOURCE((void*&)fbTex);
+}
+
 void T_racer_FrameBuffer::write(T_racer_Math::Colour col, int x, int y)
 {
 	fbTex->copyPixelValues(x, y, col);
+}
+
+void T_racer_FrameBuffer::reset(float width, float height)
+{
+	T_RACER_RELEASE_RESOURCE((void*&)fbTex);
+	fbTex = new T_racer_Texture2D(width, height);
+	size = w * h * sizeof(float) * 3;
+}
+
+void T_racer_FrameBuffer::clear()
+{
+	fbTex->clear();
+}
+
+T_racer_Texture2D T_racer_FrameBuffer::fetchFramebufferRaw()
+{
+	return *fbTex;
+}
+
+// This will apply tonemapping. Allows for GPU tonemapping. 
+// TODO - Implement for new display system.
+T_racer_Texture2D T_racer_FrameBuffer::fetchFramebufferTonemapped()
+{
+	return T_racer_Texture2D();
 }
 
 void T_racer_FrameBuffer::writeToDiskTGA(std::string name)
@@ -79,9 +109,9 @@ void T_racer_FrameBuffer::writeToDiskTGA(std::string name)
 			int i = (x + width * (y - 1)) * 3;
 
 			uint8_t c[3];
-			c[2] = fbTex->getPixelValue(x, height - y - 1).getTonemappedColour(1.0f).X;
-			c[1] = fbTex->getPixelValue(x, height - y - 1).getTonemappedColour(1.0f).Y;
-			c[0] = fbTex->getPixelValue(x, height - y - 1).getTonemappedColour(1.0f).Z;
+			c[2] = fbTex->getPixelValue(x, height - y - 1).getTonemappedColour(gamma).X;
+			c[1] = fbTex->getPixelValue(x, height - y - 1).getTonemappedColour(gamma).Y;
+			c[0] = fbTex->getPixelValue(x, height - y - 1).getTonemappedColour(gamma).Z;
 
 			fwrite(&c[0], sizeof(uint8_t), 3, pFile);
 		}
