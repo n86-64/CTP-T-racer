@@ -12,6 +12,7 @@
 #include "PathTracer.h"
 #include "PointLight.h"
 #include "AreaLight.h"
+#include "PreviewWindow.h"
 
 #include "helpers/JSONFileParser.h"
 
@@ -41,6 +42,9 @@ int main(int argc, char* argv[])
 
 	T_racer_Renderer_PathTracer  trpt;
 	T_racer_FrameBuffer* fb = new T_racer_FrameBuffer(512, 512); // Test object
+	T_racer_PreviewWindow win(512, 512);
+	win.setFramebuffer(fb);
+	win.RunWindow();
 	
 	T_racer_Scene testScene;
 	testScene.loadScene(file);
@@ -49,6 +53,12 @@ int main(int argc, char* argv[])
 	trpt.setFramebuffer(fb);
 	trpt.setScene(&testScene);
 	trpt.Render();
+
+	while (true) 
+	{
+		win.RunWindow();
+	}
+
 	trpt.postDisplayUpdate();
 
 	fb->writeToDiskTGA("test.tga");

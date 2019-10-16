@@ -157,6 +157,9 @@
     <Filter Include="Core\Displays\FrameBuffer">
       <UniqueIdentifier>{7779245b-8b13-4f31-a6af-80c6c36cac90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Displays\Preview">
+      <UniqueIdentifier>{eda39ce9-40fb-426e-9e94-c9184a229183}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\helpers\Math_Vector.cpp">
@@ -253,6 +256,7 @@
     <ClCompile Include="..\src\core\FrameBuffer.cpp">
       <Filter>Core\Displays\FrameBuffer</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\core\PreviewWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\helpers\Math_Vector.h">
@@ -395,6 +399,9 @@
     </ClInclude>
     <ClInclude Include="..\src\core\FrameBuffer.h">
       <Filter>Core\Displays\FrameBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\PreviewWindow.h">
+      <Filter>Core\Displays\Preview</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

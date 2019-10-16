@@ -44,7 +44,7 @@ T_racer_Texture2D T_racer_FrameBuffer::fetchFramebufferRaw()
 
 // This will apply tonemapping. Allows for GPU tonemapping. 
 // TODO - Implement for new display system.
-T_racer_Texture2D T_racer_FrameBuffer::fetchFramebufferTonemapped()
+T_racer_Texture2D T_racer_FrameBuffer::fetchFramebufferTonemapped(float gamma)
 {
 	return T_racer_Texture2D();
 }

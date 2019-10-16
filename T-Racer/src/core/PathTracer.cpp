@@ -52,11 +52,11 @@ void T_racer_Renderer_PathTracer::Render()
 		}
 
 		// Quick and dirty way of waiting for threads to execute.
-		while (compleatedTiles != tileCount) 
+		/*while (compleatedTiles != tileCount) 
 		{
 			display->update();
 			if (display->quit) { return; }
-		}
+		}*/
 
 		return;
 	}
